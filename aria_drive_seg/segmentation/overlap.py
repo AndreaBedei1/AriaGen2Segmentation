@@ -53,10 +53,16 @@ def resolve_overlaps(height: int, width: int,
 
 
 def class_aware_nms(boxes: np.ndarray, scores: np.ndarray, class_ids: np.ndarray,
-                    iou_thr: float = 0.7) -> List[int]:
-    """Greedy per-class NMS. boxes: (N,4) x0y0x1y1. Returns kept indices."""
+                    iou_thr: float = 0.7, iou_by_class: "dict | None" = None) -> List[int]:
+    """Greedy per-class NMS. boxes: (N,4) x0y0x1y1. Returns kept indices.
+
+    iou_by_class optionally overrides the IoU threshold per class id (falls back to
+    iou_thr)."""
     keep: List[int] = []
     for cid in np.unique(class_ids):
+        thr = iou_thr
+        if iou_by_class and int(cid) in iou_by_class and iou_by_class[int(cid)] is not None:
+            thr = float(iou_by_class[int(cid)])
         idx = np.where(class_ids == cid)[0]
         idx = idx[np.argsort(-scores[idx])]
         b = boxes[idx]
@@ -68,7 +74,7 @@ def class_aware_nms(boxes: np.ndarray, scores: np.ndarray, class_ids: np.ndarray
             for j in range(i + 1, len(idx)):
                 if suppressed[j]:
                     continue
-                if _iou(b[i], b[j]) > iou_thr:
+                if _iou(b[i], b[j]) > thr:
                     suppressed[j] = True
     return keep
 

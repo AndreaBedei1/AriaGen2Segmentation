@@ -29,12 +29,16 @@ class Detection:
     canonical_id: int
     canonical_name: str
     box: Tuple[float, float, float, float]   # x0,y0,x1,y1 in rectified pixels
-    phrase: str = ""
+    phrase: str = ""                          # canonical name (kept for back-compat)
     gdino_score: float = 0.0
     sam_iou: float = 0.0
     combined_score: float = 0.0
     area_px: int = 0
     priority: int = 0
+    native_phrase: str = ""                   # raw phrase returned by Grounding DINO
+    map_confidence: float = 0.0               # phrase->class mapping confidence
+    provenance: str = "full_frame"            # full_frame | windshield_crop | tile:<i> | roi:<name>
+    layer: str = "canonical"                  # canonical | exterior | cockpit | transparent | mirror
 
     def to_dict(self) -> Dict[str, Any]:
         d = asdict(self)
