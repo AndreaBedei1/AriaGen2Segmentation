@@ -1,288 +1,396 @@
-# Grounding DINO prompts per canonical class (§7).
-# Each entry:
-#   prompt         main text query fed to Grounding DINO
-#   synonyms       extra phrases OR'd into the query (help recall)
-#   box_threshold  GDINO box confidence threshold
-#   text_threshold GDINO text-token threshold
-#   priority       overlap priority (HIGHER wins a pixel conflict); thin/safety-critical high,
-#                  large background low. See docs/class_taxonomy.md.
-#   min_area       drop masks smaller than this many pixels (post-SAM)
-#   max_area_frac  drop masks larger than this fraction of the image (null = no cap)
-#   morph_close    morphological closing kernel size in px (0 = none)
-#   max_instances  keep at most N highest-scoring detections for this class (null = all)
+# Grounding DINO prompts per canonical class (§7). Schema v2 (Phase 1).
+# Per class:
+#   prompt              main text phrase
+#   prompt_variants     extra phrasings REALLY sent to GDINO (deduped) — improve recall
+#   synonyms            further phrasings sent + used for phrase->class mapping
+#   negative_contexts   decoy phrases; a detection matching one is dropped
+#   prompt_mode         combined (shared group caption) | variants (per-class call) | individual
+#   box_threshold       FINAL per-class GDINO box-score floor (re-applied after mapping)
+#   text_threshold / candidate_box_threshold / candidate_text_threshold / min_map_confidence
+#   priority            overlap priority (HIGHER wins a pixel conflict)
+#   min_area / max_area_frac  a class mask larger than this fraction of the frame is dropped
+#                       (kills the "absent class -> GDINO returns a full-frame box -> SAM
+#                        fills 90% of the frame" false positive)
+#   min_box_width / min_box_height / min_aspect_ratio / max_aspect_ratio / edge_margin
+#   allowed_regions / forbidden_regions   list of [x0,y0,x1,y1] in [0,1] frame fractions
+#   max_instances / nms_iou / morph_close / group_tag / solo
 #
-# prompt_strategy controls how classes are batched into GDINO calls:
-#   grouped  -> classes sharing a `group_tag` are queried together (default, faster)
-#   Difficult classes can be given their own call by setting `solo: true`.
+# prompt_mode defaults to `variants` (per-class calls): a big combined caption makes GDINO
+# return "run-on" phrases spanning several class prompts, which are then ambiguous. Per-class
+# calls keep phrases clean at the cost of more calls — Method 1 prioritises recall (§7).
 
 defaults:
-  box_threshold: 0.35
+  box_threshold: 0.28
   text_threshold: 0.25
+  candidate_box_threshold: 0.14
+  candidate_text_threshold: 0.10
+  min_map_confidence: 0.28
   min_area: 400
-  max_area_frac: null
+  max_area_frac: 0.55          # global cap; backgrounds override higher, small objects lower
   morph_close: 3
   max_instances: null
+  prompt_mode: variants
   solo: false
 
-prompt_strategy: grouped   # grouped | concatenated | individual
+prompt_strategy: grouped
 
 classes:
-  # ---------------- road scene ----------------
+  # ---------------- road scene: surfaces ----------------
   road_surface:
-    prompt: "road surface. roadway. asphalt road."
-    synonyms: ["paved road", "street surface"]
+    prompt: "road surface"
+    prompt_variants: ["roadway", "asphalt road", "paved road surface"]
+    synonyms: ["street surface", "tarmac"]
     box_threshold: 0.30
-    text_threshold: 0.22
     priority: 10
     min_area: 3000
     max_area_frac: 0.95
     morph_close: 7
+    max_instances: 3
     group_tag: surfaces
   lane_marking:
-    prompt: "road lane marking. white lane line. yellow lane line."
-    synonyms: ["dashed lane line", "road paint marking"]
+    prompt: "lane marking"
+    prompt_variants: ["white lane line", "yellow lane line", "dashed lane line", "road paint line"]
+    synonyms: ["road marking"]
     box_threshold: 0.22
     text_threshold: 0.18
     priority: 70
     min_area: 60
+    max_area_frac: 0.5
     morph_close: 1
+    max_instances: 25
     group_tag: thin
-    solo: true
   crosswalk:
-    prompt: "pedestrian crossing. zebra crossing. crosswalk."
-    synonyms: ["zebra stripes on road"]
+    prompt: "pedestrian crossing"
+    prompt_variants: ["zebra crossing", "crosswalk", "zebra stripes on road"]
     box_threshold: 0.25
-    text_threshold: 0.20
     priority: 68
     min_area: 300
+    max_area_frac: 0.4
+    max_instances: 6
     group_tag: thin
   sidewalk:
-    prompt: "sidewalk. pavement for pedestrians."
-    synonyms: ["footpath"]
+    prompt: "sidewalk"
+    prompt_variants: ["pavement for pedestrians", "footpath"]
     priority: 12
     min_area: 1500
+    max_area_frac: 0.6
     morph_close: 5
+    max_instances: 4
     group_tag: surfaces
   curb:
-    prompt: "road curb. kerb. curbstone edge."
-    synonyms: ["street curb"]
+    prompt: "road curb"
+    prompt_variants: ["kerb", "curbstone edge", "street curb"]
     box_threshold: 0.28
     priority: 22
     min_area: 200
+    max_area_frac: 0.5
+    max_instances: 6
     group_tag: surfaces
   parking_area:
-    prompt: "parking area. parking lot surface."
-    synonyms: ["parking space"]
+    prompt: "parking lot pavement"
+    prompt_variants: ["parking area asphalt", "parking space on street"]
+    box_threshold: 0.32
     priority: 12
     min_area: 2000
+    max_area_frac: 0.6
+    max_instances: 3
     group_tag: surfaces
+  rail_track:
+    prompt: "railway track"
+    prompt_variants: ["train rails on ground", "tram track in road"]
+    box_threshold: 0.35
+    priority: 25
+    min_area: 300
+    max_area_frac: 0.5
+    max_instances: 6
+    group_tag: surfaces
+
+  # ---------------- road scene: dynamic users ----------------
   person:
-    prompt: "person. pedestrian. human."
-    synonyms: ["man", "woman", "child walking"]
+    prompt: "person"
+    prompt_variants: ["pedestrian", "human walking"]
+    synonyms: ["man", "woman"]
+    negative_contexts: ["mannequin", "statue"]
     priority: 80
     min_area: 150
+    max_area_frac: 0.4
+    min_box_height: 12
+    max_instances: 30
     group_tag: dynamic
   rider:
-    prompt: "rider. person riding a bicycle. person riding a motorcycle."
-    synonyms: ["cyclist", "motorcyclist"]
+    prompt: "person riding a bicycle"
+    prompt_variants: ["person riding a motorcycle", "cyclist on a bike", "motorcyclist"]
     priority: 82
     min_area: 200
+    max_area_frac: 0.4
+    max_instances: 20
     group_tag: dynamic
+
+  # ---------------- road scene: vehicles ----------------
   car:
-    prompt: "car. automobile. passenger vehicle."
-    synonyms: ["parked car", "sedan", "suv"]
+    prompt: "car"
+    prompt_variants: ["automobile", "passenger car", "sedan", "suv", "parked car"]
+    negative_contexts: ["car interior", "car dashboard", "steering wheel"]
     priority: 40
     min_area: 400
-    # reject the ego-vehicle interior over-capture: a single "car" mask must not
-    # swallow the cockpit. Real lead cars occupy a small fraction of the frame.
     max_area_frac: 0.30
+    max_instances: 30
     group_tag: vehicles
   truck:
-    prompt: "truck. lorry. cargo truck."
-    synonyms: ["semi truck"]
+    prompt: "truck"
+    prompt_variants: ["lorry", "cargo truck", "semi truck"]
     priority: 41
     min_area: 600
     max_area_frac: 0.35
+    max_instances: 15
     group_tag: vehicles
   bus:
-    prompt: "bus. coach bus."
-    synonyms: ["city bus"]
+    prompt: "bus"
+    prompt_variants: ["coach bus", "city bus"]
     priority: 42
     min_area: 600
-    max_area_frac: 0.35
+    max_area_frac: 0.4
+    max_instances: 10
     group_tag: vehicles
   motorcycle:
-    prompt: "motorcycle. motorbike. scooter."
-    synonyms: ["moped"]
+    prompt: "motorcycle"
+    prompt_variants: ["motorbike", "scooter", "moped"]
     priority: 78
     min_area: 200
+    max_area_frac: 0.25
+    max_instances: 15
     group_tag: vehicles
   bicycle:
-    prompt: "bicycle. bike."
-    synonyms: ["pushbike"]
+    prompt: "bicycle"
+    prompt_variants: ["bike", "pushbike"]
     priority: 78
     min_area: 200
+    max_area_frac: 0.25
+    max_instances: 15
     group_tag: vehicles
+
+  # ---------------- road scene: furniture / signage ----------------
   traffic_light:
-    prompt: "traffic light. traffic signal."
+    prompt: "traffic light"
+    prompt_variants: ["traffic signal", "road traffic light", "red amber green traffic signal"]
     synonyms: ["stop light"]
-    box_threshold: 0.25
+    box_threshold: 0.28
     priority: 75
     min_area: 80
+    max_area_frac: 0.06
+    max_instances: 12
     group_tag: furniture
   traffic_sign:
-    prompt: "traffic sign. road sign."
-    synonyms: ["street sign", "warning sign"]
-    box_threshold: 0.25
+    prompt: "traffic sign"
+    prompt_variants: ["road sign", "street sign", "warning road sign"]
+    negative_contexts: ["billboard", "shop sign", "advertisement"]
+    box_threshold: 0.28
     priority: 72
     min_area: 100
+    max_area_frac: 0.12
+    max_instances: 20
     group_tag: furniture
   pole:
-    prompt: "pole. street pole. sign pole. utility pole."
-    synonyms: ["lamp post"]
-    box_threshold: 0.25
+    prompt: "pole"
+    prompt_variants: ["street pole", "sign pole", "utility pole", "lamp post"]
+    box_threshold: 0.26
     priority: 30
     min_area: 120
+    max_area_frac: 0.4
+    max_instances: 25
     group_tag: furniture
+
+  # ---------------- road scene: barriers ----------------
   guardrail:
-    prompt: "guardrail. metal crash barrier along road."
-    synonyms: ["armco barrier"]
+    prompt: "metal guardrail along road"
+    prompt_variants: ["metal crash barrier", "armco barrier"]
+    box_threshold: 0.30
     priority: 24
     min_area: 400
+    max_area_frac: 0.5
+    max_instances: 6
     group_tag: barriers
   barrier:
-    prompt: "road barrier. traffic barrier. jersey barrier."
-    synonyms: ["concrete barrier"]
+    prompt: "concrete road barrier"
+    prompt_variants: ["jersey barrier", "traffic barrier"]
+    box_threshold: 0.30
     priority: 26
     min_area: 400
+    max_area_frac: 0.5
+    max_instances: 8
     group_tag: barriers
   wall:
-    prompt: "wall. retaining wall."
-    synonyms: ["stone wall"]
+    prompt: "wall"
+    prompt_variants: ["retaining wall", "stone wall"]
+    box_threshold: 0.30
     priority: 15
     min_area: 800
+    max_area_frac: 0.6
+    max_instances: 5
     group_tag: barriers
   fence:
-    prompt: "fence. metal fence. wooden fence."
-    synonyms: ["railing"]
+    prompt: "fence"
+    prompt_variants: ["metal fence", "wooden fence", "railing"]
+    box_threshold: 0.28
     priority: 16
     min_area: 400
+    max_area_frac: 0.55
+    max_instances: 8
     group_tag: barriers
+
+  # ---------------- road scene: background ----------------
   building:
-    prompt: "building. house. facade."
-    synonyms: ["apartment block", "shop building"]
+    prompt: "building"
+    prompt_variants: ["house", "building facade", "apartment block", "shop building"]
     priority: 7
     min_area: 3000
+    max_area_frac: 0.85
     morph_close: 5
+    max_instances: 10
     group_tag: background
   vegetation:
-    prompt: "vegetation. tree. bush. hedge."
-    synonyms: ["foliage", "greenery"]
+    prompt: "vegetation"
+    prompt_variants: ["tree", "bush", "hedge", "foliage"]
     priority: 8
     min_area: 1500
+    max_area_frac: 0.85
     morph_close: 5
+    max_instances: 15
     group_tag: background
   terrain:
-    prompt: "grass. terrain. soil. field."
-    synonyms: ["lawn", "dirt ground"]
+    prompt: "grass field"
+    prompt_variants: ["terrain ground", "soil ground", "lawn grass"]
     priority: 11
     min_area: 2000
+    max_area_frac: 0.7
     morph_close: 5
+    max_instances: 6
     group_tag: background
   sky:
-    prompt: "sky."
-    synonyms: ["clouds in sky"]
+    prompt: "sky"
+    prompt_variants: ["clouds in the sky"]
     priority: 5
     min_area: 3000
+    max_area_frac: 0.98
     morph_close: 7
+    max_instances: 2
     group_tag: background
   bridge:
-    prompt: "bridge. overpass."
-    synonyms: ["viaduct"]
+    prompt: "bridge over road"
+    prompt_variants: ["highway overpass", "viaduct"]
+    box_threshold: 0.38
     priority: 6
     min_area: 2000
+    max_area_frac: 0.6
+    max_instances: 3
     group_tag: background
   tunnel:
-    prompt: "tunnel. road tunnel entrance."
-    synonyms: []
+    prompt: "road tunnel entrance"
+    prompt_variants: ["highway tunnel opening"]
+    box_threshold: 0.42
     priority: 6
     min_area: 2000
+    max_area_frac: 0.6
+    max_instances: 2
     group_tag: background
-  rail_track:
-    prompt: "railway track. train rails. tram track."
-    synonyms: ["railroad"]
-    priority: 25
-    min_area: 300
-    group_tag: surfaces
 
   # ---------------- cockpit ----------------
   steering_wheel:
-    prompt: "car steering wheel."
-    synonyms: ["steering wheel of a car"]
+    prompt: "car steering wheel"
+    prompt_variants: ["steering wheel rim"]
+    box_threshold: 0.30
     priority: 55
     min_area: 500
+    max_area_frac: 0.30
+    max_instances: 1
     group_tag: cockpit
   instrument_cluster:
-    prompt: "car instrument cluster. speedometer display. dashboard gauges."
-    synonyms: ["car dashboard dials"]
+    prompt: "car speedometer gauge cluster"
+    prompt_variants: ["dashboard instrument dials", "speedometer display behind wheel"]
+    box_threshold: 0.28
     priority: 60
     min_area: 300
+    max_area_frac: 0.15
+    max_instances: 2
     group_tag: cockpit
   dashboard:
-    prompt: "car dashboard. car dash panel."
-    synonyms: ["dashboard interior"]
+    prompt: "car dashboard"
+    prompt_variants: ["car dash panel", "dashboard top surface"]
+    box_threshold: 0.30
     priority: 30
     min_area: 2000
+    max_area_frac: 0.5
+    max_instances: 2
     group_tag: cockpit
   infotainment_screen:
-    prompt: "car infotainment touchscreen. center console display."
-    synonyms: ["navigation screen in car"]
+    prompt: "car infotainment touchscreen"
+    prompt_variants: ["center console display screen", "car navigation screen"]
+    box_threshold: 0.28
     priority: 58
     min_area: 200
+    max_area_frac: 0.15
+    max_instances: 2
     group_tag: cockpit
   rear_view_mirror:
-    prompt: "interior rear view mirror."
-    synonyms: ["rearview mirror inside car"]
+    prompt: "interior rear view mirror"
+    prompt_variants: ["rearview mirror inside car"]
+    box_threshold: 0.28
     priority: 60
     min_area: 150
+    max_area_frac: 0.12
+    max_instances: 1
     group_tag: cockpit
   side_mirror:
-    prompt: "car side mirror. wing mirror."
-    synonyms: ["door mirror"]
+    prompt: "car side wing mirror"
+    prompt_variants: ["exterior door mirror"]
+    box_threshold: 0.28
     priority: 60
     min_area: 200
+    max_area_frac: 0.15
+    max_instances: 2
     group_tag: cockpit
   windshield:
-    prompt: "car windshield. front windscreen."
-    synonyms: ["car front glass"]
-    # low priority: it is a transparent backdrop — road/sky/cars/lane seen THROUGH
-    # the glass must win, so windshield only fills where nothing else was detected.
+    prompt: "car windshield glass"
+    prompt_variants: ["front windscreen"]
+    box_threshold: 0.28
     priority: 6
     min_area: 3000
+    max_area_frac: 0.9
+    max_instances: 1
     group_tag: cockpit
   a_pillar:
-    prompt: "car a-pillar. windshield pillar interior."
-    synonyms: ["car roof pillar"]
+    prompt: "car windshield pillar"
+    prompt_variants: ["a-pillar interior trim"]
+    box_threshold: 0.30
     priority: 35
     min_area: 800
+    max_area_frac: 0.35
+    max_instances: 2
     group_tag: cockpit
   driver_hand:
-    prompt: "human hand on steering wheel. driver hand."
-    synonyms: ["hand holding steering wheel"]
+    prompt: "human hand on steering wheel"
+    prompt_variants: ["driver hand gripping wheel"]
+    box_threshold: 0.28
     priority: 85
     min_area: 300
+    max_area_frac: 0.2
+    max_instances: 2
     group_tag: cockpit
   smartphone:
-    prompt: "smartphone. mobile phone."
-    synonyms: ["cell phone"]
+    prompt: "smartphone"
+    prompt_variants: ["mobile phone", "cell phone"]
+    box_threshold: 0.28
     priority: 88
     min_area: 150
+    max_area_frac: 0.1
+    max_instances: 3
     group_tag: cockpit
   other_cockpit:
-    prompt: "car interior trim. car door panel. gear shifter."
-    synonyms: ["car interior part"]
+    prompt: "car interior door panel"
+    prompt_variants: ["gear shifter", "car interior trim"]
+    box_threshold: 0.30
     priority: 25
     min_area: 800
-    # cap so the "interior" prompt cannot claim the whole ego cabin as one blob
     max_area_frac: 0.45
+    max_instances: 6
     group_tag: cockpit

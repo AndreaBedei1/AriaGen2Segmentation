@@ -1,13 +1,22 @@
 """Method 1 — open-vocabulary prompted segmentation: Grounding DINO + SAM 2.1 (§7).
 
-Grounding DINO (HF transformers) proposes boxes from configurable text prompts;
-SAM 2.1 turns each box into a mask; masks are filtered, scored, and composited by
-priority (overlap.py). This is NOT an exhaustive semantic partition — unassigned
-pixels remain `unknown`.
+Grounding DINO (HF transformers) proposes boxes from configurable text prompts (now
+including variants + synonyms, see prompt_engine.py); SAM 2.1 turns each surviving box
+into a mask; masks are filtered (per-class thresholds, geometric filters, max_instances),
+scored, and composited by priority (overlap.py). This is NOT an exhaustive semantic
+partition — unassigned pixels remain `unknown`.
+
+Phase-1 correctness fixes vs the first version:
+  * variants/synonyms are actually sent to GDINO and deduplicated;
+  * grouped calls use a permissive CANDIDATE threshold, then each detection is re-filtered
+    by its OWN class box_threshold + mapping confidence;
+  * max_instances and a full set of geometric filters are applied;
+  * robust deterministic phrase->class mapping; the native GDINO phrase is stored.
 """
 from __future__ import annotations
 
 import time
+from collections import Counter, defaultdict
 from pathlib import Path
 from typing import Any, Dict, List, Optional, Tuple
 
@@ -18,33 +27,10 @@ from ..logging_utils import get_logger
 from ..taxonomy import Taxonomy
 from .base import Detection, FrameOutput
 from .overlap import Instance, class_aware_nms, resolve_overlaps
+from .prompt_engine import (PhraseMapper, PromptSpec, box_geom_ok, build_specs,
+                            group_captions)
 
 log = get_logger("grounded_sam2")
-
-
-def _tokens(s: str) -> set:
-    return {w for w in "".join(c if c.isalnum() else " " for c in s.lower()).split() if len(w) > 2}
-
-
-class PromptSpec:
-    def __init__(self, name: str, cfg: Dict[str, Any], defaults: Dict[str, Any]):
-        self.name = name
-        g = lambda k: cfg.get(k, defaults.get(k))
-        self.prompt = cfg["prompt"].strip().lower()
-        self.synonyms = [s.strip().lower() for s in cfg.get("synonyms", [])]
-        self.box_threshold = float(g("box_threshold"))
-        self.text_threshold = float(g("text_threshold"))
-        self.priority = int(cfg.get("priority", 0))
-        self.min_area = int(g("min_area"))
-        self.max_area_frac = g("max_area_frac")
-        self.morph_close = int(g("morph_close"))
-        self.max_instances = g("max_instances")
-        self.solo = bool(cfg.get("solo", defaults.get("solo", False)))
-        self.group_tag = cfg.get("group_tag", "misc")
-        # phrases used to map a returned GDINO phrase back to this class
-        self.phrases = [p.strip() for p in self.prompt.replace(".", " . ").split(".") if p.strip()]
-        self.phrases += self.synonyms
-        self.token_sets = [_tokens(p) for p in self.phrases if p]
 
 
 class GroundedSAM2Segmenter:
@@ -57,33 +43,34 @@ class GroundedSAM2Segmenter:
         self._gproc = None
         self._sam = None
         self._amp_dtype = None
+        # global accumulators (per class) for calibration/statistics
+        self.stats_accepted: Counter = Counter()
+        self.stats_rejected: Counter = Counter()          # keyed by reason
+        self.stats_rejected_by_class: Counter = Counter()
 
     # ------------------------------------------------------------------ #
     def _load_prompts(self) -> None:
         path = self.cfg.resolve(self.cfg.get("project.grounded_prompts"))
         doc = yaml.safe_load(Path(path).read_text())
-        defaults = doc.get("defaults", {})
         self.prompt_strategy = doc.get("prompt_strategy", "grouped")
-        self.specs: Dict[str, PromptSpec] = {}
-        for name, c in doc["classes"].items():
-            if name not in self.tax.by_name:
-                log.warning("prompt class %r not in taxonomy; skipping", name)
-                continue
-            self.specs[name] = PromptSpec(name, c, defaults)
+        self.specs: Dict[str, PromptSpec] = build_specs(doc, set(self.tax.by_name))
+        negatives: List[str] = []
+        for s in self.specs.values():
+            negatives.extend(s.negative_contexts)
+        self.mapper = PhraseMapper(self.specs, negatives=negatives)
 
     def _build_query_groups(self) -> List[List[str]]:
-        """Batch classes into GDINO calls. solo classes get their own call."""
         if self.prompt_strategy == "individual":
             return [[n] for n in self.specs]
-        groups: Dict[str, List[str]] = {}
-        solos: List[List[str]] = []
-        for n, s in self.specs.items():
-            if s.solo or self.prompt_strategy == "concatenated" and False:
-                solos.append([n])
-            else:
-                groups.setdefault(s.group_tag, []).append(n)
         if self.prompt_strategy == "concatenated":
             return [list(self.specs.keys())]
+        groups: Dict[str, List[str]] = defaultdict(list)
+        solos: List[List[str]] = []
+        for n, s in self.specs.items():
+            if s.solo:
+                solos.append([n])
+            else:
+                groups[s.group_tag].append(n)
         return list(groups.values()) + solos
 
     # ------------------------------------------------------------------ #
@@ -101,7 +88,7 @@ class GroundedSAM2Segmenter:
         gid = self.cfg.get("grounded_sam2.grounding_dino_id")
         local = self.cfg.resolve(Path("weights") / "grounding-dino-base")
         if local.exists():
-            gid = str(local)  # prefer pre-downloaded local weights (offline)
+            gid = str(local)
         log.info("loading Grounding DINO %s", gid)
         self._gproc = AutoProcessor.from_pretrained(gid)
         self._gdino = AutoModelForZeroShotObjectDetection.from_pretrained(gid).to(self.device).eval()
@@ -115,82 +102,97 @@ class GroundedSAM2Segmenter:
         self._sam = SAM2ImagePredictor(sam2_model)
 
     # ------------------------------------------------------------------ #
-    def _run_gdino(self, pil_img, class_names: List[str], h: int, w: int):
+    def _run_gdino(self, pil_img, caption: str, box_thr: float, txt_thr: float,
+                   h: int, w: int):
         import torch
-        # caption = union of class prompts; use the lowest thresholds in the group
-        caption = " ".join(self.specs[n].prompt if self.specs[n].prompt.endswith(".")
-                           else self.specs[n].prompt + "." for n in class_names)
-        box_thr = min(self.specs[n].box_threshold for n in class_names)
-        txt_thr = min(self.specs[n].text_threshold for n in class_names)
         inputs = self._gproc(images=pil_img, text=caption, return_tensors="pt").to(self.device)
         with torch.inference_mode(), torch.autocast(self.device, dtype=self._amp_dtype,
                                                     enabled=self.device == "cuda"):
             outputs = self._gdino(**inputs)
-        results = self._post_process(outputs, inputs, box_thr, txt_thr, (h, w))
-        boxes = results["boxes"].detach().cpu().numpy() if len(results["boxes"]) else np.zeros((0, 4))
-        scores = results["scores"].detach().cpu().numpy() if len(results["boxes"]) else np.zeros((0,))
-        labels = results.get("text_labels") or results.get("labels") or []
-        return boxes, scores, list(labels)
-
-    def _post_process(self, outputs, inputs, box_thr, txt_thr, size):
         proc = self._gproc.post_process_grounded_object_detection
-        kw = dict(target_sizes=[size])
         try:
-            return proc(outputs, inputs.input_ids, box_threshold=box_thr,
-                        text_threshold=txt_thr, **kw)[0]
+            res = proc(outputs, inputs.input_ids, box_threshold=box_thr,
+                       text_threshold=txt_thr, target_sizes=[(h, w)])[0]
         except TypeError:
-            return proc(outputs, inputs.input_ids, threshold=box_thr,
-                        text_threshold=txt_thr, **kw)[0]
-
-    def _phrase_to_class(self, phrase: str, candidates: List[str]) -> Optional[str]:
-        pt = _tokens(phrase)
-        if not pt:
-            return None
-        best, best_score = None, 0.0
-        for n in candidates:
-            for ts in self.specs[n].token_sets:
-                if not ts:
-                    continue
-                j = len(pt & ts) / len(pt | ts)
-                # also reward substring containment
-                if any(w in phrase for w in ts):
-                    j = max(j, 0.5 + 0.5 * j)
-                if j > best_score:
-                    best, best_score = n, j
-        return best if best_score >= 0.3 else None
+            res = proc(outputs, inputs.input_ids, threshold=box_thr,
+                       text_threshold=txt_thr, target_sizes=[(h, w)])[0]
+        n = len(res["boxes"])
+        boxes = res["boxes"].detach().cpu().numpy() if n else np.zeros((0, 4))
+        scores = res["scores"].detach().cpu().numpy() if n else np.zeros((0,))
+        labels = res.get("text_labels") or res.get("labels") or []
+        return boxes, scores, list(labels)
 
     # ------------------------------------------------------------------ #
     def segment(self, image_rgb: np.ndarray, frame_index: int,
-                capture_ts_ns: int) -> FrameOutput:
+                capture_ts_ns: int, roi: Optional[Dict[str, Any]] = None) -> FrameOutput:
         import cv2
         import torch
         from PIL import Image
 
         h, w = image_rgb.shape[:2]
         pil = Image.fromarray(image_rgb)
+        rej: Counter = Counter()
         t0 = time.time()
 
-        all_boxes, all_scores, all_cids, all_names = [], [], [], []
+        # 1) candidate detections across query groups (variants+synonyms in caption)
+        cand: List[Dict[str, Any]] = []
         for group in self._build_query_groups():
-            boxes, scores, labels = self._run_gdino(pil, group, h, w)
-            for b, s, lab in zip(boxes, scores, labels):
-                cls = self._phrase_to_class(str(lab), group)
-                if cls is None:
+            for caption, cover in group_captions(self.specs, group):
+                if not caption:
                     continue
-                all_boxes.append(b); all_scores.append(float(s))
-                all_cids.append(self.tax.id_of(cls)); all_names.append(cls)
+                cbox = min(self.specs[n].candidate_box_threshold for n in cover)
+                ctxt = min(self.specs[n].candidate_text_threshold for n in cover)
+                boxes, scores, labels = self._run_gdino(pil, caption, cbox, ctxt, h, w)
+                for b, s, lab in zip(boxes, scores, labels):
+                    cand.append({"box": b, "score": float(s), "phrase": str(lab),
+                                 "cover": cover})
         t_gdino = (time.time() - t0) * 1e3
+
+        # 2) phrase->class mapping + per-class thresholds + box-level geometry
+        acc_boxes, acc_scores, acc_cids, acc_meta = [], [], [], []
+        for d in cand:
+            mr = self.mapper.map(d["phrase"], d["cover"])
+            if mr.name is None:
+                rej[mr.reason] += 1
+                continue
+            spec = self.specs[mr.name]
+            if mr.confidence < spec.min_map_confidence:
+                rej["low_map_confidence"] += 1
+                self.stats_rejected_by_class[mr.name] += 1
+                continue
+            if d["score"] < spec.box_threshold:
+                rej["below_box_threshold"] += 1
+                self.stats_rejected_by_class[mr.name] += 1
+                continue
+            x0, y0, x1, y1 = d["box"]
+            ok, reason = box_geom_ok(spec, (x0, y0, x1, y1), int((x1 - x0) * (y1 - y0)), h, w)
+            # box-area proxy for early geom filters that don't need the mask
+            if reason in ("below_min_box_width", "below_min_box_height",
+                          "below_min_aspect_ratio", "above_max_aspect_ratio",
+                          "spans_full_frame_edges", "outside_allowed_region",
+                          "inside_forbidden_region") and not ok:
+                rej[reason] += 1
+                self.stats_rejected_by_class[mr.name] += 1
+                continue
+            acc_boxes.append(d["box"]); acc_scores.append(d["score"])
+            acc_cids.append(self.tax.id_of(mr.name))
+            acc_meta.append({"name": mr.name, "phrase": d["phrase"],
+                             "map_conf": mr.confidence,
+                             "provenance": (roi or {}).get("name", "full_frame")})
 
         dets: List[Detection] = []
         instances: List[Instance] = []
-        if all_boxes:
-            boxes = np.array(all_boxes, dtype=np.float32)
-            scores = np.array(all_scores, dtype=np.float32)
-            cids = np.array(all_cids, dtype=np.int64)
+        t_sam = 0.0
+        if acc_boxes:
+            boxes = np.array(acc_boxes, dtype=np.float32)
+            scores = np.array(acc_scores, dtype=np.float32)
+            cids = np.array(acc_cids, dtype=np.int64)
+            iou_by_class = {self.tax.id_of(n): s.nms_iou for n, s in self.specs.items()}
             keep = class_aware_nms(boxes, scores, cids,
-                                   iou_thr=float(self.cfg.get("grounded_sam2.nms_iou", 0.7)))
+                                   iou_thr=float(self.cfg.get("grounded_sam2.nms_iou", 0.7)),
+                                   iou_by_class=iou_by_class)
             boxes, scores = boxes[keep], scores[keep]
-            names = [all_names[k] for k in keep]
+            meta = [acc_meta[k] for k in keep]
 
             t1 = time.time()
             self._sam.set_image(image_rgb)
@@ -203,28 +205,44 @@ class GroundedSAM2Segmenter:
                 masks = masks[:, 0]
             ious = np.asarray(ious).reshape(-1)
 
-            for i, name in enumerate(names):
-                spec = self.specs[name]
-                m = masks[i] > 0.0
-                m = self._postprocess_mask(m, spec, h, w, cv2)
-                area = int(m.sum())
-                if area < spec.min_area:
-                    continue
-                if spec.max_area_frac and area > spec.max_area_frac * h * w:
+            per_class: Dict[str, List[Detection]] = defaultdict(list)
+            per_class_inst: Dict[str, List[Instance]] = defaultdict(list)
+            for i, m in enumerate(meta):
+                name = m["name"]; spec = self.specs[name]
+                mask = self._postprocess_mask(masks[i] > 0.0, spec, cv2)
+                area = int(mask.sum())
+                ok, reason = box_geom_ok(spec, tuple(float(x) for x in boxes[i]), area, h, w)
+                if not ok:
+                    rej[reason] += 1
+                    self.stats_rejected_by_class[name] += 1
                     continue
                 sam_iou = float(ious[i]) if i < len(ious) else 0.0
-                gdino = float(scores[i])
-                combined = self._combine(gdino, sam_iou)
+                combined = self._combine(float(scores[i]), sam_iou)
                 cid = self.tax.id_of(name)
-                dets.append(Detection(cid, name, tuple(float(x) for x in boxes[i]),
-                                      phrase=name, gdino_score=gdino, sam_iou=sam_iou,
-                                      combined_score=combined, area_px=area,
-                                      priority=spec.priority))
-                instances.append(Instance(m, cid, combined, spec.priority))
-        else:
-            t_sam = 0.0
+                det = Detection(cid, name, tuple(float(x) for x in boxes[i]),
+                                phrase=name, gdino_score=float(scores[i]), sam_iou=sam_iou,
+                                combined_score=combined, area_px=area, priority=spec.priority,
+                                native_phrase=m["phrase"], map_confidence=float(m["map_conf"]),
+                                provenance=m["provenance"])
+                per_class[name].append(det)
+                per_class_inst[name].append(Instance(mask, cid, combined, spec.priority))
+
+            # 3) max_instances per class (keep highest combined score)
+            for name, ds in per_class.items():
+                spec = self.specs[name]
+                order = sorted(range(len(ds)), key=lambda k: -ds[k].combined_score)
+                cap = spec.max_instances if spec.max_instances else len(ds)
+                dropped = max(0, len(ds) - cap)
+                if dropped:
+                    rej["max_instances"] += dropped
+                    self.stats_rejected_by_class[name] += dropped
+                for k in order[:cap]:
+                    dets.append(ds[k]); instances.append(per_class_inst[name][k])
+                    self.stats_accepted[name] += 1
 
         id_map, score_map = resolve_overlaps(h, w, instances)
+        for reason, c in rej.items():
+            self.stats_rejected[reason] += c
         total = (time.time() - t0) * 1e3
         return FrameOutput(
             frame_index=frame_index, capture_timestamp_ns=capture_ts_ns,
@@ -232,10 +250,12 @@ class GroundedSAM2Segmenter:
             canonical_mask=id_map, confidence=score_map, detections=dets,
             timings_ms={"grounding_dino": round(t_gdino, 1), "sam2": round(t_sam, 1),
                         "total": round(total, 1)},
-            extra={"coverage": float((id_map > 0).mean())},
+            extra={"coverage": float((id_map > 0).mean()),
+                   "num_candidates": len(cand), "num_accepted": len(dets),
+                   "rejections": dict(rej)},
         )
 
-    def _postprocess_mask(self, m: np.ndarray, spec: PromptSpec, h: int, w: int, cv2) -> np.ndarray:
+    def _postprocess_mask(self, m: np.ndarray, spec: PromptSpec, cv2) -> np.ndarray:
         if spec.morph_close and spec.morph_close > 1:
             k = np.ones((spec.morph_close, spec.morph_close), np.uint8)
             m = cv2.morphologyEx(m.astype(np.uint8), cv2.MORPH_CLOSE, k).astype(bool)
