@@ -1,0 +1,81 @@
+# Mapillary Vistas v1.2 (65 eval classes) -> canonical taxonomy (§6.3).
+# Keyed by the EXACT native label string (as in the model's id2label). Method 2 keeps
+# the native id-mask AND this canonical view; it never deletes native labels.
+#
+# support:
+#   supported            direct canonical equivalent -> counts in method-vs-method eval
+#   partially_supported  approximate mapping (coarser/related) -> excluded from strict eval
+#   unsupported          no canonical equivalent -> mapped to `unknown`
+#
+# NB: Mapillary distinguishes "Ego Vehicle" / "Car Mount" from "Car", so Method 2 labels
+# the ego cabin correctly (it does NOT call the driver's own car "car").
+
+version: 1
+dataset: "Mapillary Vistas v1.2 (65 classes)"
+
+mapping:
+  "Bird":                    { canonical: unknown,       support: unsupported }
+  "Ground Animal":           { canonical: unknown,       support: unsupported }
+  "Curb":                    { canonical: curb,          support: supported }
+  "Fence":                   { canonical: fence,         support: supported }
+  "Guard Rail":              { canonical: guardrail,     support: supported }
+  "Barrier":                 { canonical: barrier,       support: supported }
+  "Wall":                    { canonical: wall,          support: supported }
+  "Bike Lane":               { canonical: road_surface,  support: partially_supported }
+  "Crosswalk - Plain":       { canonical: crosswalk,     support: supported }
+  "Curb Cut":                { canonical: curb,          support: partially_supported }
+  "Parking":                 { canonical: parking_area,  support: supported }
+  "Pedestrian Area":         { canonical: sidewalk,      support: partially_supported }
+  "Rail Track":              { canonical: rail_track,     support: supported }
+  "Road":                    { canonical: road_surface,  support: supported }
+  "Service Lane":            { canonical: road_surface,  support: partially_supported }
+  "Sidewalk":                { canonical: sidewalk,      support: supported }
+  "Bridge":                  { canonical: bridge,        support: supported }
+  "Building":                { canonical: building,      support: supported }
+  "Tunnel":                  { canonical: tunnel,        support: supported }
+  "Person":                  { canonical: person,        support: supported }
+  "Bicyclist":               { canonical: rider,         support: supported }
+  "Motorcyclist":            { canonical: rider,         support: supported }
+  "Other Rider":             { canonical: rider,         support: supported }
+  "Lane Marking - Crosswalk": { canonical: crosswalk,    support: partially_supported }
+  "Lane Marking - General":  { canonical: lane_marking,  support: supported }
+  "Mountain":                { canonical: terrain,       support: partially_supported }
+  "Sand":                    { canonical: terrain,       support: partially_supported }
+  "Sky":                     { canonical: sky,           support: supported }
+  "Snow":                    { canonical: terrain,       support: partially_supported }
+  "Terrain":                 { canonical: terrain,       support: supported }
+  "Vegetation":              { canonical: vegetation,    support: supported }
+  "Water":                   { canonical: unknown,       support: unsupported }
+  "Banner":                  { canonical: unknown,       support: unsupported }
+  "Bench":                   { canonical: unknown,       support: unsupported }
+  "Bike Rack":               { canonical: unknown,       support: unsupported }
+  "Billboard":               { canonical: unknown,       support: unsupported }
+  "Catch Basin":             { canonical: unknown,       support: unsupported }
+  "CCTV Camera":             { canonical: unknown,       support: unsupported }
+  "Fire Hydrant":            { canonical: unknown,       support: unsupported }
+  "Junction Box":            { canonical: unknown,       support: unsupported }
+  "Mailbox":                 { canonical: unknown,       support: unsupported }
+  "Manhole":                 { canonical: unknown,       support: unsupported }
+  "Phone Booth":             { canonical: unknown,       support: unsupported }
+  "Pothole":                 { canonical: road_surface,  support: partially_supported }
+  "Street Light":            { canonical: pole,          support: partially_supported }
+  "Pole":                    { canonical: pole,          support: supported }
+  "Traffic Sign Frame":      { canonical: traffic_sign,  support: partially_supported }
+  "Utility Pole":            { canonical: pole,          support: partially_supported }
+  "Traffic Light":           { canonical: traffic_light, support: supported }
+  "Traffic Sign (Back)":     { canonical: traffic_sign,  support: partially_supported }
+  "Traffic Sign (Front)":    { canonical: traffic_sign,  support: supported }
+  "Trash Can":               { canonical: unknown,       support: unsupported }
+  "Bicycle":                 { canonical: bicycle,       support: supported }
+  "Boat":                    { canonical: unknown,       support: unsupported }
+  "Bus":                     { canonical: bus,           support: supported }
+  "Car":                     { canonical: car,           support: supported }
+  "Caravan":                 { canonical: car,           support: partially_supported }
+  "Motorcycle":              { canonical: motorcycle,    support: supported }
+  "On Rails":                { canonical: unknown,       support: unsupported }
+  "Other Vehicle":           { canonical: car,           support: partially_supported }
+  "Trailer":                 { canonical: truck,         support: partially_supported }
+  "Truck":                   { canonical: truck,         support: supported }
+  "Wheeled Slow":            { canonical: unknown,       support: partially_supported }
+  "Car Mount":               { canonical: other_cockpit, support: unsupported }
+  "Ego Vehicle":             { canonical: other_cockpit, support: unsupported }

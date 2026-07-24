@@ -1,0 +1,68 @@
+# Canonical taxonomy for aria_drive_seg — single source of truth.
+# Every method maps ITS native labels onto these canonical ids. The palette is
+# deterministic and shared across both methods so colored overlays are comparable.
+#
+# groups:
+#   special  -> unknown / unassigned pixels (id 0). Never invented from a residual mask.
+#   road     -> outdoor road-scene classes (§6.1). Supported by BOTH methods (where the
+#               Mapillary taxonomy has an equivalent).
+#   cockpit  -> vehicle-interior classes (§6.2). Typically only Grounded-SAM2 (open-vocab).
+#               OneFormer is NOT forced to produce these.
+#
+# fields per class:
+#   id        canonical integer id written into the uint16 mask
+#   group     special | road | cockpit
+#   color     [r,g,b] deterministic palette (0-255)
+#   eval      whether the class is part of the "common" set used for direct method-vs-method
+#             comparison. Only classes supported by both methods should be true.
+
+version: 1
+
+classes:
+  # ---- special -----------------------------------------------------------
+  - { id: 0,  name: unknown,            group: special, color: [0, 0, 0],       eval: false }
+
+  # ---- common road-scene classes (§6.1) ----------------------------------
+  - { id: 1,  name: road_surface,       group: road,    color: [128, 64, 128],  eval: true }
+  - { id: 2,  name: lane_marking,       group: road,    color: [255, 255, 255], eval: true }
+  - { id: 3,  name: crosswalk,          group: road,    color: [200, 128, 220], eval: true }
+  - { id: 4,  name: sidewalk,           group: road,    color: [244, 35, 232],  eval: true }
+  - { id: 5,  name: curb,               group: road,    color: [196, 196, 128], eval: true }
+  - { id: 6,  name: parking_area,       group: road,    color: [250, 170, 160], eval: true }
+  - { id: 7,  name: person,             group: road,    color: [220, 20, 60],   eval: true }
+  - { id: 8,  name: rider,              group: road,    color: [255, 0, 0],     eval: true }
+  - { id: 9,  name: car,                group: road,    color: [0, 0, 142],     eval: true }
+  - { id: 10, name: truck,              group: road,    color: [0, 0, 70],      eval: true }
+  - { id: 11, name: bus,                group: road,    color: [0, 60, 100],    eval: true }
+  - { id: 12, name: motorcycle,         group: road,    color: [0, 0, 230],     eval: true }
+  - { id: 13, name: bicycle,            group: road,    color: [119, 11, 32],   eval: true }
+  - { id: 14, name: traffic_light,      group: road,    color: [250, 170, 30],  eval: true }
+  - { id: 15, name: traffic_sign,       group: road,    color: [220, 220, 0],   eval: true }
+  - { id: 16, name: pole,               group: road,    color: [153, 153, 153], eval: true }
+  - { id: 17, name: guardrail,          group: road,    color: [180, 165, 180], eval: true }
+  - { id: 18, name: barrier,            group: road,    color: [250, 170, 100], eval: true }
+  - { id: 19, name: wall,               group: road,    color: [102, 102, 156], eval: true }
+  - { id: 20, name: fence,              group: road,    color: [190, 153, 153], eval: true }
+  - { id: 21, name: building,           group: road,    color: [70, 70, 70],    eval: true }
+  - { id: 22, name: vegetation,         group: road,    color: [107, 142, 35],  eval: true }
+  - { id: 23, name: terrain,            group: road,    color: [152, 251, 152], eval: true }
+  - { id: 24, name: sky,                group: road,    color: [70, 130, 180],  eval: true }
+  - { id: 25, name: bridge,             group: road,    color: [150, 100, 100], eval: true }
+  - { id: 26, name: tunnel,             group: road,    color: [150, 120, 90],  eval: true }
+  - { id: 27, name: rail_track,         group: road,    color: [230, 150, 140], eval: true }
+
+  # ---- cockpit classes (§6.2) --------------------------------------------
+  # eval=false: OneFormer(Mapillary) has no equivalent, so they are excluded from the
+  # direct method-vs-method comparison (studied only inside Grounded-SAM2).
+  - { id: 28, name: steering_wheel,     group: cockpit, color: [255, 140, 0],   eval: false }
+  - { id: 29, name: instrument_cluster, group: cockpit, color: [255, 215, 0],   eval: false }
+  - { id: 30, name: dashboard,          group: cockpit, color: [139, 69, 19],   eval: false }
+  - { id: 31, name: infotainment_screen,group: cockpit, color: [0, 255, 255],   eval: false }
+  - { id: 32, name: rear_view_mirror,   group: cockpit, color: [255, 0, 255],   eval: false }
+  - { id: 33, name: side_mirror,        group: cockpit, color: [218, 112, 214], eval: false }
+  - { id: 34, name: windshield,         group: cockpit, color: [173, 216, 230], eval: false }
+  - { id: 35, name: a_pillar,           group: cockpit, color: [160, 82, 45],   eval: false }
+  - { id: 36, name: driver_hand,        group: cockpit, color: [255, 205, 148], eval: false }
+  - { id: 37, name: smartphone,         group: cockpit, color: [50, 205, 50],   eval: false }
+  - { id: 38, name: other_cockpit,      group: cockpit, color: [128, 128, 128], eval: false }
+  - { id: 39, name: unknown_cockpit,    group: cockpit, color: [64, 64, 64],    eval: false }

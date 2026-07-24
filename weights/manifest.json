@@ -1,0 +1,101 @@
+{
+  "sam2.1_hiera_large": {
+    "name": "sam2.1_hiera_large",
+    "kind": "url",
+    "license": "Apache-2.0 (SAM 2)",
+    "method": "grounded_sam2",
+    "url": "https://dl.fbaipublicfiles.com/segment_anything_2/092824/sam2.1_hiera_large.pt",
+    "version": "092824",
+    "bytes": 898083611,
+    "sha256": "2647878d5dfa5098f2f8649825738a9345572bae2d4350a2468587ece47dd318",
+    "path": "weights/sam2.1/sam2.1_hiera_large.pt"
+  },
+  "grounding_dino_base": {
+    "name": "grounding_dino_base",
+    "kind": "hf",
+    "license": "Apache-2.0",
+    "method": "grounded_sam2",
+    "repo_id": "IDEA-Research/grounding-dino-base",
+    "path": "weights/grounding-dino-base",
+    "files": [
+      {
+        "file": ".gitattributes",
+        "bytes": 1519
+      },
+      {
+        "file": "README.md",
+        "bytes": 2580
+      },
+      {
+        "file": "config.json",
+        "bytes": 1737
+      },
+      {
+        "file": "model.safetensors",
+        "bytes": 933400872
+      },
+      {
+        "file": "preprocessor_config.json",
+        "bytes": 457
+      },
+      {
+        "file": "pytorch_model.bin",
+        "bytes": 936002005
+      },
+      {
+        "file": "special_tokens_map.json",
+        "bytes": 125
+      },
+      {
+        "file": "tokenizer.json",
+        "bytes": 711396
+      },
+      {
+        "file": "tokenizer_config.json",
+        "bytes": 1237
+      },
+      {
+        "file": "vocab.txt",
+        "bytes": 231508
+      }
+    ],
+    "bytes": 1870353436,
+    "main_weight_sha256": "5548f844c928c4b6f411fa8cbcc2bfa8dbbba437cb1d513975519f93c2a9ed21"
+  },
+  "mask2former_mapillary_semantic": {
+    "name": "mask2former_mapillary_semantic",
+    "kind": "hf",
+    "license": "Mapillary Vistas research/non-commercial (weights); MIT (code)",
+    "method": "oneformer_mapillary",
+    "repo_id": "facebook/mask2former-swin-large-mapillary-vistas-semantic",
+    "path": "weights/mask2former-mapillary-semantic",
+    "files": [
+      {
+        "file": ".gitattributes",
+        "bytes": 1477
+      },
+      {
+        "file": "README.md",
+        "bytes": 3209
+      },
+      {
+        "file": "config.json",
+        "bytes": 79477
+      },
+      {
+        "file": "model.safetensors",
+        "bytes": 865964336
+      },
+      {
+        "file": "preprocessor_config.json",
+        "bytes": 536
+      },
+      {
+        "file": "pytorch_model.bin",
+        "bytes": 866128837
+      }
+    ],
+    "bytes": 1732177872,
+    "main_weight_sha256": "72721afb6894c0b1239b9259c428996d9ca0aecbebc4efb4a2deaae0403e2ea7"
+  }
+}

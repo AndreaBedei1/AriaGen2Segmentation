@@ -1,0 +1,66 @@
+# Python bytecode and caches
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.pytype/
+.hypothesis/
+
+# Virtual environments
+.venv/
+venv/
+env/
+ENV/
+
+# Packaging and build artifacts
+build/
+dist/
+*.egg-info/
+.eggs/
+*.egg
+
+# Test and coverage output
+.coverage
+.coverage.*
+coverage.xml
+htmlcov/
+test-results/
+
+# Local configuration and secrets
+.env
+.env.*
+!.env.example
+*.local
+
+# IDE, editor, and OS files
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
+
+# Local Codex/agent state
+.agents/
+.codex/
+
+# Raw recordings and large model artifacts
+*.[vV][rR][sS]
+weights/*
+!weights/manifest.json
+
+# Generated pipeline runs and outputs
+output/
+run*/
+val*/
+*_out/
+
+# Logs and temporary files
+*.log
+*.tmp
+*.temp
+tmp/
+temp/

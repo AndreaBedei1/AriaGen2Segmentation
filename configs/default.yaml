@@ -1,0 +1,89 @@
+# Default pipeline configuration for aria_drive_seg.
+# Every value here is hashed into per-stage cache keys (see io_utils.config_fingerprint);
+# changing calibration / thresholds / taxonomy / resolution invalidates the affected cache.
+
+project:
+  classes: configs/classes.yaml
+  grounded_prompts: configs/grounded_prompts.yaml
+  mapillary_map: configs/mapillary_to_canonical.yaml
+  seed: 1234
+  deterministic: true
+
+vrs:
+  rgb_label: camera-rgb
+  eyegaze_label: eyegaze
+  time_domain: DEVICE_TIME
+
+# Geometry / rectification (§5). The raw Gen2 RGB is upright fisheye624; we rectify to a
+# linear pinhole. rotate_ccw90 default 0 was verified visually (Gen2 RGB is already upright).
+rectify:
+  enabled: true
+  out_width: 2016
+  out_height: 1512
+  focal: 879.0            # pinhole focal in px; lower => wider FOV, more black border
+  rotate_ccw90: 0         # number of 90° CCW rotations to apply after rectification
+  keep_original: true     # also persist the native-geometry frame
+
+# Frame selection (overridable on the CLI)
+frames:
+  start_time_s: null
+  end_time_s: null
+  frame_step: 1
+  max_frames: null
+  jpeg_quality: 92
+
+# Gaze alignment + projection (§9)
+gaze:
+  max_dt_ms: 20.0         # frame<->gaze samples farther than this (each side) => marked far
+  interp: true            # linear interpolation of yaw/pitch when bracketing samples valid
+  fallback_depth_m: 8.0   # used when depth invalid (clearly marked as approximation)
+  min_valid: combined     # which validity flag gates a usable sample
+  disc_radius_px: 40      # radius of the "dominant class in disc" query (§10)
+  gauss_sigma_px: 60.0    # sigma of the 2D gaussian gaze query
+  gauss_sigma_deg: null   # if set, overrides sigma_px using the rectified focal
+
+# Segmentation — shared
+segmentation:
+  overlap_min_iou_dedup: 0.85   # NMS/dedup IoU for same-class masks
+  write_instance_masks: false   # optionally persist per-instance masks (compressed)
+  write_confidence: true
+
+# Method 1: Grounded-SAM2 (§7)
+grounded_sam2:
+  grounding_dino_id: IDEA-Research/grounding-dino-base
+  sam2_cfg: configs/sam2.1/sam2.1_hiera_l.yaml
+  sam2_ckpt: weights/sam2.1/sam2.1_hiera_large.pt
+  nms_iou: 0.7
+  score_combine: geometric   # combined = sqrt(gdino_box * sam_iou)
+  device: cuda
+
+# Method 2: OneFormer / Mask2Former on Mapillary Vistas (§8). See docs/model_selection.md.
+# Two backends, SAME Mapillary v1.2 65-class taxonomy -> same canonical mapping:
+#   hf_mask2former : facebook/mask2former-swin-large-mapillary-vistas-semantic
+#                    native in HF transformers, ZERO custom ops -> runs in env B (default,
+#                    reproducible on this torch 2.13/cu130 stack).
+#   hf_oneformer   : OneFormer DiNAT-L Mapillary (the task's preferred model) -> needs
+#                    natten (env C with older torch). Set source: hf_oneformer to use it.
+oneformer_mapillary:
+  task: semantic             # semantic | panoptic
+  variant: default           # default (single-scale) | max_accuracy (multiscale+flip)
+  source: hf_mask2former     # hf_mask2former | hf_oneformer
+  mask2former_id: weights/mask2former-mapillary-semantic   # local (offline); HF id: facebook/mask2former-swin-large-mapillary-vistas-semantic
+  oneformer_id: null         # set to a local converted OneFormer-DiNAT-L-Mapillary dir (env C)
+  device: cuda
+  input_max_size: 2048       # longest side; larger = slower, more detail
+
+# Hardware / parallelism (§13)
+hardware:
+  devices: auto              # auto | "0" | "0,1"
+  workers: auto              # cpu workers for decode/rectify/io
+  amp: bf16                  # bf16 | fp16 | fp32
+  tf32: true
+  channels_last: true
+  torch_compile: false
+  vram_margin_mb: 2048
+
+render:
+  fps: 10
+  overlay_alpha: 0.5
+  font_scale: 0.6

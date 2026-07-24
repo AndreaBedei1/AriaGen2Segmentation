@@ -1,0 +1,288 @@
+# Grounding DINO prompts per canonical class (§7).
+# Each entry:
+#   prompt         main text query fed to Grounding DINO
+#   synonyms       extra phrases OR'd into the query (help recall)
+#   box_threshold  GDINO box confidence threshold
+#   text_threshold GDINO text-token threshold
+#   priority       overlap priority (HIGHER wins a pixel conflict); thin/safety-critical high,
+#                  large background low. See docs/class_taxonomy.md.
+#   min_area       drop masks smaller than this many pixels (post-SAM)
+#   max_area_frac  drop masks larger than this fraction of the image (null = no cap)
+#   morph_close    morphological closing kernel size in px (0 = none)
+#   max_instances  keep at most N highest-scoring detections for this class (null = all)
+#
+# prompt_strategy controls how classes are batched into GDINO calls:
+#   grouped  -> classes sharing a `group_tag` are queried together (default, faster)
+#   Difficult classes can be given their own call by setting `solo: true`.
+
+defaults:
+  box_threshold: 0.35
+  text_threshold: 0.25
+  min_area: 400
+  max_area_frac: null
+  morph_close: 3
+  max_instances: null
+  solo: false
+
+prompt_strategy: grouped   # grouped | concatenated | individual
+
+classes:
+  # ---------------- road scene ----------------
+  road_surface:
+    prompt: "road surface. roadway. asphalt road."
+    synonyms: ["paved road", "street surface"]
+    box_threshold: 0.30
+    text_threshold: 0.22
+    priority: 10
+    min_area: 3000
+    max_area_frac: 0.95
+    morph_close: 7
+    group_tag: surfaces
+  lane_marking:
+    prompt: "road lane marking. white lane line. yellow lane line."
+    synonyms: ["dashed lane line", "road paint marking"]
+    box_threshold: 0.22
+    text_threshold: 0.18
+    priority: 70
+    min_area: 60
+    morph_close: 1
+    group_tag: thin
+    solo: true
+  crosswalk:
+    prompt: "pedestrian crossing. zebra crossing. crosswalk."
+    synonyms: ["zebra stripes on road"]
+    box_threshold: 0.25
+    text_threshold: 0.20
+    priority: 68
+    min_area: 300
+    group_tag: thin
+  sidewalk:
+    prompt: "sidewalk. pavement for pedestrians."
+    synonyms: ["footpath"]
+    priority: 12
+    min_area: 1500
+    morph_close: 5
+    group_tag: surfaces
+  curb:
+    prompt: "road curb. kerb. curbstone edge."
+    synonyms: ["street curb"]
+    box_threshold: 0.28
+    priority: 22
+    min_area: 200
+    group_tag: surfaces
+  parking_area:
+    prompt: "parking area. parking lot surface."
+    synonyms: ["parking space"]
+    priority: 12
+    min_area: 2000
+    group_tag: surfaces
+  person:
+    prompt: "person. pedestrian. human."
+    synonyms: ["man", "woman", "child walking"]
+    priority: 80
+    min_area: 150
+    group_tag: dynamic
+  rider:
+    prompt: "rider. person riding a bicycle. person riding a motorcycle."
+    synonyms: ["cyclist", "motorcyclist"]
+    priority: 82
+    min_area: 200
+    group_tag: dynamic
+  car:
+    prompt: "car. automobile. passenger vehicle."
+    synonyms: ["parked car", "sedan", "suv"]
+    priority: 40
+    min_area: 400
+    # reject the ego-vehicle interior over-capture: a single "car" mask must not
+    # swallow the cockpit. Real lead cars occupy a small fraction of the frame.
+    max_area_frac: 0.30
+    group_tag: vehicles
+  truck:
+    prompt: "truck. lorry. cargo truck."
+    synonyms: ["semi truck"]
+    priority: 41
+    min_area: 600
+    max_area_frac: 0.35
+    group_tag: vehicles
+  bus:
+    prompt: "bus. coach bus."
+    synonyms: ["city bus"]
+    priority: 42
+    min_area: 600
+    max_area_frac: 0.35
+    group_tag: vehicles
+  motorcycle:
+    prompt: "motorcycle. motorbike. scooter."
+    synonyms: ["moped"]
+    priority: 78
+    min_area: 200
+    group_tag: vehicles
+  bicycle:
+    prompt: "bicycle. bike."
+    synonyms: ["pushbike"]
+    priority: 78
+    min_area: 200
+    group_tag: vehicles
+  traffic_light:
+    prompt: "traffic light. traffic signal."
+    synonyms: ["stop light"]
+    box_threshold: 0.25
+    priority: 75
+    min_area: 80
+    group_tag: furniture
+  traffic_sign:
+    prompt: "traffic sign. road sign."
+    synonyms: ["street sign", "warning sign"]
+    box_threshold: 0.25
+    priority: 72
+    min_area: 100
+    group_tag: furniture
+  pole:
+    prompt: "pole. street pole. sign pole. utility pole."
+    synonyms: ["lamp post"]
+    box_threshold: 0.25
+    priority: 30
+    min_area: 120
+    group_tag: furniture
+  guardrail:
+    prompt: "guardrail. metal crash barrier along road."
+    synonyms: ["armco barrier"]
+    priority: 24
+    min_area: 400
+    group_tag: barriers
+  barrier:
+    prompt: "road barrier. traffic barrier. jersey barrier."
+    synonyms: ["concrete barrier"]
+    priority: 26
+    min_area: 400
+    group_tag: barriers
+  wall:
+    prompt: "wall. retaining wall."
+    synonyms: ["stone wall"]
+    priority: 15
+    min_area: 800
+    group_tag: barriers
+  fence:
+    prompt: "fence. metal fence. wooden fence."
+    synonyms: ["railing"]
+    priority: 16
+    min_area: 400
+    group_tag: barriers
+  building:
+    prompt: "building. house. facade."
+    synonyms: ["apartment block", "shop building"]
+    priority: 7
+    min_area: 3000
+    morph_close: 5
+    group_tag: background
+  vegetation:
+    prompt: "vegetation. tree. bush. hedge."
+    synonyms: ["foliage", "greenery"]
+    priority: 8
+    min_area: 1500
+    morph_close: 5
+    group_tag: background
+  terrain:
+    prompt: "grass. terrain. soil. field."
+    synonyms: ["lawn", "dirt ground"]
+    priority: 11
+    min_area: 2000
+    morph_close: 5
+    group_tag: background
+  sky:
+    prompt: "sky."
+    synonyms: ["clouds in sky"]
+    priority: 5
+    min_area: 3000
+    morph_close: 7
+    group_tag: background
+  bridge:
+    prompt: "bridge. overpass."
+    synonyms: ["viaduct"]
+    priority: 6
+    min_area: 2000
+    group_tag: background
+  tunnel:
+    prompt: "tunnel. road tunnel entrance."
+    synonyms: []
+    priority: 6
+    min_area: 2000
+    group_tag: background
+  rail_track:
+    prompt: "railway track. train rails. tram track."
+    synonyms: ["railroad"]
+    priority: 25
+    min_area: 300
+    group_tag: surfaces
+
+  # ---------------- cockpit ----------------
+  steering_wheel:
+    prompt: "car steering wheel."
+    synonyms: ["steering wheel of a car"]
+    priority: 55
+    min_area: 500
+    group_tag: cockpit
+  instrument_cluster:
+    prompt: "car instrument cluster. speedometer display. dashboard gauges."
+    synonyms: ["car dashboard dials"]
+    priority: 60
+    min_area: 300
+    group_tag: cockpit
+  dashboard:
+    prompt: "car dashboard. car dash panel."
+    synonyms: ["dashboard interior"]
+    priority: 30
+    min_area: 2000
+    group_tag: cockpit
+  infotainment_screen:
+    prompt: "car infotainment touchscreen. center console display."
+    synonyms: ["navigation screen in car"]
+    priority: 58
+    min_area: 200
+    group_tag: cockpit
+  rear_view_mirror:
+    prompt: "interior rear view mirror."
+    synonyms: ["rearview mirror inside car"]
+    priority: 60
+    min_area: 150
+    group_tag: cockpit
+  side_mirror:
+    prompt: "car side mirror. wing mirror."
+    synonyms: ["door mirror"]
+    priority: 60
+    min_area: 200
+    group_tag: cockpit
+  windshield:
+    prompt: "car windshield. front windscreen."
+    synonyms: ["car front glass"]
+    # low priority: it is a transparent backdrop — road/sky/cars/lane seen THROUGH
+    # the glass must win, so windshield only fills where nothing else was detected.
+    priority: 6
+    min_area: 3000
+    group_tag: cockpit
+  a_pillar:
+    prompt: "car a-pillar. windshield pillar interior."
+    synonyms: ["car roof pillar"]
+    priority: 35
+    min_area: 800
+    group_tag: cockpit
+  driver_hand:
+    prompt: "human hand on steering wheel. driver hand."
+    synonyms: ["hand holding steering wheel"]
+    priority: 85
+    min_area: 300
+    group_tag: cockpit
+  smartphone:
+    prompt: "smartphone. mobile phone."
+    synonyms: ["cell phone"]
+    priority: 88
+    min_area: 150
+    group_tag: cockpit
+  other_cockpit:
+    prompt: "car interior trim. car door panel. gear shifter."
+    synonyms: ["car interior part"]
+    priority: 25
+    min_area: 800
+    # cap so the "interior" prompt cannot claim the whole ego cabin as one blob
+    max_area_frac: 0.45
+    group_tag: cockpit

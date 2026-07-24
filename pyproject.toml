@@ -1,0 +1,36 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "aria_drive_seg"
+version = "0.1.0"
+description = "Fully-local dual-method segmentation + eye-gaze analysis for Meta Project Aria Gen2 driving recordings"
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "MIT" }
+authors = [{ name = "aria_drive_seg" }]
+
+# NOTE: dependencies are split across three environments (see docs/reproducibility.md
+# and README "Installation"). Only the light "core" deps are declared here so the package
+# imports in the VRS-I/O env without pulling in torch; the ML deps (torch, transformers,
+# sam2, natten) are installed per-env with the commands documented in the README.
+dependencies = [
+    "numpy>=1.24",
+    "pyyaml>=6.0",
+    "pyarrow>=12.0",
+    "pandas>=2.0",
+    "pillow>=9.0",
+]
+
+[project.optional-dependencies]
+io = ["opencv-python-headless>=4.8", "matplotlib>=3.7", "imageio-ffmpeg>=0.4"]
+
+[project.scripts]
+aria-drive-seg = "aria_drive_seg.cli:main"
+
+[tool.setuptools.packages.find]
+include = ["aria_drive_seg*"]
+
+[tool.setuptools.package-data]
+aria_drive_seg = ["../configs/*.yaml"]
