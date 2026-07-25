@@ -1,0 +1,1 @@
+grounded_sam2: { roi_enabled: true, multiscale_enabled: false, roi_scale: 1.5 }

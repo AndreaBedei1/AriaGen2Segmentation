@@ -65,6 +65,6 @@ val*/
 tmp/
 temp/
 
-# Experimental / ablation runs
+# Experimental / ablation RUN outputs (heavy). Config files under configs/ are tracked.
 runs/
-ablation/
+/ablation/
