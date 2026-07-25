@@ -135,11 +135,18 @@ kept only as `max_recall`, not the full-run default. See docs/ablation_grounded_
 giant masks / coordinates):
 - A (baseline): mean_cov 0.29, ~19 dets, 0 giant masks, 0 errors.
 - B (phase1): mean_cov 0.45, ~38 dets, 0 giant masks, 0 errors.
-- C (extended_hierarchical): mean_cov 0.59, ~98 dets, 0 giant masks; hierarchy gating works
-  (few subclasses accepted, most rejected/ambiguous → parent kept) — the over-segmentation
-  of the old max-recall profile is gone.
-- D (selective_roi_multiscale): running (ROI/multiscale, ~50 s/frame).
-No config selected — selection awaits ground truth (`validation/gt/`).
+- C (extended_hierarchical): mean_cov 0.59, ~98 dets, 0 giant masks, ~18 s/frame; hierarchy
+  gating works (few subclasses accepted, most rejected/ambiguous → parent kept) — the
+  over-segmentation of the old max-recall profile is gone.
+- D (selective_roi_multiscale): mean_cov 0.69, ~158 dets, 0 giant masks, ~49 s/frame; ROI +
+  tile provenance correct.
+
+The smoke test **found a real bug** (its purpose): frame 1128 raised ZeroDivisionError in
+C/D because a GDINO box overshooting the edge produced a negative-index → zero-size crop.
+Fixed by clamping box coords in `_subclass_scores` and `_finalize_pass` (`d24d6f1`); frame
+1128 now yields 110 (C) / 165 (D) detections, 0 out-of-bounds boxes, 0 giant masks. Per-frame
+error isolation (§14) meant the other 9 frames were unaffected. No crashes, no giant masks in
+any config. **No winner selected — selection awaits ground truth (`validation/gt/`).**
 
 ## Blocked until GT + static ablation done
 SAM2 temporal (Phase 8) and the full 3762-frame run remain blocked until GT exists, the
