@@ -190,3 +190,26 @@ affected `segment` stage. These files are folded into the segmentation cache fin
 edit transparently invalidates and recomputes exactly the affected masks (see
 [architecture.md](architecture.md#resumability-caching-and-the-config-fingerprint)). Keep
 `id: 0` (`unknown`) defined — `Taxonomy` requires it.
+
+## Extended taxonomy (Phase 2) + parent hierarchy
+Beyond the base 0–39, ids **40–99** add ~60 fine classes (exterior surfaces/geometry,
+vulnerable road users, vehicle subtypes, signage/infrastructure, interior parts). Existing
+ids 0–39 keep their meaning (backward compatible). Each fine class declares a **`parent`**
+generic (e.g. `pedestrian→person`, `stop_sign→traffic_sign`, `left_side_mirror→side_mirror`,
+`speedometer_display→instrument_cluster`); `Taxonomy.rollup_name/rollup_id` follow parents to
+the generic used for the common method-vs-method comparison. Fine classes are `eval: false`
+(no Mapillary equivalent — Grounded-SAM2 only) and get a deterministic auto-colour when no
+explicit `color` is given.
+
+**Detection vs comparison.** Only classes supported by both methods (`eval: true`, the
+generics) enter the direct comparison; fine classes are rolled up to their parent for that.
+
+**Hierarchical detection.** In the standard config the fine person/vehicle subtypes are NOT
+prompted globally; the parent is detected first and the subtype is classified on the parent
+crop (see [hierarchical_segmentation.md](hierarchical_segmentation.md)). This prevents fine
+classes (e.g. `child`, `emergency_vehicle`) from firing spuriously on the full frame.
+
+## Layers vs canonical (Phase 3)
+Besides the canonical mask, Grounded-SAM2 emits four functional layers (exterior / cockpit /
+transparent / mirror) used for the structured gaze target — see
+[multilayer_semantics.md](multilayer_semantics.md).

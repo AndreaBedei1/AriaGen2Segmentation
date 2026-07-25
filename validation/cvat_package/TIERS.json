@@ -1,0 +1,40 @@
+{
+  "tier_A_segmentation_masks": [
+    "road_surface",
+    "lane_marking",
+    "sidewalk",
+    "car",
+    "person",
+    "bicycle",
+    "motorcycle",
+    "traffic_sign",
+    "traffic_light",
+    "building",
+    "vegetation",
+    "sky",
+    "steering_wheel",
+    "instrument_cluster",
+    "dashboard",
+    "driver_hand",
+    "rear_view_mirror",
+    "left_side_mirror",
+    "right_side_mirror"
+  ],
+  "tier_B_boxes_presence": [
+    "stop_sign",
+    "yield_sign",
+    "speed_limit_sign",
+    "warning_sign",
+    "stop_line",
+    "direction_arrow",
+    "crosswalk",
+    "bollard",
+    "traffic_cone",
+    "child",
+    "cyclist",
+    "motorcyclist",
+    "van",
+    "emergency_vehicle"
+  ],
+  "tier_C_rule": "every class NOT in Tier A or B and absent from a frame is `not_observed` and must NOT be counted as a false negative"
+}

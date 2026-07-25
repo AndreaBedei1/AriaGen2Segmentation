@@ -32,6 +32,21 @@ same-class **mask-IoU dedup** (`overlap_min_iou_dedup`) to merge full-frame ↔ 
 duplicates, then `max_instances` per class. Per-frame metadata records `rois`,
 `provenance_counts`, and all rejection reasons.
 
+## Parent→subclass hierarchy (fine-class control)
+Fine subclasses (person/vehicle subtypes) must not compete on the full frame — that turns
+a normal car into `emergency_vehicle` or an adult into `child` on a marginal score. With
+`grounded_sam2.hierarchical_subclasses: true` (default in the standard config), the fine
+subclasses (`configs/grounded_prompts.yaml` `hierarchy.parents`) are **excluded from global
+prompting**; instead the parent (person / rider / car / truck) is detected first with its
+mask, and the subtype is classified ONLY on the parent crop (`_classify_subclasses` +
+`hierarchy.decide_subclass`). A subclass relabels the parent's mask only when its score
+≥ `subclass_min_score` AND beats the second candidate by ≥ `subclass_min_margin`; otherwise
+the parent label is kept. Mask geometry always comes from the parent. Each detection stores
+`parent_class`, `subclass_status` (accepted|rejected|ambiguous), `subclass_confidence`,
+`parent_confidence`. The old aggressive global behaviour stays available via the diagnostic
+`global_fine_subclasses: true`. Tested in `tests/test_hierarchy.py` (a normal car stays car;
+an adult stays person on a marginal child margin; rejected/ambiguous keep the parent).
+
 ## Validation (3 frames, ROI+multiscale on)
 No errors; the crop passes roughly doubled the detection count (frame 0: 83 full-frame
 + ~125 from ROI/tile passes → 208 accepted after fusion). All 8–9 ROIs derived. Cost:

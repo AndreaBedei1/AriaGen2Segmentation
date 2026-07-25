@@ -55,8 +55,16 @@ weights/*
 # Generated pipeline runs and outputs
 output/
 run*/
-val*/
+val10/
+val300/
 *_out/
+
+# Validation GT set: track the manifest + text/labels, NOT the heavy images/masks
+validation/frames/
+validation/contact_sheet.jpg
+validation/cvat_package/images/
+validation/cvat_package/preannotation_tierA/
+validation/gt/
 
 # Logs and temporary files
 *.log

@@ -1,0 +1,530 @@
+[
+  {
+    "name": "road_surface",
+    "color": "#804080",
+    "type": "mask",
+    "attributes": [
+      {
+        "name": "tier",
+        "mutable": false,
+        "input_type": "select",
+        "default_value": "A",
+        "values": [
+          "A"
+        ]
+      }
+    ]
+  },
+  {
+    "name": "lane_marking",
+    "color": "#ffffff",
+    "type": "mask",
+    "attributes": [
+      {
+        "name": "tier",
+        "mutable": false,
+        "input_type": "select",
+        "default_value": "A",
+        "values": [
+          "A"
+        ]
+      }
+    ]
+  },
+  {
+    "name": "sidewalk",
+    "color": "#f423e8",
+    "type": "mask",
+    "attributes": [
+      {
+        "name": "tier",
+        "mutable": false,
+        "input_type": "select",
+        "default_value": "A",
+        "values": [
+          "A"
+        ]
+      }
+    ]
+  },
+  {
+    "name": "car",
+    "color": "#00008e",
+    "type": "mask",
+    "attributes": [
+      {
+        "name": "tier",
+        "mutable": false,
+        "input_type": "select",
+        "default_value": "A",
+        "values": [
+          "A"
+        ]
+      }
+    ]
+  },
+  {
+    "name": "person",
+    "color": "#dc143c",
+    "type": "mask",
+    "attributes": [
+      {
+        "name": "tier",
+        "mutable": false,
+        "input_type": "select",
+        "default_value": "A",
+        "values": [
+          "A"
+        ]
+      }
+    ]
+  },
+  {
+    "name": "bicycle",
+    "color": "#770b20",
+    "type": "mask",
+    "attributes": [
+      {
+        "name": "tier",
+        "mutable": false,
+        "input_type": "select",
+        "default_value": "A",
+        "values": [
+          "A"
+        ]
+      }
+    ]
+  },
+  {
+    "name": "motorcycle",
+    "color": "#0000e6",
+    "type": "mask",
+    "attributes": [
+      {
+        "name": "tier",
+        "mutable": false,
+        "input_type": "select",
+        "default_value": "A",
+        "values": [
+          "A"
+        ]
+      }
+    ]
+  },
+  {
+    "name": "traffic_sign",
+    "color": "#dcdc00",
+    "type": "mask",
+    "attributes": [
+      {
+        "name": "tier",
+        "mutable": false,
+        "input_type": "select",
+        "default_value": "A",
+        "values": [
+          "A"
+        ]
+      }
+    ]
+  },
+  {
+    "name": "traffic_light",
+    "color": "#faaa1e",
+    "type": "mask",
+    "attributes": [
+      {
+        "name": "tier",
+        "mutable": false,
+        "input_type": "select",
+        "default_value": "A",
+        "values": [
+          "A"
+        ]
+      }
+    ]
+  },
+  {
+    "name": "building",
+    "color": "#464646",
+    "type": "mask",
+    "attributes": [
+      {
+        "name": "tier",
+        "mutable": false,
+        "input_type": "select",
+        "default_value": "A",
+        "values": [
+          "A"
+        ]
+      }
+    ]
+  },
+  {
+    "name": "vegetation",
+    "color": "#6b8e23",
+    "type": "mask",
+    "attributes": [
+      {
+        "name": "tier",
+        "mutable": false,
+        "input_type": "select",
+        "default_value": "A",
+        "values": [
+          "A"
+        ]
+      }
+    ]
+  },
+  {
+    "name": "sky",
+    "color": "#4682b4",
+    "type": "mask",
+    "attributes": [
+      {
+        "name": "tier",
+        "mutable": false,
+        "input_type": "select",
+        "default_value": "A",
+        "values": [
+          "A"
+        ]
+      }
+    ]
+  },
+  {
+    "name": "steering_wheel",
+    "color": "#ff8c00",
+    "type": "mask",
+    "attributes": [
+      {
+        "name": "tier",
+        "mutable": false,
+        "input_type": "select",
+        "default_value": "A",
+        "values": [
+          "A"
+        ]
+      }
+    ]
+  },
+  {
+    "name": "instrument_cluster",
+    "color": "#ffd700",
+    "type": "mask",
+    "attributes": [
+      {
+        "name": "tier",
+        "mutable": false,
+        "input_type": "select",
+        "default_value": "A",
+        "values": [
+          "A"
+        ]
+      }
+    ]
+  },
+  {
+    "name": "dashboard",
+    "color": "#8b4513",
+    "type": "mask",
+    "attributes": [
+      {
+        "name": "tier",
+        "mutable": false,
+        "input_type": "select",
+        "default_value": "A",
+        "values": [
+          "A"
+        ]
+      }
+    ]
+  },
+  {
+    "name": "driver_hand",
+    "color": "#ffcd94",
+    "type": "mask",
+    "attributes": [
+      {
+        "name": "tier",
+        "mutable": false,
+        "input_type": "select",
+        "default_value": "A",
+        "values": [
+          "A"
+        ]
+      }
+    ]
+  },
+  {
+    "name": "rear_view_mirror",
+    "color": "#ff00ff",
+    "type": "mask",
+    "attributes": [
+      {
+        "name": "tier",
+        "mutable": false,
+        "input_type": "select",
+        "default_value": "A",
+        "values": [
+          "A"
+        ]
+      }
+    ]
+  },
+  {
+    "name": "left_side_mirror",
+    "color": "#40b867",
+    "type": "mask",
+    "attributes": [
+      {
+        "name": "tier",
+        "mutable": false,
+        "input_type": "select",
+        "default_value": "A",
+        "values": [
+          "A"
+        ]
+      }
+    ]
+  },
+  {
+    "name": "right_side_mirror",
+    "color": "#f03630",
+    "type": "mask",
+    "attributes": [
+      {
+        "name": "tier",
+        "mutable": false,
+        "input_type": "select",
+        "default_value": "A",
+        "values": [
+          "A"
+        ]
+      }
+    ]
+  },
+  {
+    "name": "stop_sign",
+    "color": "#b83c25",
+    "type": "rectangle",
+    "attributes": [
+      {
+        "name": "tier",
+        "mutable": false,
+        "input_type": "select",
+        "default_value": "B",
+        "values": [
+          "B"
+        ]
+      }
+    ]
+  },
+  {
+    "name": "yield_sign",
+    "color": "#7888f0",
+    "type": "rectangle",
+    "attributes": [
+      {
+        "name": "tier",
+        "mutable": false,
+        "input_type": "select",
+        "default_value": "B",
+        "values": [
+          "B"
+        ]
+      }
+    ]
+  },
+  {
+    "name": "speed_limit_sign",
+    "color": "#73b840",
+    "type": "rectangle",
+    "attributes": [
+      {
+        "name": "tier",
+        "mutable": false,
+        "input_type": "select",
+        "default_value": "B",
+        "values": [
+          "B"
+        ]
+      }
+    ]
+  },
+  {
+    "name": "warning_sign",
+    "color": "#f030ba",
+    "type": "rectangle",
+    "attributes": [
+      {
+        "name": "tier",
+        "mutable": false,
+        "input_type": "select",
+        "default_value": "B",
+        "values": [
+          "B"
+        ]
+      }
+    ]
+  },
+  {
+    "name": "stop_line",
+    "color": "#b85c73",
+    "type": "rectangle",
+    "attributes": [
+      {
+        "name": "tier",
+        "mutable": false,
+        "input_type": "select",
+        "default_value": "B",
+        "values": [
+          "B"
+        ]
+      }
+    ]
+  },
+  {
+    "name": "direction_arrow",
+    "color": "#a0b825",
+    "type": "rectangle",
+    "attributes": [
+      {
+        "name": "tier",
+        "mutable": false,
+        "input_type": "select",
+        "default_value": "B",
+        "values": [
+          "B"
+        ]
+      }
+    ]
+  },
+  {
+    "name": "crosswalk",
+    "color": "#c880dc",
+    "type": "rectangle",
+    "attributes": [
+      {
+        "name": "tier",
+        "mutable": false,
+        "input_type": "select",
+        "default_value": "B",
+        "values": [
+          "B"
+        ]
+      }
+    ]
+  },
+  {
+    "name": "bollard",
+    "color": "#6125b8",
+    "type": "rectangle",
+    "attributes": [
+      {
+        "name": "tier",
+        "mutable": false,
+        "input_type": "select",
+        "default_value": "B",
+        "values": [
+          "B"
+        ]
+      }
+    ]
+  },
+  {
+    "name": "traffic_cone",
+    "color": "#78f086",
+    "type": "rectangle",
+    "attributes": [
+      {
+        "name": "tier",
+        "mutable": false,
+        "input_type": "select",
+        "default_value": "B",
+        "values": [
+          "B"
+        ]
+      }
+    ]
+  },
+  {
+    "name": "child",
+    "color": "#5cb872",
+    "type": "rectangle",
+    "attributes": [
+      {
+        "name": "tier",
+        "mutable": false,
+        "input_type": "select",
+        "default_value": "B",
+        "values": [
+          "B"
+        ]
+      }
+    ]
+  },
+  {
+    "name": "cyclist",
+    "color": "#f0545b",
+    "type": "rectangle",
+    "attributes": [
+      {
+        "name": "tier",
+        "mutable": false,
+        "input_type": "select",
+        "default_value": "B",
+        "values": [
+          "B"
+        ]
+      }
+    ]
+  },
+  {
+    "name": "motorcyclist",
+    "color": "#2557b8",
+    "type": "rectangle",
+    "attributes": [
+      {
+        "name": "tier",
+        "mutable": false,
+        "input_type": "select",
+        "default_value": "B",
+        "values": [
+          "B"
+        ]
+      }
+    ]
+  },
+  {
+    "name": "van",
+    "color": "#7354f0",
+    "type": "rectangle",
+    "attributes": [
+      {
+        "name": "tier",
+        "mutable": false,
+        "input_type": "select",
+        "default_value": "B",
+        "values": [
+          "B"
+        ]
+      }
+    ]
+  },
+  {
+    "name": "emergency_vehicle",
+    "color": "#f078a6",
+    "type": "rectangle",
+    "attributes": [
+      {
+        "name": "tier",
+        "mutable": false,
+        "input_type": "select",
+        "default_value": "B",
+        "values": [
+          "B"
+        ]
+      }
+    ]
+  }
+]
