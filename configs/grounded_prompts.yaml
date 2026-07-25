@@ -34,6 +34,21 @@ defaults:
 
 prompt_strategy: grouped
 
+# Hierarchical parent->subclass classification (Phase 3 fix). When
+# grounded_sam2.hierarchical_subclasses is true, the subclasses listed here are NOT
+# prompted on the full frame; instead the parent is detected first and the subclass
+# prompts run on the parent crop, relabelling the mask only on a confident, clear win.
+hierarchy:
+  subclass_min_score: 0.35
+  subclass_min_margin: 0.08
+  max_parents_per_frame: 12
+  min_parent_area_frac: 0.002
+  parents:
+    person: [pedestrian, child, cyclist, motorcyclist, scooter_rider, wheelchair_user, person_with_stroller]
+    rider: [cyclist, motorcyclist, scooter_rider]
+    car: [van, pickup, emergency_vehicle]
+    truck: [construction_vehicle, trailer]
+
 classes:
   # ---------------- road scene: surfaces ----------------
   road_surface:

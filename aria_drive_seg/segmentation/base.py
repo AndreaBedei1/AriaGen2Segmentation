@@ -39,6 +39,10 @@ class Detection:
     map_confidence: float = 0.0               # phrase->class mapping confidence
     provenance: str = "full_frame"            # full_frame | windshield_crop | tile:<i> | roi:<name>
     layer: str = "canonical"                  # canonical | exterior | cockpit | transparent | mirror
+    parent_class: str = ""                    # hierarchy: generic parent this came from
+    subclass_status: str = ""                 # accepted | rejected | ambiguous | ""
+    subclass_confidence: float = 0.0
+    parent_confidence: float = 0.0
 
     def to_dict(self) -> Dict[str, Any]:
         d = asdict(self)

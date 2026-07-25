@@ -24,6 +24,7 @@ import yaml
 from ..logging_utils import get_logger
 from ..taxonomy import Taxonomy
 from .base import Detection, FrameOutput
+from .hierarchy import decide_subclass, load_hierarchy
 from .layers import LAYERS, layer_of_id
 from .overlap import Instance, class_aware_nms, mask_iou, resolve_overlaps
 from .prompt_engine import (PhraseMapper, PromptSpec, box_geom_ok, build_specs,
@@ -63,6 +64,16 @@ class GroundedSAM2Segmenter:
             negatives.extend(s.negative_contexts)
         self.mapper = PhraseMapper(self.specs, negatives=negatives)
         self._available = set(self.specs.keys())
+        self.hierarchy = load_hierarchy(doc)
+
+    def _global_classes(self) -> List[str]:
+        """Classes prompted on the full frame. In the standard config the fine
+        hierarchy subclasses are excluded (classified on parent crops instead)."""
+        names = list(self.specs.keys())
+        if (self.cfg.get("grounded_sam2.hierarchical_subclasses", True)
+                and not self.cfg.get("grounded_sam2.global_fine_subclasses", False)):
+            names = [n for n in names if n not in self.hierarchy["subclasses"]]
+        return names
 
     def _build_query_groups(self, names: Optional[List[str]] = None) -> List[List[str]]:
         specs = names or list(self.specs.keys())
@@ -230,8 +241,9 @@ class GroundedSAM2Segmenter:
         rej: Counter = Counter()
         t0 = time.time()
 
-        # ---- full-frame pass ----
-        cand = self._gdino_candidates(Image.fromarray(image_rgb), self._build_query_groups(), h, w)
+        # ---- full-frame pass (fine hierarchy subclasses excluded in standard config) ----
+        cand = self._gdino_candidates(Image.fromarray(image_rgb),
+                                      self._build_query_groups(self._global_classes()), h, w)
         t_gdino = (time.time() - t0) * 1e3
         t1 = time.time()
         all_dets, all_inst = self._finalize_pass(image_rgb, cand, h, w, (0, 0), 1.0,
@@ -266,6 +278,11 @@ class GroundedSAM2Segmenter:
 
         # ---- fuse across passes (box + mask NMS, max_instances) ----
         all_dets, all_inst = self._fuse(all_dets, all_inst, rej)
+
+        # ---- hierarchical parent->subclass classification (on parent crops) ----
+        if (self.cfg.get("grounded_sam2.hierarchical_subclasses", True)
+                and not self.cfg.get("grounded_sam2.global_fine_subclasses", False)):
+            all_dets, all_inst = self._classify_subclasses(image_rgb, all_dets, all_inst, rej)
 
         id_map, score_map = resolve_overlaps(h, w, all_inst)
         layer_inst: Dict[str, List[Instance]] = {L: [] for L in LAYERS}
@@ -336,6 +353,59 @@ class GroundedSAM2Segmenter:
             self.stats_accepted[name] += min(len(idxs), cap)
         keep2.sort()
         return [dets[k] for k in keep2], [inst[k] for k in keep2]
+
+    def _subclass_scores(self, image: np.ndarray, box, subs: List[str]) -> Dict[str, float]:
+        import cv2
+        from PIL import Image
+        x0, y0, x1, y1 = [int(v) for v in box]
+        if x1 - x0 < 12 or y1 - y0 < 12:
+            return {}
+        crop = image[y0:y1, x0:x1]
+        ch, cw = crop.shape[:2]
+        if max(ch, cw) < 200:  # upscale small parent crops for the subclass query
+            s = 200.0 / max(ch, cw)
+            crop = cv2.resize(crop, (int(cw * s), int(ch * s)))
+        ch2, cw2 = crop.shape[:2]
+        cand = self._gdino_candidates(Image.fromarray(np.ascontiguousarray(crop)), [subs], ch2, cw2)
+        scores: Dict[str, float] = {}
+        for d in cand:
+            mr = self.mapper.map(d["phrase"], subs)
+            if mr.name in subs:
+                scores[mr.name] = max(scores.get(mr.name, 0.0),
+                                      float(d["score"]) * float(mr.confidence))
+        return scores
+
+    def _classify_subclasses(self, image: np.ndarray, dets: List[Detection],
+                             insts: List[Instance], rej: Counter):
+        """Detect subtype on the parent crop; relabel only on a confident, clear win.
+        Mask geometry stays from the parent."""
+        H, W = image.shape[:2]
+        parents = self.hierarchy["parents"]
+        ms, mm = self.hierarchy["min_score"], self.hierarchy["min_margin"]
+        cap = self.hierarchy["max_parents_per_frame"]
+        min_area = self.hierarchy["min_parent_area_frac"] * H * W
+        cands = [(i, d) for i, d in enumerate(dets)
+                 if d.canonical_name in parents and d.area_px >= min_area]
+        cands.sort(key=lambda t: -t[1].area_px)
+        for i, d in cands[:cap]:
+            subs = [s for s in parents[d.canonical_name] if s in self.specs]
+            if not subs:
+                continue
+            scores = self._subclass_scores(image, d.box, subs)
+            name, status, conf = decide_subclass(scores, ms, mm)
+            d.parent_class = d.canonical_name
+            d.parent_confidence = d.combined_score
+            d.subclass_status = status
+            d.subclass_confidence = conf
+            if status == "accepted" and name in self.specs:
+                newid = self.tax.id_of(name)
+                d.canonical_id = newid; d.canonical_name = name
+                d.priority = self.specs[name].priority
+                insts[i] = Instance(insts[i].mask, newid, insts[i].score, self.specs[name].priority)
+                self.stats_accepted[name] += 1
+            else:
+                rej[f"subclass_{status}"] += 1
+        return dets, insts
 
     def _postprocess_mask(self, m: np.ndarray, spec: PromptSpec, cv2) -> np.ndarray:
         if spec.morph_close and spec.morph_close > 1:

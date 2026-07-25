@@ -56,7 +56,12 @@ grounded_sam2:
   nms_iou: 0.7
   score_combine: geometric   # combined = sqrt(gdino_box * sam_iou)
   device: cuda
-  mode: independent          # independent | temporal (Phase 8)
+  mode: independent          # independent | temporal (Phase 8, not yet implemented)
+  # Hierarchical parent->subclass: detect person/car/... first, classify subtypes on the
+  # parent crop (never prompt child/emergency_vehicle globally in the standard config).
+  hierarchical_subclasses: true
+  # allow the aggressive global fine-class prompts (diagnostic max-recall only)
+  global_fine_subclasses: false
   # Phase 4 — hierarchical ROI (opt-in): re-detect targeted classes inside derived
   # windshield/window/mirror/interior ROIs so small/through-glass objects get more pixels.
   roi_enabled: false
