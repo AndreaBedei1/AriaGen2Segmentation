@@ -65,12 +65,52 @@ truck/bus, fence/wall/barrier.
 per-class thresholds read, exact/synonym/singular-plural mapping, ambiguity rejection,
 negative context, aspect-ratio/region/box-dim geometric filters). Baseline 41 stay green.
 
-## Remaining phases (planned, not yet implemented)
-2 extended taxonomy · 3 multilayer semantic outputs + structured gaze resolution ·
-4 hierarchical ROI · 5 multiscale small-object pass · 6 `calibrate_prompts.py` + ablation ·
-7 minimal ground truth · 8 optional SAM2 temporal propagation · 9 richer diagnostics ·
-10 more tests · 11 60–100 then 200-frame validation · 12 full report.
-The full 3762-frame run remains **gated** on explicit confirmation (Phase 11.13).
+## Phases 2–6 (implemented, tested, committed)
+
+**Phase 2 — extended taxonomy** (`a9dccf2`): +60 fine classes (ids 40-99; 0-39 unchanged
+for backward compat) across surfaces/geometry, vulnerable road users, vehicles,
+signage/infra and interior parts. Each declares a `parent` generic (pedestrian→person,
+stop_sign→traffic_sign, left_side_mirror→side_mirror, …) so analysis can roll subclasses
+up to the common comparison taxonomy; deterministic auto-colours. `eval=false` (Grounded-
+only). On 10 frames the extended taxonomy reached ~122 detections/frame but at ~15 s/frame.
+
+**Phase 3 — multilayer semantics** (`38f9964`): four functional layer masks
+(exterior_content / cockpit_object / transparent_surface / mirror_region) + structured
+gaze resolution. A gaze pixel on the glass resolves to the exterior class behind it
+(`through_glass`); if none was detected → `unknown_exterior` (never silently `windshield`);
+mirrors are primary with an optional reflected secondary. Verified visually (gaze→`stop_line`
+through glass; clean layer separation). See docs/multilayer_semantics.md.
+
+**Phase 4 & 5 — hierarchical ROI + multiscale** (`6564859`): ROIs derived from structural
+detections (no hardcoded coords; optional EMA stabilisation); targeted class subsets
+re-detected on upscaled windshield/window/mirror/interior crops + overlapping windshield
+tiles for tiny objects; cross-pass box+mask NMS fusion with provenance. Validated: crop
+passes ~doubled detections (83 full-frame + ~125 crop → 208), all ROIs derived, 0 errors,
+~47–50 s/frame (max-recall). Default OFF. See docs/hierarchical_segmentation.md.
+
+**Phase 6 — calibration/ablation** (`a4d32c7`): `scripts/calibrate_prompts.py` +
+`configs/ablation/{baseline_grouped,per_class_variants,hierarchical_roi,
+hierarchical_roi_multiscale}.yaml` to pick the speed/recall operating point on metrics +
+visual QA. See docs/ablation_grounded_sam2.md.
+
+Tests: **73 passed** (added test_taxonomy_extended, test_layers, test_roi, test_prompt_engine).
+
+## Speed/recall tradeoff (measured on this hardware)
+Per-class full-frame ≈ 5–6.5 s/frame (original taxonomy) / ≈15 s/frame (extended);
++ROI+multiscale ≈ 47–50 s/frame. The operating point is chosen by the ablation (user
+directive), balancing recall vs cost vs false positives — not fixed a priori.
+
+## Remaining phases
+7 minimal ground truth (infra already present: `scripts/prepare_annotation.py` +
+`scripts/evaluate_gt.py` — needs a labelled 60-frame set) · 8 optional SAM2 temporal
+propagation · 9 richer layer/gaze diagnostic videos · 10 further tests · 11 run the
+ablation to choose a config, then 60–100 then 200 consecutive frames · 12 final report.
+The full 3762-frame run stays **gated** on explicit confirmation (Phase 11.13).
+
+## Git / push
+9 thematic commits on `feature/grounded-sam2-recall`. **Push is pending** — no git
+credentials are available in this environment; push the branch manually:
+`git push -u origin feature/grounded-sam2-recall`.
 
 ## Reproduce the Phase-1 validation
 ```bash
