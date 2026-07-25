@@ -1,2 +1,0 @@
-# Phase 1 config: per-class prompts + thresholds + filters, no ROI/multiscale.
-grounded_sam2: { roi_enabled: false, multiscale_enabled: false }

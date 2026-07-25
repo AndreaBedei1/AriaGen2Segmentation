@@ -1,0 +1,11 @@
+# C — extended_hierarchical: Phase-1 fixes + extended taxonomy + parent->subclass
+# hierarchy (child/emergency_vehicle etc. classified on parent crops, NOT globally).
+# No ROI, no multiscale. Candidate default config.
+grounded_sam2:
+  class_whitelist: null
+  prompt_mode_override: variants
+  hierarchical_subclasses: true
+  global_fine_subclasses: false
+  roi_enabled: false
+  multiscale_enabled: false
+  gaze_conditioned: false

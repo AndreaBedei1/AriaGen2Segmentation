@@ -1,0 +1,9 @@
+# B — phase1_clean: Phase-1 fixes (variants, synonyms, per-class thresholds, robust
+# mapping, geometric filters) on the ORIGINAL taxonomy. No ROI/multiscale/hierarchy.
+grounded_sam2:
+  class_whitelist: [road_surface, lane_marking, crosswalk, sidewalk, curb, parking_area, rail_track, person, rider, car, truck, bus, motorcycle, bicycle, traffic_light, traffic_sign, pole, guardrail, barrier, wall, fence, building, vegetation, terrain, sky, bridge, tunnel, steering_wheel, instrument_cluster, dashboard, infotainment_screen, rear_view_mirror, side_mirror, windshield, a_pillar, driver_hand, smartphone, other_cockpit]
+  prompt_mode_override: variants
+  hierarchical_subclasses: false
+  roi_enabled: false
+  multiscale_enabled: false
+  gaze_conditioned: false

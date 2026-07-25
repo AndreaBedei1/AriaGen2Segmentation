@@ -1,0 +1,13 @@
+# E — gaze_conditioned_multiscale (EXPERIMENTAL, NOT default; gaze-assisted, not
+# comparable to the gaze-independent A-D). Config C + high-res crops centred on the
+# valid gaze point. Requires align-gaze to have run on the input.
+grounded_sam2:
+  class_whitelist: null
+  prompt_mode_override: variants
+  hierarchical_subclasses: true
+  roi_enabled: false
+  multiscale_enabled: false
+  gaze_conditioned: true
+  gaze_crop_small: 0.12
+  gaze_crop_wide: 0.30
+  gaze_scale: 2.0

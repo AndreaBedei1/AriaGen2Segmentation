@@ -56,6 +56,17 @@ def run_segment(method: str, input_dir: str, cfg: Config,
     seg = GroundedSAM2Segmenter(cfg, tax)
     seg.load()
 
+    # gaze-conditioned mode (config E): load aligned gaze to steer crops
+    gaze_map: Dict[int, Any] = {}
+    if cfg.get("grounded_sam2.gaze_conditioned", False):
+        gp = Path(input_dir) / "gaze" / "aligned_gaze.parquet"
+        if gp.exists():
+            import pandas as pd
+            gdf = pd.read_parquet(gp)
+            for _, r in gdf.iterrows():
+                if bool(r.get("valid")):
+                    gaze_map[int(r["frame_index"])] = (r.get("rect_u"), r.get("rect_v"))
+
     write_conf = bool(cfg.get("segmentation.write_confidence", True))
     n_done = n_err = 0
     for k, ref in enumerate(frames):
@@ -65,7 +76,7 @@ def run_segment(method: str, input_dir: str, cfg: Config,
             continue
         try:
             img = _read_rgb(ref.rectified_path)
-            out = _segment_with_oom_guard(seg, img, i, ref.capture_timestamp_ns)
+            out = _segment_with_oom_guard(seg, img, i, ref.capture_timestamp_ns, gaze_map.get(i))
             meta = write_frame_output(layout, out, write_confidence=write_conf)
             manifest.mark(i, {"coverage": out.extra.get("coverage"),
                               "num_detections": len(out.detections),
@@ -101,12 +112,12 @@ def _peak_vram():
     return None
 
 
-def _segment_with_oom_guard(seg, img, i, ts):
+def _segment_with_oom_guard(seg, img, i, ts, gaze_xy=None):
     """Retry once on CUDA OOM after clearing cache (§14)."""
     import torch
     try:
-        return seg.segment(img, i, ts)
+        return seg.segment(img, i, ts, gaze_xy)
     except torch.cuda.OutOfMemoryError:
         log.warning("CUDA OOM on frame %d; clearing cache and retrying", i)
         torch.cuda.empty_cache()
-        return seg.segment(img, i, ts)
+        return seg.segment(img, i, ts, gaze_xy)

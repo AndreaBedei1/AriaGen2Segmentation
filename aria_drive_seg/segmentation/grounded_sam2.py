@@ -59,6 +59,15 @@ class GroundedSAM2Segmenter:
         doc = yaml.safe_load(Path(path).read_text())
         self.prompt_strategy = doc.get("prompt_strategy", "grouped")
         self.specs: Dict[str, PromptSpec] = build_specs(doc, set(self.tax.by_name))
+        # ablation knobs
+        whitelist = self.cfg.get("grounded_sam2.class_whitelist")
+        if whitelist:
+            wl = set(whitelist)
+            self.specs = {n: s for n, s in self.specs.items() if n in wl}
+        mode_override = self.cfg.get("grounded_sam2.prompt_mode_override")
+        if mode_override:
+            for s in self.specs.values():
+                s.prompt_mode = mode_override
         negatives: List[str] = []
         for s in self.specs.values():
             negatives.extend(s.negative_contexts)
@@ -235,7 +244,7 @@ class GroundedSAM2Segmenter:
 
     # ------------------------------------------------------------------ #
     def segment(self, image_rgb: np.ndarray, frame_index: int,
-                capture_ts_ns: int) -> FrameOutput:
+                capture_ts_ns: int, gaze_xy: Optional[Tuple[float, float]] = None) -> FrameOutput:
         from PIL import Image
         h, w = image_rgb.shape[:2]
         rej: Counter = Counter()
@@ -267,13 +276,30 @@ class GroundedSAM2Segmenter:
         if self.cfg.get("grounded_sam2.multiscale_enabled", False):
             wbox = rois.get("windshield_view") or roimod.derive_rois(all_dets, h, w).get("windshield_view")
             if wbox:
-                subset = roimod.roi_class_subset("windshield_view", self._available)
+                ms_classes = self.cfg.get("grounded_sam2.multiscale_classes")
+                subset = ([c for c in ms_classes if c in self._available] if ms_classes
+                          else roimod.roi_class_subset("windshield_view", self._available))
                 mscale = float(self.cfg.get("grounded_sam2.ms_scale", 1.5))
                 tiles = roimod.tiles_of(wbox, int(self.cfg.get("grounded_sam2.ms_tiles", 3)),
                                         float(self.cfg.get("grounded_sam2.ms_tile_overlap", 0.2)))
                 for ti, tile in enumerate(tiles):
                     d, ins = self._crop_pass(image_rgb, tile, subset, f"tile:{ti}", mscale, rej)
                     all_dets += d; all_inst += ins
+
+        # ---- config E: gaze-conditioned crops (experimental, non-default) ----
+        if (self.cfg.get("grounded_sam2.gaze_conditioned", False) and gaze_xy is not None
+                and gaze_xy[0] is not None and np.isfinite(gaze_xy[0])):
+            gu, gv = float(gaze_xy[0]), float(gaze_xy[1])
+            gsub = self.cfg.get("grounded_sam2.gaze_classes") or \
+                roimod.roi_class_subset("windshield_view", self._available)
+            gscale = float(self.cfg.get("grounded_sam2.gaze_scale", 2.0))
+            for frac, tag in [(float(self.cfg.get("grounded_sam2.gaze_crop_small", 0.12)), "gaze_small"),
+                              (float(self.cfg.get("grounded_sam2.gaze_crop_wide", 0.30)), "gaze_wide")]:
+                half = int(frac * max(h, w) / 2)
+                box = (max(0, int(gu) - half), max(0, int(gv) - half),
+                       min(w, int(gu) + half), min(h, int(gv) + half))
+                d, ins = self._crop_pass(image_rgb, box, gsub, f"gaze:{tag}", gscale, rej)
+                all_dets += d; all_inst += ins
         t_sam = (time.time() - t1) * 1e3
 
         # ---- fuse across passes (box + mask NMS, max_instances) ----

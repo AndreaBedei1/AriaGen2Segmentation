@@ -1,3 +1,0 @@
-# Approximate pre-Phase-1 behaviour: combined grouped caption, no ROI/multiscale.
-grounded_sam2: { roi_enabled: false, multiscale_enabled: false }
-# note: prompt_mode is per-class in grounded_prompts.yaml; this config keeps the current prompts.

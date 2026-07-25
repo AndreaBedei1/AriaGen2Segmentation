@@ -1,0 +1,17 @@
+# D — selective_roi_multiscale: config C + ROI + multiscale ONLY for small/safety
+# classes (never for road/building/vegetation/sky/dashboard/interior or the
+# crop-only subclasses child/emergency_vehicle).
+grounded_sam2:
+  class_whitelist: null
+  prompt_mode_override: variants
+  hierarchical_subclasses: true
+  global_fine_subclasses: false
+  roi_enabled: true
+  roi_scale: 1.5
+  multiscale_enabled: true
+  ms_tiles: 3
+  ms_scale: 1.5
+  multiscale_classes: [person, cyclist, bicycle, motorcycle, traffic_light, traffic_sign,
+                       stop_sign, yield_sign, speed_limit_sign, warning_sign, traffic_cone,
+                       bollard, stop_line, lane_marking]
+  gaze_conditioned: false
