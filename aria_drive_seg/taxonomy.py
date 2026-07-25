@@ -1,12 +1,25 @@
 """Canonical taxonomy: load classes.yaml, provide id<->name, palette, colorize."""
 from __future__ import annotations
 
+import colorsys
 from dataclasses import dataclass
 from pathlib import Path
 from typing import Dict, List, Optional
 
 import numpy as np
 import yaml
+
+
+def auto_color(cid: int) -> tuple:
+    """Deterministic distinct RGB from a class id (golden-ratio hue spread).
+
+    Used only when a class has no explicit `color`, so the palette stays deterministic
+    and identical across both methods without hand-picking dozens of colours."""
+    h = (cid * 0.6180339887498949) % 1.0
+    s = 0.50 + 0.30 * ((cid * 7) % 3) / 2.0
+    v = 0.72 + 0.22 * ((cid * 5) % 2)
+    r, g, b = colorsys.hsv_to_rgb(h, s, v)
+    return (int(round(r * 255)), int(round(g * 255)), int(round(b * 255)))
 
 
 @dataclass(frozen=True)
@@ -16,6 +29,7 @@ class CanonClass:
     group: str            # special | road | cockpit
     color: tuple          # (r, g, b)
     eval: bool            # part of the common method-vs-method comparison set
+    parent: Optional[str] = None   # generic class this is a subclass of (e.g. pedestrian->person)
 
 
 class Taxonomy:
@@ -34,7 +48,9 @@ class Taxonomy:
         classes = [
             CanonClass(
                 id=int(c["id"]), name=str(c["name"]), group=str(c["group"]),
-                color=tuple(int(x) for x in c["color"]), eval=bool(c.get("eval", False)),
+                color=tuple(int(x) for x in c["color"]) if c.get("color") else auto_color(int(c["id"])),
+                eval=bool(c.get("eval", False)),
+                parent=(str(c["parent"]) if c.get("parent") else None),
             )
             for c in data["classes"]
         ]
@@ -56,6 +72,24 @@ class Taxonomy:
 
     def group_ids(self, group: str) -> List[int]:
         return [c.id for c in self.classes if c.group == group]
+
+    def rollup_name(self, name: str) -> str:
+        """Follow `parent` links to the generic class (e.g. pedestrian->person)."""
+        seen = set()
+        cur = name
+        while cur in self.by_name and self.by_name[cur].parent and cur not in seen:
+            seen.add(cur)
+            cur = self.by_name[cur].parent
+        return cur
+
+    def rollup_id(self, cid: int) -> int:
+        c = self.by_id.get(int(cid))
+        if not c:
+            return int(cid)
+        return self.id_of(self.rollup_name(c.name))
+
+    def subclasses_of(self, name: str) -> List[str]:
+        return [c.name for c in self.classes if c.parent == name]
 
     # ---- rendering ----
     def palette(self) -> np.ndarray:

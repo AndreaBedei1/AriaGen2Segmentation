@@ -66,3 +66,75 @@ classes:
   - { id: 37, name: smartphone,         group: cockpit, color: [50, 205, 50],   eval: false }
   - { id: 38, name: other_cockpit,      group: cockpit, color: [128, 128, 128], eval: false }
   - { id: 39, name: unknown_cockpit,    group: cockpit, color: [64, 64, 64],    eval: false }
+
+  # ==================================================================
+  # Extended taxonomy (Phase 2). IDs 40+ are NEW — existing ids 0-39 keep their
+  # meaning (backward compatible). `parent` links a fine subclass to the generic
+  # class used for the method-vs-method comparison; `eval: false` because these
+  # fine classes have no Mapillary equivalent (Grounded-SAM2 only). Colours are
+  # auto-generated deterministically from the id (no explicit `color`).
+  # ---- exterior: surfaces & road geometry (subclasses of road markings/surface)
+  - { id: 40, name: road_edge,          group: road, eval: false, parent: road_surface }
+  - { id: 41, name: lane_divider,       group: road, eval: false, parent: lane_marking }
+  - { id: 42, name: stop_line,          group: road, eval: false, parent: lane_marking }
+  - { id: 43, name: yield_marking,      group: road, eval: false, parent: lane_marking }
+  - { id: 44, name: direction_arrow,    group: road, eval: false, parent: lane_marking }
+  - { id: 45, name: speed_bump,         group: road, eval: false, parent: road_surface }
+  - { id: 46, name: road_shoulder,      group: road, eval: false, parent: road_surface }
+  - { id: 47, name: traffic_island,     group: road, eval: false, parent: sidewalk }
+  - { id: 48, name: median,             group: road, eval: false, parent: barrier }
+  - { id: 49, name: intersection_area,  group: road, eval: false, parent: road_surface }
+  - { id: 50, name: driveway,           group: road, eval: false, parent: road_surface }
+  - { id: 51, name: pothole,            group: road, eval: false, parent: road_surface }
+  - { id: 52, name: manhole,            group: road, eval: false, parent: road_surface }
+  # ---- exterior: road users (subclasses of person/rider)
+  - { id: 53, name: pedestrian,         group: road, eval: false, parent: person }
+  - { id: 54, name: child,              group: road, eval: false, parent: person }
+  - { id: 55, name: cyclist,            group: road, eval: false, parent: rider }
+  - { id: 56, name: motorcyclist,       group: road, eval: false, parent: rider }
+  - { id: 57, name: scooter_rider,      group: road, eval: false, parent: rider }
+  - { id: 58, name: wheelchair_user,    group: road, eval: false, parent: person }
+  - { id: 59, name: person_with_stroller, group: road, eval: false, parent: person }
+  - { id: 60, name: animal_on_road,     group: road, eval: false }
+  # ---- exterior: vehicles (subclasses of car/truck/bus)
+  - { id: 61, name: van,                group: road, eval: false, parent: car }
+  - { id: 62, name: pickup,             group: road, eval: false, parent: car }
+  - { id: 63, name: emergency_vehicle,  group: road, eval: false, parent: car }
+  - { id: 64, name: construction_vehicle, group: road, eval: false, parent: truck }
+  - { id: 65, name: trailer,            group: road, eval: false, parent: truck }
+  - { id: 66, name: tram,               group: road, eval: false }
+  - { id: 67, name: train,              group: road, eval: false }
+  # ---- exterior: signage & infrastructure (subclasses of traffic_sign/pole)
+  - { id: 68, name: stop_sign,          group: road, eval: false, parent: traffic_sign }
+  - { id: 69, name: yield_sign,         group: road, eval: false, parent: traffic_sign }
+  - { id: 70, name: speed_limit_sign,   group: road, eval: false, parent: traffic_sign }
+  - { id: 71, name: warning_sign,       group: road, eval: false, parent: traffic_sign }
+  - { id: 72, name: direction_sign,     group: road, eval: false, parent: traffic_sign }
+  - { id: 73, name: railway_crossing,   group: road, eval: false, parent: traffic_sign }
+  - { id: 74, name: bollard,            group: road, eval: false, parent: pole }
+  - { id: 75, name: traffic_cone,       group: road, eval: false }
+  - { id: 76, name: delineator_post,    group: road, eval: false, parent: pole }
+  - { id: 77, name: street_light,       group: road, eval: false, parent: pole }
+  - { id: 78, name: bus_stop,           group: road, eval: false }
+  - { id: 79, name: temporary_barrier,  group: road, eval: false, parent: barrier }
+  # ---- interior: instruments & controls (subclasses of cockpit generics)
+  - { id: 80, name: speedometer_display, group: cockpit, eval: false, parent: instrument_cluster }
+  - { id: 81, name: warning_indicator,  group: cockpit, eval: false, parent: instrument_cluster }
+  - { id: 82, name: navigation_display, group: cockpit, eval: false, parent: infotainment_screen }
+  - { id: 83, name: center_console,     group: cockpit, eval: false, parent: dashboard }
+  - { id: 84, name: climate_controls,   group: cockpit, eval: false, parent: other_cockpit }
+  - { id: 85, name: gear_selector,      group: cockpit, eval: false, parent: other_cockpit }
+  - { id: 86, name: left_air_vent,      group: cockpit, eval: false, parent: other_cockpit }
+  - { id: 87, name: right_air_vent,     group: cockpit, eval: false, parent: other_cockpit }
+  - { id: 88, name: left_side_mirror,   group: cockpit, eval: false, parent: side_mirror }
+  - { id: 89, name: right_side_mirror,  group: cockpit, eval: false, parent: side_mirror }
+  - { id: 90, name: left_window,        group: cockpit, eval: false }
+  - { id: 91, name: right_window,       group: cockpit, eval: false }
+  - { id: 92, name: a_pillar_left,      group: cockpit, eval: false, parent: a_pillar }
+  - { id: 93, name: a_pillar_right,     group: cockpit, eval: false, parent: a_pillar }
+  - { id: 94, name: sun_visor,          group: cockpit, eval: false, parent: other_cockpit }
+  - { id: 95, name: door_panel,         group: cockpit, eval: false, parent: other_cockpit }
+  - { id: 96, name: driver_arm,         group: cockpit, eval: false, parent: driver_hand }
+  - { id: 97, name: phone_mount,        group: cockpit, eval: false, parent: other_cockpit }
+  - { id: 98, name: passenger,          group: cockpit, eval: false }
+  - { id: 99, name: headrest,           group: cockpit, eval: false, parent: other_cockpit }
