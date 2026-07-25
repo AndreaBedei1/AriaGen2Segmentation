@@ -118,13 +118,44 @@ def compute_gaze_labels(input_dir: str, method: str, cfg: Config,
             confidence=conf, dist_boundary_px=db,
             is_unknown=(cid == 0), is_unsupported=unsup,
         )
+        # structured multi-layer gaze resolution (Phase 3), when layer masks exist
+        rec.update(_resolve_layers(layout, fi, u, v, tax, disc_r))
         rows.append(rec)
 
     df = pd.DataFrame(rows).sort_values("frame_index")
-    outp = out / "comparison" / "gaze" / f"gaze_labels_{method}.parquet"
+    outp = out / "comparison" / "gaze" / f"gaze_labels_{method}.parquet"  # noqa: E501
     outp.parent.mkdir(parents=True, exist_ok=True)
     tmp = outp.with_suffix(".tmp.parquet")
     df.to_parquet(tmp, index=False)
     tmp.replace(outp)
     log.info("wrote %s (%d frames)", outp, len(df))
     return outp
+
+
+def _resolve_layers(layout, fi: int, u: float, v: float, tax: Taxonomy,
+                    disc: int) -> dict:
+    """Load per-layer masks (if present) and compute the structured gaze target (§3)."""
+    from ..io_utils import read_mask_u16
+    from ..segmentation.layers import LAYERS, resolve_gaze_target
+
+    layer_masks = {}
+    for L in LAYERS:
+        lp = layout.layers / L / f"frame_{fi:06d}.png"
+        if lp.exists():
+            layer_masks[L] = read_mask_u16(lp)
+    if not layer_masks:
+        return {}
+    res = resolve_gaze_target(layer_masks, u, v, tax, disc=disc)
+    conf = res.get("confidence", {})
+    return {
+        "primary_target": res["primary_target"],
+        "secondary_target": res["secondary_target"],
+        "resolution_reason": res["resolution_reason"],
+        "exterior_content": res["exterior_content"],
+        "cockpit_object": res["cockpit_object"],
+        "transparent_surface": res["transparent_surface"],
+        "mirror_region": res["mirror_region"],
+        "conf_exterior": conf.get("exterior"),
+        "conf_cockpit": conf.get("cockpit"),
+        "conf_mirror": conf.get("mirror"),
+    }

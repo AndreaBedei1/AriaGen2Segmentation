@@ -26,6 +26,7 @@ import yaml
 from ..logging_utils import get_logger
 from ..taxonomy import Taxonomy
 from .base import Detection, FrameOutput
+from .layers import LAYERS, layer_of_id
 from .overlap import Instance, class_aware_nms, resolve_overlaps
 from .prompt_engine import (PhraseMapper, PromptSpec, box_geom_ok, build_specs,
                             group_captions)
@@ -241,6 +242,11 @@ class GroundedSAM2Segmenter:
                     self.stats_accepted[name] += 1
 
         id_map, score_map = resolve_overlaps(h, w, instances)
+        # multi-layer masks (Phase 3): partition instances by functional layer
+        layer_inst: Dict[str, List[Instance]] = {L: [] for L in LAYERS}
+        for inst in instances:
+            layer_inst[layer_of_id(self.tax, inst.canonical_id)].append(inst)
+        layers = {L: resolve_overlaps(h, w, layer_inst[L])[0] for L in LAYERS}
         for reason, c in rej.items():
             self.stats_rejected[reason] += c
         total = (time.time() - t0) * 1e3
@@ -250,8 +256,10 @@ class GroundedSAM2Segmenter:
             canonical_mask=id_map, confidence=score_map, detections=dets,
             timings_ms={"grounding_dino": round(t_gdino, 1), "sam2": round(t_sam, 1),
                         "total": round(total, 1)},
+            layers=layers,
             extra={"coverage": float((id_map > 0).mean()),
                    "num_candidates": len(cand), "num_accepted": len(dets),
+                   "layer_coverage": {L: float((layers[L] > 0).mean()) for L in LAYERS},
                    "rejections": dict(rej)},
         )
 

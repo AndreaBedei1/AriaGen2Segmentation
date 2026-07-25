@@ -58,6 +58,7 @@ class FrameOutput:
     detections: List[Detection] = field(default_factory=list)
     timings_ms: Dict[str, float] = field(default_factory=dict)
     extra: Dict[str, Any] = field(default_factory=dict)
+    layers: Dict[str, np.ndarray] = field(default_factory=dict)  # exterior/cockpit/transparent/mirror -> uint16
 
 
 class SegLayout:
@@ -69,14 +70,21 @@ class SegLayout:
         self.native = self.root / "native"
         self.metadata = self.root / "metadata"
         self.instances = self.root / "instances"
+        self.layers = self.root / "layers"
 
-    def ensure(self, native: bool = False, instances: bool = False) -> None:
+    def ensure(self, native: bool = False, instances: bool = False,
+               layers: bool = False) -> None:
         for d in (self.canonical, self.confidence, self.metadata):
             d.mkdir(parents=True, exist_ok=True)
         if native:
             self.native.mkdir(parents=True, exist_ok=True)
         if instances:
             self.instances.mkdir(parents=True, exist_ok=True)
+        if layers:
+            self.layers.mkdir(parents=True, exist_ok=True)
+
+    def layer_path(self, layer: str, i: int) -> Path:
+        return self.layers / layer / f"{self.name(i)}.png"
 
     def name(self, frame_index: int) -> str:
         return f"frame_{frame_index:06d}"
@@ -108,6 +116,9 @@ def write_frame_output(layout: SegLayout, out: FrameOutput,
     write_mask_u16(layout.canonical_path(out.frame_index), out.canonical_mask)
     if out.native_mask is not None:
         write_mask_u16(layout.native_path(out.frame_index), out.native_mask)
+    for layer_name, layer_mask in (out.layers or {}).items():
+        (layout.layers / layer_name).mkdir(parents=True, exist_ok=True)
+        write_mask_u16(layout.layer_path(layer_name, out.frame_index), layer_mask)
     if write_confidence and out.confidence is not None:
         import cv2
         conf_u8 = np.clip(out.confidence * 255.0, 0, 255).astype(np.uint8)

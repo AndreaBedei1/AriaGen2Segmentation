@@ -36,7 +36,7 @@ def run_segment(method: str, input_dir: str, cfg: Config,
 
     tax = Taxonomy.load(cfg.resolve(cfg.get("project.classes")))
     layout = SegLayout(input_dir, method)
-    layout.ensure()
+    layout.ensure(layers=True)
     frames = iter_frames(input_dir)
 
     fp = config_fingerprint(
