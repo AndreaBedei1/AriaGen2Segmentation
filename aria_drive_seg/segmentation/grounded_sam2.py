@@ -178,6 +178,9 @@ class GroundedSAM2Segmenter:
             if d["score"] < spec.box_threshold:
                 rej["below_box_threshold"] += 1; continue
             fbox = roimod.remap_box(d["box"], offset, scale)
+            # clamp to full-frame bounds (GDINO boxes can overshoot the edge by a few px)
+            fbox = (max(0.0, min(fbox[0], w_full)), max(0.0, min(fbox[1], h_full)),
+                    max(0.0, min(fbox[2], w_full)), max(0.0, min(fbox[3], h_full)))
             ok, reason = box_geom_ok(spec, fbox, int((fbox[2] - fbox[0]) * (fbox[3] - fbox[1])),
                                      h_full, w_full)
             if not ok and reason in _SHAPE_REJECTS:
@@ -383,7 +386,11 @@ class GroundedSAM2Segmenter:
     def _subclass_scores(self, image: np.ndarray, box, subs: List[str]) -> Dict[str, float]:
         import cv2
         from PIL import Image
-        x0, y0, x1, y1 = [int(v) for v in box]
+        H, W = image.shape[:2]
+        # clamp to image bounds — GDINO boxes can slightly overshoot / go negative,
+        # and negative slice indices would yield a degenerate (zero-size) crop.
+        x0 = max(0, min(int(box[0]), W)); y0 = max(0, min(int(box[1]), H))
+        x1 = max(0, min(int(box[2]), W)); y1 = max(0, min(int(box[3]), H))
         if x1 - x0 < 12 or y1 - y0 < 12:
             return {}
         crop = image[y0:y1, x0:x1]
