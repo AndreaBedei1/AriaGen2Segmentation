@@ -1,17 +1,15 @@
 """Method 1 — open-vocabulary prompted segmentation: Grounding DINO + SAM 2.1 (§7).
 
-Grounding DINO (HF transformers) proposes boxes from configurable text prompts (now
-including variants + synonyms, see prompt_engine.py); SAM 2.1 turns each surviving box
-into a mask; masks are filtered (per-class thresholds, geometric filters, max_instances),
-scored, and composited by priority (overlap.py). This is NOT an exhaustive semantic
-partition — unassigned pixels remain `unknown`.
+Grounding DINO proposes boxes from configurable text prompts (variants + synonyms,
+prompt_engine.py); SAM 2.1 turns each surviving box into a mask; masks are filtered
+(per-class thresholds, geometric filters, max_instances), scored, composited by
+priority (overlap.py) and split into functional layers (layers.py). NOT an exhaustive
+partition — unassigned pixels stay `unknown`.
 
-Phase-1 correctness fixes vs the first version:
-  * variants/synonyms are actually sent to GDINO and deduplicated;
-  * grouped calls use a permissive CANDIDATE threshold, then each detection is re-filtered
-    by its OWN class box_threshold + mapping confidence;
-  * max_instances and a full set of geometric filters are applied;
-  * robust deterministic phrase->class mapping; the native GDINO phrase is stored.
+Passes (a single reusable `_finalize_pass` runs each): a full-frame pass; optional
+hierarchical-ROI passes on derived windshield/window/mirror/interior crops (Phase 4);
+optional multi-scale tiles of the windshield crop for tiny objects (Phase 5). All
+detections carry provenance and are fused across passes (box + mask NMS, max_instances).
 """
 from __future__ import annotations
 
@@ -27,11 +25,16 @@ from ..logging_utils import get_logger
 from ..taxonomy import Taxonomy
 from .base import Detection, FrameOutput
 from .layers import LAYERS, layer_of_id
-from .overlap import Instance, class_aware_nms, resolve_overlaps
+from .overlap import Instance, class_aware_nms, mask_iou, resolve_overlaps
 from .prompt_engine import (PhraseMapper, PromptSpec, box_geom_ok, build_specs,
                             group_captions)
+from . import roi as roimod
 
 log = get_logger("grounded_sam2")
+
+_SHAPE_REJECTS = {"below_min_box_width", "below_min_box_height", "below_min_aspect_ratio",
+                  "above_max_aspect_ratio", "spans_full_frame_edges",
+                  "outside_allowed_region", "inside_forbidden_region"}
 
 
 class GroundedSAM2Segmenter:
@@ -44,10 +47,10 @@ class GroundedSAM2Segmenter:
         self._gproc = None
         self._sam = None
         self._amp_dtype = None
-        # global accumulators (per class) for calibration/statistics
         self.stats_accepted: Counter = Counter()
-        self.stats_rejected: Counter = Counter()          # keyed by reason
+        self.stats_rejected: Counter = Counter()
         self.stats_rejected_by_class: Counter = Counter()
+        self._roi_state = roimod.ROIState() if cfg.get("grounded_sam2.roi_stable", True) else None
 
     # ------------------------------------------------------------------ #
     def _load_prompts(self) -> None:
@@ -59,19 +62,19 @@ class GroundedSAM2Segmenter:
         for s in self.specs.values():
             negatives.extend(s.negative_contexts)
         self.mapper = PhraseMapper(self.specs, negatives=negatives)
+        self._available = set(self.specs.keys())
 
-    def _build_query_groups(self) -> List[List[str]]:
+    def _build_query_groups(self, names: Optional[List[str]] = None) -> List[List[str]]:
+        specs = names or list(self.specs.keys())
         if self.prompt_strategy == "individual":
-            return [[n] for n in self.specs]
+            return [[n] for n in specs]
         if self.prompt_strategy == "concatenated":
-            return [list(self.specs.keys())]
+            return [list(specs)]
         groups: Dict[str, List[str]] = defaultdict(list)
         solos: List[List[str]] = []
-        for n, s in self.specs.items():
-            if s.solo:
-                solos.append([n])
-            else:
-                groups[s.group_tag].append(n)
+        for n in specs:
+            s = self.specs[n]
+            (solos.append([n]) if s.solo else groups[s.group_tag].append(n))
         return list(groups.values()) + solos
 
     # ------------------------------------------------------------------ #
@@ -123,21 +126,9 @@ class GroundedSAM2Segmenter:
         labels = res.get("text_labels") or res.get("labels") or []
         return boxes, scores, list(labels)
 
-    # ------------------------------------------------------------------ #
-    def segment(self, image_rgb: np.ndarray, frame_index: int,
-                capture_ts_ns: int, roi: Optional[Dict[str, Any]] = None) -> FrameOutput:
-        import cv2
-        import torch
-        from PIL import Image
-
-        h, w = image_rgb.shape[:2]
-        pil = Image.fromarray(image_rgb)
-        rej: Counter = Counter()
-        t0 = time.time()
-
-        # 1) candidate detections across query groups (variants+synonyms in caption)
+    def _gdino_candidates(self, pil, groups: List[List[str]], h: int, w: int):
         cand: List[Dict[str, Any]] = []
-        for group in self._build_query_groups():
+        for group in groups:
             for caption, cover in group_captions(self.specs, group):
                 if not caption:
                     continue
@@ -145,12 +136,17 @@ class GroundedSAM2Segmenter:
                 ctxt = min(self.specs[n].candidate_text_threshold for n in cover)
                 boxes, scores, labels = self._run_gdino(pil, caption, cbox, ctxt, h, w)
                 for b, s, lab in zip(boxes, scores, labels):
-                    cand.append({"box": b, "score": float(s), "phrase": str(lab),
-                                 "cover": cover})
-        t_gdino = (time.time() - t0) * 1e3
+                    cand.append({"box": b, "score": float(s), "phrase": str(lab), "cover": cover})
+        return cand
 
-        # 2) phrase->class mapping + per-class thresholds + box-level geometry
-        acc_boxes, acc_scores, acc_cids, acc_meta = [], [], [], []
+    def _finalize_pass(self, sam_image: np.ndarray, cand: List[Dict[str, Any]],
+                       h_full: int, w_full: int, offset: Tuple[int, int], scale: float,
+                       provenance: str, rej: Counter):
+        """Map phrases -> classes, filter, NMS, run SAM on `sam_image`, paste masks to
+        full-frame coords. Returns (detections, instances) in full-frame geometry."""
+        import cv2
+        import torch
+        acc = []
         for d in cand:
             mr = self.mapper.map(d["phrase"], d["cover"])
             if mr.name is None:
@@ -158,93 +154,122 @@ class GroundedSAM2Segmenter:
                 continue
             spec = self.specs[mr.name]
             if mr.confidence < spec.min_map_confidence:
-                rej["low_map_confidence"] += 1
-                self.stats_rejected_by_class[mr.name] += 1
-                continue
+                rej["low_map_confidence"] += 1; continue
             if d["score"] < spec.box_threshold:
-                rej["below_box_threshold"] += 1
-                self.stats_rejected_by_class[mr.name] += 1
-                continue
-            x0, y0, x1, y1 = d["box"]
-            ok, reason = box_geom_ok(spec, (x0, y0, x1, y1), int((x1 - x0) * (y1 - y0)), h, w)
-            # box-area proxy for early geom filters that don't need the mask
-            if reason in ("below_min_box_width", "below_min_box_height",
-                          "below_min_aspect_ratio", "above_max_aspect_ratio",
-                          "spans_full_frame_edges", "outside_allowed_region",
-                          "inside_forbidden_region") and not ok:
-                rej[reason] += 1
-                self.stats_rejected_by_class[mr.name] += 1
-                continue
-            acc_boxes.append(d["box"]); acc_scores.append(d["score"])
-            acc_cids.append(self.tax.id_of(mr.name))
-            acc_meta.append({"name": mr.name, "phrase": d["phrase"],
-                             "map_conf": mr.confidence,
-                             "provenance": (roi or {}).get("name", "full_frame")})
+                rej["below_box_threshold"] += 1; continue
+            fbox = roimod.remap_box(d["box"], offset, scale)
+            ok, reason = box_geom_ok(spec, fbox, int((fbox[2] - fbox[0]) * (fbox[3] - fbox[1])),
+                                     h_full, w_full)
+            if not ok and reason in _SHAPE_REJECTS:
+                rej[reason] += 1; continue
+            acc.append({"cbox": d["box"], "score": d["score"], "name": mr.name, "spec": spec,
+                        "fbox": fbox, "phrase": d["phrase"], "map_conf": mr.confidence})
+        if not acc:
+            return [], []
+        boxes = np.array([a["cbox"] for a in acc], dtype=np.float32)
+        scores = np.array([a["score"] for a in acc], dtype=np.float32)
+        cids = np.array([self.tax.id_of(a["name"]) for a in acc], dtype=np.int64)
+        iou_by_class = {self.tax.id_of(n): s.nms_iou for n, s in self.specs.items()}
+        keep = class_aware_nms(boxes, scores, cids,
+                               iou_thr=float(self.cfg.get("grounded_sam2.nms_iou", 0.7)),
+                               iou_by_class=iou_by_class)
+        acc = [acc[k] for k in keep]
+        boxes = boxes[keep]
 
-        dets: List[Detection] = []
-        instances: List[Instance] = []
-        t_sam = 0.0
-        if acc_boxes:
-            boxes = np.array(acc_boxes, dtype=np.float32)
-            scores = np.array(acc_scores, dtype=np.float32)
-            cids = np.array(acc_cids, dtype=np.int64)
-            iou_by_class = {self.tax.id_of(n): s.nms_iou for n, s in self.specs.items()}
-            keep = class_aware_nms(boxes, scores, cids,
-                                   iou_thr=float(self.cfg.get("grounded_sam2.nms_iou", 0.7)),
-                                   iou_by_class=iou_by_class)
-            boxes, scores = boxes[keep], scores[keep]
-            meta = [acc_meta[k] for k in keep]
+        self._sam.set_image(sam_image)
+        with torch.inference_mode(), torch.autocast(self.device, dtype=self._amp_dtype,
+                                                    enabled=self.device == "cuda"):
+            masks, ious, _ = self._sam.predict(box=boxes, multimask_output=False)
+        masks = np.asarray(masks)
+        if masks.ndim == 4:
+            masks = masks[:, 0]
+        ious = np.asarray(ious).reshape(-1)
 
-            t1 = time.time()
-            self._sam.set_image(image_rgb)
-            with torch.inference_mode(), torch.autocast(self.device, dtype=self._amp_dtype,
-                                                        enabled=self.device == "cuda"):
-                masks, ious, _ = self._sam.predict(box=boxes, multimask_output=False)
-            t_sam = (time.time() - t1) * 1e3
-            masks = np.asarray(masks)
-            if masks.ndim == 4:
-                masks = masks[:, 0]
-            ious = np.asarray(ious).reshape(-1)
+        dets, inst = [], []
+        for i, a in enumerate(acc):
+            spec = a["spec"]
+            m_crop = self._postprocess_mask(masks[i] > 0.0, spec, cv2)
+            m_full = roimod.paste_mask(m_crop, offset, h_full, w_full, scale)
+            area = int(m_full.sum())
+            ok, reason = box_geom_ok(spec, a["fbox"], area, h_full, w_full)
+            if not ok:
+                rej[reason] += 1; continue
+            sam_iou = float(ious[i]) if i < len(ious) else 0.0
+            combined = self._combine(float(a["score"]), sam_iou)
+            cid = self.tax.id_of(a["name"])
+            dets.append(Detection(cid, a["name"], tuple(float(x) for x in a["fbox"]),
+                                  phrase=a["name"], gdino_score=float(a["score"]), sam_iou=sam_iou,
+                                  combined_score=combined, area_px=area, priority=spec.priority,
+                                  native_phrase=a["phrase"], map_confidence=float(a["map_conf"]),
+                                  provenance=provenance))
+            inst.append(Instance(m_full, cid, combined, spec.priority))
+        return dets, inst
 
-            per_class: Dict[str, List[Detection]] = defaultdict(list)
-            per_class_inst: Dict[str, List[Instance]] = defaultdict(list)
-            for i, m in enumerate(meta):
-                name = m["name"]; spec = self.specs[name]
-                mask = self._postprocess_mask(masks[i] > 0.0, spec, cv2)
-                area = int(mask.sum())
-                ok, reason = box_geom_ok(spec, tuple(float(x) for x in boxes[i]), area, h, w)
-                if not ok:
-                    rej[reason] += 1
-                    self.stats_rejected_by_class[name] += 1
+    def _crop_pass(self, image: np.ndarray, box, class_names: List[str], provenance: str,
+                   scale: float, rej: Counter):
+        import cv2
+        from PIL import Image
+        H, W = image.shape[:2]
+        x0, y0, x1, y1 = [int(v) for v in box]
+        if x1 - x0 < 8 or y1 - y0 < 8:
+            return [], []
+        crop = image[y0:y1, x0:x1]
+        if scale != 1.0:
+            crop = cv2.resize(crop, (int((x1 - x0) * scale), int((y1 - y0) * scale)),
+                              interpolation=cv2.INTER_LINEAR)
+        ch, cw = crop.shape[:2]
+        cand = self._gdino_candidates(Image.fromarray(crop), [class_names], ch, cw)
+        return self._finalize_pass(np.ascontiguousarray(crop), cand, H, W, (x0, y0), scale,
+                                   provenance, rej)
+
+    # ------------------------------------------------------------------ #
+    def segment(self, image_rgb: np.ndarray, frame_index: int,
+                capture_ts_ns: int) -> FrameOutput:
+        from PIL import Image
+        h, w = image_rgb.shape[:2]
+        rej: Counter = Counter()
+        t0 = time.time()
+
+        # ---- full-frame pass ----
+        cand = self._gdino_candidates(Image.fromarray(image_rgb), self._build_query_groups(), h, w)
+        t_gdino = (time.time() - t0) * 1e3
+        t1 = time.time()
+        all_dets, all_inst = self._finalize_pass(image_rgb, cand, h, w, (0, 0), 1.0,
+                                                 "full_frame", rej)
+
+        rois: Dict[str, Any] = {}
+        # ---- Phase 4: hierarchical ROI passes ----
+        if self.cfg.get("grounded_sam2.roi_enabled", False):
+            rois = roimod.derive_rois(all_dets, h, w, float(self.cfg.get("grounded_sam2.roi_pad_frac", 0.05)))
+            if self._roi_state is not None:
+                rois = self._roi_state.update(rois, h, w)
+            rscale = float(self.cfg.get("grounded_sam2.roi_scale", 1.5))
+            for name, box in rois.items():
+                subset = roimod.roi_class_subset(name, self._available)
+                if not subset:
                     continue
-                sam_iou = float(ious[i]) if i < len(ious) else 0.0
-                combined = self._combine(float(scores[i]), sam_iou)
-                cid = self.tax.id_of(name)
-                det = Detection(cid, name, tuple(float(x) for x in boxes[i]),
-                                phrase=name, gdino_score=float(scores[i]), sam_iou=sam_iou,
-                                combined_score=combined, area_px=area, priority=spec.priority,
-                                native_phrase=m["phrase"], map_confidence=float(m["map_conf"]),
-                                provenance=m["provenance"])
-                per_class[name].append(det)
-                per_class_inst[name].append(Instance(mask, cid, combined, spec.priority))
+                d, ins = self._crop_pass(image_rgb, box, subset, f"roi:{name}", rscale, rej)
+                all_dets += d; all_inst += ins
 
-            # 3) max_instances per class (keep highest combined score)
-            for name, ds in per_class.items():
-                spec = self.specs[name]
-                order = sorted(range(len(ds)), key=lambda k: -ds[k].combined_score)
-                cap = spec.max_instances if spec.max_instances else len(ds)
-                dropped = max(0, len(ds) - cap)
-                if dropped:
-                    rej["max_instances"] += dropped
-                    self.stats_rejected_by_class[name] += dropped
-                for k in order[:cap]:
-                    dets.append(ds[k]); instances.append(per_class_inst[name][k])
-                    self.stats_accepted[name] += 1
+        # ---- Phase 5: multi-scale windshield tiles ----
+        if self.cfg.get("grounded_sam2.multiscale_enabled", False):
+            wbox = rois.get("windshield_view") or roimod.derive_rois(all_dets, h, w).get("windshield_view")
+            if wbox:
+                subset = roimod.roi_class_subset("windshield_view", self._available)
+                mscale = float(self.cfg.get("grounded_sam2.ms_scale", 1.5))
+                tiles = roimod.tiles_of(wbox, int(self.cfg.get("grounded_sam2.ms_tiles", 3)),
+                                        float(self.cfg.get("grounded_sam2.ms_tile_overlap", 0.2)))
+                for ti, tile in enumerate(tiles):
+                    d, ins = self._crop_pass(image_rgb, tile, subset, f"tile:{ti}", mscale, rej)
+                    all_dets += d; all_inst += ins
+        t_sam = (time.time() - t1) * 1e3
 
-        id_map, score_map = resolve_overlaps(h, w, instances)
-        # multi-layer masks (Phase 3): partition instances by functional layer
+        # ---- fuse across passes (box + mask NMS, max_instances) ----
+        all_dets, all_inst = self._fuse(all_dets, all_inst, rej)
+
+        id_map, score_map = resolve_overlaps(h, w, all_inst)
         layer_inst: Dict[str, List[Instance]] = {L: [] for L in LAYERS}
-        for inst in instances:
+        for inst in all_inst:
             layer_inst[layer_of_id(self.tax, inst.canonical_id)].append(inst)
         layers = {L: resolve_overlaps(h, w, layer_inst[L])[0] for L in LAYERS}
         for reason, c in rej.items():
@@ -253,15 +278,64 @@ class GroundedSAM2Segmenter:
         return FrameOutput(
             frame_index=frame_index, capture_timestamp_ns=capture_ts_ns,
             method="grounded_sam2", image_size=(h, w),
-            canonical_mask=id_map, confidence=score_map, detections=dets,
+            canonical_mask=id_map, confidence=score_map, detections=all_dets,
             timings_ms={"grounding_dino": round(t_gdino, 1), "sam2": round(t_sam, 1),
                         "total": round(total, 1)},
             layers=layers,
             extra={"coverage": float((id_map > 0).mean()),
-                   "num_candidates": len(cand), "num_accepted": len(dets),
+                   "num_candidates": len(cand), "num_accepted": len(all_dets),
+                   "rois": {k: [int(x) for x in v] for k, v in rois.items()},
+                   "provenance_counts": dict(Counter(d.provenance for d in all_dets)),
                    "layer_coverage": {L: float((layers[L] > 0).mean()) for L in LAYERS},
                    "rejections": dict(rej)},
         )
+
+    def _fuse(self, dets: List[Detection], inst: List[Instance], rej: Counter):
+        """Cross-pass duplicate fusion: class-aware box NMS, then same-class mask-IoU
+        dedup, then max_instances per class."""
+        if not dets:
+            return [], []
+        boxes = np.array([d.box for d in dets], dtype=np.float32)
+        scores = np.array([d.combined_score for d in dets], dtype=np.float32)
+        cids = np.array([d.canonical_id for d in dets], dtype=np.int64)
+        iou_by_class = {self.tax.id_of(n): s.nms_iou for n, s in self.specs.items()}
+        keep = class_aware_nms(boxes, scores, cids,
+                               iou_thr=float(self.cfg.get("grounded_sam2.nms_iou", 0.7)),
+                               iou_by_class=iou_by_class)
+        dets = [dets[k] for k in keep]; inst = [inst[k] for k in keep]
+        # same-class mask-IoU dedup (fuse full-frame vs tile duplicates)
+        thr = float(self.cfg.get("segmentation.overlap_min_iou_dedup", 0.85))
+        order = sorted(range(len(dets)), key=lambda k: -dets[k].combined_score)
+        drop = set()
+        for ii in range(len(order)):
+            a = order[ii]
+            if a in drop:
+                continue
+            for jj in range(ii + 1, len(order)):
+                b = order[jj]
+                if b in drop or dets[a].canonical_id != dets[b].canonical_id:
+                    continue
+                if mask_iou(inst[a].mask, inst[b].mask) > thr:
+                    drop.add(b)
+        dets = [d for k, d in enumerate(dets) if k not in drop]
+        inst = [x for k, x in enumerate(inst) if k not in drop]
+        if drop:
+            rej["mask_dedup"] += len(drop)
+        # max_instances per class
+        per: Dict[str, List[int]] = defaultdict(list)
+        for k, d in enumerate(dets):
+            per[d.canonical_name].append(k)
+        keep2 = []
+        for name, idxs in per.items():
+            cap = self.specs[name].max_instances or len(idxs)
+            idxs = sorted(idxs, key=lambda k: -dets[k].combined_score)
+            if len(idxs) > cap:
+                rej["max_instances"] += len(idxs) - cap
+                self.stats_rejected_by_class[name] += len(idxs) - cap
+            keep2 += idxs[:cap]
+            self.stats_accepted[name] += min(len(idxs), cap)
+        keep2.sort()
+        return [dets[k] for k in keep2], [inst[k] for k in keep2]
 
     def _postprocess_mask(self, m: np.ndarray, spec: PromptSpec, cv2) -> np.ndarray:
         if spec.morph_close and spec.morph_close > 1:

@@ -56,6 +56,18 @@ grounded_sam2:
   nms_iou: 0.7
   score_combine: geometric   # combined = sqrt(gdino_box * sam_iou)
   device: cuda
+  mode: independent          # independent | temporal (Phase 8)
+  # Phase 4 — hierarchical ROI (opt-in): re-detect targeted classes inside derived
+  # windshield/window/mirror/interior ROIs so small/through-glass objects get more pixels.
+  roi_enabled: false
+  roi_pad_frac: 0.05
+  roi_scale: 1.5             # upscale factor for ROI crops
+  roi_stable: true          # EMA-smooth ROIs across frames (same car/person)
+  # Phase 5 — multi-scale tiling of the windshield crop for tiny objects (opt-in).
+  multiscale_enabled: false
+  ms_tiles: 3               # horizontal overlapping tiles of the windshield crop
+  ms_tile_overlap: 0.2
+  ms_scale: 1.5
 
 # Method 2: OneFormer / Mask2Former on Mapillary Vistas (§8). See docs/model_selection.md.
 # Two backends, SAME Mapillary v1.2 65-class taxonomy -> same canonical mapping:
