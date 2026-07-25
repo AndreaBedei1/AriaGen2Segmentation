@@ -107,9 +107,48 @@ propagation · 9 richer layer/gaze diagnostic videos · 10 further tests · 11 r
 ablation to choose a config, then 60–100 then 200 consecutive frames · 12 final report.
 The full 3762-frame run stays **gated** on explicit confirmation (Phase 11.13).
 
+## Operating-point selection prep (GT + controlled ablation)
+
+To choose the static operating point **scientifically** (not on coverage), this stage adds:
+
+**Frozen 60-frame validation set** (`validation/`, `08ffff6`… manifest committed): 20 uniform
++ 20 hard-scene (image complexity / lighting) + 20 gaze-diverse (cockpit-down, wide-yaw,
+invalid, ahead), min 12-frame gap, contact sheet checked. `build_validation_set.py`.
+
+**Tiered CVAT ground-truth package** (`validation/cvat_package/`): Tier A = 19 seg-mask
+classes, Tier B = 14 box/presence classes, Tier C = `not_observed` (absent ≠ FN).
+`build_gt_package.py` + import/export instructions. **Human annotation required — no labels
+invented.** See docs/ground_truth_protocol.md.
+
+**Hierarchical parent→subclass fix**: fine subclasses (child, emergency_vehicle, …) are no
+longer prompted globally in the standard config; the parent is detected first and the subtype
+is classified on the parent crop, relabelling only on a confident+clear win. Fixes the
+max-recall over-segmentation. Tests in test_hierarchy.py.
+
+**Five ablation configs** (`configs/ablation/`): A baseline_original, B phase1_clean,
+C extended_hierarchical, D selective_roi_multiscale, E gaze_conditioned (experimental).
+Selection uses GT metrics + gates (safety-class F1, gaze accuracy, fine-subclass precision,
+mIoU, small-object recall, cost) with a target ≈20–25 s/frame; the ~47–50 s/frame profile is
+kept only as `max_recall`, not the full-run default. See docs/ablation_grounded_sam2.md.
+
+**Smoke tests (pre-GT, 10 frames/config)** — no winner chosen, only sanity (crashes /
+giant masks / coordinates):
+- A (baseline): mean_cov 0.29, ~19 dets, 0 giant masks, 0 errors.
+- B (phase1): mean_cov 0.45, ~38 dets, 0 giant masks, 0 errors.
+- C (extended_hierarchical): mean_cov 0.59, ~98 dets, 0 giant masks; hierarchy gating works
+  (few subclasses accepted, most rejected/ambiguous → parent kept) — the over-segmentation
+  of the old max-recall profile is gone.
+- D (selective_roi_multiscale): running (ROI/multiscale, ~50 s/frame).
+No config selected — selection awaits ground truth (`validation/gt/`).
+
+## Blocked until GT + static ablation done
+SAM2 temporal (Phase 8) and the full 3762-frame run remain blocked until GT exists, the
+static ablation A–D is scored, an operating point passes the gates, and it clears 200
+consecutive frames.
+
 ## Git / push
-9 thematic commits on `feature/grounded-sam2-recall`. **Push is pending** — no git
-credentials are available in this environment; push the branch manually:
+Thematic commits on `feature/grounded-sam2-recall`. **Push is pending** — no git credentials
+in this environment; push manually:
 `git push -u origin feature/grounded-sam2-recall`.
 
 ## Reproduce the Phase-1 validation
