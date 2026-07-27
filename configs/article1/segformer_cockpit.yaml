@@ -1,8 +1,19 @@
 article1_cockpit:
   model: nvidia/segformer-b2-finetuned-ade-512-512
   local_checkpoint: weights/segformer-b2-article1-cockpit
+  pretrained_local: weights/segformer-b2-pretrained
   classes: [background_internal, mirror, instrument_display, control_and_ego_vehicle]
   domains: [car, motorcycle]
+  image_size: [512, 512]
+  batch_size: 4
+  learning_rate: 0.00006
+  weight_decay: 0.01
+  epochs: 50
+  early_stopping_patience: 8
+  class_weights: [0.25, 1.5, 1.5, 1.0]
+  augmentations: [horizontal_flip_with_attribute_swap, color_jitter, mild_blur]
+  domain_balanced_sampler: true
+  checkpoint_dir: checkpoints/article1_cockpit
   seed: 2026
   mixed_precision: bf16
   deterministic: true
