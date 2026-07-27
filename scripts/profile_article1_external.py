@@ -56,16 +56,20 @@ def main():
         inputs = proc(images=rgb, return_tensors="pt", do_resize=not no_default_resize)
         preprocess = (time.perf_counter() - t) * 1000
         inputs = {k: v.to("cuda") for k, v in inputs.items()}
+        torch.cuda.synchronize()
         torch.cuda.reset_peak_memory_stats()
         t = time.perf_counter()
         with torch.inference_mode(), torch.autocast("cuda", dtype=torch.bfloat16):
             result = model(**inputs)
+        torch.cuda.synchronize()
         forward = (time.perf_counter() - t) * 1000
         cq = result.class_queries_logits.float().softmax(-1)[..., :-1]
         mq = result.masks_queries_logits.float().sigmoid()
         sem = torch.einsum("bqc,bqhw->bchw", cq, mq)[0]
         sem = sem / sem.sum(0, keepdim=True).clamp_min(1e-12)
-        return sem.cpu().numpy(), preprocess, forward, torch.cuda.max_memory_allocated() / 1e6
+        native = sem.cpu().numpy()
+        torch.cuda.synchronize()
+        return native, preprocess, forward, torch.cuda.max_memory_allocated() / 1e6
 
     for _, row in frames.iterrows():
         fi = int(row.frame_index)
