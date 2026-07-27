@@ -12,6 +12,7 @@ always kept; the canonical mask is an ADDITIONAL view (native labels never delet
 from __future__ import annotations
 
 import time
+import re
 from pathlib import Path
 from typing import Any, Dict, List, Optional, Tuple
 
@@ -19,6 +20,7 @@ import numpy as np
 import yaml
 
 from ..config import Config
+from ..hashing import sha256_file
 from ..io_utils import (Manifest, append_jsonl, atomic_write_json,
                         config_fingerprint)
 from ..logging_utils import get_logger
@@ -32,6 +34,43 @@ ALLOWED_MASK2FORMER_MISSING = {
     "model.pixel_level_module.encoder.swin.layernorm.weight",
     "model.pixel_level_module.encoder.swin.layernorm.bias",
 }
+ALLOWED_MASK2FORMER_UNEXPECTED_PATTERNS = (
+    r"^model\.pixel_level_module\.encoder\.swin\.encoder\.layers\.\d+"
+    r"\.blocks\.\d+\.attention\.self\.relative_position_index$",
+)
+
+
+def validate_mask2former_loading_info(info: dict) -> dict:
+    """Validate loading diagnostics independently so every failure mode is tested."""
+    missing = set(info.get("missing_keys", ()))
+    unexpected = list(info.get("unexpected_keys", ()))
+    mismatched = list(info.get("mismatched_keys", ()))
+    errors = list(info.get("error_msgs", ()))
+    if missing != ALLOWED_MASK2FORMER_MISSING:
+        raise RuntimeError(f"unapproved Mask2Former missing keys: {sorted(missing)}")
+    rejected = [
+        key for key in unexpected
+        if not any(re.fullmatch(pattern, key)
+                   for pattern in ALLOWED_MASK2FORMER_UNEXPECTED_PATTERNS)
+    ]
+    if rejected:
+        raise RuntimeError(
+            f"unapproved Mask2Former unexpected keys: {sorted(rejected)}")
+    if mismatched:
+        raise RuntimeError(f"Mask2Former mismatched shapes: {mismatched}")
+    if errors:
+        raise RuntimeError(f"Mask2Former loader errors: {errors}")
+    return {
+        "missing_keys": sorted(missing),
+        "unexpected_keys": sorted(unexpected),
+        "allowed_unexpected_patterns":
+            list(ALLOWED_MASK2FORMER_UNEXPECTED_PATTERNS),
+        "unexpected_key_policy":
+            "legacy non-trainable relative_position_index buffers only",
+        "mismatched_keys": [],
+        "error_msgs": [],
+        "gate_passed": True,
+    }
 
 
 def load_verified_mask2former(model_path: str):
@@ -45,23 +84,28 @@ def load_verified_mask2former(model_path: str):
     import torch
     from transformers import Mask2FormerForUniversalSegmentation
 
+    import transformers
+
     model, info = Mask2FormerForUniversalSegmentation.from_pretrained(
-        model_path, output_loading_info=True)
-    missing = set(info.get("missing_keys", ()))
-    if missing != ALLOWED_MASK2FORMER_MISSING:
-        raise RuntimeError(f"unapproved Mask2Former missing keys: {sorted(missing)}")
-    if info.get("mismatched_keys") or info.get("error_msgs"):
-        raise RuntimeError(f"Mask2Former load mismatch: {info}")
+        model_path, output_loading_info=True, local_files_only=True)
+    report = validate_mask2former_loading_info(info)
     norm = model.model.pixel_level_module.encoder.swin.layernorm
     with torch.no_grad():
         norm.weight.fill_(1.0)
         norm.bias.zero_()
-    model._aria_loading_info = {
-        "missing_keys": sorted(missing),
-        "unexpected_keys": sorted(info.get("unexpected_keys", ())),
-        "mismatched_keys": sorted(info.get("mismatched_keys", ())),
-        "final_swin_layernorm_policy": "explicit_identity_unused_by_swin_backbone_feature_maps",
-    }
+    checkpoint = Path(model_path)
+    weight_files = [
+        path for path in (checkpoint / "model.safetensors",
+                          checkpoint / "pytorch_model.bin") if path.exists()]
+    report.update({
+        "checkpoint_files_sha256": {
+            path.name: sha256_file(path) for path in weight_files},
+        "transformers_version": transformers.__version__,
+        "pytorch_version": torch.__version__,
+        "final_swin_layernorm_policy":
+            "explicit_identity_unused_by_swin_backbone_feature_maps",
+    })
+    model._aria_loading_info = report
     return model
 
 
