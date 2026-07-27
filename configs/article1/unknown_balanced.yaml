@@ -1,0 +1,8 @@
+article1:
+  unknown:
+    enabled: true
+    min_top1_probability: 0.45
+    min_top1_top2_margin: 0.08
+    max_normalized_entropy: 0.75
+    unsupported_native_to_unknown: true
+    combine_rule: any

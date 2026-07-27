@@ -1,0 +1,65 @@
+{
+  "disclaimer": "Pre-GT behavior ablation; not an accuracy evaluation.",
+  "frames": 10,
+  "profiles": {
+    "permissive": {
+      "policy": {
+        "enabled": true,
+        "min_top1_probability": 0.35,
+        "min_top1_top2_margin": 0.04,
+        "max_normalized_entropy": 0.85,
+        "unsupported_native_to_unknown": true,
+        "combine_rule": "any"
+      },
+      "mean_unknown_rate": 0.00930239958637776,
+      "min_unknown_rate": 0.001997905643738977,
+      "max_unknown_rate": 0.02563683652473335,
+      "unknown_reason_bitmask_counts": {
+        "0": 30198365,
+        "1": 2915,
+        "2": 275913,
+        "3": 4727
+      }
+    },
+    "balanced": {
+      "policy": {
+        "enabled": true,
+        "min_top1_probability": 0.45,
+        "min_top1_top2_margin": 0.08,
+        "max_normalized_entropy": 0.75,
+        "unsupported_native_to_unknown": true,
+        "combine_rule": "any"
+      },
+      "mean_unknown_rate": 0.018825388951877048,
+      "min_unknown_rate": 0.004338637461157303,
+      "max_unknown_rate": 0.044249509217267155,
+      "unknown_reason_bitmask_counts": {
+        "0": 29908086,
+        "1": 22532,
+        "2": 501632,
+        "3": 49670
+      }
+    },
+    "conservative": {
+      "policy": {
+        "enabled": true,
+        "min_top1_probability": 0.55,
+        "min_top1_top2_margin": 0.12,
+        "max_normalized_entropy": 0.65,
+        "unsupported_native_to_unknown": true,
+        "combine_rule": "any"
+      },
+      "mean_unknown_rate": 0.036307588235911646,
+      "min_unknown_rate": 0.006824373267825649,
+      "max_unknown_rate": 0.13629423605862098,
+      "unknown_reason_bitmask_counts": {
+        "0": 29375195,
+        "1": 107183,
+        "2": 24043,
+        "3": 975273,
+        "7": 140,
+        "5": 86
+      }
+    }
+  }
+}

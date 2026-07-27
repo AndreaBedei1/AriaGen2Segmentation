@@ -99,6 +99,14 @@ def build_parser() -> argparse.ArgumentParser:
     prend.add_argument("--participant-id", required=True)
     prend.add_argument("--fps", type=float, default=None)
     _add_common(prend)
+    prep = a1.add_parser("reprocess-external",
+                         help="apply checkpoint2 unknown/thin policies to saved native probabilities")
+    prep.add_argument("--input", required=True)
+    prep.add_argument("--source-subdir", default="article1_external")
+    prep.add_argument("--vehicle-type", required=True, choices=["car", "motorcycle"])
+    prep.add_argument("--session-id", required=True)
+    prep.add_argument("--participant-id", required=True)
+    _add_common(prep)
     return ap
 
 
@@ -176,6 +184,10 @@ def main(argv: Optional[list] = None) -> int:
             result = run_render_external(args.input, cfg, output_dir=args.output, fps=args.fps)
             print(result)
             return 0
+        if args.article1_command == "reprocess-external":
+            from .article1.reprocess import run_reprocess_external
+            return run_reprocess_external(args.input, cfg, source_subdir=args.source_subdir,
+                                          resume=args.resume, force=args.force)
 
     return 1
 

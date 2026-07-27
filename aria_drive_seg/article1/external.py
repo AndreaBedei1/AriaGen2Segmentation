@@ -42,19 +42,25 @@ class Article1Mapper:
             self.attributes[native_id] = {
                 k: v for k, v in entry.items() if k not in {"article1"}
             }
+        self.mapillary_ego_ids = {
+            native_id for native_id, attrs in self.attributes.items()
+            if attrs.get("mapillary_ego_region") is True
+        }
 
     def aggregate(self, native_probabilities: np.ndarray, confidence_threshold: float,
-                  entropy_unknown_threshold: float | None = None) -> dict:
+                  entropy_unknown_threshold: float | None = None,
+                  unknown_policy: dict | None = None) -> dict:
         return aggregate_native_probabilities(
             native_probabilities, self.native_to_article, self.taxonomy.max_id + 1,
-            confidence_threshold, entropy_unknown_threshold)
+            confidence_threshold, entropy_unknown_threshold, unknown_policy)
 
 
 def aggregate_native_probabilities(native_probabilities: np.ndarray,
                                    native_to_article: np.ndarray,
                                    num_article_classes: int,
                                    confidence_threshold: float = 0.38,
-                                   entropy_unknown_threshold: float | None = None) -> dict:
+                                   entropy_unknown_threshold: float | None = None,
+                                   unknown_policy: dict | None = None) -> dict:
     """Sum native probability channels into Article 1 channels.
 
     Input is C×H×W and is normalized defensively. Unsupported native channels map
@@ -72,17 +78,50 @@ def aggregate_native_probabilities(native_probabilities: np.ndarray,
         out[int(article_id)] += p[native_id]
     out /= np.maximum(out.sum(axis=0, keepdims=True), 1e-12)
     entropy = -(out * np.log(np.maximum(out, 1e-12))).sum(axis=0)
-    known_conf = out[1:].max(axis=0) if num_article_classes > 1 else np.zeros(p.shape[1:])
-    uncertain = known_conf < float(confidence_threshold)
-    if entropy_unknown_threshold is not None:
-        uncertain |= entropy > float(entropy_unknown_threshold)
+    normalized_entropy = entropy / np.log(max(2, num_article_classes))
+    known = out[1:]
+    order = np.argsort(known, axis=0)
+    top1_ids = order[-1].astype(np.uint16) + 1
+    top2_ids = order[-2].astype(np.uint16) + 1
+    top1 = np.take_along_axis(known, order[-1:], axis=0)[0]
+    top2 = np.take_along_axis(known, order[-2:-1], axis=0)[0]
+    margin = top1 - top2
+    dominant_native = p.argmax(axis=0)
+    unsupported = native_to_article[dominant_native] == 0
+    reasons = np.zeros(p.shape[1:], dtype=np.uint8)
+    policy = unknown_policy or {}
+    if policy.get("enabled", bool(unknown_policy)):
+        low_probability = top1 < float(policy.get("min_top1_probability", .45))
+        low_margin = margin < float(policy.get("min_top1_top2_margin", .08))
+        high_entropy = normalized_entropy > float(policy.get("max_normalized_entropy", .75))
+        reasons[low_probability] |= 1
+        reasons[low_margin] |= 2
+        reasons[high_entropy] |= 4
+        if policy.get("unsupported_native_to_unknown", True):
+            reasons[unsupported] |= 8
+        tests = np.stack([low_probability, low_margin, high_entropy,
+                          unsupported if policy.get("unsupported_native_to_unknown", True)
+                          else np.zeros_like(unsupported)])
+        uncertain = tests.all(axis=0) if policy.get("combine_rule") == "all" else tests.any(axis=0)
+    else:
+        uncertain = top1 < float(confidence_threshold)
+        reasons[uncertain] |= 1
+        if entropy_unknown_threshold is not None:
+            hi = entropy > float(entropy_unknown_threshold)
+            uncertain |= hi
+            reasons[hi] |= 4
     out[:, uncertain] = 0
     out[0, uncertain] = 1
     mask = out.argmax(axis=0).astype(np.uint16)
     confidence = out.max(axis=0).astype(np.float32)
-    top2 = np.argsort(out, axis=0)[-2:][::-1].astype(np.uint16)
+    final_top2 = np.stack([top1_ids, top2_ids])
     return {"probabilities": out, "mask": mask, "confidence": confidence,
-            "entropy": entropy.astype(np.float32), "top2": top2}
+            "entropy": entropy.astype(np.float32),
+            "normalized_entropy": normalized_entropy.astype(np.float32),
+            "top2": final_top2, "top1_probability": top1.astype(np.float32),
+            "top2_probability": top2.astype(np.float32),
+            "margin": margin.astype(np.float32), "unknown_reason": reasons,
+            "dominant_native": dominant_native.astype(np.uint16)}
 
 
 def preserve_thin_markings(base_mask: np.ndarray, probabilities: np.ndarray,
@@ -119,6 +158,90 @@ def preserve_thin_markings(base_mask: np.ndarray, probabilities: np.ndarray,
             "regulatory_mask": regulatory}
 
 
+THIN_REASON = {
+    0: "none", 1: "low_probability", 2: "low_margin", 3: "outside_road_support",
+    4: "conflicts_with_nonroad", 5: "component_too_small",
+    6: "component_too_large", 7: "accepted",
+}
+
+
+def filter_thin_markings(base_mask: np.ndarray, probabilities: np.ndarray,
+                         cfg: dict) -> dict:
+    """Filter raw thin probabilities using road semantics and component geometry."""
+    import cv2
+    h, w = base_mask.shape
+    lane_id, regulatory_id, road_id = 2, 3, 1
+    lane_t = float(cfg.get("lane_threshold", .40))
+    reg_t = float(cfg.get("regulatory_threshold", .45))
+    floor = float(cfg.get("candidate_probability_floor", .10))
+    known = probabilities[1:]
+    ordered = np.sort(known, axis=0)
+    margin = ordered[-1] - ordered[-2]
+    min_margin = float(cfg.get("min_top1_top2_margin", .05))
+    # Thin predictions must be supported by independently predicted road surface;
+    # they cannot create their own support merely by winning the base argmax.
+    road_seed = (base_mask == road_id).astype(np.uint8)
+    dilation = int(cfg.get("road_support_dilation_px", 12))
+    if dilation > 0:
+        k = cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (2 * dilation + 1,) * 2)
+        road_support = cv2.dilate(road_seed, k).astype(bool)
+    else:
+        road_support = road_seed.astype(bool)
+    nonroad = ~np.isin(base_mask, [road_id, lane_id, regulatory_id, 0])
+    raw = np.zeros((h, w), np.uint16)
+    raw[probabilities[lane_id] >= floor] = lane_id
+    raw[probabilities[regulatory_id] >= floor] = regulatory_id
+    filtered = np.zeros_like(raw)
+    reasons = np.zeros((h, w), np.uint8)
+    stats = {name: 0 for name in THIN_REASON.values()}
+    max_area = float(cfg.get("max_component_area_frac", .08)) * h * w
+    min_area = int(cfg.get("min_component_area_px", 25))
+    min_overlap = float(cfg.get("min_road_overlap", .60))
+    for cid, threshold in ((lane_id, lane_t), (regulatory_id, reg_t)):
+        candidate = probabilities[cid] >= floor
+        lowp = candidate & (probabilities[cid] < threshold)
+        reasons[lowp] = 1
+        lowm = candidate & ~lowp & (margin < min_margin)
+        reasons[lowm] = 2
+        eligible = candidate & ~lowp & ~lowm
+        outside = eligible & ~road_support
+        reasons[outside] = 3
+        eligible &= road_support
+        if cfg.get("suppress_on_nonroad_classes", True):
+            conflict = eligible & nonroad
+            reasons[conflict] = 4
+            eligible &= ~nonroad
+        binary = eligible.astype(np.uint8)
+        op = int(cfg.get("morphology_open_kernel", 1))
+        cl = int(cfg.get("morphology_close_kernel", 1))
+        if op > 1:
+            binary = cv2.morphologyEx(binary, cv2.MORPH_OPEN, np.ones((op, op), np.uint8))
+        if cl > 1:
+            binary = cv2.morphologyEx(binary, cv2.MORPH_CLOSE, np.ones((cl, cl), np.uint8))
+        n, labels, comp_stats, _ = cv2.connectedComponentsWithStats(binary, 8)
+        for i in range(1, n):
+            comp = labels == i
+            area = int(comp_stats[i, cv2.CC_STAT_AREA])
+            overlap = float(road_support[comp].mean()) if area else 0
+            if area < min_area:
+                reasons[comp] = 5
+            elif area > max_area:
+                reasons[comp] = 6
+            elif overlap < min_overlap:
+                reasons[comp] = 3
+            else:
+                filtered[comp] = cid
+                reasons[comp] = 7
+    composite = base_mask.copy()
+    composite[filtered == lane_id] = lane_id
+    composite[filtered == regulatory_id] = regulatory_id
+    values, counts = np.unique(reasons, return_counts=True)
+    for value, count in zip(values, counts):
+        stats[THIN_REASON[int(value)]] = int(count)
+    return {"raw_thin_mask": raw, "filtered_thin_mask": filtered,
+            "reason_map": reasons, "composite": composite, "reason_stats": stats}
+
+
 def _atomic_npz(path: Path, **arrays) -> None:
     with atomic_write(path, "wb") as handle:
         np.savez_compressed(handle, **arrays)
@@ -134,7 +257,8 @@ def run_external(input_dir: str, cfg: Config, resume: bool = True,
     root = Path(input_dir)
     out = root / "article1_external"
     for name in ("native_masks", "native_probabilities", "probabilities", "base_masks",
-                 "thin_masks", "masks", "confidence", "entropy", "top2", "metadata"):
+                 "thin_masks", "masks", "confidence", "entropy", "top2", "metadata",
+                 "provenance", "mapillary_ego_region"):
         (out / name).mkdir(parents=True, exist_ok=True)
     tax_path = cfg.resolve(cfg.get("article1.classes"))
     map_path = cfg.resolve(cfg.get("article1.mapillary_mapping"))
@@ -169,6 +293,7 @@ def run_external(input_dir: str, cfg: Config, resume: bool = True,
         native_prob = (native_scores / native_scores.sum(dim=0, keepdim=True).clamp_min(1e-12))
         native_prob = native_prob.cpu().numpy().astype(np.float32)
         native_mask = native_prob.argmax(axis=0).astype(np.uint16)
+        ego_region = np.isin(native_mask, list(mapper.mapillary_ego_ids))
         agg = mapper.aggregate(native_prob, cfg.get("article1.confidence_threshold", .38),
                                cfg.get("article1.entropy_unknown_threshold"))
         thin = preserve_thin_markings(
@@ -183,6 +308,12 @@ def run_external(input_dir: str, cfg: Config, resume: bool = True,
         write_mask_u16(out / "base_masks" / f"{stem}.png", agg["mask"])
         write_mask_u16(out / "thin_masks" / f"{stem}.png", thin["thin_mask"])
         write_mask_u16(out / "masks" / f"{stem}.png", thin["composite"])
+        # Provenance id 1 = Mapillary. Separate binary ego flag retains the native
+        # region without turning it into a scientific cockpit class.
+        write_mask_u16(out / "provenance" / f"{stem}.png",
+                       np.ones_like(native_mask, dtype=np.uint16))
+        cv2.imwrite(str(out / "mapillary_ego_region" / f"{stem}.png"),
+                    ego_region.astype(np.uint8) * 255)
         cv2.imwrite(str(out / "confidence" / f"{stem}.png"),
                     np.clip(agg["confidence"] * 255, 0, 255).astype(np.uint8))
         _atomic_npz(out / "native_probabilities" / f"{stem}.npz",
@@ -203,6 +334,9 @@ def run_external(input_dir: str, cfg: Config, resume: bool = True,
                 "unknown_rate": float((thin["composite"] == 0).mean()),
                 "thin_lane_pixels": int(thin["lane_mask"].sum()),
                 "thin_regulatory_pixels": int(thin["regulatory_mask"].sum())}
+        meta["mapillary_ego_region"] = True
+        meta["mapillary_ego_region_pixels"] = int(ego_region.sum())
+        meta["provenance_codes"] = {"1": "mapillary"}
         atomic_write_json(out / "metadata" / f"{stem}.json", meta)
         manifest.mark(fi, {"total_ms": elapsed})
         manifest.save()

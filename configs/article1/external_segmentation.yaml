@@ -1,0 +1,25 @@
+article1:
+  classes: configs/article1/classes_article1.yaml
+  mapillary_mapping: configs/article1/mapillary_to_article1.yaml
+  output_subdir: article1_external_checkpoint2
+  unknown:
+    enabled: true
+    min_top1_probability: 0.45
+    min_top1_top2_margin: 0.08
+    max_normalized_entropy: 0.75
+    unsupported_native_to_unknown: true
+    combine_rule: any
+  thin_markings:
+    lane_threshold: 0.40
+    regulatory_threshold: 0.45
+    candidate_probability_floor: 0.10
+    road_support_dilation_px: 12
+    min_road_overlap: 0.60
+    min_component_area_px: 25
+    max_component_area_frac: 0.08
+    min_top1_top2_margin: 0.05
+    suppress_on_nonroad_classes: true
+    morphology_open_kernel: 1
+    morphology_close_kernel: 1
+  probability_dtype: float16
+  render_fps: 2
