@@ -1,0 +1,36 @@
+{
+  "labels": [
+    "mirror",
+    "instrument_display",
+    "control_and_ego_vehicle",
+    "background_internal",
+    "ignore"
+  ],
+  "attributes": {
+    "mirror_side": [
+      "left",
+      "right",
+      "central",
+      "unknown"
+    ],
+    "control_type": [
+      "steering_wheel",
+      "handlebar",
+      "hand",
+      "console",
+      "ego_body",
+      "other"
+    ],
+    "display_type": [
+      "instrument_cluster",
+      "navigation",
+      "central_display",
+      "motorcycle_display",
+      "other"
+    ]
+  },
+  "vehicle_frames": {
+    "car": 60,
+    "motorcycle": 0
+  }
+}

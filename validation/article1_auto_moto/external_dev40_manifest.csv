@@ -1,0 +1,21 @@
+sample_id,vehicle_type,session_id,participant_id,frame_index,capture_timestamp_ns,route_segment_id,route_progress,matched_pair_id,scene_category,gaze_valid,lighting,traffic_density,annotation_split,selection_reason
+car_ext_000,car,auto_30s_180_210,unknown,1805,1235764312058,,,,to_review,True,to_review,to_review,development_seeded,uniform temporal coverage; manual stratification pending
+car_ext_001,car,auto_30s_180_210,unknown,1820,1237264413214,,,,to_review,True,to_review,to_review,development_seeded,uniform temporal coverage; manual stratification pending
+car_ext_002,car,auto_30s_180_210,unknown,1835,1238764432224,,,,to_review,True,to_review,to_review,development_seeded,uniform temporal coverage; manual stratification pending
+car_ext_003,car,auto_30s_180_210,unknown,1850,1240264369296,,,,to_review,True,to_review,to_review,development_seeded,uniform temporal coverage; manual stratification pending
+car_ext_004,car,auto_30s_180_210,unknown,1865,1241764179433,,,,to_review,True,to_review,to_review,development_seeded,uniform temporal coverage; manual stratification pending
+car_ext_005,car,auto_30s_180_210,unknown,1880,1243264097391,,,,to_review,True,to_review,to_review,development_seeded,uniform temporal coverage; manual stratification pending
+car_ext_006,car,auto_30s_180_210,unknown,1895,1244763882214,,,,to_review,True,to_review,to_review,development_seeded,uniform temporal coverage; manual stratification pending
+car_ext_007,car,auto_30s_180_210,unknown,1910,1246263692538,,,,to_review,True,to_review,to_review,development_seeded,uniform temporal coverage; manual stratification pending
+car_ext_008,car,auto_30s_180_210,unknown,1925,1247763705443,,,,to_review,True,to_review,to_review,development_seeded,uniform temporal coverage; manual stratification pending
+car_ext_009,car,auto_30s_180_210,unknown,1940,1249263522046,,,,to_review,True,to_review,to_review,development_seeded,uniform temporal coverage; manual stratification pending
+car_ext_010,car,auto_30s_180_210,unknown,1960,1251263281746,,,,to_review,True,to_review,to_review,development_seeded,uniform temporal coverage; manual stratification pending
+car_ext_011,car,auto_30s_180_210,unknown,1975,1252763256454,,,,to_review,True,to_review,to_review,development_seeded,uniform temporal coverage; manual stratification pending
+car_ext_012,car,auto_30s_180_210,unknown,1990,1254263224662,,,,to_review,True,to_review,to_review,development_seeded,uniform temporal coverage; manual stratification pending
+car_ext_013,car,auto_30s_180_210,unknown,2005,1255763047661,,,,to_review,True,to_review,to_review,development_seeded,uniform temporal coverage; manual stratification pending
+car_ext_014,car,auto_30s_180_210,unknown,2020,1257262895922,,,,to_review,True,to_review,to_review,development_seeded,uniform temporal coverage; manual stratification pending
+car_ext_015,car,auto_30s_180_210,unknown,2035,1258762788173,,,,to_review,True,to_review,to_review,development_seeded,uniform temporal coverage; manual stratification pending
+car_ext_016,car,auto_30s_180_210,unknown,2050,1260262668163,,,,to_review,True,to_review,to_review,development_seeded,uniform temporal coverage; manual stratification pending
+car_ext_017,car,auto_30s_180_210,unknown,2065,1261762623371,,,,to_review,True,to_review,to_review,development_seeded,uniform temporal coverage; manual stratification pending
+car_ext_018,car,auto_30s_180_210,unknown,2080,1263262484390,,,,to_review,True,to_review,to_review,development_seeded,uniform temporal coverage; manual stratification pending
+car_ext_019,car,auto_30s_180_210,unknown,2100,1265262269475,,,,to_review,True,to_review,to_review,development_seeded,uniform temporal coverage; manual stratification pending

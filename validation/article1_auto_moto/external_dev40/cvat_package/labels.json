@@ -1,0 +1,19 @@
+{
+  "labels": [
+    "road_surface",
+    "lane_marking",
+    "regulatory_road_marking",
+    "vehicle",
+    "two_wheeler",
+    "pedestrian",
+    "traffic_light",
+    "traffic_sign",
+    "road_boundary_or_obstacle",
+    "other_environment",
+    "unknown_void"
+  ],
+  "vehicle_frames": {
+    "car": 20,
+    "motorcycle": 0
+  }
+}

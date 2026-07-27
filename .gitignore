@@ -66,6 +66,8 @@ validation/contact_sheet.jpg
 validation/cvat_package/images/
 validation/cvat_package/preannotation_tierA/
 validation/gt/
+validation/article1_auto_moto/**/cvat_package/images/
+validation/article1_auto_moto/**/cvat_package/seeds/
 
 # Logs and temporary files
 *.log
