@@ -23,7 +23,7 @@ def _blend(rgb, mask, palette, alpha=.48):
 
 def _hud(img, title, frame_index, timestamp_s, labels, mask, extra):
     h, w = img.shape[:2]
-    panel = np.zeros((h, 410, 3), np.uint8)
+    panel = np.zeros((h, 416, 3), np.uint8)
     panel[:] = (20, 23, 29)
     canvas = np.hstack([img, panel])
     cv2.rectangle(canvas, (0, 0), (w, 82), (12, 15, 20), -1)

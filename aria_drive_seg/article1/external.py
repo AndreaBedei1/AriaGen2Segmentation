@@ -197,6 +197,7 @@ def run_external(input_dir: str, cfg: Config, resume: bool = True,
         meta = {"frame_index": fi, "capture_timestamp_ns": ref.capture_timestamp_ns,
                 "vehicle_type": cfg.get("article1.vehicle_type"),
                 "session_id": cfg.get("article1.session_id"),
+                "participant_id": cfg.get("article1.participant_id"),
                 "total_ms": round(elapsed, 1),
                 "coverage": float((thin["composite"] > 0).mean()),
                 "unknown_rate": float((thin["composite"] == 0).mean()),
@@ -205,8 +206,17 @@ def run_external(input_dir: str, cfg: Config, resume: bool = True,
         atomic_write_json(out / "metadata" / f"{stem}.json", meta)
         manifest.mark(fi, {"total_ms": elapsed})
         manifest.save()
+    peak_vram_mb = None
+    if torch.cuda.is_available():
+        peak_vram_mb = round(torch.cuda.max_memory_allocated() / 1e6, 1)
+    prior_summary = {}
+    if (out / "summary.json").exists():
+        prior_summary = json.loads((out / "summary.json").read_text())
     atomic_write_json(out / "summary.json",
-                      {"frames": len(manifest.done), "mean_ms": float(np.mean(timings)) if timings else None,
+                      {"frames": len(manifest.done),
+                       "mean_ms": (float(np.mean(timings)) if timings
+                                   else prior_summary.get("mean_ms")),
+                       "peak_vram_mb": peak_vram_mb,
                        "unmapped_native_labels": mapper.unmapped,
                        "config_fingerprint": fp})
     return 0
