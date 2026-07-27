@@ -28,6 +28,42 @@ from .base import (Detection, FrameOutput, SegLayout, aggregate_metadata_parquet
 
 log = get_logger("oneformer")
 
+ALLOWED_MASK2FORMER_MISSING = {
+    "model.pixel_level_module.encoder.swin.layernorm.weight",
+    "model.pixel_level_module.encoder.swin.layernorm.bias",
+}
+
+
+def load_verified_mask2former(model_path: str):
+    """Load the converted Mapillary checkpoint without random backbone parameters.
+
+    Transformers >=5 adds the final SwinModel LayerNorm, but SwinBackbone consumes
+    pre-final ``reshaped_hidden_states`` and normalizes them with
+    ``hidden_states_norms``. The converted checkpoint therefore has no final norm.
+    We set it explicitly to identity and fail closed for every other missing key.
+    """
+    import torch
+    from transformers import Mask2FormerForUniversalSegmentation
+
+    model, info = Mask2FormerForUniversalSegmentation.from_pretrained(
+        model_path, output_loading_info=True)
+    missing = set(info.get("missing_keys", ()))
+    if missing != ALLOWED_MASK2FORMER_MISSING:
+        raise RuntimeError(f"unapproved Mask2Former missing keys: {sorted(missing)}")
+    if info.get("mismatched_keys") or info.get("error_msgs"):
+        raise RuntimeError(f"Mask2Former load mismatch: {info}")
+    norm = model.model.pixel_level_module.encoder.swin.layernorm
+    with torch.no_grad():
+        norm.weight.fill_(1.0)
+        norm.bias.zero_()
+    model._aria_loading_info = {
+        "missing_keys": sorted(missing),
+        "unexpected_keys": sorted(info.get("unexpected_keys", ())),
+        "mismatched_keys": sorted(info.get("mismatched_keys", ())),
+        "final_swin_layernorm_policy": "explicit_identity_unused_by_swin_backbone_feature_maps",
+    }
+    return model
+
 
 def _norm(s: str) -> str:
     return " ".join("".join(c if c.isalnum() else " " for c in s.lower()).split())
@@ -99,7 +135,7 @@ class OneFormerMapillarySegmenter:
             mid = self._resolve_local(mid)
             log.info("loading Mask2Former %s", mid)
             self._proc = AutoImageProcessor.from_pretrained(mid)
-            self._model = Mask2FormerForUniversalSegmentation.from_pretrained(mid)
+            self._model = load_verified_mask2former(mid)
         self.model_id = mid
         self._model = self._model.to(self.device).eval()
         if self.cfg.get("hardware.channels_last", True):
