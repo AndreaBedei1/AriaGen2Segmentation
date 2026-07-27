@@ -1,0 +1,18 @@
+version: 1
+required_columns:
+  - session_id
+  - participant_id
+  - vehicle_type
+  - frame_index
+  - timestamp
+  - route_progress
+  - gps_lat
+  - gps_lon
+  - slam_pose_available
+  - segment_id
+  - scene_category
+  - gaze_valid
+  - matched_pair_id
+  - annotation_split
+split_unit: [session_id, participant_id, segment_id, matched_pair_id]
+prohibited_split: random_frame
