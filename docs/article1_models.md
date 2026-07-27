@@ -16,3 +16,9 @@ vehicle is intentionally disallowed.
 Grounded-SAM2 B/C can seed manual annotations; D is not the primary annotation source.
 Mapillary Ego Vehicle and Car Mount are external `other_environment` plus an explicit
 provenance flag; they do not supervise the cockpit model.
+
+Mask2Former loading is fail-closed for missing, unexpected, mismatched and loader-error
+diagnostics. Unexpected state is accepted only for the exact Swin
+`relative_position_index` legacy-buffer path; decoder, head, classifier and trainable
+parameter keys cannot match that policy. The loading report records every key, authorized
+patterns, checkpoint hashes, PyTorch/Transformers versions and gate outcome.
