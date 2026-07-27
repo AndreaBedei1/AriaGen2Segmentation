@@ -1,0 +1,9 @@
+article1_temporal_gaze:
+  ema_alpha: 0.35
+  window_frames: 7
+  switch_margin: 0.12
+  switch_threshold: 0.50
+  previous_class_floor: 0.25
+  minimum_dwell_frames: 3
+  unknown_timeout: 5
+  invalid_gaze_reset_frames: 10

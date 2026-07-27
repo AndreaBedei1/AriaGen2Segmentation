@@ -1,0 +1,68 @@
+version: 1
+dataset: "Mapillary Vistas v1.2 (65 eval classes)"
+mapping:
+  "Bird": {article1: other_environment}
+  "Ground Animal": {article1: other_environment}
+  "Curb": {article1: road_boundary_or_obstacle}
+  "Fence": {article1: other_environment}
+  "Guard Rail": {article1: road_boundary_or_obstacle}
+  "Barrier": {article1: road_boundary_or_obstacle}
+  "Wall": {article1: other_environment}
+  "Bike Lane": {article1: road_surface}
+  "Crosswalk - Plain": {article1: regulatory_road_marking, marking_type: crosswalk}
+  "Curb Cut": {article1: road_boundary_or_obstacle}
+  "Parking": {article1: road_surface}
+  "Pedestrian Area": {article1: road_boundary_or_obstacle}
+  "Rail Track": {article1: road_boundary_or_obstacle}
+  "Road": {article1: road_surface}
+  "Service Lane": {article1: road_surface}
+  "Sidewalk": {article1: road_boundary_or_obstacle}
+  "Bridge": {article1: other_environment}
+  "Building": {article1: other_environment}
+  "Tunnel": {article1: other_environment}
+  "Person": {article1: pedestrian}
+  "Bicyclist": {article1: two_wheeler, two_wheeler_type: bicycle}
+  "Motorcyclist": {article1: two_wheeler, two_wheeler_type: motorcycle}
+  "Other Rider": {article1: two_wheeler, two_wheeler_type: unknown}
+  "Lane Marking - Crosswalk": {article1: regulatory_road_marking, marking_type: crosswalk}
+  "Lane Marking - General": {article1: lane_marking}
+  "Mountain": {article1: other_environment}
+  "Sand": {article1: other_environment}
+  "Sky": {article1: other_environment}
+  "Snow": {article1: other_environment}
+  "Terrain": {article1: other_environment}
+  "Vegetation": {article1: other_environment}
+  "Water": {article1: other_environment}
+  "Banner": {article1: other_environment}
+  "Bench": {article1: other_environment}
+  "Bike Rack": {article1: road_boundary_or_obstacle}
+  "Billboard": {article1: other_environment}
+  "Catch Basin": {article1: road_boundary_or_obstacle}
+  "CCTV Camera": {article1: other_environment}
+  "Fire Hydrant": {article1: road_boundary_or_obstacle}
+  "Junction Box": {article1: road_boundary_or_obstacle}
+  "Mailbox": {article1: road_boundary_or_obstacle}
+  "Manhole": {article1: regulatory_road_marking, marking_type: other_regulatory_marking}
+  "Phone Booth": {article1: other_environment}
+  "Pothole": {article1: road_surface}
+  "Street Light": {article1: other_environment}
+  "Pole": {article1: other_environment}
+  "Traffic Sign Frame": {article1: traffic_sign}
+  "Utility Pole": {article1: other_environment}
+  "Traffic Light": {article1: traffic_light}
+  "Traffic Sign (Back)": {article1: traffic_sign}
+  "Traffic Sign (Front)": {article1: traffic_sign}
+  "Trash Can": {article1: road_boundary_or_obstacle}
+  "Bicycle": {article1: two_wheeler, two_wheeler_type: bicycle}
+  "Boat": {article1: other_environment}
+  "Bus": {article1: vehicle, vehicle_type: bus}
+  "Car": {article1: vehicle, vehicle_type: car}
+  "Caravan": {article1: vehicle, vehicle_type: other}
+  "Motorcycle": {article1: two_wheeler, two_wheeler_type: motorcycle}
+  "On Rails": {article1: vehicle, vehicle_type: other}
+  "Other Vehicle": {article1: vehicle, vehicle_type: other}
+  "Trailer": {article1: vehicle, vehicle_type: trailer}
+  "Truck": {article1: vehicle, vehicle_type: truck}
+  "Wheeled Slow": {article1: two_wheeler, two_wheeler_type: unknown}
+  "Car Mount": {article1: control_and_ego_vehicle}
+  "Ego Vehicle": {article1: control_and_ego_vehicle}

@@ -1,0 +1,15 @@
+article1:
+  classes: configs/article1/classes_article1.yaml
+  mapillary_mapping: configs/article1/mapillary_to_article1.yaml
+  confidence_threshold: 0.38
+  entropy_unknown_threshold: 2.35
+  lane_marking_threshold: 0.24
+  regulatory_marking_threshold: 0.20
+  thin_class_priority: [regulatory_road_marking, lane_marking]
+  thin_class_min_component_area: 18
+  thin_class_max_gap: 2
+  thin_class_morphology: conservative_close
+  save_native_probabilities: true
+  save_article1_probabilities: true
+  probability_dtype: float16
+  render_fps: 2

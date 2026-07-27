@@ -1,0 +1,10 @@
+article1_cockpit:
+  model: nvidia/segformer-b2-finetuned-ade-512-512
+  local_checkpoint: weights/segformer-b2-article1-cockpit
+  classes: [background_internal, mirror, instrument_display, control_and_ego_vehicle]
+  domains: [car, motorcycle]
+  seed: 2026
+  mixed_precision: bf16
+  deterministic: true
+  resume: true
+  note: "Training is blocked until manually reviewed car+motorcycle cockpit annotations exist."

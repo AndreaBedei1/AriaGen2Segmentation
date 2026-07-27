@@ -1,0 +1,17 @@
+version: 1
+scope: "Article 1 — paired car vs motorcycle semantic gaze"
+classes:
+  - {id: 0,  name: unknown,                    group: special,     color: [0, 0, 0],       eval: true}
+  - {id: 1,  name: road_surface,               group: external,    color: [128, 64, 128],  eval: true}
+  - {id: 2,  name: lane_marking,               group: thin,        color: [255, 255, 255], eval: true}
+  - {id: 3,  name: regulatory_road_marking,    group: thin,        color: [220, 170, 255], eval: true}
+  - {id: 4,  name: vehicle,                    group: external,    color: [0, 0, 142],     eval: true}
+  - {id: 5,  name: two_wheeler,                group: external,    color: [119, 11, 32],   eval: true}
+  - {id: 6,  name: pedestrian,                 group: external,    color: [220, 20, 60],   eval: true}
+  - {id: 7,  name: traffic_light,              group: external,    color: [250, 170, 30],  eval: true}
+  - {id: 8,  name: traffic_sign,               group: external,    color: [220, 220, 0],   eval: true}
+  - {id: 9,  name: road_boundary_or_obstacle,  group: external,    color: [244, 35, 232],  eval: true}
+  - {id: 10, name: mirror,                     group: cockpit,     color: [255, 0, 255],   eval: true}
+  - {id: 11, name: instrument_display,         group: cockpit,     color: [0, 255, 255],   eval: true}
+  - {id: 12, name: control_and_ego_vehicle,    group: cockpit,     color: [255, 140, 0],   eval: true}
+  - {id: 13, name: other_environment,          group: environment, color: [90, 110, 90],   eval: true}
