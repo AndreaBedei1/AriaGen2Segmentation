@@ -64,5 +64,5 @@ mapping:
   "Trailer": {article1: vehicle, vehicle_type: trailer}
   "Truck": {article1: vehicle, vehicle_type: truck}
   "Wheeled Slow": {article1: two_wheeler, two_wheeler_type: unknown}
-  "Car Mount": {article1: control_and_ego_vehicle}
-  "Ego Vehicle": {article1: control_and_ego_vehicle}
+  "Car Mount": {article1: other_environment, mapillary_ego_region: true}
+  "Ego Vehicle": {article1: other_environment, mapillary_ego_region: true}
