@@ -81,6 +81,24 @@ def build_parser() -> argparse.ArgumentParser:
     p = sub.add_parser("hwinfo", help="write hardware_report.json (§13)")
     p.add_argument("--output", default=".")
     _add_common(p)
+
+    p = sub.add_parser("article1", help="Article 1 car-vs-motorcycle pipeline")
+    a1 = p.add_subparsers(dest="article1_command", required=True)
+    pext = a1.add_parser("segment-external",
+                         help="probabilistic Mask2Former Mapillary macro segmentation")
+    pext.add_argument("--input", required=True, help="run directory containing frames/")
+    pext.add_argument("--vehicle-type", required=True, choices=["car", "motorcycle"])
+    pext.add_argument("--session-id", required=True)
+    pext.add_argument("--participant-id", required=True)
+    _add_common(pext)
+    prend = a1.add_parser("render-external", help="render native and Article 1 external videos")
+    prend.add_argument("--input", required=True)
+    prend.add_argument("--output", default=None)
+    prend.add_argument("--vehicle-type", required=True, choices=["car", "motorcycle"])
+    prend.add_argument("--session-id", required=True)
+    prend.add_argument("--participant-id", required=True)
+    prend.add_argument("--fps", type=float, default=None)
+    _add_common(prend)
     return ap
 
 
@@ -145,6 +163,19 @@ def main(argv: Optional[list] = None) -> int:
         from .pipeline import run_all
         return run_all(args.vrs, args.output, cfg, methods=args.methods.split(","),
                        resume=args.resume, force=args.force)
+
+    if cmd == "article1":
+        cfg.set("article1.vehicle_type", args.vehicle_type)
+        cfg.set("article1.session_id", args.session_id)
+        cfg.set("article1.participant_id", args.participant_id)
+        if args.article1_command == "segment-external":
+            from .article1.external import run_external
+            return run_external(args.input, cfg, resume=args.resume, force=args.force)
+        if args.article1_command == "render-external":
+            from .article1.render import run_render_external
+            result = run_render_external(args.input, cfg, output_dir=args.output, fps=args.fps)
+            print(result)
+            return 0
 
     return 1
 
