@@ -23,11 +23,13 @@ example search and active learning.
 | Component | Status |
 |---|---|
 | Reduced taxonomy and Mapillary mapping | Implemented and unit-tested |
-| Probabilistic external segmentation | Implemented; 10-frame auto smoke test completed |
-| Thin road-marking preservation | Implemented and unit-tested; calibration pending GT |
+| Probabilistic external segmentation | Checkpoint-2 stop gate completed on 60 auto frames |
+| Thin road-marking preservation | Raw/filtered layers and rejection provenance implemented; calibration pending GT |
 | External diagnostic renderer | Implemented |
-| Cockpit SegFormer schema/config | Implemented; training blocked by reviewed annotations |
+| Cockpit SegFormer schema/config | Dataset, balanced sampler, loss, entropy, resume and split checks implemented; training blocked by reviewed annotations |
 | Fusion, temporal gaze, route pairing | Planned for later operational steps |
 | Motorcycle and paired results | Blocked: no motorcycle VRS supplied |
 
 No pseudo-label is treated as ground truth and no accuracy is reported without reviewed GT.
+The Mapillary Ego Vehicle/Car Mount labels are external provenance only and never scientific
+`control_and_ego_vehicle`. See `REPORT_ARTICLE1_CHECKPOINT2.md`.
