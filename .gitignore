@@ -54,6 +54,7 @@ weights/*
 
 # Generated pipeline runs and outputs
 output/
+outputs/
 run*/
 val10/
 val300/
