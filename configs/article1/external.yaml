@@ -1,15 +1,35 @@
 article1:
   classes: configs/article1/classes_article1.yaml
   mapillary_mapping: configs/article1/mapillary_to_article1.yaml
+  output_subdir: article1_external
   confidence_threshold: 0.38
   entropy_unknown_threshold: 2.35
-  lane_marking_threshold: 0.24
-  regulatory_marking_threshold: 0.20
-  thin_class_priority: [regulatory_road_marking, lane_marking]
-  thin_class_min_component_area: 18
-  thin_class_max_gap: 2
-  thin_class_morphology: conservative_close
+  unknown:
+    enabled: true
+    min_top1_probability: 0.45
+    min_top1_top2_margin: 0.08
+    max_normalized_entropy: 0.75
+    unsupported_native_to_unknown: true
+    combine_rule: any
+  thin_markings:
+    lane_threshold: 0.40
+    regulatory_threshold: 0.45
+    candidate_probability_floor: 0.10
+    road_probability_threshold: 0.25
+    use_road_probability_support: true
+    use_base_mask_support: true
+    road_support_dilation_px: 12
+    nonroad_conflict_threshold: 0.55
+    min_road_overlap: 0.60
+    accepted_component_policy: supported_pixels_only
+    min_component_area_px: 25
+    max_component_area_frac: 0.08
+    min_top1_top2_margin: 0.05
+    suppress_on_nonroad_classes: true
+    morphology_open_kernel: 1
+    morphology_close_kernel: 1
   save_native_probabilities: true
   save_article1_probabilities: true
+  diagnostic_outputs: false
   probability_dtype: float16
   render_fps: 2

@@ -1,10 +1,13 @@
 from pathlib import Path
 
 import numpy as np
+import pytest
 import yaml
 
+from aria_drive_seg.cli import _load_cfg, build_parser
 from aria_drive_seg.article1.external import (
     Article1Mapper,
+    apply_article1_policy,
     aggregate_native_probabilities,
     filter_thin_markings,
     preserve_thin_markings,
@@ -13,6 +16,19 @@ from aria_drive_seg.taxonomy import Taxonomy
 
 
 ROOT = Path(__file__).resolve().parents[1]
+
+
+def test_standard_article1_commands_default_to_static_v2_configs():
+    parser = build_parser()
+    common = ["--input", "unused", "--vehicle-type", "car",
+              "--session-id", "s", "--participant-id", "p"]
+    direct = _load_cfg(parser.parse_args(["article1", "segment-external", *common]))
+    replay = _load_cfg(parser.parse_args(["article1", "reprocess-external", *common]))
+    assert direct.get("article1.output_subdir") == "article1_external"
+    assert direct.get("article1.unknown.enabled") is True
+    assert direct.get("article1.thin_markings.accepted_component_policy") == \
+        "supported_pixels_only"
+    assert replay.get("article1.output_subdir") == "article1_external_checkpoint2"
 
 
 def test_probabilistic_vehicle_and_two_wheeler_aggregation():
@@ -125,3 +141,127 @@ def test_thin_filter_requires_road_support_and_preserves_raw():
     assert result["filtered_thin_mask"][3, 4] == 0
     assert result["reason_map"][3, 4] == 3
     assert result["filtered_thin_mask"][15, 10] == 2
+
+
+def _thin_cfg(**updates):
+    cfg = {
+        "lane_threshold": .4, "regulatory_threshold": .4,
+        "candidate_probability_floor": .1,
+        "road_probability_threshold": .25,
+        "use_road_probability_support": True, "use_base_mask_support": False,
+        "road_support_dilation_px": 0, "nonroad_conflict_threshold": .55,
+        "min_road_overlap": .60,
+        "accepted_component_policy": "supported_pixels_only",
+        "min_component_area_px": 1, "max_component_area_frac": 1,
+        "min_top1_top2_margin": 0, "suppress_on_nonroad_classes": True,
+        "morphology_open_kernel": 1, "morphology_close_kernel": 1,
+    }
+    cfg.update(updates)
+    return cfg
+
+
+@pytest.mark.parametrize("class_id", [2, 3])
+@pytest.mark.parametrize("overlap,accepted", [
+    (0, False), (.30, False), (.59, False), (.60, True), (.90, True), (1, True),
+])
+def test_real_component_road_overlap_threshold(class_id, overlap, accepted):
+    base = np.full((5, 100), 13, np.uint16)
+    p = np.zeros((14, 5, 100), np.float32)
+    p[class_id, 2, :] = .9
+    supported = int(round(overlap * 100))
+    p[1, 2, :supported] = .3
+    result = filter_thin_markings(base, p, _thin_cfg())
+    kept = int((result["filtered_thin_mask"] == class_id).sum())
+    assert kept == (supported if accepted else 0)
+    if not accepted:
+        assert np.all(result["reason_map"][2, :] == 3)
+
+
+def test_full_component_policy_keeps_unsupported_tail_once_supported():
+    base = np.full((3, 10), 13, np.uint16)
+    p = np.zeros((14, 3, 10), np.float32)
+    p[2, 1, :] = .9
+    p[1, 1, :6] = .3
+    out = filter_thin_markings(
+        base, p, _thin_cfg(accepted_component_policy="full_component_if_supported",
+                           suppress_on_nonroad_classes=False))
+    assert np.all(out["filtered_thin_mask"][1] == 2)
+
+
+def test_large_component_is_rejected_before_road_clipping():
+    base = np.ones((20, 20), np.uint16)
+    p = np.zeros((14, 20, 20), np.float32)
+    p[1] = .4
+    p[2, 2:18, 2:18] = .9
+    out = filter_thin_markings(
+        base, p, _thin_cfg(max_component_area_frac=.10))
+    assert not out["filtered_thin_mask"].any()
+    assert (out["reason_map"] == 6).sum() == 16 * 16
+
+
+@pytest.mark.parametrize("blocking_id", [4, 10])
+def test_vehicle_or_cockpit_conflict_counts_against_overlap(blocking_id):
+    base = np.full((3, 10), 13, np.uint16)
+    p = np.zeros((14, 3, 10), np.float32)
+    p[2, 1, :] = .9
+    p[1, 1, :] = .3
+    p[blocking_id, 1, :5] = .8
+    out = filter_thin_markings(base, p, _thin_cfg())
+    assert not out["filtered_thin_mask"].any()
+    assert np.all(out["reason_map"][1] == 3)
+
+
+def test_component_near_road_edge_keeps_only_supported_pixels():
+    base = np.full((3, 10), 13, np.uint16)
+    p = np.zeros((14, 3, 10), np.float32)
+    p[3, 1, :] = .9
+    p[1, 1, :9] = .3
+    out = filter_thin_markings(base, p, _thin_cfg())
+    assert np.all(out["filtered_thin_mask"][1, :9] == 3)
+    assert out["filtered_thin_mask"][1, 9] == 0
+    assert out["reason_map"][1, 9] == 3
+
+
+def test_road_support_combines_probability_base_dilation_and_nonroad_exclusion():
+    base = np.full((9, 9), 13, np.uint16)
+    base[4, 2] = 1
+    p = np.zeros((14, 9, 9), np.float32)
+    p[1, 4, 6] = .3
+    p[4, 4, 6] = .8
+    out = filter_thin_markings(
+        base, p, _thin_cfg(road_support_dilation_px=1,
+                           use_base_mask_support=True))
+    assert out["road_support_raw"][4, 2]       # base-mask support
+    assert out["road_support_raw"][4, 6]       # probability support
+    assert out["road_support_dilated"][4, 3]   # controlled dilation
+    assert not out["road_support_final"][4, 6] # confident vehicle exclusion
+
+
+def test_direct_and_saved_reprocess_policy_are_equivalent(tmp_path):
+    tax = Taxonomy.load(ROOT / "configs/article1/classes_article1.yaml")
+    mapper = Article1Mapper(
+        {0: "Road", 1: "Lane Marking - General", 2: "Car", 3: "Building"},
+        ROOT / "configs/article1/mapillary_to_article1.yaml", tax)
+    rng = np.random.default_rng(2026)
+    native = rng.random((4, 16, 18), dtype=np.float32)
+    cfg = {
+        "probability_dtype": "float16",
+        "unknown": {"enabled": True, "min_top1_probability": .45,
+                    "min_top1_top2_margin": .08,
+                    "max_normalized_entropy": .75,
+                    "unsupported_native_to_unknown": True, "combine_rule": "any"},
+        "thin_markings": _thin_cfg(min_component_area_px=2),
+    }
+    direct = apply_article1_policy(native, mapper, cfg)
+    saved = tmp_path / "native.npz"
+    np.savez_compressed(saved, probabilities=native.astype(np.float16))
+    reprocessed = apply_article1_policy(
+        np.load(saved)["probabilities"].astype(np.float32), mapper, cfg)
+    for key in ("mask", "unknown_reason"):
+        assert np.array_equal(direct["aggregate"][key],
+                              reprocessed["aggregate"][key])
+    for key in ("raw_thin_mask", "filtered_thin_mask", "composite", "reason_map"):
+        assert np.array_equal(direct["thin"][key], reprocessed["thin"][key])
+    assert np.allclose(direct["aggregate"]["probabilities"],
+                       reprocessed["aggregate"]["probabilities"],
+                       atol=np.finfo(np.float16).eps)

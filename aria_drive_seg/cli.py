@@ -112,7 +112,12 @@ def build_parser() -> argparse.ArgumentParser:
 
 def _load_cfg(args):
     from .config import Config, apply_cli_overrides
-    cfg = Config.load(path=getattr(args, "config", None))
+    path = getattr(args, "config", None)
+    if path is None and getattr(args, "command", None) == "article1":
+        path = ("configs/article1/external_segmentation.yaml"
+                if getattr(args, "article1_command", None) == "reprocess-external"
+                else "configs/article1/external.yaml")
+    cfg = Config.load(path=path)
     return apply_cli_overrides(cfg, args)
 
 
