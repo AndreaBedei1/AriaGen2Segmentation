@@ -64,11 +64,27 @@ def half(image):
 
 def build_frames(rgb, raw, temporal, raw_thin, temporal_thin,
                  validity, occlusion, provenance, unknown_raw,
-                 unknown_temporal, metadata, gaze, taxonomy):
+                 unknown_temporal, raw_confidence, temporal_confidence,
+                 propagation_age, metadata, gaze, taxonomy):
+    gaze_inside = (
+        gaze is not None and bool(gaze.get("valid", False)) and
+        np.isfinite(gaze.get("rect_u", np.nan)) and
+        np.isfinite(gaze.get("rect_v", np.nan)) and
+        0 <= int(gaze.rect_u) < raw.shape[1] and
+        0 <= int(gaze.rect_v) < raw.shape[0])
+    if gaze_inside:
+        gx, gy = int(gaze.rect_u), int(gaze.rect_v)
+        raw_extra = f"gaze={taxonomy.name_of(raw[gy, gx])} p={raw_confidence[gy, gx]/255:.2f}"
+        temporal_extra = (
+            f"gaze={taxonomy.name_of(temporal[gy, gx])} "
+            f"p={temporal_confidence[gy, gx]/255:.2f} "
+            f"age={propagation_age[gy, gx]} prov={provenance[gy, gx]}")
+    else:
+        raw_extra = temporal_extra = "gaze=invalid"
     raw_view = annotate(overlay(rgb, raw, taxonomy.palette()),
-                        "STATIC RAW", metadata)
+                        "STATIC RAW", metadata, raw_extra)
     temporal_view = annotate(overlay(rgb, temporal, taxonomy.palette()),
-                             "TEMPORAL STABILIZED", metadata)
+                             "TEMPORAL STABILIZED", metadata, temporal_extra)
     gaze_point(raw_view, gaze)
     gaze_point(temporal_view, gaze)
     static_single = np.hstack([half(raw_view), np.full((756, 280, 3), 22, np.uint8)])
@@ -96,12 +112,8 @@ def build_frames(rgb, raw, temporal, raw_thin, temporal_thin,
         half(annotate(overlay(rgb, (unknown_temporal > 0).astype(np.uint16),
                               unknown_palette, .60), "TEMPORAL UNKNOWN", metadata)),
     ])
-    raw_gaze_class = int(raw[int(gaze.rect_v), int(gaze.rect_u)]) \
-        if gaze is not None and bool(gaze.get("valid", False)) and \
-        0 <= int(gaze.rect_u) < raw.shape[1] and 0 <= int(gaze.rect_v) < raw.shape[0] else -1
-    temporal_gaze_class = int(temporal[int(gaze.rect_v), int(gaze.rect_u)]) \
-        if gaze is not None and bool(gaze.get("valid", False)) and \
-        0 <= int(gaze.rect_u) < raw.shape[1] and 0 <= int(gaze.rect_v) < raw.shape[0] else -1
+    raw_gaze_class = int(raw[gy, gx]) if gaze_inside else -1
+    temporal_gaze_class = int(temporal[gy, gx]) if gaze_inside else -1
     gaze_compare = np.hstack([
         half(annotate(raw_view, "RAW AT GAZE", metadata,
                       f"class={taxonomy.name_of(raw_gaze_class)}")),
@@ -167,12 +179,19 @@ def main():
             str(temporal_root / "unknown_raw" / f"{stem}.png"), 0)
         unknown_temporal = cv2.imread(
             str(temporal_root / "unknown_temporal" / f"{stem}.png"), 0)
+        raw_confidence = cv2.imread(
+            str(temporal_root / "static_confidence" / f"{stem}.png"), 0)
+        temporal_confidence = cv2.imread(
+            str(temporal_root / "temporal_confidence" / f"{stem}.png"), 0)
+        propagation_age = cv2.imread(
+            str(temporal_root / "propagation_age" / f"{stem}.png"), 0)
         metadata = json.loads(
             (temporal_root / "metadata" / f"{stem}.json").read_text())
         sample = gaze.loc[frame_id] if gaze is not None and frame_id in gaze.index else None
         rendered = build_frames(
             rgb, raw, temporal, raw_thin, temporal_thin, validity, occlusion,
-            provenance, unknown_raw, unknown_temporal, metadata, sample, taxonomy)
+            provenance, unknown_raw, unknown_temporal, raw_confidence,
+            temporal_confidence, propagation_age, metadata, sample, taxonomy)
         for writer, image in zip(writers.values(), rendered):
             writer.append_data(image)
         if position % max(1, len(frames) // 20) == 0:

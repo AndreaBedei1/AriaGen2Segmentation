@@ -225,6 +225,19 @@ def test_dynamic_classes_require_current_support(cid):
     assert np.all(result.mask == 1)
 
 
+def test_t1_t2_t3_ablation_boundaries_are_distinct():
+    first = initial(4)
+    current = np.zeros((14, 8, 9), np.float32)
+    current[1] = .55
+    current[0] = .45
+    t1 = next_frame(first.state, current, mode="T1")
+    t2 = next_frame(first.state, current, mode="T2")
+    t3 = next_frame(first.state, current, mode="T3")
+    assert np.all(t1.mask == 1)  # hysteresis only, no probability propagation
+    assert np.all(t2.mask == 4)  # generic flow/fusion has no dynamic support gate
+    assert np.all(t3.mask == 1)  # class-specific vehicle policy is conservative
+
+
 def test_raw_input_is_never_mutated_and_provenance_is_explicit():
     first = initial(1)
     current = one_hot(0)

@@ -177,10 +177,14 @@ def run_temporal(input_dir: str, cfg: Config, resume=True, force=False,
     out = root / temporal_cfg.get("output_subdir", "article1_temporal")
     for name in OUTPUT_DIRS:
         (out / name).mkdir(parents=True, exist_ok=True)
-    tax = Taxonomy.load(cfg.resolve(article_cfg["classes"]))
+    taxonomy_path = cfg.resolve(article_cfg["classes"])
+    mapping_path = cfg.resolve(article_cfg["mapillary_mapping"])
+    tax = Taxonomy.load(taxonomy_path)
     class_names = tax.names()
     temporal_fp = stable_hash(temporal_cfg)
-    static_fp = stable_hash(article_cfg)
+    static_fp = stable_hash([
+        cfg.get("oneformer_mapillary"), article_cfg,
+        taxonomy_path.read_text(), mapping_path.read_text()])
     frames = list(iter_frames(root))
     max_frames = cfg.get("frames.max_frames")
     if max_frames is not None:
@@ -381,6 +385,9 @@ def _write_summary(out: Path, manifest: dict, taxonomy: Taxonomy) -> None:
         summary["modes"][mode] = {
             f"mean_{key}": float(np.mean([row[key] for row in rows]))
             for key in numeric}
+        state_dir = out / "temporal_state" / mode
+        summary["modes"][mode]["state_storage_bytes"] = sum(
+            path.stat().st_size for path in state_dir.glob("*.npz"))
     size = sum(path.stat().st_size for path in out.rglob("*") if path.is_file())
     summary["storage_bytes"] = size
     summary["storage_bytes_per_frame"] = (

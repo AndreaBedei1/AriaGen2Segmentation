@@ -25,7 +25,8 @@ def test_temporal_video_frames_have_stable_codec_geometry():
     taxonomy = Taxonomy.load("configs/article1/classes_article1.yaml")
     frames = build_frames(
         image, mask, mask, mask, mask, np.full_like(zero, 255), zero,
-        zero, zero, zero, metadata, None, taxonomy)
+        zero, zero, zero, np.full_like(zero, 255), np.full_like(zero, 255),
+        zero, metadata, None, taxonomy)
     assert len(frames) == 8
     assert frames[0].shape == frames[1].shape == (756, 1288, 3)
     assert all(frame.shape[0] % 4 == 0 and frame.shape[1] % 8 == 0

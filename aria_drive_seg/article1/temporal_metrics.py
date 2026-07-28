@@ -179,6 +179,19 @@ def compute_gaze_diagnostics(run_dir: str | Path, frames_dir: str | Path) -> Pat
         })
     if not records:
         return None
+    previous_raw = previous_temporal = None
+    for record in records:
+        if record["valid"]:
+            record["raw_gaze_class_switch"] = (
+                previous_raw is not None and record["raw_class"] != previous_raw)
+            record["temporal_gaze_class_switch"] = (
+                previous_temporal is not None and
+                record["temporal_class"] != previous_temporal)
+            previous_raw = record["raw_class"]
+            previous_temporal = record["temporal_class"]
+        else:
+            record["raw_gaze_class_switch"] = False
+            record["temporal_gaze_class_switch"] = False
     output = run / "gaze" / "article1_temporal_gaze_diagnostics.parquet"
     output.parent.mkdir(parents=True, exist_ok=True)
     pd.DataFrame(records).to_parquet(output, index=False)

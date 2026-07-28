@@ -142,9 +142,13 @@ def stabilize_frame(current_probabilities: np.ndarray,
         config_fingerprint, static_policy_fingerprint)
     if mode == "T0" or reset:
         count = (state.reset_count if state else 0) + int(reset > 0)
-        return _initial_result(
+        result = _initial_result(
             p, current_thin, current_rgb, frame_index, timestamp_ns,
             config_fingerprint, static_policy_fingerprint, count, reset)
+        if flow is not None:
+            result.flow_validity = flow.valid.copy()
+            result.occlusion = flow.occlusion.copy()
+        return result
     assert state is not None
     h, w = p.shape[1:]
     warp_start = time.perf_counter()
@@ -172,6 +176,18 @@ def stabilize_frame(current_probabilities: np.ndarray,
 
     fusion_start = time.perf_counter()
     ttl, class_weight, require_support = _class_params(class_names, cfg)
+    if mode == "T1":
+        # Hysteresis-only baseline: no probability propagation.
+        ttl[:] = np.iinfo(np.uint16).max
+        class_weight[:] = 0
+        require_support[:] = False
+    elif mode == "T2":
+        # Generic flow+fusion baseline; class-specific TTL starts at T3.
+        ttl[:] = np.iinfo(np.uint16).max
+        class_weight[:] = float(
+            cfg.get("fusion", {}).get("previous_weight", .65))
+        class_weight[0] = 0
+        require_support[:] = False
     current_mask = p.argmax(0).astype(np.uint16)
     ordered = np.argsort(p, axis=0)
     current_top2 = ordered[-2:]
@@ -273,6 +289,10 @@ def stabilize_frame(current_probabilities: np.ndarray,
         previous_thin_conf = warp_with_backward(state.thin_confidence, backward)
         thin_cfg = cfg.get("thin_markings", {})
         propagated = (thin == 0) & (previous_thin > 0) & valid & current_road_support
+        max_distance = float(
+            thin_cfg.get("max_propagation_distance_px", 40))
+        max_distance *= float(cfg.get("processing_scale", 1.0))
+        propagated &= np.linalg.norm(backward, axis=2) <= max_distance
         lane_ttl = int(thin_cfg.get("lane_ttl_frames", 3))
         regulatory_ttl = int(thin_cfg.get("regulatory_ttl_frames", 2))
         thin_ttl = np.where(previous_thin == 2, lane_ttl, regulatory_ttl)
