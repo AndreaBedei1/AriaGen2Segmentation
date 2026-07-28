@@ -1,7 +1,8 @@
 """Causal, per-pixel probability stabilization for Article 1."""
 from __future__ import annotations
 
-from dataclasses import dataclass
+from dataclasses import dataclass, field
+import time
 
 import cv2
 import numpy as np
@@ -47,6 +48,7 @@ class TemporalResult:
     occlusion: np.ndarray
     reset_reason: int
     state: TemporalState
+    timings_ms: dict = field(default_factory=dict)
 
 
 def _class_params(class_names: list[str], cfg: dict) -> tuple[np.ndarray, np.ndarray, np.ndarray]:
@@ -100,6 +102,7 @@ def _initial_result(current_prob: np.ndarray, current_thin: np.ndarray,
                     config_fingerprint: str, static_policy_fingerprint: str,
                     reset_count: int, reset_reason: int) -> TemporalResult:
     mask = current_prob.argmax(0).astype(np.uint16)
+    mask[current_thin > 0] = current_thin[current_thin > 0]
     confidence = current_prob.max(0).astype(np.float32)
     zeros = np.zeros(mask.shape, np.uint16)
     provenance = np.full(mask.shape, 7, np.uint8)
@@ -113,7 +116,9 @@ def _initial_result(current_prob: np.ndarray, current_thin: np.ndarray,
         current_prob, mask, confidence, provenance, zeros.copy(),
         state.class_age, state.candidate_class, np.full(mask.shape, 6, np.uint8),
         current_thin, np.zeros(mask.shape, bool), np.ones(mask.shape, bool),
-        np.zeros(mask.shape, bool), reset_reason, state)
+        np.zeros(mask.shape, bool), reset_reason, state,
+        {"warping_ms": 0.0, "fusion_ms": 0.0, "hysteresis_ms": 0.0,
+         "thin_temporal_ms": 0.0})
 
 
 def stabilize_frame(current_probabilities: np.ndarray,
@@ -142,6 +147,7 @@ def stabilize_frame(current_probabilities: np.ndarray,
             config_fingerprint, static_policy_fingerprint, count, reset)
     assert state is not None
     h, w = p.shape[1:]
+    warp_start = time.perf_counter()
     if mode == "T1":
         backward = np.zeros((h, w, 2), np.float32)
         valid = np.ones((h, w), bool)
@@ -162,7 +168,9 @@ def stabilize_frame(current_probabilities: np.ndarray,
         state.candidate_class, backward, cv2.INTER_NEAREST).astype(np.uint16)
     previous_candidate_age = warp_with_backward(
         state.candidate_age, backward, cv2.INTER_NEAREST).astype(np.uint16)
+    warping_ms = (time.perf_counter() - warp_start) * 1000
 
+    fusion_start = time.perf_counter()
     ttl, class_weight, require_support = _class_params(class_names, cfg)
     current_mask = p.argmax(0).astype(np.uint16)
     ordered = np.argsort(p, axis=0)
@@ -196,7 +204,9 @@ def stabilize_frame(current_probabilities: np.ndarray,
     fused = current_weight[None] * p + previous_weight[None] * previous_p
     fused /= np.maximum(fused.sum(0, keepdims=True), 1e-8)
     proposed = fused.argmax(0).astype(np.uint16)
+    fusion_ms = (time.perf_counter() - fusion_start) * 1000
 
+    hysteresis_start = time.perf_counter()
     switch = proposed != previous_mask
     hcfg = cfg.get("hysteresis", {})
     candidate_same = proposed == previous_candidate
@@ -251,7 +261,9 @@ def stabilize_frame(current_probabilities: np.ndarray,
     provenance[used_previous] = 3
     provenance[used_previous & (current_mask != temporal_mask)] = 2
     provenance[held] = 6
+    hysteresis_ms = (time.perf_counter() - hysteresis_start) * 1000
 
+    thin_start = time.perf_counter()
     thin = current_thin.astype(np.uint16).copy()
     thin_propagated = np.zeros((h, w), bool)
     previous_thin_conf = np.zeros((h, w), np.float32)
@@ -283,6 +295,7 @@ def stabilize_frame(current_probabilities: np.ndarray,
     thin_confidence[thin_propagated] = (
         previous_thin_conf[thin_propagated] *
         float(cfg.get("thin_markings", {}).get("temporal_decay", .75)))
+    thin_temporal_ms = (time.perf_counter() - thin_start) * 1000
     state_out = TemporalState(
         fused, temporal_mask, confidence, class_age, propagation_age,
         proposed, candidate_age, thin, thin_confidence, current_rgb.copy(),
@@ -292,4 +305,7 @@ def stabilize_frame(current_probabilities: np.ndarray,
     return TemporalResult(
         fused, temporal_mask, confidence, provenance, propagation_age,
         class_age, proposed, switch_reason, thin, unknown_recovered,
-        valid, occlusion, 0, state_out)
+        valid, occlusion, 0, state_out,
+        {"warping_ms": warping_ms, "fusion_ms": fusion_ms,
+         "hysteresis_ms": hysteresis_ms,
+         "thin_temporal_ms": thin_temporal_ms})

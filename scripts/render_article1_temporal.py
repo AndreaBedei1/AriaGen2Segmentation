@@ -27,7 +27,8 @@ def overlay(rgb, mask, palette, alpha=.42):
     selected = mask > 0
     result[selected] = (
         result[selected] * (1 - alpha) + color[selected] * alpha).astype(np.uint8)
-    edges = cv2.Canny((mask % 256).astype(np.uint8), 0, 1)
+    edges = cv2.Canny(
+        (mask.astype(np.uint16) % 256).astype(np.uint8), 0, 1)
     result[edges > 0] = 255
     return result
 

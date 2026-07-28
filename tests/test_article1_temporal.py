@@ -313,3 +313,21 @@ def test_replay_missing_static_probability_fails_closed(tmp_path):
     (static / "probabilities/frame_000100.npz").unlink()
     with pytest.raises(RuntimeError, match="missing static probability"):
         run_temporal(root, config, static_output=str(static))
+
+
+def test_resume_rejects_missing_intermediate_frame(tmp_path):
+    root, static, config = _synthetic_replay(tmp_path)
+    run_temporal(root, config, static_output=str(static))
+    manifest_path = root / "article1_temporal/manifest.json"
+    manifest = json.loads(manifest_path.read_text())
+    manifest["processed_frame_indices"] = [100, 102]
+    manifest_path.write_text(json.dumps(manifest))
+    with pytest.raises(RuntimeError, match="missing or non-contiguous"):
+        run_temporal(root, config, static_output=str(static), resume=True)
+
+
+def test_streaming_runner_never_indexes_a_future_frame_or_reads_gaze_coordinates():
+    import aria_drive_seg.article1.temporal_pipeline as pipeline
+    source = inspect.getsource(pipeline).lower()
+    assert "frames[position + 1]" not in source
+    assert "rect_u" not in source and "rect_v" not in source

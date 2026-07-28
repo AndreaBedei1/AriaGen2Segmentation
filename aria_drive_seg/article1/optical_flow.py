@@ -1,7 +1,8 @@
 """Causal optical-flow backends and validity checks for Article 1."""
 from __future__ import annotations
 
-from dataclasses import dataclass
+from dataclasses import dataclass, field
+import time
 
 import cv2
 import numpy as np
@@ -17,6 +18,7 @@ class FlowResult:
     valid_fraction: float
     median_flow_px: float
     mean_photometric_error: float
+    timings_ms: dict = field(default_factory=dict)
 
 
 def _gray(image: np.ndarray) -> np.ndarray:
@@ -120,6 +122,14 @@ def compute_optical_flow(previous_rgb: np.ndarray, current_rgb: np.ndarray,
     current_input = _gray(current) if cfg.get("grayscale", True) else current
     preset = getattr(cv2, "DISOPTICAL_FLOW_PRESET_MEDIUM", 2)
     dis = cv2.DISOpticalFlow_create(preset)
+    flow_start = time.perf_counter()
     forward = dis.calc(previous_input, current_input, None)
     backward = dis.calc(current_input, previous_input, None)
-    return validate_flow(previous, current, forward, backward, cfg)
+    flow_ms = (time.perf_counter() - flow_start) * 1000
+    validation_start = time.perf_counter()
+    result = validate_flow(previous, current, forward, backward, cfg)
+    result.timings_ms = {
+        "flow_compute_ms": flow_ms,
+        "flow_validation_ms": (time.perf_counter() - validation_start) * 1000,
+    }
+    return result

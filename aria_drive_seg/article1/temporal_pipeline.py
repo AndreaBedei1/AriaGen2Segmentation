@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import json
+import resource
 import time
 from pathlib import Path
 
@@ -56,7 +57,7 @@ def _up(array: np.ndarray, size: tuple[int, int], nearest=True) -> np.ndarray:
 def _write_frame(out: Path, stem: str, static: dict, temporal: TemporalResult,
                  full_size: tuple[int, int], metadata: dict,
                  save_probability: bool, flow=None) -> None:
-    static_mask = static["aggregate"]["mask"]
+    static_mask = static["thin"]["composite"]
     static_thin = static["thin"]["filtered_thin_mask"]
     temporal_mask = _up(temporal.mask, full_size).astype(np.uint16)
     temporal_thin = _up(temporal.thin_mask, full_size).astype(np.uint16)
@@ -181,6 +182,9 @@ def run_temporal(input_dir: str, cfg: Config, resume=True, force=False,
     temporal_fp = stable_hash(temporal_cfg)
     static_fp = stable_hash(article_cfg)
     frames = list(iter_frames(root))
+    max_frames = cfg.get("frames.max_frames")
+    if max_frames is not None:
+        frames = frames[:int(max_frames)]
     if not frames:
         raise RuntimeError("temporal pipeline requires extracted consecutive frames")
     frame_indices = [ref.frame_index for ref in frames]
@@ -311,7 +315,11 @@ def run_temporal(input_dir: str, cfg: Config, resume=True, force=False,
             "frame_index": ref.frame_index,
             "capture_timestamp_ns": ref.capture_timestamp_ns,
             "static_ms": static_ms, "optical_flow_ms": flow_ms,
-            "total_ms": (time.perf_counter() - frame_start) * 1000,
+            "flow_compute_ms": (
+                flow.timings_ms.get("flow_compute_ms", 0.0) if flow else 0.0),
+            "flow_validation_ms": (
+                flow.timings_ms.get("flow_validation_ms", 0.0) if flow else 0.0),
+            **primary.timings_ms,
             "flow_valid_fraction": float(primary.flow_validity.mean()),
             "reset_reason": RESET_REASON[primary.reset_reason],
             "reset_reason_code": primary.reset_reason,
@@ -323,9 +331,14 @@ def run_temporal(input_dir: str, cfg: Config, resume=True, force=False,
             "provenance_codes": {str(k): v for k, v in PROVENANCE.items()},
             "switch_reason_codes": {str(k): v for k, v in SWITCH_REASON.items()},
         }
+        write_start = time.perf_counter()
         _write_frame(
             out, stem, static, primary, (w, h), metadata,
             save_probability, flow)
+        metadata["output_writing_ms"] = (
+            time.perf_counter() - write_start) * 1000
+        metadata["total_ms"] = (time.perf_counter() - frame_start) * 1000
+        atomic_write_json(out / "metadata" / f"{stem}.json", metadata)
         processed.append(ref.frame_index)
         if (position + 1) % checkpoint_interval == 0 or position == len(frames) - 1:
             for mode, state in states.items():
@@ -372,4 +385,13 @@ def _write_summary(out: Path, manifest: dict, taxonomy: Taxonomy) -> None:
     summary["storage_bytes"] = size
     summary["storage_bytes_per_frame"] = (
         size / max(1, summary["frame_count"]))
+    summary["peak_ram_mb"] = resource.getrusage(
+        resource.RUSAGE_SELF).ru_maxrss / 1024
+    try:
+        import torch
+        summary["peak_vram_mb"] = (
+            torch.cuda.max_memory_allocated() / 1e6
+            if torch.cuda.is_available() else None)
+    except ImportError:
+        summary["peak_vram_mb"] = None
     atomic_write_json(out / "summary.json", summary)
