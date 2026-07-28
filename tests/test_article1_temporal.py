@@ -2,7 +2,9 @@ from pathlib import Path
 import inspect
 
 import cv2
+import json
 import numpy as np
+import pandas as pd
 import pytest
 
 from aria_drive_seg.article1.optical_flow import (
@@ -10,6 +12,8 @@ from aria_drive_seg.article1.optical_flow import (
 from aria_drive_seg.article1.temporal import (
     PROVENANCE, reset_reason_for, stabilize_frame)
 from aria_drive_seg.article1.temporal_state import TemporalState
+from aria_drive_seg.article1.temporal_pipeline import run_temporal
+from aria_drive_seg.config import Config
 
 
 NAMES = [
@@ -247,3 +251,65 @@ def test_primary_segmentation_has_no_future_or_gaze_input():
     assert not any(token in source.lower() for token in forbidden)
     signature = inspect.signature(stabilize_frame)
     assert "next_frame" not in signature.parameters
+
+
+def _synthetic_replay(tmp_path, frames=3):
+    root, static = tmp_path / "run", tmp_path / "static"
+    (root / "frames" / "rectified").mkdir(parents=True)
+    rows = []
+    for index in range(frames):
+        frame_id = 100 + index
+        relative = f"frames/rectified/frame_{frame_id:06d}.jpg"
+        image = np.zeros((24, 32, 3), np.uint8)
+        image[:, 2 + index:6 + index] = 180
+        cv2.imwrite(str(root / relative), image)
+        rows.append({
+            "frame_index": frame_id,
+            "capture_timestamp_ns": (index + 1) * 100_000_000,
+            "rectified_path": relative, "original_path": relative,
+        })
+        stem = f"frame_{frame_id:06d}"
+        for directory in ("probabilities", "base_masks",
+                          "filtered_thin_masks", "masks"):
+            (static / directory).mkdir(parents=True, exist_ok=True)
+        probability = one_hot(1, (24, 32))
+        with open(static / "probabilities" / f"{stem}.npz", "wb") as handle:
+            np.savez_compressed(handle, probabilities=probability.astype(np.float16))
+        cv2.imwrite(str(static / "base_masks" / f"{stem}.png"),
+                    np.ones((24, 32), np.uint16))
+        cv2.imwrite(str(static / "filtered_thin_masks" / f"{stem}.png"),
+                    np.zeros((24, 32), np.uint16))
+        cv2.imwrite(str(static / "masks" / f"{stem}.png"),
+                    np.ones((24, 32), np.uint16))
+    pd.DataFrame(rows).to_parquet(root / "frames" / "frames.parquet", index=False)
+    config = Config.load(
+        "configs/article1/temporal_segmentation.yaml",
+        overrides={"temporal": {
+            "processing_scale": .5, "state_checkpoint_interval": 2,
+            "experiment_modes": ["T0", "T4"], "diagnostic_outputs": False,
+        }})
+    return root, static, config
+
+
+def test_streaming_manifest_raw_preservation_and_resume(tmp_path):
+    root, static, config = _synthetic_replay(tmp_path)
+    assert run_temporal(root, config, static_output=str(static)) == 0
+    out = root / "article1_temporal"
+    manifest = json.loads((out / "manifest.json").read_text())
+    assert manifest["causal"] is True
+    assert manifest["gaze_assisted"] is False
+    assert manifest["frame_count"] == 3
+    assert manifest["processed_frame_indices"] == [100, 101, 102]
+    raw = cv2.imread(str(out / "static_masks/frame_000100.png"),
+                     cv2.IMREAD_UNCHANGED)
+    assert np.all(raw == 1)
+    before = (out / "temporal_masks/frame_000102.png").stat().st_mtime_ns
+    assert run_temporal(root, config, static_output=str(static), resume=True) == 0
+    assert (out / "temporal_masks/frame_000102.png").stat().st_mtime_ns == before
+
+
+def test_replay_missing_static_probability_fails_closed(tmp_path):
+    root, static, config = _synthetic_replay(tmp_path, frames=1)
+    (static / "probabilities/frame_000100.npz").unlink()
+    with pytest.raises(RuntimeError, match="missing static probability"):
+        run_temporal(root, config, static_output=str(static))

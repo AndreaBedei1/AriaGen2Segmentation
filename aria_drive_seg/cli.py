@@ -107,6 +107,23 @@ def build_parser() -> argparse.ArgumentParser:
     prep.add_argument("--session-id", required=True)
     prep.add_argument("--participant-id", required=True)
     _add_common(prep)
+    ptemp = a1.add_parser(
+        "segment-temporal",
+        help="causal static+temporal Article 1 segmentation")
+    ptemp.add_argument("--input", required=True, help="extracted run containing frames/")
+    ptemp.add_argument("--vehicle-type", required=True, choices=["car", "motorcycle"])
+    ptemp.add_argument("--session-id", required=True)
+    ptemp.add_argument("--participant-id", required=True)
+    _add_common(ptemp)
+    pstab = a1.add_parser(
+        "stabilize-temporal",
+        help="causal replay from saved static Article 1 probabilities")
+    pstab.add_argument("--input", required=True, help="static Article 1 output directory")
+    pstab.add_argument("--frames", required=True, help="extracted run containing frames/")
+    pstab.add_argument("--vehicle-type", required=True, choices=["car", "motorcycle"])
+    pstab.add_argument("--session-id", required=True)
+    pstab.add_argument("--participant-id", required=True)
+    _add_common(pstab)
     return ap
 
 
@@ -114,9 +131,13 @@ def _load_cfg(args):
     from .config import Config, apply_cli_overrides
     path = getattr(args, "config", None)
     if path is None and getattr(args, "command", None) == "article1":
-        path = ("configs/article1/external_segmentation.yaml"
-                if getattr(args, "article1_command", None) == "reprocess-external"
-                else "configs/article1/external.yaml")
+        article_command = getattr(args, "article1_command", None)
+        if article_command in {"segment-temporal", "stabilize-temporal"}:
+            path = "configs/article1/temporal_segmentation.yaml"
+        elif article_command == "reprocess-external":
+            path = "configs/article1/external_segmentation.yaml"
+        else:
+            path = "configs/article1/external.yaml"
     cfg = Config.load(path=path)
     return apply_cli_overrides(cfg, args)
 
@@ -193,6 +214,13 @@ def main(argv: Optional[list] = None) -> int:
             from .article1.reprocess import run_reprocess_external
             return run_reprocess_external(args.input, cfg, source_subdir=args.source_subdir,
                                           resume=args.resume, force=args.force)
+        if args.article1_command == "segment-temporal":
+            from .article1.temporal_pipeline import run_temporal
+            return run_temporal(args.input, cfg, resume=args.resume, force=args.force)
+        if args.article1_command == "stabilize-temporal":
+            from .article1.temporal_pipeline import run_temporal
+            return run_temporal(args.frames, cfg, resume=args.resume, force=args.force,
+                                static_output=args.input)
 
     return 1
 
