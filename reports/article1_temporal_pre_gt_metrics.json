@@ -1,0 +1,223 @@
+{
+  "disclaimer": "Pre-GT only. Reduced flicker/unknown is not accuracy; persistence can propagate errors.",
+  "frame_count": 300,
+  "raw_class_switch_rate": 0.0560426067052404,
+  "temporal_class_switch_rate": 0.04943422308846739,
+  "raw_unknown_rate": 0.01142801809509812,
+  "temporal_unknown_rate": 0.007144751161781585,
+  "thin_temporal_continuity": 0.1725820238644509,
+  "dropout_events_1_frame_pixels": 13095167,
+  "dropout_events_2_frame_pixels": 6091261,
+  "reset_count": 7,
+  "storage_bytes": 806669720,
+  "modes": {
+    "T0": {
+      "mean_raw_unknown_rate": 0.011426708028890568,
+      "mean_temporal_unknown_rate": 0.011426708028890564,
+      "mean_unknown_recovery_rate": 0.0,
+      "mean_propagated_pixels": 0.0,
+      "mean_mean_propagation_age": 0.0,
+      "mean_pixel_difference_raw_temporal": 0.0,
+      "mean_flow_valid_fraction": 0.5249576667086588,
+      "mean_reset": 0.023333333333333334,
+      "mean_thin_pixels": 1692.5266666666666,
+      "mean_elapsed_ms": 67.35117230665007,
+      "mean_raw_switch_rate": 0.055867740614764426,
+      "mean_temporal_switch_rate": 0.05586774061476441,
+      "mean_current_evidence_free_propagation": 0.0,
+      "state_storage_bytes": 39543705
+    },
+    "T1": {
+      "mean_raw_unknown_rate": 0.011426708028890568,
+      "mean_temporal_unknown_rate": 0.0031793491573584164,
+      "mean_unknown_recovery_rate": 0.008651716602278772,
+      "mean_propagated_pixels": 7829.516666666666,
+      "mean_mean_propagation_age": 0.0,
+      "mean_pixel_difference_raw_temporal": 0.010473539724531787,
+      "mean_flow_valid_fraction": 0.9877997930139134,
+      "mean_reset": 0.023333333333333334,
+      "mean_thin_pixels": 1692.5266666666666,
+      "mean_elapsed_ms": 328.64980636327044,
+      "mean_raw_switch_rate": 0.055867740614764426,
+      "mean_temporal_switch_rate": 0.042742176345846976,
+      "mean_current_evidence_free_propagation": 7310.09,
+      "state_storage_bytes": 38437116
+    },
+    "T2": {
+      "mean_raw_unknown_rate": 0.011426708028890568,
+      "mean_temporal_unknown_rate": 0.007880199147560258,
+      "mean_unknown_recovery_rate": 0.004597807487192409,
+      "mean_propagated_pixels": 38068.613333333335,
+      "mean_mean_propagation_age": 0.23309538216485243,
+      "mean_pixel_difference_raw_temporal": 0.009341988081240725,
+      "mean_flow_valid_fraction": 0.5249576667086588,
+      "mean_reset": 0.023333333333333334,
+      "mean_thin_pixels": 1692.5266666666666,
+      "mean_elapsed_ms": 325.1533850331786,
+      "mean_raw_switch_rate": 0.055867740614764426,
+      "mean_temporal_switch_rate": 0.047035807893116094,
+      "mean_current_evidence_free_propagation": 6185.456666666667,
+      "state_storage_bytes": 39015201
+    },
+    "T3": {
+      "mean_raw_unknown_rate": 0.011426708028890568,
+      "mean_temporal_unknown_rate": 0.007141890449595475,
+      "mean_unknown_recovery_rate": 0.0047605268959435626,
+      "mean_propagated_pixels": 37978.14,
+      "mean_mean_propagation_age": 0.18357713124025662,
+      "mean_pixel_difference_raw_temporal": 0.007847725252652501,
+      "mean_flow_valid_fraction": 0.5249576667086588,
+      "mean_reset": 0.023333333333333334,
+      "mean_thin_pixels": 1692.5266666666666,
+      "mean_elapsed_ms": 327.14975232663465,
+      "mean_raw_switch_rate": 0.055867740614764426,
+      "mean_temporal_switch_rate": 0.04921065339716133,
+      "mean_current_evidence_free_propagation": 5084.253333333333,
+      "state_storage_bytes": 38981108
+    },
+    "T4": {
+      "mean_raw_unknown_rate": 0.011426708028890568,
+      "mean_temporal_unknown_rate": 0.007144751161781585,
+      "mean_unknown_recovery_rate": 0.004758086104812295,
+      "mean_propagated_pixels": 37463.93,
+      "mean_mean_propagation_age": 0.1919434997112197,
+      "mean_pixel_difference_raw_temporal": 0.007976999699056577,
+      "mean_flow_valid_fraction": 0.5249576667086588,
+      "mean_reset": 0.023333333333333334,
+      "mean_thin_pixels": 1940.7366666666667,
+      "mean_elapsed_ms": 347.7835773800204,
+      "mean_raw_switch_rate": 0.055867740614764426,
+      "mean_temporal_switch_rate": 0.04926944234483917,
+      "mean_current_evidence_free_propagation": 4955.683333333333,
+      "state_storage_bytes": 38987190
+    }
+  },
+  "classes": {
+    "unknown": {
+      "appearances": 5687008,
+      "disappearances": 5797916,
+      "switches": 11484924,
+      "propagated_pixels": 9556,
+      "average_ttl": 0.0,
+      "maximum_ttl": 0,
+      "supported_by_current_evidence_pct": 74.30933444956048
+    },
+    "road_surface": {
+      "appearances": 7213764,
+      "disappearances": 7241396,
+      "switches": 14455160,
+      "propagated_pixels": 3075380,
+      "average_ttl": 0.334897150921187,
+      "maximum_ttl": 3,
+      "supported_by_current_evidence_pct": 66.42623025447261
+    },
+    "lane_marking": {
+      "appearances": 1286280,
+      "disappearances": 1265020,
+      "switches": 2551300,
+      "propagated_pixels": 542624,
+      "average_ttl": 0.7187002417880521,
+      "maximum_ttl": 3,
+      "supported_by_current_evidence_pct": 43.047487763165655
+    },
+    "regulatory_road_marking": {
+      "appearances": 447200,
+      "disappearances": 446016,
+      "switches": 893216,
+      "propagated_pixels": 185480,
+      "average_ttl": 0.7295449644166487,
+      "maximum_ttl": 2,
+      "supported_by_current_evidence_pct": 36.21684278628423
+    },
+    "vehicle": {
+      "appearances": 8664032,
+      "disappearances": 8803304,
+      "switches": 17467336,
+      "propagated_pixels": 4661036,
+      "average_ttl": 0.14817564163846836,
+      "maximum_ttl": 1,
+      "supported_by_current_evidence_pct": 82.67812134469676
+    },
+    "two_wheeler": {
+      "appearances": 179012,
+      "disappearances": 179012,
+      "switches": 358024,
+      "propagated_pixels": 17616,
+      "average_ttl": 0.0485921889191644,
+      "maximum_ttl": 1,
+      "supported_by_current_evidence_pct": 88.87942779291554
+    },
+    "pedestrian": {
+      "appearances": 807752,
+      "disappearances": 840584,
+      "switches": 1648336,
+      "propagated_pixels": 853380,
+      "average_ttl": 0.21349926175912254,
+      "maximum_ttl": 1,
+      "supported_by_current_evidence_pct": 72.63048114556236
+    },
+    "traffic_light": {
+      "appearances": 1164,
+      "disappearances": 1164,
+      "switches": 2328,
+      "propagated_pixels": 848,
+      "average_ttl": 0.07547169811320754,
+      "maximum_ttl": 1,
+      "supported_by_current_evidence_pct": 89.97641509433963
+    },
+    "traffic_sign": {
+      "appearances": 648908,
+      "disappearances": 646696,
+      "switches": 1295604,
+      "propagated_pixels": 190288,
+      "average_ttl": 0.24888589926847726,
+      "maximum_ttl": 2,
+      "supported_by_current_evidence_pct": 72.26782561170437
+    },
+    "road_boundary_or_obstacle": {
+      "appearances": 4105752,
+      "disappearances": 4154700,
+      "switches": 8260452,
+      "propagated_pixels": 1489728,
+      "average_ttl": 0.2840169480603171,
+      "maximum_ttl": 2,
+      "supported_by_current_evidence_pct": 70.40479872835847
+    },
+    "mirror": {
+      "appearances": 0,
+      "disappearances": 0,
+      "switches": 0,
+      "propagated_pixels": 0,
+      "average_ttl": 0.0,
+      "maximum_ttl": 0,
+      "supported_by_current_evidence_pct": 0.0
+    },
+    "instrument_display": {
+      "appearances": 0,
+      "disappearances": 0,
+      "switches": 0,
+      "propagated_pixels": 0,
+      "average_ttl": 0.0,
+      "maximum_ttl": 0,
+      "supported_by_current_evidence_pct": 0.0
+    },
+    "control_and_ego_vehicle": {
+      "appearances": 0,
+      "disappearances": 0,
+      "switches": 0,
+      "propagated_pixels": 0,
+      "average_ttl": 0.0,
+      "maximum_ttl": 0,
+      "supported_by_current_evidence_pct": 0.0
+    },
+    "other_environment": {
+      "appearances": 16013944,
+      "disappearances": 15679008,
+      "switches": 31692952,
+      "propagated_pixels": 33930780,
+      "average_ttl": 0.08632775314920553,
+      "maximum_ttl": 1,
+      "supported_by_current_evidence_pct": 91.29221314688316
+    }
+  }
+}
