@@ -266,8 +266,11 @@ def stabilize_frame(current_probabilities: np.ndarray,
     switch_reason[unknown_recovered] = 8
 
     used_previous = eligible & (previous_weight > 0)
+    class_propagated = (
+        used_previous & (temporal_mask == previous_mask) &
+        (current_mask != temporal_mask))
     propagation_age = np.where(
-        used_previous & (current_mask != temporal_mask),
+        class_propagated,
         previous_propagation_age + 1, 0).astype(np.uint16)
     same_class = temporal_mask == previous_mask
     class_age = np.where(
@@ -275,7 +278,7 @@ def stabilize_frame(current_probabilities: np.ndarray,
     confidence = np.take_along_axis(fused, temporal_mask[None], 0)[0]
     provenance = np.ones((h, w), np.uint8)
     provenance[used_previous] = 3
-    provenance[used_previous & (current_mask != temporal_mask)] = 2
+    provenance[class_propagated] = 2
     provenance[held] = 6
     hysteresis_ms = (time.perf_counter() - hysteresis_start) * 1000
 

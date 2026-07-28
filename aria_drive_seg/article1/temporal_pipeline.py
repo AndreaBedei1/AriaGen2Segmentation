@@ -116,6 +116,10 @@ def _frame_metrics(mode: str, static_mask: np.ndarray, result: TemporalResult,
     static_small = cv2.resize(
         static_mask, (temporal_mask.shape[1], temporal_mask.shape[0]),
         interpolation=cv2.INTER_NEAREST)
+    if mode == "T0":
+        # T0 is the exact static reference projected to the common metric grid,
+        # not a probability-resampled approximation of it.
+        temporal_mask = static_small
     propagated = np.isin(result.provenance, [2, 3, 5, 6])
     record = {
         "mode": mode,

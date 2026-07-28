@@ -12,7 +12,7 @@ from aria_drive_seg.article1.optical_flow import (
 from aria_drive_seg.article1.temporal import (
     PROVENANCE, reset_reason_for, stabilize_frame)
 from aria_drive_seg.article1.temporal_state import TemporalState
-from aria_drive_seg.article1.temporal_pipeline import run_temporal
+from aria_drive_seg.article1.temporal_pipeline import _frame_metrics, run_temporal
 from aria_drive_seg.config import Config
 
 
@@ -236,6 +236,31 @@ def test_t1_t2_t3_ablation_boundaries_are_distinct():
     assert np.all(t1.mask == 1)  # hysteresis only, no probability propagation
     assert np.all(t2.mask == 4)  # generic flow/fusion has no dynamic support gate
     assert np.all(t3.mask == 1)  # class-specific vehicle policy is conservative
+
+
+def test_cross_class_fusion_is_not_counted_as_class_propagation():
+    first = initial(1)
+    first.state.probabilities[:] = 0
+    first.state.probabilities[1] = .30
+    first.state.probabilities[3] = .70
+    current = np.zeros((14, 8, 9), np.float32)
+    current[1] = .15
+    current[2] = .45
+    current[3] = .40
+    result = next_frame(first.state, current, mode="T2")
+    assert np.all(result.mask == 3)
+    assert np.all(result.provenance == 3)
+    assert not result.propagation_age.any()
+
+
+def test_t0_metrics_use_exact_static_reference_on_common_grid():
+    result = initial(1)
+    static = np.full((16, 18), 5, np.uint16)
+    prior = np.full((8, 9), 5, np.uint16)
+    record = _frame_metrics("T0", static, result, prior, prior, 1.0)
+    assert record["pixel_difference_raw_temporal"] == 0
+    assert record["temporal_switch_rate"] == 0
+    assert record["raw_unknown_rate"] == record["temporal_unknown_rate"]
 
 
 def test_raw_input_is_never_mutated_and_provenance_is_explicit():
