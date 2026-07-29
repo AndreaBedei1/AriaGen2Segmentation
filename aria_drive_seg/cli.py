@@ -124,6 +124,22 @@ def build_parser() -> argparse.ArgumentParser:
     pstab.add_argument("--session-id", required=True)
     pstab.add_argument("--participant-id", required=True)
     _add_common(pstab)
+    pcam = a1.add_parser(
+        "semantic-camera",
+        help="dense external+cockpit Article 1 per-frame fusion")
+    pcam.add_argument(
+        "--input", required=True, help="extracted run containing frames/")
+    pcam.add_argument(
+        "--external", required=True,
+        help="saved Article 1 Mask2Former output (read-only)")
+    pcam.add_argument(
+        "--output", default=None,
+        help="semantic-camera output directory (default <input>/semantic_camera)")
+    pcam.add_argument(
+        "--vehicle-type", required=True, choices=["car", "motorcycle"])
+    pcam.add_argument("--session-id", required=True)
+    pcam.add_argument("--participant-id", required=True)
+    _add_common(pcam)
     return ap
 
 
@@ -134,6 +150,8 @@ def _load_cfg(args):
         article_command = getattr(args, "article1_command", None)
         if article_command in {"segment-temporal", "stabilize-temporal"}:
             path = "configs/article1/temporal_segmentation.yaml"
+        elif article_command == "semantic-camera":
+            path = "configs/article1/semantic_camera.yaml"
         elif article_command == "reprocess-external":
             path = "configs/article1/external_segmentation.yaml"
         else:
@@ -221,6 +239,11 @@ def main(argv: Optional[list] = None) -> int:
             from .article1.temporal_pipeline import run_temporal
             return run_temporal(args.frames, cfg, resume=args.resume, force=args.force,
                                 static_output=args.input)
+        if args.article1_command == "semantic-camera":
+            from .article1.semantic_camera import run_semantic_camera
+            return run_semantic_camera(
+                args.input, args.external, cfg, args.vehicle_type,
+                output_dir=args.output, resume=args.resume, force=args.force)
 
     return 1
 

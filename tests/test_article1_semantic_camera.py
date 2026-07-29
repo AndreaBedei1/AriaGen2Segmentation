@@ -12,10 +12,12 @@ from aria_drive_seg.article1.semantic_camera import (
     PROVENANCE, fuse_semantic_camera, grounded_output_to_internal,
     run_semantic_camera,
 )
+from aria_drive_seg.cli import _load_cfg, build_parser
 from aria_drive_seg.config import Config
 from aria_drive_seg.io_utils import write_mask_u16
 from aria_drive_seg.segmentation.base import FrameOutput
 from aria_drive_seg.taxonomy import Taxonomy
+from scripts.render_article1_semantic_camera import build_video_frames
 
 
 def _entropy(probabilities):
@@ -232,3 +234,44 @@ def test_incompatible_resume_and_missing_external_fail_closed(
     (ext / "static_confidence/frame_000100.png").unlink()
     with pytest.raises(RuntimeError, match="missing external confidence"):
         ExternalEvidenceReader(ext).read(100)
+
+
+def test_semantic_camera_cli_defaults_to_dedicated_config(project_root):
+    args = build_parser().parse_args([
+        "article1", "semantic-camera", "--input", "frames",
+        "--external", "external", "--vehicle-type", "car",
+        "--session-id", "s", "--participant-id", "p",
+    ])
+    cfg = _load_cfg(args)
+    assert cfg.get("semantic_camera.output_subdir") == "semantic_camera"
+    assert cfg.get("grounded_sam2.gaze_conditioned") is False
+
+
+def test_semantic_camera_video_frames_have_codec_aligned_geometry(project_root):
+    shape = (24, 32)
+    rgb = np.zeros((*shape, 3), np.uint8)
+    ext = np.ones(shape, np.uint16)
+    inside = np.zeros(shape, np.uint16)
+    inside[-5:] = 12
+    final = ext.copy()
+    final[-5:] = 12
+    metadata = {
+        "frame_index": 1,
+        "capture_timestamp_ns": 100,
+        "external_selected_fraction": .8,
+        "internal_model_selected_fraction": .1,
+        "geometric_proxy_selected_fraction": .1,
+        "dense_fill_fraction": 0,
+        "conflict_fraction": .1,
+        "internal_source": "synthetic",
+        "internal_is_fallback": True,
+    }
+    taxonomy = Taxonomy.load(
+        project_root / "configs/article1/classes_article1.yaml")
+    dense, comparison = build_video_frames(
+        rgb, ext, inside, final, metadata, taxonomy)
+    assert dense.shape == (960, 1280, 3)
+    assert comparison.shape == (560, 1920, 3)
+    assert all(
+        value % 8 == 0
+        for frame in (dense, comparison) for value in frame.shape[:2])
