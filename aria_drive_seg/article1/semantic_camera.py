@@ -651,6 +651,11 @@ def _peak_vram_mb() -> float | None:
     return None
 
 
+def _max_optional(*values: float | None) -> float | None:
+    available = [float(value) for value in values if value is not None]
+    return max(available) if available else None
+
+
 def _output_complete(out: Path, stem: str) -> bool:
     return all((out / directory / f"{stem}{suffix}").exists() for directory, suffix in (
         ("final_masks", ".png"), ("overlays", ".jpg"),
@@ -789,6 +794,10 @@ def _write_summary(
         out: Path, rows: list[dict[str, Any]], fingerprint: str,
         external_reader: ExternalEvidenceReader,
         provider: InternalProvider) -> None:
+    summary_path = out / "summary.json"
+    previous_summary = (
+        json.loads(summary_path.read_text())
+        if summary_path.exists() else {})
     keys = (
         "dense_coverage", "external_selected_fraction",
         "internal_model_selected_fraction",
@@ -801,6 +810,11 @@ def _write_summary(
         "external_read", "internal_inference", "fusion",
         "output_writing", "total",
     )
+    current_peak_ram = resource.getrusage(
+        resource.RUSAGE_SELF).ru_maxrss / 1024
+    current_peak_vram = _peak_vram_mb()
+    prior_peak_ram = previous_summary.get("peak_ram_mb")
+    prior_peak_vram = previous_summary.get("peak_vram_mb")
     summary = {
         "stage": "article1_semantic_camera_v1",
         "fingerprint": fingerprint,
@@ -818,12 +832,11 @@ def _write_summary(
                 row["timings_ms"].get(key, 0.0) for row in rows]))
             for key in timing_keys
         },
-        "peak_ram_mb": resource.getrusage(
-            resource.RUSAGE_SELF).ru_maxrss / 1024,
-        "peak_vram_mb": _peak_vram_mb(),
+        "peak_ram_mb": _max_optional(current_peak_ram, prior_peak_ram),
+        "peak_vram_mb": _max_optional(current_peak_vram, prior_peak_vram),
     }
     size = sum(
         path.stat().st_size for path in out.rglob("*") if path.is_file())
     summary["storage_bytes"] = size
     summary["storage_bytes_per_frame"] = size / max(1, len(rows))
-    atomic_write_json(out / "summary.json", summary)
+    atomic_write_json(summary_path, summary)

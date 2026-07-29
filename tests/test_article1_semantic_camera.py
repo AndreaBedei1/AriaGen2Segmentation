@@ -206,6 +206,11 @@ def test_streaming_runner_is_dense_resumable_and_preserves_external(
     manifest = json.loads((output / "manifest.json").read_text())
     assert len(manifest["done"]) == 3
     assert manifest["internal_is_fallback"] is False
+    summary_path = output / "summary.json"
+    summary = json.loads(summary_path.read_text())
+    summary["peak_ram_mb"] = 999.0
+    summary["peak_vram_mb"] = 888.0
+    summary_path.write_text(json.dumps(summary))
     before = (
         output / "final_masks/frame_000102.png").stat().st_mtime_ns
     run_semantic_camera(
@@ -213,6 +218,9 @@ def test_streaming_runner_is_dense_resumable_and_preserves_external(
         internal_provider=FakeInternalProvider())
     assert (
         output / "final_masks/frame_000102.png").stat().st_mtime_ns == before
+    resumed_summary = json.loads(summary_path.read_text())
+    assert resumed_summary["peak_ram_mb"] >= 999.0
+    assert resumed_summary["peak_vram_mb"] >= 888.0
 
 
 def test_incompatible_resume_and_missing_external_fail_closed(
