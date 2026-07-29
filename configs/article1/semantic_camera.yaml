@@ -1,0 +1,78 @@
+semantic_camera:
+  version: 1
+  classes: configs/article1/classes_article1.yaml
+  output_subdir: semantic_camera
+
+  external:
+    # The 300-frame checkpoint keeps the real Mask2Former Article 1 top-1
+    # confidence but not every full probability tensor. Keep evidence uniform
+    # across the clip and use the explicitly named entropy proxy.
+    use_probabilities_if_available: false
+
+  internal:
+    mode: auto
+    segformer_checkpoint: weights/segformer-b2-article1-cockpit
+    device: cuda
+    fallback: grounded_sam2_proxy
+    geometric_proxy:
+      enabled: true
+      bottom_start_fraction: 0.68
+      confidence: 0.40
+
+  fusion:
+    entropy_penalty: 0.20
+    conflict_margin: 0.03
+    geometric_score_relaxation: 0.20
+    geometric_external_max_confidence: 0.68
+    dense_fill_confidence: 0.0
+    geometric_override_classes:
+      [unknown, vehicle, road_boundary_or_obstacle, other_environment]
+    internal_min_confidence:
+      mirror: 0.25
+      instrument_display: 0.25
+      control_and_ego_vehicle: 0.28
+    external_priorities:
+      unknown: 0
+      road_surface: 90
+      lane_marking: 125
+      regulatory_road_marking: 120
+      vehicle: 95
+      two_wheeler: 115
+      pedestrian: 125
+      traffic_light: 135
+      traffic_sign: 130
+      road_boundary_or_obstacle: 75
+      mirror: 0
+      instrument_display: 0
+      control_and_ego_vehicle: 0
+      other_environment: 25
+    internal_priorities:
+      mirror: 150
+      instrument_display: 140
+      control_and_ego_vehicle: 110
+
+  render:
+    overlay_alpha: 0.45
+    fps: 10
+
+# Temporary internal fallback. This is real local Grounding DINO + SAM2.1
+# inference restricted to cockpit concepts, but it is not a reviewed/trained
+# cockpit semantic model and must never be reported as one.
+grounded_sam2:
+  class_whitelist:
+    - steering_wheel
+    - instrument_cluster
+    - dashboard
+    - infotainment_screen
+    - rear_view_mirror
+    - side_mirror
+    - windshield
+    - a_pillar
+    - driver_hand
+    - smartphone
+    - other_cockpit
+  prompt_mode_override: combined
+  hierarchical_subclasses: false
+  roi_enabled: false
+  multiscale_enabled: false
+  gaze_conditioned: false
