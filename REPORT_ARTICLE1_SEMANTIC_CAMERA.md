@@ -1,7 +1,9 @@
 # Article 1 semantic camera fusion
 
-Date: 2026-07-29  
-Base branch: `feature/article1-temporal-stabilization` at `06f08ca`  
+Date: 2026-07-29
+
+Base branch: `feature/article1-temporal-stabilization` at `06f08ca`
+
 Work branch: `feature/article1-semantic-camera-fusion`
 
 ## Delivered scope
@@ -157,4 +159,3 @@ The next step is to annotate a balanced car/motorcycle cockpit set, train and re
 the existing four-class cockpit SegFormer, then rerun the same fusion contract with
 the proxy disabled and evaluate per-class IoU plus boundary quality against held-out
 ground truth.
-

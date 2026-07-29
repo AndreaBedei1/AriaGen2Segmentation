@@ -68,4 +68,3 @@ PYTHONPATH=. /home/andreabedei/miniconda3/envs/aria-car/bin/python \
   --output output/article1/semantic_camera_30s \
   --fps 10
 ```
-

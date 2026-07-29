@@ -1,7 +1,9 @@
 # Article 1 semantic camera — visual QA
 
-Date: 2026-07-29  
-Clip: VRS interval 180–210 s, frames 1801–2100, 10 fps, 2016×1512  
+Date: 2026-07-29
+
+Clip: VRS interval 180–210 s, frames 1801–2100, 10 fps, 2016×1512
+
 Artifacts: `output/article1/semantic_camera_30s/contact_sheet.jpg` and the
 four `preview_*.png` images in the same directory.
 
@@ -58,4 +60,3 @@ Both MP4 files were checked with `ffprobe` and decoded sequentially with OpenCV:
 | `02_external_internal_fusion.mp4` | H.264/yuv420p | 1920×560 | 10 | 30.000 s | 300 |
 
 No frame had inconsistent rendered geometry.
-
