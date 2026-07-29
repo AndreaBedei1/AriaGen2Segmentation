@@ -88,7 +88,7 @@ pixels, zero IDs outside 1–13 and one constant 1512×2016 geometry.
 - mean total: 916.89 ms/frame
 - mean internal inference: 574.09 ms/frame after warm-up
 - peak RAM/VRAM: 2928.62/3274.34 MB
-- semantic-camera data: 303,488,042 bytes
+- semantic-camera data: 303,488,041 bytes at the final resume check
 
 All 13 final classes occur in the clip. This is a coverage and execution result, not
 an accuracy result.
