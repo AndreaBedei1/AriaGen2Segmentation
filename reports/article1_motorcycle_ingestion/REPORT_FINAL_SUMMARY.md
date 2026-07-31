@@ -1,16 +1,17 @@
 # Article 1 — motorcycle ingestion: final summary
 
-Generated: 2026-07-31T21:41:51.348927+00:00
+Generated: 2026-07-31T21:43:52.957106+00:00
 
 ## Git
 
 - branch: `feature/article1-motorcycle-ingestion`
 - base commit: `240d088b3436bc8b6e0c1cb76b67bb1dbbd66d53`
-- final commit: `fd39626be14a60547941f6f3fcb3d89a2c5c6145`
+- final commit: `43081ad37e8fa57571e1e0ef2ee7b10acb1e10c5`
 
 Intermediate commits:
 
 ```
+43081ad Run the frozen Article 1 baseline on the motorcycle and analyse it
 fd39626 Render the side-by-side external/internal/fusion comparison
 892d43d Keep the full hand-tracking record, not just its summary
 56cbba4 Fail the frozen run when a stage fails
@@ -112,6 +113,8 @@ These are candidates, not confirmed errors: there is no reviewed ground truth to
 - candidate false masks: 132
 - candidate over-propagation: 43
 
+The failure inventory above counts `false_hand` per **frame**, while the audit counts per **side candidate** (two per frame) and routes some of them to the over-propagation case instead, so the two figures describe the same situation from different units.
+
 Across the whole recordings, the on-device tracker reports a hand in 100.0% of car samples (75.1% projecting into the RGB image) against 37.0% on the motorcycle (12.5% into the image). Intermittent hand visibility on a motorcycle is the normal case and is never treated as a model error.
 
 ## Route pairing quality
@@ -154,7 +157,7 @@ training is blocked until reviewed car AND motorcycle cockpit annotations exist;
 ## Tests
 
 ```
-385 passed, 1 skipped in 24.80s
+385 passed, 1 skipped in 24.17s
 ```
 
 ## Outputs
@@ -163,6 +166,7 @@ training is blocked until reviewed car AND motorcycle cockpit annotations exist;
 
 - `reports/article1_motorcycle_ingestion/REPORT_ACQUISITION_QA.md`
 - `reports/article1_motorcycle_ingestion/REPORT_ANNOTATION_DATASET.md`
+- `reports/article1_motorcycle_ingestion/REPORT_FINAL_SUMMARY.md`
 - `reports/article1_motorcycle_ingestion/REPORT_HAND_VISIBILITY_AUDIT.md`
 - `reports/article1_motorcycle_ingestion/REPORT_MOTORCYCLE_BASELINE.md`
 - `reports/article1_motorcycle_ingestion/REPORT_PRELIMINARY_AUTO_MOTO_COMPARISON.md`

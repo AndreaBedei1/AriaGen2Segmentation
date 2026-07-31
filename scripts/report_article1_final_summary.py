@@ -264,6 +264,11 @@ def main() -> int:
               f"- candidate false masks: {hands['candidate_false_mask_count']}",
               f"- candidate over-propagation: "
               f"{hands['candidate_over_propagation_count']}",
+              "",
+              "The failure inventory above counts `false_hand` per **frame**, while "
+              "the audit counts per **side candidate** (two per frame) and routes "
+              "some of them to the over-propagation case instead, so the two figures "
+              "describe the same situation from different units.",
               ""]
     if stream_export:
         moto_h = stream_export.get(qa_moto.get("recording_id"), {}).get(
