@@ -409,6 +409,9 @@ def stabilize_presentation_frame(
 
     winner_support = np.take_along_axis(
         support_counts, candidate[None], 0)[0]
+    rows, cols = np.indices(shape)
+    candidate_has_past = past_scores[candidate, rows, cols] > 0
+    candidate_has_future = future_scores[candidate, rows, cols] > 0
     internal_candidate = np.isin(candidate, INTERNAL_CLASS_IDS)
     internal_activation = (
         internal_candidate
@@ -417,6 +420,11 @@ def stabilize_presentation_frame(
         & (best_score >= current_score - float(cfg.get(
             "internal_activation_relaxation", .18)))
     )
+    if bool(cfg.get("internal_require_bidirectional_support", False)):
+        internal_activation &= candidate_has_past & candidate_has_future
+        allowed[
+            switch & internal_candidate
+            & ~(candidate_has_past & candidate_has_future)] = False
     allowed |= switch & internal_activation
     thin_candidate = np.isin(candidate, THIN_CLASS_IDS)
     allowed |= (
@@ -457,7 +465,6 @@ def stabilize_presentation_frame(
         dtype=np.float32)
     provenance = np.full(shape, 1, np.uint8)
     changed = output != current
-    rows, cols = np.indices(shape)
     winner_past = past_scores[output, rows, cols] > 0
     winner_future = future_scores[output, rows, cols] > 0
     provenance[changed & winner_past & ~winner_future] = 2

@@ -11,6 +11,7 @@ from aria_drive_seg.article1.semantic_camera_final import (
     FINAL_PROVENANCE,
     FinalPassResult,
     _tree_contract,
+    compute_flow_aligned_internal_flicker,
     finalize_presentation_frame,
     refine_line_class,
     run_semantic_camera_final_pass,
@@ -18,6 +19,7 @@ from aria_drive_seg.article1.semantic_camera_final import (
 from aria_drive_seg.article1.semantic_camera_video import (
     PresentationResult,
     identity_pair_flow,
+    stabilize_presentation_frame,
 )
 from aria_drive_seg.config import Config
 from aria_drive_seg.io_utils import write_mask_u16
@@ -135,6 +137,80 @@ def test_finalization_is_dense_valid_and_deterministic():
     assert np.all((first.mask >= 1) & (first.mask <= 13))
     assert first.stats["dense_coverage"] == 1.0
     assert set(np.unique(first.provenance)).issubset(FINAL_PROVENANCE)
+
+
+def test_short_current_line_is_kept_when_road_supported():
+    binary = np.zeros((12, 20), bool)
+    binary[6, 8:11] = True
+    cfg = {
+        **line_cfg(),
+        "minimum_length_px": 20,
+        "minimum_aspect_ratio": 5.0,
+    }
+    result = refine_line_class(
+        binary, np.ones_like(binary), np.zeros_like(binary),
+        np.zeros(binary.shape, np.float32), cfg)
+    assert np.all(result.mask[6, 8:11])
+    assert not np.any(result.removed)
+
+
+def test_flow_aligned_internal_flicker_ignores_known_motion():
+    shape = (8, 12)
+    masks = [np.full(shape, 13, np.uint16) for _ in range(3)]
+    masks[0][4, 4] = 11
+    masks[1][4, 5] = 11
+    masks[2][4, 6] = 11
+    forward = np.zeros((*shape, 2), np.float32)
+    backward = np.zeros((*shape, 2), np.float32)
+    forward[..., 0] = 1
+    backward[..., 0] = -1
+    valid_forward = np.ones(shape, bool)
+    valid_backward = np.ones(shape, bool)
+    from aria_drive_seg.article1.semantic_camera_video import PairFlow
+    pair = PairFlow(
+        forward, backward, valid_forward, valid_backward)
+    metrics = compute_flow_aligned_internal_flicker(
+        masks, [pair, pair])
+    assert metrics["isolated_internal_flicker_pixels"] == 0
+
+
+def test_new_internal_activation_requires_past_and_future_when_enabled():
+    shape = (5, 7)
+    masks = [np.full(shape, 13, np.uint16) for _ in range(3)]
+    confidences = [np.full(shape, .7, np.float32) for _ in masks]
+    external = [np.full(shape, 13, np.uint16) for _ in masks]
+    masks[0][2, 3] = 11
+    cfg = {
+        "window_radius_frames": 2,
+        "current_confidence_floor": .2,
+        "switch_margin": 0.0,
+        "internal_activation_relaxation": 1.0,
+        "internal_minimum_support_frames": 1,
+        "internal_require_bidirectional_support": True,
+        "classes": {
+            name: {
+                "ttl_frames": 2 if name == "instrument_display" else 0,
+                "vote_weight": 2.0 if name == "instrument_display" else .1,
+                "minimum_confidence": 0.0,
+                "temporal_decay": 1.0,
+            }
+            for name in (
+                "unknown", "road_surface", "lane_marking",
+                "regulatory_road_marking", "vehicle", "two_wheeler",
+                "pedestrian", "traffic_light", "traffic_sign",
+                "road_boundary_or_obstacle", "mirror",
+                "instrument_display", "control_and_ego_vehicle",
+                "other_environment")
+        },
+    }
+    flows = [identity_pair_flow(shape), identity_pair_flow(shape)]
+    past_only = stabilize_presentation_frame(
+        1, masks, confidences, external, confidences, flows, cfg)
+    assert past_only.mask[2, 3] == 13
+    masks[2][2, 3] = 11
+    bilateral = stabilize_presentation_frame(
+        1, masks, confidences, external, confidences, flows, cfg)
+    assert bilateral.mask[2, 3] == 11
 
 
 def _synthetic_final_inputs(tmp_path, count=5):

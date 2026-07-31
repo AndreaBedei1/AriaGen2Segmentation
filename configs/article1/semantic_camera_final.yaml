@@ -13,8 +13,9 @@ semantic_camera_final:
     flow_validity_neighborhood_px: 7
     switch_margin: 0.055
     thin_switch_margin: -0.035
-    thin_minimum_support_frames: 1
-    internal_minimum_support_frames: 1
+    thin_minimum_support_frames: 2
+    internal_minimum_support_frames: 2
+    internal_require_bidirectional_support: true
     internal_activation_relaxation: 0.16
     internal_current_keep_confidence: 0.18
     internal_deactivation_ratio: 0.40
@@ -69,13 +70,13 @@ semantic_camera_final:
   geometry:
     road_closing_kernel_px: 11
     road_support_radius_px: 8
-    barrier_dilation_px: 2
+    barrier_dilation_px: 0
     fill_confidence: 0.30
     line_filter:
       common:
         closing_orientations_deg: [0, 30, 60, 90, 120, 150]
-        closing_kernel_length_px: 17
-        maximum_gap_px: 26
+        closing_kernel_length_px: 19
+        maximum_gap_px: 30
         orientation_tolerance_deg: 18
         endpoint_alignment_tolerance_deg: 24
         seed_minimum_area_px: 3
@@ -87,6 +88,7 @@ semantic_camera_final:
         minimum_length_px: 11
         minimum_aspect_ratio: 2.0
       regulatory_road_marking:
+        add_new_pixels: false
         closing_kernel_length_px: 13
         maximum_gap_px: 20
         minimum_length_px: 8

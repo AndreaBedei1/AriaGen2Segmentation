@@ -33,6 +33,7 @@ from .semantic_camera_video import (
     compute_flow_aligned_metrics,
     compute_presentation_metrics,
     stabilize_presentation_frame,
+    warp_source_to_target,
 )
 
 
@@ -352,12 +353,17 @@ def refine_line_class(
         forbidden: np.ndarray,
         probability: np.ndarray,
         cfg: dict[str, Any],
+        preserve_mask: np.ndarray | None = None,
 ) -> LineRefinement:
     """Repair line gaps with orientation and road-geometry constraints."""
     original = np.asarray(class_mask, bool)
     probability = np.asarray(probability, np.float32)
+    preserved = (
+        original if preserve_mask is None
+        else np.asarray(preserve_mask, bool))
     if original.shape != road_support.shape or original.shape != forbidden.shape \
-            or original.shape != probability.shape:
+            or original.shape != probability.shape or \
+            original.shape != preserved.shape:
         raise ValueError("line-refinement geometry mismatch")
     probability_support = probability >= float(
         cfg.get("probability_support_floor", .25))
@@ -390,7 +396,12 @@ def refine_line_class(
             linked = skeleton
         linked &= allowed
 
-    refined = _remove_incompatible_components(linked, cfg)
+    cleaned = _remove_incompatible_components(linked, cfg)
+    # Current model pixels remain the recall anchor whenever they satisfy the
+    # mandatory road/probability gate.  Shape filtering is strict for newly
+    # synthesized regions, while isolated model fragments are removed only
+    # when they are geometrically incompatible with that gate.
+    refined = cleaned | (original & preserved & allowed)
     morphological_added = refined & ~original
     removed = original & ~refined
     _, before_components = _component_geometries(original)
@@ -555,7 +566,8 @@ def finalize_presentation_frame(
             np.where(output == class_id, confidence, 0.0))
         refined = refine_line_class(
             output == class_id, road_support, forbidden,
-            probability, class_cfg)
+            probability, class_cfg,
+            preserve_mask=output == class_id)
         removed = (output == class_id) & refined.removed
         output[removed & road_support] = ROAD_ID
         output[removed & ~road_support] = OTHER_ID
@@ -568,6 +580,8 @@ def finalize_presentation_frame(
             refined.morphological_added
             & np.isin(output, [ROAD_ID, OTHER_ID])
             & ~forbidden)
+        if not bool(class_cfg.get("add_new_pixels", True)):
+            can_add[:] = False
         output[can_add] = class_id
         confidence[can_add] = np.maximum(
             confidence[can_add],
@@ -639,30 +653,45 @@ def finalize_presentation_frame(
 
 def compute_line_component_metrics(
         masks: Sequence[np.ndarray],
+        broken_length_threshold_px: float = 25.0,
 ) -> dict[str, Any]:
     component_counts = []
+    broken_counts = []
     lengths = []
     per_class: dict[str, dict[str, float]] = {}
     for class_id in LINE_CLASS_IDS:
         class_counts = []
+        class_broken = []
         class_lengths = []
         for mask in masks:
             components = _component_geometries(mask == class_id)[1]
             class_counts.append(len(components))
+            class_broken.append(sum(
+                value.length < broken_length_threshold_px
+                for value in components))
             class_lengths.extend(value.length for value in components)
         name = FINAL_CLASS_NAMES[int(class_id)]
         per_class[name] = {
-            "mean_components_per_frame": float(np.mean(class_counts)),
+            "mean_total_components_per_frame": float(
+                np.mean(class_counts)),
+            "mean_broken_components_per_frame": float(
+                np.mean(class_broken)),
             "mean_component_length_px": float(np.mean(class_lengths))
             if class_lengths else 0.0,
         }
         component_counts.extend(class_counts)
+        broken_counts.extend(class_broken)
         lengths.extend(class_lengths)
     return {
         "mean_broken_components_per_class_frame": float(
+            np.mean(broken_counts)),
+        "mean_total_components_per_class_frame": float(
             np.mean(component_counts)),
         "mean_component_length_px": float(np.mean(lengths))
         if lengths else 0.0,
+        "broken_component_definition": (
+            f"PCA length < {broken_length_threshold_px:g} px at "
+            "processing geometry"),
         "per_class": per_class,
     }
 
@@ -687,6 +716,40 @@ def compute_internal_flicker(
     return {
         "isolated_internal_flicker_pixels": pixels,
         "isolated_internal_flicker_rate": pixels / denominator,
+        "geometry": "image coordinates",
+    }
+
+
+def compute_flow_aligned_internal_flicker(
+        masks: Sequence[np.ndarray],
+        pair_flows: Sequence[PairFlow],
+) -> dict[str, Any]:
+    """Measure isolated internal-class dropout after flow alignment."""
+    if not masks or len(pair_flows) != max(0, len(masks) - 1):
+        raise ValueError(
+            "flow-aligned internal flicker requires one flow per pair")
+    pixels = 0
+    valid_pixels = 0
+    confidence = np.ones(masks[0].shape, np.float32)
+    for index in range(1, len(masks) - 1):
+        previous, _, previous_valid = warp_source_to_target(
+            masks[index - 1], confidence, index - 1, index, pair_flows)
+        following, _, following_valid = warp_source_to_target(
+            masks[index + 1], confidence, index + 1, index, pair_flows)
+        valid = previous_valid & following_valid
+        stable_internal_neighbors = (
+            (previous == following)
+            & np.isin(previous, INTERNAL_CLASS_IDS))
+        pixels += int(
+            (valid & stable_internal_neighbors
+             & (masks[index] != previous)).sum())
+        valid_pixels += int(valid.sum())
+    return {
+        "isolated_internal_flicker_pixels": pixels,
+        "isolated_internal_flicker_rate": (
+            pixels / max(1, valid_pixels)),
+        "valid_pixels": valid_pixels,
+        "geometry": "flow-aligned neighbor evidence",
     }
 
 
@@ -1001,6 +1064,12 @@ def run_semantic_camera_final_pass(
         working_previous)
     after_metrics["internal_flicker"] = compute_internal_flicker(
         final_working_masks)
+    before_metrics["flow_aligned_internal_flicker"] = \
+        compute_flow_aligned_internal_flicker(
+            working_previous, pair_flows)
+    after_metrics["flow_aligned_internal_flicker"] = \
+        compute_flow_aligned_internal_flicker(
+            final_working_masks, pair_flows)
     total_pixels = len(frames) * work_size[0] * work_size[1]
     metrics = {
         "before_previous_presentation": before_metrics,
@@ -1037,6 +1106,11 @@ def run_semantic_camera_final_pass(
                 after_metrics["internal_flicker"][
                     "isolated_internal_flicker_rate"]
                 - before_metrics["internal_flicker"][
+                    "isolated_internal_flicker_rate"]),
+            "flow_aligned_internal_flicker_change": (
+                after_metrics["flow_aligned_internal_flicker"][
+                    "isolated_internal_flicker_rate"]
+                - before_metrics["flow_aligned_internal_flicker"][
                     "isolated_internal_flicker_rate"]),
         },
         "coverage": {
