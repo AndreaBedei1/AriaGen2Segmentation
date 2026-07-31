@@ -6,7 +6,10 @@ from typing import Iterable
 import pandas as pd
 
 
-ALLOWED_UNITS = ("participant_id", "session_id", "matched_pair_id", "route_segment_id")
+ALLOWED_UNITS = ("participant_id", "session_id", "matched_pair_id", "route_segment_id",
+                 # added for the shared car/motorcycle cockpit dataset: a whole
+                 # recording and a whole pairing group are also valid split units
+                 "recording_id", "pairing_group_id")
 
 
 def grouped_split(df: pd.DataFrame, unit: str, validation_groups: Iterable[str]):
