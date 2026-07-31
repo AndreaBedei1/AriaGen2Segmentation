@@ -371,6 +371,11 @@ def build_qa_package(
         "| Sequenza | Frame | Timestamp clip | Motivo | Contact sheet |",
         "|---|---:|---:|---|---|",
     ]
+    complete_index_lines = [
+        "",
+        "## Indice completo delle immagini",
+        "",
+    ]
     package_rows = []
     first_timestamp = int(frames.capture_timestamp_ns.iloc[0])
     for selection in selections:
@@ -468,6 +473,19 @@ def build_qa_package(
             f"{start_frame}–{end_frame} | {clip_time:.3f} s | "
             f"{selection['correction']} | "
             f"[JPG]({relative}/contact_sheet.jpg) |")
+        complete_index_lines.extend([
+            f"### {selection['problem']}",
+            "",
+            f"- [Contact sheet]({relative}/contact_sheet.jpg)",
+        ])
+        for item in individual_links:
+            complete_index_lines.extend([
+                f"- Frame {item['frame_index']}: "
+                f"[RGB]({relative}/{item['rgb']}), "
+                f"[maschera PNG]({relative}/{item['mask']}), "
+                f"[overlay]({relative}/{item['overlay']})",
+            ])
+        complete_index_lines.append("")
         package_rows.append({
             **selection,
             "frame_range": [start_frame, end_frame],
@@ -477,6 +495,7 @@ def build_qa_package(
             "contact_sheet": f"{relative}/contact_sheet.jpg",
             "individuals": individual_links,
         })
+    root_lines.extend(complete_index_lines)
     root_lines.extend([
         "",
         "Le maschere sono PNG; RGB, overlay e contact sheet sono JPG. "
