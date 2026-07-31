@@ -1,0 +1,84 @@
+# Article 1 dataset protocol and frame-rate policy.
+#
+# This file declares the TARGET protocol. It does not describe, rewrite or alter the
+# recordings that already exist: the current car recording stays a 10 fps
+# provisional baseline on disk and is never resampled to match this declaration.
+
+dataset_protocol:
+  version: 1
+  target_dataset_rgb_fps: 15
+  target_domains: [car, motorcycle]
+  target_profile: same acquisition profile for both vehicles
+  target_route: same route as far as practically possible
+  status_of_current_data:
+    car:
+      measured_rgb_fps: 10.0008
+      role: provisional development baseline
+      final: false
+      note: >-
+        must be re-recorded at the target rate before any definitive car/motorcycle
+        comparison is published
+    motorcycle:
+      measured_rgb_fps: 15.0012
+      role: first acquisition at the target protocol rate
+      final: true
+  # The sampling rate is a property of the acquisition, never of the vehicle.
+  rate_policy:
+    measure_from_timestamps: true
+    trust_profile_name: false
+    trust_nominal_rate_alone: false
+    forbid_rate_as_feature: true
+    forbid_rate_derived_features:
+      - frame count
+      - frame index difference
+      - per-frame counts of any kind
+      - inter-frame pixel difference used without per-second normalisation
+    forbid_upsampling: true
+    forbid_interpolation: true
+    forbid_synthetic_frames: true
+    forbid_silent_duplication: true
+
+# Two analysis modes. A is the only one that may support a scientific statement.
+analysis_modes:
+  native:
+    id: A
+    description: >-
+      each recording is analysed at its own measured rate, against its own real
+      timestamps
+    resampling: none
+    temporal_windows: declared in seconds and converted per recording
+    metric_normalisation: per second
+    valid_for_scientific_claims: true
+
+  comparable_timeline:
+    id: B
+    description: >-
+      a common grid used only for preliminary QA visualisation and exploratory
+      metrics
+    derived: true
+    preliminary: true
+    grid_hz: 10
+    selection_rule: nearest real sample to each grid point
+    interpolation: forbidden
+    frame_creation: forbidden
+    upsampling: forbidden
+    duplicate_policy: reported explicitly, never silent
+    record_temporal_error: true
+    max_temporal_error_ms: 60
+    valid_for_scientific_claims: false
+    forbidden_uses:
+      - the delivered dataset format
+      - training or evaluating the future vehicle classifier
+      - any published comparison between the two vehicles
+
+# Temporal parameters used by the ingestion stages, all in seconds. The number of
+# frames each represents is computed from the measured rate of the recording being
+# processed.
+temporal_windows_s:
+  gaze_association: 0.10
+  hand_association: 0.10
+  hand_persistence_alert: 0.8
+  failure_mode_trail: 0.7
+  annotation_minimum_separation: 4.0
+  segment_duration: 30.0
+  segment_search_stride: 5.0

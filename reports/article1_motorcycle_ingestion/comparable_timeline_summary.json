@@ -1,0 +1,59 @@
+{
+  "status": "derived_preliminary",
+  "derived": true,
+  "preliminary": true,
+  "valid_for_scientific_claims": false,
+  "grid_hz": 10.0,
+  "selection_rule": "nearest real sample to each grid point",
+  "interpolated": false,
+  "synthetic_frames": 0,
+  "upsampled": false,
+  "forbidden_uses": [
+    "the delivered dataset format",
+    "training or evaluating the future vehicle classifier",
+    "any published comparison between the two vehicles"
+  ],
+  "demonstration_window_s": 60.0,
+  "recordings": {
+    "car_2e84f0c3e245": {
+      "domain": "car",
+      "native_effective_fps": 10.000760457825214,
+      "native_frames_in_window": 601,
+      "grid_points": 601,
+      "selected_real_frames": 601,
+      "duplicate_selection_count": 0,
+      "temporal_error_ms": {
+        "mean": 2.5075500183028288,
+        "median": 2.923375,
+        "p95": 4.737739,
+        "max": 5.573094
+      },
+      "notes": []
+    },
+    "motorcycle_5ab8604a14df": {
+      "domain": "motorcycle",
+      "native_effective_fps": 15.001172266606774,
+      "native_frames_in_window": 900,
+      "grid_points": 600,
+      "selected_real_frames": 600,
+      "duplicate_selection_count": 0,
+      "temporal_error_ms": {
+        "mean": 16.66571033,
+        "median": 16.669245,
+        "p95": 33.10069225,
+        "max": 33.338387
+      },
+      "notes": [
+        "1 grid points dropped: nearest real sample farther than 60.0 ms; not filled by design"
+      ]
+    }
+  },
+  "native_mode": {
+    "id": "A",
+    "description": "each recording is analysed at its own measured rate, against its own real timestamps",
+    "resampling": "none",
+    "temporal_windows": "declared in seconds and converted per recording",
+    "metric_normalisation": "per second",
+    "valid_for_scientific_claims": true
+  }
+}
