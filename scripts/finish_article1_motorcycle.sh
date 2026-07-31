@@ -68,6 +68,13 @@ step "7/9 presentation video and final-pass QA package"
   --fps "$FPS" \
   --source-start-seconds "$START_S"
 
+step "7b/9 side-by-side external / internal / fusion comparison video"
+"$ML_PY" scripts/render_article1_semantic_camera.py \
+  --frames "$RUN" \
+  --semantic-camera "$RUN/semantic_camera" \
+  --output "$RUN/videos_comparison" \
+  --fps "$FPS"
+
 step "8/9 reports"
 "$IO_PY" scripts/report_article1_acquisition_qa.py --reports "$REPORTS"
 "$IO_PY" scripts/report_article1_motorcycle_baseline.py --run "$RUN" \
