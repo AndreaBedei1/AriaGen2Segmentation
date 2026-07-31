@@ -50,6 +50,104 @@ supervision until a human has reviewed it.
 """
 
 
+EXAMPLE_CATEGORIES = {
+    "positive": {
+        "title": "Clean cases",
+        "description": (
+            "Frames where the cockpit classes are unambiguous. Annotate these the "
+            "obvious way; they define what a correct mask looks like."),
+        "match": lambda s: ("cockpit:prominent" in s["strata_covered"]
+                            or "cockpit:mirror" in s["strata_covered"]
+                            or "cockpit:instrument" in s["strata_covered"]),
+    },
+    "negative": {
+        "title": "Looks like a class but is not",
+        "description": (
+            "Frames where an automatic proposal is wrong in an instructive way: a "
+            "geometric prior painting road as cockpit, a reflection that is not a "
+            "mirror, a bright highlight on the tank that is not a control. Do not "
+            "reproduce the pre-annotation here; annotate what is visible."),
+        "match": lambda s: ("provenance:geometric_cockpit_proxy" in s["strata_covered"]
+                            or "provenance:fallback" in s["strata_covered"]
+                            or (s.get("failure_mode_candidate") or "").startswith(
+                                ("false_", "cockpit_absorbed"))),
+    },
+    "ambiguous": {
+        "title": "Genuinely debatable",
+        "description": (
+            "Frames where the models disagree or are uncertain. Annotate what you "
+            "can defend from the image and tick `ambiguity_flag`; these are the "
+            "frames whose disagreement is worth recording."),
+        "match": lambda s: ("uncertainty:high_entropy" in s["strata_covered"]
+                            or "uncertainty:model_conflict" in s["strata_covered"]
+                            or "uncertainty:low_confidence" in s["strata_covered"]),
+    },
+}
+
+
+def _write_examples(out: Path, selected: List[Dict[str, Any]],
+                    items: List[PackageItem], thumbs_dir: Path,
+                    per_category: int = 6) -> None:
+    """Populate the example directories the annotator guide refers to.
+
+    Examples are drawn from the selection itself, so an annotator can open the same
+    frame in the task rather than reasoning about material they will never see.
+    """
+    import shutil
+
+    by_key = {(i.recording_id, i.source_frame_index): i for i in items}
+    root = out / "examples"
+    index: Dict[str, Any] = {}
+
+    for name, spec in EXAMPLE_CATEGORIES.items():
+        directory = root / name
+        directory.mkdir(parents=True, exist_ok=True)
+        picked = []
+        for s in selected:
+            if len(picked) >= per_category:
+                break
+            if not spec["match"](s):
+                continue
+            item = by_key.get((s["recording_id"], s["source_frame_index"]))
+            if item is None:
+                continue
+            thumb = thumbs_dir / item.image_name
+            if not thumb.exists():
+                continue
+            shutil.copy2(thumb, directory / item.image_name)
+            picked.append({
+                "image_name": item.image_name,
+                "domain": item.domain,
+                "source_frame_index": item.source_frame_index,
+                "why": s["selection_reason"],
+                "strata": s["strata_covered"],
+                "failure_mode_candidate": s.get("failure_mode_candidate"),
+            })
+        lines = [f"# {spec['title']}", "", spec["description"], ""]
+        if picked:
+            for p in picked:
+                lines += [f"## `{p['image_name']}`", "",
+                          f"- domain: {p['domain']}",
+                          f"- source frame: {p['source_frame_index']}",
+                          f"- why it is here: {p['why']}"]
+                if p["failure_mode_candidate"]:
+                    lines.append("- candidate failure mode: "
+                                 f"`{p['failure_mode_candidate']}`")
+                lines.append("")
+        else:
+            lines += ["No frame in the current selection matches this category. "
+                      "That is a fact about the selection, not a placeholder: the "
+                      "category is kept so it is filled the moment such a frame is "
+                      "selected.", ""]
+        (directory / "README.md").write_text("\n".join(lines))
+        index[name] = {"count": len(picked), "frames": picked}
+
+    (root / "index.json").write_text(json.dumps(
+        {"note": ("examples are drawn from the annotation selection itself, so the "
+                  "annotator can open the same frame in the task"),
+         "categories": index}, indent=2) + "\n")
+
+
 def _load_selection(reports: Path) -> List[Dict[str, Any]]:
     doc = json.loads((reports / "annotation_selection.json").read_text())
     return doc["selected"]
@@ -149,6 +247,8 @@ def main() -> int:
             image_sha256=sha256_file(dst),
             preannotation_sha256=pre_sha,
         ))
+
+    _write_examples(out, selected, items, thumbs_dir)
 
     write_labelmap(out / "preannotations_not_ground_truth" / "labelmap.txt", taxonomy)
     write_labelmap(out / "labelmap.txt", taxonomy)

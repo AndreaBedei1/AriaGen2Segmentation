@@ -1,0 +1,148 @@
+{
+  "note": "examples are drawn from the annotation selection itself, so the annotator can open the same frame in the task",
+  "categories": {
+    "positive": {
+      "count": 6,
+      "frames": [
+        {
+          "image_name": "car_2e84f0c3e245_002340.jpg",
+          "domain": "car",
+          "source_frame_index": 2340,
+          "why": "[external_validation] adds 14 previously uncovered strata: cockpit:prominent, domain:car, geometry:turning, hand:left:visible, hand:right:out_of_frame, light:normal",
+          "strata": [
+            "cockpit:prominent",
+            "domain:car",
+            "geometry:turning",
+            "hand:left:visible",
+            "hand:right:out_of_frame",
+            "light:normal",
+            "motion:high",
+            "route:q2",
+            "scene:boundary",
+            "scene:markings",
+            "scene:pedestrian",
+            "scene:signage",
+            "scene:traffic",
+            "scene:two_wheeler"
+          ],
+          "failure_mode_candidate": null
+        },
+        {
+          "image_name": "car_2e84f0c3e245_002110.jpg",
+          "domain": "car",
+          "source_frame_index": 2110,
+          "why": "[external_validation] adds 7 previously uncovered strata: geometry:straight, hand:left:partially_visible, hand:right:visible, light:dark, motion:low, route:q1",
+          "strata": [
+            "cockpit:prominent",
+            "domain:car",
+            "geometry:straight",
+            "hand:left:partially_visible",
+            "hand:right:visible",
+            "light:dark",
+            "motion:low",
+            "route:q1",
+            "scene:boundary",
+            "scene:clear",
+            "scene:markings",
+            "scene:pedestrian",
+            "scene:signage"
+          ],
+          "failure_mode_candidate": null
+        },
+        {
+          "image_name": "car_2e84f0c3e245_000870.jpg",
+          "domain": "car",
+          "source_frame_index": 870,
+          "why": "[external_validation] adds 3 previously uncovered strata: hand:right:partially_visible, motion:medium, route:q0",
+          "strata": [
+            "cockpit:prominent",
+            "domain:car",
+            "geometry:straight",
+            "hand:left:visible",
+            "hand:right:partially_visible",
+            "light:dark",
+            "motion:medium",
+            "route:q0",
+            "scene:boundary",
+            "scene:markings",
+            "scene:pedestrian",
+            "scene:traffic"
+          ],
+          "failure_mode_candidate": null
+        },
+        {
+          "image_name": "car_2e84f0c3e245_003760.jpg",
+          "domain": "car",
+          "source_frame_index": 3760,
+          "why": "[external_validation] adds 2 previously uncovered strata: hand:right:not_visible, route:q3",
+          "strata": [
+            "cockpit:prominent",
+            "domain:car",
+            "geometry:turning",
+            "hand:left:visible",
+            "hand:right:not_visible",
+            "light:dark",
+            "motion:high",
+            "route:q3",
+            "scene:boundary",
+            "scene:clear",
+            "scene:pedestrian",
+            "scene:signage"
+          ],
+          "failure_mode_candidate": null
+        },
+        {
+          "image_name": "car_2e84f0c3e245_002370.jpg",
+          "domain": "car",
+          "source_frame_index": 2370,
+          "why": "[external_validation] adds 1 previously uncovered strata: light:bright",
+          "strata": [
+            "cockpit:prominent",
+            "domain:car",
+            "geometry:turning",
+            "hand:left:visible",
+            "hand:right:out_of_frame",
+            "light:bright",
+            "motion:high",
+            "route:q2",
+            "scene:boundary",
+            "scene:markings",
+            "scene:pedestrian",
+            "scene:signage",
+            "scene:traffic",
+            "scene:two_wheeler"
+          ],
+          "failure_mode_candidate": null
+        },
+        {
+          "image_name": "car_2e84f0c3e245_000010.jpg",
+          "domain": "car",
+          "source_frame_index": 10,
+          "why": "[external_validation] adds 1 previously uncovered strata: hand:left:not_visible",
+          "strata": [
+            "cockpit:prominent",
+            "domain:car",
+            "geometry:turning",
+            "hand:left:not_visible",
+            "hand:right:out_of_frame",
+            "light:dark",
+            "motion:high",
+            "route:q0",
+            "scene:boundary",
+            "scene:signage",
+            "scene:traffic"
+          ],
+          "failure_mode_candidate": null
+        }
+      ]
+    },
+    "negative": {
+      "count": 0,
+      "frames": []
+    },
+    "ambiguous": {
+      "count": 0,
+      "frames": []
+    }
+  }
+}
