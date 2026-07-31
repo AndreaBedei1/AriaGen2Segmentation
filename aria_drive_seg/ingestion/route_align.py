@@ -153,6 +153,10 @@ class PairCandidate:
     timestamp_ns_motorcycle: int
     progression_car: float
     progression_motorcycle: float
+    latitude_car: float
+    longitude_car: float
+    latitude_motorcycle: float
+    longitude_motorcycle: float
     distance_m: float
     heading_difference_deg: float
     pairing_quality: float
@@ -219,6 +223,10 @@ def pair_tracks(car: RouteTrack, motorcycle: RouteTrack,
             timestamp_ns_motorcycle=int(motorcycle.timestamp_ns[j]),
             progression_car=float(car.progression[i]),
             progression_motorcycle=float(motorcycle.progression[j]),
+            latitude_car=float(car.latitude[i]),
+            longitude_car=float(car.longitude[i]),
+            latitude_motorcycle=float(motorcycle.latitude[j]),
+            longitude_motorcycle=float(motorcycle.longitude[j]),
             distance_m=distance,
             heading_difference_deg=heading_diff,
             pairing_quality=quality,

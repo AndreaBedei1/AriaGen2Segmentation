@@ -1,0 +1,127 @@
+{
+  "status": "exploratory_preliminary",
+  "is_scientific_conclusion": false,
+  "alignment_priority_used": [
+    "1. GPS \u2014 available in both recordings and used here",
+    "2. SLAM/VIO trajectory \u2014 not used: no MPS/VIO trajectory product is present in these VRS files, only raw SLAM camera streams",
+    "3. relative spatial progression \u2014 derived from the GPS track",
+    "4. heading \u2014 derived from consecutive GPS positions and used as an acceptance gate",
+    "5. cumulative distance \u2014 used for the normalised progression",
+    "6. visual landmarks \u2014 not used",
+    "7. scene similarity \u2014 not used"
+  ],
+  "not_used": [
+    "absolute wall-clock time",
+    "frame index",
+    "frame rate"
+  ],
+  "gps_counts": {
+    "car": {
+      "total_gps_samples": 374,
+      "usable_gps_samples": 219
+    },
+    "motorcycle": {
+      "total_gps_samples": 1004,
+      "usable_gps_samples": 953
+    }
+  },
+  "route_events": {
+    "car": {
+      "stops": [],
+      "reversals": [
+        {
+          "timestamp_ns": 1227118161233,
+          "progression": 0.33159581348186734,
+          "heading_before_deg": 102.56971952144272,
+          "heading_after_deg": 284.8659460646682
+        },
+        {
+          "timestamp_ns": 1230118162639,
+          "progression": 0.3317320624760006,
+          "heading_before_deg": 270.0000006657267,
+          "heading_after_deg": 89.9999993342733
+        }
+      ],
+      "gps_dropouts": [
+        {
+          "start_timestamp_ns": 1223118159358,
+          "end_timestamp_ns": 1226118160764,
+          "gap_s": 3.000001406
+        },
+        {
+          "start_timestamp_ns": 1238118166337,
+          "end_timestamp_ns": 1241118167639,
+          "gap_s": 3.000001302
+        }
+      ],
+      "median_sample_interval_s": 1.000000417
+    },
+    "motorcycle": {
+      "stops": [
+        {
+          "start_timestamp_ns": 2727248129580,
+          "end_timestamp_ns": 2734248129424,
+          "duration_s": 6.999999844,
+          "progression": 0.5612376220543541
+        }
+      ],
+      "reversals": [],
+      "gps_dropouts": [],
+      "median_sample_interval_s": 1.0
+    }
+  },
+  "paired": true,
+  "candidate_count": 953,
+  "accepted_count": 181,
+  "accepted_fraction": 0.18992654774396642,
+  "max_distance_m": 40.0,
+  "max_heading_difference_deg": 45.0,
+  "car": {
+    "recording_id": "car_2e84f0c3e245",
+    "domain": "car",
+    "source": "gps",
+    "sample_count": 219,
+    "total_distance_m": 2233.9930054073493,
+    "duration_s": 236.00009578,
+    "median_accuracy_m": 25.0,
+    "stopped_sample_fraction": 0.0,
+    "warnings": [
+      "median GPS accuracy 25.0 m is degraded",
+      "155 of 374 GPS samples discarded: no fix or accuracy worse than 50 m"
+    ]
+  },
+  "motorcycle": {
+    "recording_id": "motorcycle_5ab8604a14df",
+    "domain": "motorcycle",
+    "source": "gps",
+    "sample_count": 953,
+    "total_distance_m": 14328.926879042196,
+    "duration_s": 951.99994849,
+    "median_accuracy_m": 3.0,
+    "stopped_sample_fraction": 0.014690451206715634,
+    "warnings": [
+      "51 of 1004 GPS samples discarded: no fix or accuracy worse than 50 m"
+    ]
+  },
+  "median_pair_distance_m": 16.290381687866986,
+  "median_pair_quality": 0.5098116984703378,
+  "common_route": {
+    "motorcycle_progression_range": [
+      0.8128802769948967,
+      0.9679823456868
+    ],
+    "car_progression_range": [
+      0.0,
+      0.9923835505256435
+    ],
+    "motorcycle_covered_fraction": 0.15510206869190324,
+    "car_covered_fraction": 0.9923835505256435,
+    "motorcycle_time_range_ns": [
+      2915248134007,
+      3100248148851
+    ],
+    "approximate_common_distance_m": 2222.4462010744614,
+    "progression_monotonic": true
+  },
+  "caveat": "the car recording is a provisional 10 fps development baseline; this pairing is exploratory and must be recomputed once the car is re-recorded at the final protocol rate"
+}
