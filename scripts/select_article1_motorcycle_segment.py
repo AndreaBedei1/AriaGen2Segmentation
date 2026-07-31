@@ -15,6 +15,7 @@ import pandas as pd
 
 from aria_drive_seg.ingestion.rgb_scan import RgbScan
 from aria_drive_seg.ingestion.segment_select import build_candidates, select_segment
+from aria_drive_seg.ingestion.streams import associate_by_timestamp
 from aria_drive_seg.io_utils import atomic_write_json
 from aria_drive_seg.logging_utils import get_logger, setup_logging
 
@@ -56,9 +57,18 @@ def main() -> int:
     hand_path = (Path(args.work) / "hand_tracking" / f"{rec_id}.parquet")
     if hand_path.exists():
         ht = pd.read_parquet(hand_path)
-        hand_flags = {int(r.source_frame_index): bool(r.any_hand_tracked)
-                      for r in ht.itertuples()}
-        log.info("using hand-tracking flags for %d frames", len(hand_flags))
+        # Hand tracking runs at its own rate with its own indices; it is associated
+        # to RGB frames by timestamp, never by index.
+        assoc = associate_by_timestamp(
+            scan.timestamp_ns, ht["timestamp_ns"].to_numpy(np.int64),
+            window_s=0.10, frame_indices=scan.frame_index.tolist())
+        tracked = ht["any_hand_tracked"].to_numpy()
+        hand_flags = {
+            a.frame_index: bool(tracked[a.nearest_index])
+            for a in assoc
+            if a.nearest_index is not None and abs(a.nearest_dt_ms or 1e9) <= 100.0}
+        log.info("using hand-tracking flags for %d of %d RGB frames",
+                 len(hand_flags), scan.frame_index.size)
 
     candidates = build_candidates(
         scan, args.domain, duration_s=args.duration_s, stride_s=args.stride_s,

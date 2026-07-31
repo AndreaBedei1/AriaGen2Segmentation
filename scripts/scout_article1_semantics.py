@@ -17,14 +17,49 @@ from pathlib import Path
 import numpy as np
 import pandas as pd
 
-from aria_drive_seg.article1.external import (Article1Mapper,
-                                              infer_native_probabilities)
+from aria_drive_seg.article1.external import Article1Mapper
 from aria_drive_seg.config import Config
 from aria_drive_seg.logging_utils import get_logger, setup_logging
 from aria_drive_seg.segmentation.oneformer import OneFormerMapillarySegmenter
 from aria_drive_seg.taxonomy import Taxonomy
 
 log = get_logger("scout.semantics")
+
+
+def _scout_native_mask(segmenter, image_rgb: np.ndarray) -> np.ndarray:
+    """Dominant native Mapillary class per pixel, at the model's input resolution.
+
+    The production path upsamples the full C x H x W probability tensor to the
+    native image size before the argmax. For 66 classes at 2016 x 1512 that is a
+    ~800 MB float tensor per frame and it dominates the runtime, without adding
+    information: the processor resizes every image to a fixed 384 x 384 square, so
+    384 x 384 is the finest geometry the model actually produces.
+
+    The resize is anisotropic but is a pure scaling of both axes with no padding
+    (the returned `pixel_mask` is fully valid), so relative class *areas* are
+    preserved exactly. That is all a scouting ranking needs.
+
+    This is a proxy statistic. It is never written into a mask, a metric or a
+    result.
+    """
+    import torch
+    import torch.nn.functional as F
+    from PIL import Image
+
+    inputs = segmenter._proc(images=Image.fromarray(image_rgb), return_tensors="pt")
+    target_hw = tuple(inputs["pixel_values"].shape[-2:])
+    inputs = {k: (v.to(segmenter.device) if hasattr(v, "to") else v)
+              for k, v in inputs.items()}
+    with torch.inference_mode(), torch.autocast(
+            segmenter.device, dtype=segmenter._amp_dtype,
+            enabled=segmenter.device == "cuda"):
+        outputs = segmenter._model(**inputs)
+    class_queries = outputs.class_queries_logits.float().softmax(dim=-1)[..., :-1]
+    mask_queries = F.interpolate(outputs.masks_queries_logits.float(),
+                                 size=target_hw, mode="bilinear",
+                                 align_corners=False).sigmoid()
+    scores = torch.einsum("bqc,bqhw->bchw", class_queries, mask_queries)[0]
+    return scores.argmax(dim=0).cpu().numpy()
 
 
 def main() -> int:
@@ -57,16 +92,16 @@ def main() -> int:
     import cv2
     names = taxonomy.names() + ["mapillary_ego_region"]
     rows, fractions = [], []
+    ego_ids = list(mapper.mapillary_ego_ids)
     for n, (_, row) in enumerate(frames.iterrows()):
         bgr = cv2.imread(str(root / row["rectified_path"]), cv2.IMREAD_COLOR)
         if bgr is None:
             log.warning("unreadable frame %s", row["rectified_path"])
             continue
         rgb = cv2.cvtColor(bgr, cv2.COLOR_BGR2RGB)
-        native = infer_native_probabilities(segmenter, rgb)
-        native_mask = np.argmax(native, axis=0)
+        native_mask = _scout_native_mask(segmenter, rgb)
         article_mask = mapper.native_to_article[native_mask]
-        ego = np.isin(native_mask, list(mapper.mapillary_ego_ids))
+        ego = np.isin(native_mask, ego_ids)
 
         total = article_mask.size
         frac = [float(np.count_nonzero(article_mask == taxonomy.id_of(c)) / total)
