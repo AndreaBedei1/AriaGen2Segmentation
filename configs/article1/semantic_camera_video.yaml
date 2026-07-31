@@ -1,0 +1,109 @@
+semantic_camera_video:
+  version: 1
+  source_subdir: semantic_camera
+  output_subdir: semantic_camera_video_stabilized
+  processing_scale: 0.5
+
+  improved_fusion:
+    entropy_penalty: 0.12
+    conflict_margin: -0.04
+    cockpit_bottom_start_fraction: 0.58
+    cockpit_side_fraction: 0.20
+    cockpit_position_bonus: 0.16
+    strong_external_internal_override_confidence: 0.78
+    internal_min_confidence:
+      mirror: 0.18
+      instrument_display: 0.18
+      control_and_ego_vehicle: 0.22
+    internal_priorities:
+      mirror: 180
+      instrument_display: 170
+      control_and_ego_vehicle: 145
+    external_priorities:
+      road_surface: 100
+      lane_marking: 140
+      regulatory_road_marking: 135
+      vehicle: 115
+      two_wheeler: 130
+      pedestrian: 140
+      traffic_light: 150
+      traffic_sign: 145
+      road_boundary_or_obstacle: 80
+      other_environment: 20
+    strong_external_thresholds:
+      road_surface: 0.72
+      lane_marking: 0.66
+      regulatory_road_marking: 0.66
+      vehicle: 0.80
+      two_wheeler: 0.76
+      pedestrian: 0.76
+      traffic_light: 0.66
+      traffic_sign: 0.66
+
+  presentation:
+    non_causal: true
+    window_radius_frames: 5
+    current_weight: 1.0
+    current_confidence_floor: 0.30
+    temporal_decay: 0.86
+    switch_margin: 0.06
+    thin_switch_margin: -0.02
+    thin_minimum_support_frames: 1
+    internal_minimum_support_frames: 1
+    internal_activation_relaxation: 0.18
+    internal_current_keep_confidence: 0.20
+    internal_deactivation_ratio: 0.42
+    strong_external_thresholds:
+      road_surface: 0.72
+      lane_marking: 0.68
+      regulatory_road_marking: 0.68
+      vehicle: 0.82
+      two_wheeler: 0.78
+      pedestrian: 0.78
+      traffic_light: 0.68
+      traffic_sign: 0.68
+    classes:
+      unknown:
+        {ttl_frames: 0, vote_weight: 0.0, minimum_confidence: 1.0}
+      road_surface:
+        {ttl_frames: 1, vote_weight: 0.90, minimum_confidence: 0.45}
+      lane_marking:
+        {ttl_frames: 3, vote_weight: 1.35, minimum_confidence: 0.25,
+         temporal_decay: 0.90}
+      regulatory_road_marking:
+        {ttl_frames: 3, vote_weight: 1.30, minimum_confidence: 0.25,
+         temporal_decay: 0.90}
+      vehicle:
+        {ttl_frames: 1, vote_weight: 0.70, minimum_confidence: 0.55}
+      two_wheeler:
+        {ttl_frames: 1, vote_weight: 0.65, minimum_confidence: 0.55}
+      pedestrian:
+        {ttl_frames: 1, vote_weight: 0.60, minimum_confidence: 0.55}
+      traffic_light:
+        {ttl_frames: 1, vote_weight: 0.85, minimum_confidence: 0.50}
+      traffic_sign:
+        {ttl_frames: 1, vote_weight: 0.85, minimum_confidence: 0.50}
+      road_boundary_or_obstacle:
+        {ttl_frames: 1, vote_weight: 0.70, minimum_confidence: 0.45}
+      mirror:
+        {ttl_frames: 5, vote_weight: 1.90, minimum_confidence: 0.16,
+         temporal_decay: 0.92}
+      instrument_display:
+        {ttl_frames: 5, vote_weight: 1.85, minimum_confidence: 0.16,
+         temporal_decay: 0.92}
+      control_and_ego_vehicle:
+        {ttl_frames: 5, vote_weight: 1.65, minimum_confidence: 0.18,
+         temporal_decay: 0.92}
+      other_environment:
+        {ttl_frames: 0, vote_weight: 0.35, minimum_confidence: 0.0}
+
+  optical_flow:
+    backend: opencv_dis
+    grayscale: true
+    use_forward_backward_check: true
+    forward_backward_threshold_px: 1.75
+    photometric_error_threshold: 0.20
+
+  render:
+    fps: 10
+    overlay_alpha: 0.45

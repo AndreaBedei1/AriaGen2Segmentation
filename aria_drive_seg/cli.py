@@ -140,6 +140,22 @@ def build_parser() -> argparse.ArgumentParser:
     pcam.add_argument("--session-id", required=True)
     pcam.add_argument("--participant-id", required=True)
     _add_common(pcam)
+    pvideo = a1.add_parser(
+        "stabilize-semantic-camera-video",
+        help="offline non-causal semantic-camera presentation stabilization")
+    pvideo.add_argument(
+        "--input", required=True, help="extracted run containing frames/")
+    pvideo.add_argument(
+        "--semantic-camera", required=True,
+        help="scientific semantic-camera output (read-only)")
+    pvideo.add_argument(
+        "--output", default=None,
+        help="presentation data output directory")
+    pvideo.add_argument(
+        "--vehicle-type", required=True, choices=["car", "motorcycle"])
+    pvideo.add_argument("--session-id", required=True)
+    pvideo.add_argument("--participant-id", required=True)
+    _add_common(pvideo)
     return ap
 
 
@@ -152,6 +168,8 @@ def _load_cfg(args):
             path = "configs/article1/temporal_segmentation.yaml"
         elif article_command == "semantic-camera":
             path = "configs/article1/semantic_camera.yaml"
+        elif article_command == "stabilize-semantic-camera-video":
+            path = "configs/article1/semantic_camera_video.yaml"
         elif article_command == "reprocess-external":
             path = "configs/article1/external_segmentation.yaml"
         else:
@@ -243,6 +261,12 @@ def main(argv: Optional[list] = None) -> int:
             from .article1.semantic_camera import run_semantic_camera
             return run_semantic_camera(
                 args.input, args.external, cfg, args.vehicle_type,
+                output_dir=args.output, resume=args.resume, force=args.force)
+        if args.article1_command == "stabilize-semantic-camera-video":
+            from .article1.semantic_camera_video import \
+                run_semantic_camera_video
+            return run_semantic_camera_video(
+                args.input, args.semantic_camera, cfg,
                 output_dir=args.output, resume=args.resume, force=args.force)
 
     return 1
