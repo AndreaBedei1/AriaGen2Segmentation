@@ -29,16 +29,37 @@ from aria_drive_seg.logging_utils import get_logger, setup_logging
 log = get_logger("hand.audit")
 
 
+# A hand on a grip, seen from a head-mounted camera, occupies a small but not
+# negligible part of the frame. The open-vocabulary probe regularly returns a box
+# covering a whole quadrant and calls it "a hand" — on this segment the largest
+# such region was 19.7% of the frame, which is the fairing, not a hand. Detections
+# outside this band are kept in the record but not treated as hand evidence.
+MIN_PLAUSIBLE_HAND_AREA = 0.0005     # ~1500 px at 2016x1512
+MAX_PLAUSIBLE_HAND_AREA = 0.05       # 5% of the frame
+
+
 def _load_proxy(path: Optional[str]) -> Dict[int, Dict[str, Any]]:
     if not path or not Path(path).exists():
         return {}
     df = pd.read_parquet(path)
-    return {int(r.source_frame_index): {
-        "present": bool(r.hand_mask_present),
-        "score": float(r.best_score),
-        "area_fraction": float(r.hand_area_fraction),
-        "detections": json.loads(r.detections_json),
-    } for r in df.itertuples()}
+    out: Dict[int, Dict[str, Any]] = {}
+    for r in df.itertuples():
+        detections = json.loads(r.detections_json)
+        plausible = [d for d in detections
+                     if MIN_PLAUSIBLE_HAND_AREA <= d.get("area_fraction", 0.0)
+                     <= MAX_PLAUSIBLE_HAND_AREA]
+        out[int(r.source_frame_index)] = {
+            "present": bool(plausible),
+            "raw_present": bool(r.hand_mask_present),
+            "score": max((d["score"] for d in plausible), default=0.0),
+            "area_fraction": float(sum(d.get("area_fraction", 0.0)
+                                       for d in plausible)),
+            "raw_area_fraction": float(r.hand_area_fraction),
+            "detections": plausible,
+            "raw_detections": len(detections),
+            "implausible_detections": len(detections) - len(plausible),
+        }
+    return out
 
 
 def _proxy_overlap(detections: List[Dict[str, Any]],
@@ -188,8 +209,11 @@ def main() -> int:
                 "tracking_dt_ms": a.nearest_dt_ms,
                 "proxy_available": bool(p),
                 "proxy_mask_present": mask_present,
+                "proxy_mask_present_before_plausibility": p.get("raw_present"),
+                "proxy_implausible_detections": p.get("implausible_detections"),
                 "proxy_score": p.get("score"),
                 "proxy_area_fraction": p.get("area_fraction"),
+                "proxy_raw_area_fraction": p.get("raw_area_fraction"),
                 "proxy_tracking_overlap": signals.proxy_iou_with_tracking_region,
                 "local_blur_variance": local_blur,
                 "reference_blur_variance": reference_blur,
@@ -207,6 +231,19 @@ def main() -> int:
     summary["persistence_window_frames"] = persistence_frames
     summary["association_window_s"] = args.association_window_s
     summary["proxy_available"] = bool(proxy)
+    summary["proxy_plausibility_bounds"] = {
+        "min_area_fraction": MIN_PLAUSIBLE_HAND_AREA,
+        "max_area_fraction": MAX_PLAUSIBLE_HAND_AREA,
+        "rationale": ("the open-vocabulary probe regularly returns a whole-quadrant "
+                      "box labelled 'a hand'; detections outside this area band are "
+                      "kept in the record but are not treated as hand evidence"),
+    }
+    summary["proxy_frames_with_raw_region"] = int(
+        sum(1 for v in proxy.values() if v["raw_present"]))
+    summary["proxy_frames_with_plausible_region"] = int(
+        sum(1 for v in proxy.values() if v["present"]))
+    summary["proxy_implausible_detections"] = int(
+        sum(v["implausible_detections"] for v in proxy.values()))
     summary["per_state_per_second"] = {
         k: (v / rate.duration_s if rate.duration_s > 0 else None)
         for k, v in summary["per_state"].items()}

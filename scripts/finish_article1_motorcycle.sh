@@ -12,7 +12,7 @@ CAR_ID="${CAR_ID:-car_2e84f0c3e245}"
 MOTO_SHA12="${MOTO_SHA12:-5ab8604a14df}"
 VIDEO="${VIDEO:-$RUN/semantic_camera_moto_final.mp4}"
 FPS="${FPS:-15.0012}"
-START_S="${START_S:-955.0}"
+START_S="${START_S:-925.0}"
 
 IO_PY="${IO_PY:-$HOME/projectaria_gen2_python_env/bin/python}"
 ML_PY="${ML_PY:-$HOME/aria_seg_ml_env/bin/python}"
