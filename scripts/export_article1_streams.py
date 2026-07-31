@@ -35,16 +35,21 @@ def export_hands(provider, rec_id: str, domain: str, out: Path) -> dict:
     cfg = provider.rgb_config()
     width, height = int(cfg["width"]), int(cfg["height"])
 
+    stream_label = cfg_label = "handtracking"
     rows = []
     for s in samples:
         row = {"recording_id": rec_id, "domain": domain,
-               "hand_sample_index": s.index, "timestamp_ns": s.timestamp_ns}
+               "hand_sample_index": s.index, "timestamp_ns": s.timestamp_ns,
+               "stream_source": stream_label}
         for side in ("left", "right"):
             side_sample = getattr(s, side)
+            # handedness is explicit rather than implied by the column prefix
+            row[f"{side}_handedness"] = side
             row[f"{side}_hand_tracked"] = bool(side_sample.present)
             row[f"{side}_hand_confidence"] = side_sample.confidence
             in_frame = total = 0
             cx = cy = None
+            projected = None
             if side_sample.present and side_sample.landmarks_device:
                 pts = project_device_points_to_rgb(provider, side_sample.landmarks_device)
                 total = len(pts)
@@ -54,6 +59,16 @@ def export_hands(provider, rec_id: str, domain: str, out: Path) -> dict:
                 if inside:
                     cx = float(np.mean([p[0] for p in inside]))
                     cy = float(np.mean([p[1] for p in inside]))
+                projected = pts
+            # the raw 3D landmarks and their RGB projection are kept in full; a
+            # count and a centroid are summaries, not a substitute for the data
+            row[f"{side}_landmarks_device"] = json.dumps(
+                side_sample.landmarks_device) if side_sample.present else None
+            row[f"{side}_landmarks_rgb"] = json.dumps(projected) if projected else None
+            row[f"{side}_wrist_device"] = json.dumps(side_sample.wrist_device) \
+                if side_sample.present else None
+            row[f"{side}_palm_device"] = json.dumps(side_sample.palm_device) \
+                if side_sample.present else None
             row[f"{side}_landmarks_total"] = total
             row[f"{side}_landmarks_in_frame"] = in_frame
             row[f"{side}_centroid_x"] = cx
