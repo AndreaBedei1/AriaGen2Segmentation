@@ -1,0 +1,54 @@
+{
+  "status": "review_candidates_only",
+  "is_ground_truth": false,
+  "sequences": {
+    "01_both_hands_absent": {
+      "found": true,
+      "centre_frame_index": 13875,
+      "frames": [
+        13875,
+        13876,
+        13877,
+        13878,
+        13879
+      ]
+    },
+    "02_tracked_but_out_of_frame": {
+      "found": true,
+      "centre_frame_index": 13903,
+      "frames": [
+        13901,
+        13902,
+        13903,
+        13904,
+        13905
+      ]
+    },
+    "03_hand_visible_candidate": {
+      "found": false,
+      "note": "no frame in this segment matches this situation"
+    },
+    "04_uncertain": {
+      "found": true,
+      "centre_frame_index": 13901,
+      "frames": [
+        13899,
+        13900,
+        13901,
+        13902,
+        13903
+      ]
+    },
+    "05_motion_blurred": {
+      "found": true,
+      "centre_frame_index": 13967,
+      "frames": [
+        13965,
+        13966,
+        13967,
+        13968,
+        13969
+      ]
+    }
+  }
+}

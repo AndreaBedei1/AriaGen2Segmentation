@@ -54,14 +54,28 @@ def _scan_lookup(work: Path, sha12: str) -> Dict[int, Dict[str, float]]:
             for i, fi in enumerate(scan.frame_index)}
 
 
-def _hand_lookup(path: Optional[str]):
+def _hand_lookup(path: Optional[str], agreement_path: Optional[str] = None):
+    """Per-frame hand states and whether a hand region was actually proposed.
+
+    Both are needed: without the mask-presence side the inventory would report zero
+    false hand regions while the audit reports many, because a false region is
+    precisely a mask with no visibility support.
+    """
     if not path or not Path(path).exists():
         return None, None
     df = pd.read_csv(path)
     states: Dict[int, Dict[str, str]] = {}
     for r in df.itertuples():
         states.setdefault(int(r.source_frame_index), {})[r.side] = r.state_candidate
-    return states, None
+
+    masks: Dict[int, bool] = {}
+    if agreement_path and Path(agreement_path).exists():
+        agreement = pd.read_csv(agreement_path)
+        if "proxy_mask_present" in agreement.columns:
+            for r in agreement.itertuples():
+                fi = int(r.source_frame_index)
+                masks[fi] = bool(masks.get(fi, False) or bool(r.proxy_mask_present))
+    return states, (masks or None)
 
 
 def _overlay(rgb, mask, taxonomy: Taxonomy, alpha: float = 0.45):
@@ -142,6 +156,8 @@ def main() -> int:
     ap.add_argument("--work", default="output/article1/ingestion")
     ap.add_argument("--source-sha12", required=True)
     ap.add_argument("--hand-candidates", default=None)
+    ap.add_argument("--hand-agreement", default=None,
+                    help="hand_proxy_agreement.csv, for mask presence")
     ap.add_argument("--reports", default="reports/article1_motorcycle_ingestion")
     ap.add_argument("--sequence-length", type=int, default=5)
     ap.add_argument("--config", default="configs/article1/semantic_camera.yaml")
@@ -159,8 +175,10 @@ def main() -> int:
         _scan_lookup(Path(args.work), args.source_sha12))
     log.info("loaded diagnostics for %d frames", len(diagnostics))
 
-    hand_states, _ = _hand_lookup(args.hand_candidates)
-    result = detect(diagnostics, taxonomy, hand_states=hand_states)
+    hand_states, hand_masks = _hand_lookup(args.hand_candidates,
+                                          args.hand_agreement)
+    result = detect(diagnostics, taxonomy, hand_states=hand_states,
+                    hand_masks_present=hand_masks)
     result["mask_subdir"] = args.mask_subdir
     result["causality_note"] = (
         "this is an offline diagnostic over an already-produced run; it looks at "

@@ -1,0 +1,181 @@
+{
+  "status": "prepared_not_started",
+  "training_started": false,
+  "gate": "training is blocked until reviewed car AND motorcycle cockpit annotations exist; pseudo-labels are never promoted to ground truth",
+  "ready_to_train": false,
+  "blockers": [
+    "datasets/article1_annotation_package/REVIEWED_ANNOTATIONS.json is absent: no human-reviewed annotation has been delivered",
+    "no reviewed mask directory"
+  ],
+  "model": {
+    "architecture": "nvidia/segformer-b2-finetuned-ade-512-512",
+    "classes": [
+      "background_internal",
+      "mirror",
+      "instrument_display",
+      "control_and_ego_vehicle"
+    ],
+    "shared_between_domains": true,
+    "domains": [
+      "car",
+      "motorcycle"
+    ],
+    "note": "one model for both vehicles: a car-only or motorcycle-only cockpit model is not an acceptable final solution, because the two domains must be measured with the same instrument"
+  },
+  "hyperparameters": {
+    "image_size": [
+      512,
+      512
+    ],
+    "batch_size": 4,
+    "learning_rate": 6e-05,
+    "weight_decay": 0.01,
+    "epochs": 50,
+    "early_stopping_patience": 8,
+    "class_weights": [
+      0.25,
+      1.5,
+      1.5,
+      1.0
+    ],
+    "domain_balanced_sampler": true,
+    "seed": 2026,
+    "mixed_precision": "bf16",
+    "deterministic": true
+  },
+  "augmentation": {
+    "horizontal_flip": true,
+    "horizontal_flip_swaps_side_attributes": true,
+    "color_jitter": {
+      "brightness": 0.25,
+      "contrast": 0.25,
+      "saturation": 0.2,
+      "hue": 0.03
+    },
+    "mild_blur_sigma": [
+      0.0,
+      1.2
+    ],
+    "motion_blur_kernel_px": [
+      0,
+      7
+    ],
+    "random_resized_crop_scale": [
+      0.7,
+      1.0
+    ],
+    "forbidden": [
+      "vertical_flip",
+      "rotation_beyond_15_degrees",
+      "channel_shuffle",
+      "cutout_over_cockpit_classes"
+    ]
+  },
+  "split": {
+    "available": true,
+    "split_unit": "route_group_id",
+    "groups_per_domain": {
+      "car": [
+        "car_2e84f0c3e245|q0",
+        "car_2e84f0c3e245|q1",
+        "car_2e84f0c3e245|q2",
+        "car_2e84f0c3e245|q3"
+      ],
+      "motorcycle": [
+        "motorcycle_5ab8604a14df|q0",
+        "motorcycle_5ab8604a14df|q1",
+        "motorcycle_5ab8604a14df|q2",
+        "motorcycle_5ab8604a14df|q3"
+      ]
+    },
+    "validation_groups": [
+      "car_2e84f0c3e245|q3",
+      "motorcycle_5ab8604a14df|q3"
+    ],
+    "rationale": [
+      "the split is over whole `route_group_id` groups, never over frames",
+      "consecutive frames of one drive are near duplicates; splitting per frame would measure memorisation instead of generalisation",
+      "validation holds out groups from both domains, otherwise the car/motorcycle gap could not be measured"
+    ],
+    "train_frames": 94,
+    "validation_frames": 50,
+    "train_per_domain": {
+      "car": 52,
+      "motorcycle": 42
+    },
+    "validation_per_domain": {
+      "motorcycle": 32,
+      "car": 18
+    },
+    "temporal_leakage_check": "passed at 5.0 s minimum separation"
+  },
+  "split_units_allowed": [
+    "participant_id",
+    "session_id",
+    "recording_id",
+    "route_segment_id",
+    "route_group_id",
+    "pairing_group_id",
+    "matched_pair_id"
+  ],
+  "split_units_forbidden": [
+    "frame_index",
+    "source_frame_index",
+    "sample_id",
+    "timestamp_ns",
+    "image_path"
+  ],
+  "metrics": {
+    "primary": [
+      "per-class IoU for mirror, instrument_display, control_and_ego_vehicle",
+      "mean IoU over the three cockpit classes",
+      "per-domain IoU reported separately for car and motorcycle",
+      "the gap between the two domains, as the domain-shift indicator"
+    ],
+    "secondary": [
+      "boundary F-score on the cockpit classes",
+      "per-class precision and recall",
+      "calibration: reliability of the predicted confidence",
+      "normalised predictive entropy on correct vs incorrect pixels"
+    ],
+    "hands": [
+      "reported only on frames a reviewer marked visible or partially_visible",
+      "on frames marked out_of_frame, occluded, not_visible or uncertain a missing mask is NOT counted as an error",
+      "false hand masks in those frames ARE counted and reported separately"
+    ],
+    "reporting_rules": [
+      "no metric is computed against pseudo-labels",
+      "every number is reported per domain as well as pooled",
+      "the unit of inference is the recording or the matched pair, never the individual frame"
+    ]
+  },
+  "future_fusion": {
+    "replaces": "grounded_sam2_cockpit_proxy + geometric_cockpit_proxy",
+    "internal_provider": "SegFormerInternalProvider",
+    "activation": "semantic_camera.internal.mode=auto already prefers a reviewed checkpoint when weights/segformer-b2-article1-cockpit exists; no fusion code change is required",
+    "output_contract": {
+      "probabilities": "4xHxW normalised over background_internal, mirror, instrument_display, control_and_ego_vehicle",
+      "mask": "HxW uint16 in the cockpit training space",
+      "confidence": "HxW float32",
+      "entropy": "HxW normalised predictive entropy"
+    },
+    "mapping_to_macro_taxonomy": {
+      "mirror": "mirror",
+      "instrument_display": "instrument_display",
+      "control_and_ego_vehicle": "control_and_ego_vehicle"
+    },
+    "fallback_policy": "if the reviewed checkpoint is absent the pipeline must keep using the explicitly-marked proxy and keep reporting internal_is_fallback=true",
+    "revalidation_required": [
+      "internal_min_confidence thresholds must be recalibrated against the trained model, not inherited from the proxy",
+      "the geometric bottom-fraction prior must be removed for the motorcycle once the trained model covers the handlebar"
+    ]
+  },
+  "next_steps": [
+    "1. a human reviews the CVAT package and delivers corrected masks",
+    "2. the reviewer drops REVIEWED_ANNOTATIONS.json into the dataset directory, recording who reviewed what",
+    "3. re-run this script: the gate opens only when that marker exists and both domains are present",
+    "4. run scripts/train_article1_cockpit.py, then scripts/validate_article1_cockpit.py, then scripts/export_article1_cockpit.py",
+    "5. recalibrate the fusion's internal_min_confidence against the trained model instead of inheriting the proxy's thresholds",
+    "6. remove the geometric bottom-of-frame cockpit prior for the motorcycle once the trained model covers the handlebar"
+  ]
+}

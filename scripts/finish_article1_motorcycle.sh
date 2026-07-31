@@ -31,6 +31,7 @@ step "2/9 failure-mode analysis and QA sequences"
   --frames "$RUN" --semantic-camera "$RUN/semantic_camera" \
   --source-sha12 "$MOTO_SHA12" \
   --hand-candidates "$REPORTS/hand_visibility_candidates.csv" \
+  --hand-agreement "$REPORTS/hand_proxy_agreement.csv" \
   --reports "$REPORTS"
 
 step "3/9 exploratory car vs motorcycle comparison"
@@ -58,7 +59,8 @@ step "6/9 cockpit training plan (does not train)"
   --output "$REPORTS/cockpit_training_plan.json"
 
 step "7/9 presentation video and final-pass QA package"
-"$ML_PY" scripts/render_article1_semantic_camera_final.py \
+# the renderers need imageio and cv2 only; they run in the VRS I/O env
+"$IO_PY" scripts/render_article1_semantic_camera_final.py \
   --frames "$RUN" \
   --semantic-camera "$RUN/semantic_camera" \
   --previous-presentation "$RUN/semantic_camera_video_stabilized" \
@@ -69,7 +71,7 @@ step "7/9 presentation video and final-pass QA package"
   --source-start-seconds "$START_S"
 
 step "7b/9 side-by-side external / internal / fusion comparison video"
-"$ML_PY" scripts/render_article1_semantic_camera.py \
+"$IO_PY" scripts/render_article1_semantic_camera.py \
   --frames "$RUN" \
   --semantic-camera "$RUN/semantic_camera" \
   --output "$RUN/videos_comparison" \

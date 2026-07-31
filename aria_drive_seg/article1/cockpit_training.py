@@ -28,7 +28,8 @@ from .splits import assert_no_group_leakage
 # Grouping units that are safe to split on. Every one of them is a unit that a
 # whole continuous stretch of footage belongs to.
 SAFE_SPLIT_UNITS = ("participant_id", "session_id", "recording_id",
-                    "route_segment_id", "pairing_group_id", "matched_pair_id")
+                    "route_segment_id", "route_group_id", "pairing_group_id",
+                    "matched_pair_id")
 
 # Explicitly forbidden: these identify an individual frame, so splitting on them
 # puts neighbouring frames of the same sequence on both sides.

@@ -1,6 +1,6 @@
 # Article 1 — acquisition and stream QA (car + motorcycle)
 
-Generated: 2026-07-31T16:48:47.559479+00:00
+Generated: 2026-07-31T21:39:27.164587+00:00
 
 Branch: `feature/article1-motorcycle-ingestion`
 

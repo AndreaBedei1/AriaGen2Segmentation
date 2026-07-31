@@ -2999,11 +2999,110 @@
     {
       "domain": "motorcycle",
       "recording_id": "motorcycle_5ab8604a14df",
+      "source_frame_index": 14205,
+      "timestamp_ns": 3121820435811,
+      "timestamp_s": 3121.820435811,
+      "image_path": "output/article1/ingestion/scout/motorcycle_5ab8604a14df/frames/rectified/frame_014205.jpg",
+      "selection_reason": "[external_validation] adds 20 previously uncovered strata: cockpit:minimal, domain:motorcycle, failure:blur_related_failure, geometry:straight, hand:left:out_of_frame, hand:right:not_visible",
+      "strata_covered": [
+        "cockpit:minimal",
+        "domain:motorcycle",
+        "failure:blur_related_failure",
+        "geometry:straight",
+        "hand:left:out_of_frame",
+        "hand:right:not_visible",
+        "light:normal",
+        "motion:medium",
+        "provenance:external_mask2former",
+        "provenance:fallback",
+        "provenance:geometric_cockpit_proxy",
+        "route:q3",
+        "scene:boundary",
+        "scene:markings",
+        "scene:signage",
+        "scene:traffic",
+        "scene:two_wheeler",
+        "uncertainty:high_entropy",
+        "uncertainty:low_confidence",
+        "uncertainty:model_conflict"
+      ],
+      "expected_classes": [
+        "lane_marking",
+        "other_environment",
+        "road_boundary_or_obstacle",
+        "road_surface",
+        "traffic_sign",
+        "vehicle"
+      ],
+      "failure_mode_candidate": "blur_related_failure",
+      "hand_visibility_candidate": {
+        "left": "out_of_frame",
+        "right": "not_visible"
+      },
+      "confidence": 0.8955751657485962,
+      "entropy": 0.12078239023685455,
+      "provenance": {
+        "external_mask2former": 0.8879653906315612,
+        "cockpit_proxy": 0.0,
+        "geometric_cockpit_proxy": 0.09206998771730915,
+        "dense_other_environment_fill": 0.019964621651129586
+      },
+      "split_group": "external_validation",
+      "route_segment": "q3",
+      "route_progression": 0.9954693213813076,
+      "pairing_id": null
+    },
+    {
+      "domain": "motorcycle",
+      "recording_id": "motorcycle_5ab8604a14df",
+      "source_frame_index": 4259,
+      "timestamp_ns": 2458805782770,
+      "timestamp_s": 2458.80578277,
+      "image_path": "output/article1/ingestion/scout/motorcycle_5ab8604a14df/frames/rectified/frame_004259.jpg",
+      "selection_reason": "[external_validation] adds 8 previously uncovered strata: cockpit:partial, geometry:turning, hand:right:out_of_frame, light:bright, motion:high, quality:low_sharpness",
+      "strata_covered": [
+        "cockpit:partial",
+        "domain:motorcycle",
+        "geometry:turning",
+        "hand:left:out_of_frame",
+        "hand:right:out_of_frame",
+        "light:bright",
+        "motion:high",
+        "quality:low_sharpness",
+        "route:q1",
+        "scene:boundary",
+        "scene:clear",
+        "scene:markings",
+        "scene:signage"
+      ],
+      "expected_classes": [
+        "lane_marking",
+        "other_environment",
+        "road_boundary_or_obstacle",
+        "road_surface",
+        "traffic_sign"
+      ],
+      "failure_mode_candidate": null,
+      "hand_visibility_candidate": {
+        "left": "out_of_frame",
+        "right": "out_of_frame"
+      },
+      "confidence": null,
+      "entropy": null,
+      "provenance": {},
+      "split_group": "external_validation",
+      "route_segment": "q1",
+      "route_progression": 0.3052159210029387,
+      "pairing_id": null
+    },
+    {
+      "domain": "motorcycle",
+      "recording_id": "motorcycle_5ab8604a14df",
       "source_frame_index": 1439,
       "timestamp_ns": 2270820429935,
       "timestamp_s": 2270.820429935,
       "image_path": "output/article1/ingestion/scout/motorcycle_5ab8604a14df/frames/rectified/frame_001439.jpg",
-      "selection_reason": "[external_validation] adds 15 previously uncovered strata: cockpit:partial, domain:motorcycle, geometry:straight, hand:left:not_visible, hand:right:not_visible, light:normal",
+      "selection_reason": "[external_validation] adds 4 previously uncovered strata: hand:left:not_visible, motion:low, route:q0, scene:pedestrian",
       "strata_covered": [
         "cockpit:partial",
         "domain:motorcycle",
@@ -3046,85 +3145,57 @@
     {
       "domain": "motorcycle",
       "recording_id": "motorcycle_5ab8604a14df",
-      "source_frame_index": 4049,
-      "timestamp_ns": 2444806970394,
-      "timestamp_s": 2444.806970394,
-      "image_path": "output/article1/ingestion/scout/motorcycle_5ab8604a14df/frames/rectified/frame_004049.jpg",
-      "selection_reason": "[external_validation] adds 7 previously uncovered strata: cockpit:minimal, hand:left:out_of_frame, hand:right:out_of_frame, light:bright, motion:medium, route:q1",
+      "source_frame_index": 13950,
+      "timestamp_ns": 3104821549760,
+      "timestamp_s": 3104.82154976,
+      "image_path": "output/article1/ingestion/scout/motorcycle_5ab8604a14df/frames/rectified/frame_013950.jpg",
+      "selection_reason": "[external_validation] adds 2 previously uncovered strata: cockpit:prominent, failure:fragmentation",
       "strata_covered": [
-        "cockpit:minimal",
+        "cockpit:prominent",
         "domain:motorcycle",
-        "geometry:straight",
+        "failure:fragmentation",
+        "geometry:turning",
         "hand:left:out_of_frame",
-        "hand:right:out_of_frame",
+        "hand:right:not_visible",
         "light:bright",
-        "motion:medium",
-        "quality:low_sharpness",
-        "route:q1",
+        "motion:high",
+        "provenance:external_mask2former",
+        "provenance:fallback",
+        "route:q3",
         "scene:boundary",
+        "scene:clear",
         "scene:markings",
-        "scene:traffic"
+        "scene:pedestrian",
+        "scene:two_wheeler",
+        "uncertainty:high_entropy",
+        "uncertainty:low_confidence",
+        "uncertainty:model_conflict"
       ],
       "expected_classes": [
         "lane_marking",
         "other_environment",
+        "pedestrian",
         "road_boundary_or_obstacle",
         "road_surface",
+        "two_wheeler",
         "vehicle"
       ],
-      "failure_mode_candidate": null,
+      "failure_mode_candidate": "fragmentation",
       "hand_visibility_candidate": {
         "left": "out_of_frame",
-        "right": "out_of_frame"
+        "right": "not_visible"
       },
-      "confidence": null,
-      "entropy": null,
-      "provenance": {},
-      "split_group": "external_validation",
-      "route_segment": "q1",
-      "route_progression": 0.27976189822587066,
-      "pairing_id": null
-    },
-    {
-      "domain": "motorcycle",
-      "recording_id": "motorcycle_5ab8604a14df",
-      "source_frame_index": 14415,
-      "timestamp_ns": 3135815587623,
-      "timestamp_s": 3135.815587623,
-      "image_path": "output/article1/ingestion/scout/motorcycle_5ab8604a14df/frames/rectified/frame_014415.jpg",
-      "selection_reason": "[external_validation] adds 5 previously uncovered strata: geometry:turning, hand:left:partially_visible, hand:right:visible, motion:high, route:q3",
-      "strata_covered": [
-        "cockpit:minimal",
-        "domain:motorcycle",
-        "geometry:turning",
-        "hand:left:partially_visible",
-        "hand:right:visible",
-        "light:normal",
-        "motion:high",
-        "route:q3",
-        "scene:boundary",
-        "scene:signage",
-        "scene:traffic",
-        "scene:two_wheeler"
-      ],
-      "expected_classes": [
-        "other_environment",
-        "road_boundary_or_obstacle",
-        "road_surface",
-        "traffic_sign",
-        "two_wheeler"
-      ],
-      "failure_mode_candidate": null,
-      "hand_visibility_candidate": {
-        "left": "partially_visible",
-        "right": "visible"
+      "confidence": 0.9472100138664246,
+      "entropy": 0.0985899493098259,
+      "provenance": {
+        "external_mask2former": 0.9869437358276644,
+        "cockpit_proxy": 0.00026835579910976736,
+        "geometric_cockpit_proxy": 0.008927587238599143,
+        "dense_other_environment_fill": 0.0038603211346266903
       },
-      "confidence": null,
-      "entropy": null,
-      "provenance": {},
       "split_group": "external_validation",
       "route_segment": "q3",
-      "route_progression": 1.0,
+      "route_progression": 0.9709789103401247,
       "pairing_id": null
     },
     {
@@ -3174,46 +3245,149 @@
     {
       "domain": "motorcycle",
       "recording_id": "motorcycle_5ab8604a14df",
-      "source_frame_index": 13950,
-      "timestamp_ns": 3104821549760,
-      "timestamp_s": 3104.82154976,
-      "image_path": "output/article1/ingestion/scout/motorcycle_5ab8604a14df/frames/rectified/frame_013950.jpg",
-      "selection_reason": "[external_validation] adds 1 previously uncovered strata: cockpit:prominent",
+      "source_frame_index": 14415,
+      "timestamp_ns": 3135815587623,
+      "timestamp_s": 3135.815587623,
+      "image_path": "output/article1/ingestion/scout/motorcycle_5ab8604a14df/frames/rectified/frame_014415.jpg",
+      "selection_reason": "[external_validation] adds 2 previously uncovered strata: hand:left:partially_visible, hand:right:visible",
       "strata_covered": [
-        "cockpit:prominent",
+        "cockpit:minimal",
         "domain:motorcycle",
         "geometry:turning",
-        "hand:left:out_of_frame",
-        "hand:right:not_visible",
-        "light:bright",
+        "hand:left:partially_visible",
+        "hand:right:visible",
+        "light:normal",
         "motion:high",
         "route:q3",
         "scene:boundary",
-        "scene:clear",
-        "scene:markings",
-        "scene:pedestrian",
+        "scene:signage",
+        "scene:traffic",
         "scene:two_wheeler"
       ],
       "expected_classes": [
-        "lane_marking",
         "other_environment",
-        "pedestrian",
         "road_boundary_or_obstacle",
         "road_surface",
-        "two_wheeler",
-        "vehicle"
+        "traffic_sign",
+        "two_wheeler"
       ],
       "failure_mode_candidate": null,
       "hand_visibility_candidate": {
-        "left": "out_of_frame",
-        "right": "not_visible"
+        "left": "partially_visible",
+        "right": "visible"
       },
       "confidence": null,
       "entropy": null,
       "provenance": {},
       "split_group": "external_validation",
       "route_segment": "q3",
-      "route_progression": 0.9709789103401247,
+      "route_progression": 1.0,
+      "pairing_id": null
+    },
+    {
+      "domain": "motorcycle",
+      "recording_id": "motorcycle_5ab8604a14df",
+      "source_frame_index": 13875,
+      "timestamp_ns": 3099822119217,
+      "timestamp_s": 3099.822119217,
+      "image_path": "output/article1/ingestion/scout/motorcycle_5ab8604a14df/frames/rectified/frame_013875.jpg",
+      "selection_reason": "[external_validation] adds 1 previously uncovered strata: failure:cockpit_absorbed_by_external",
+      "strata_covered": [
+        "cockpit:minimal",
+        "domain:motorcycle",
+        "failure:cockpit_absorbed_by_external",
+        "geometry:straight",
+        "hand:left:not_visible",
+        "hand:right:not_visible",
+        "light:normal",
+        "motion:medium",
+        "provenance:external_mask2former",
+        "provenance:fallback",
+        "route:q3",
+        "scene:boundary",
+        "scene:markings",
+        "scene:signage",
+        "scene:traffic",
+        "uncertainty:model_conflict"
+      ],
+      "expected_classes": [
+        "lane_marking",
+        "other_environment",
+        "regulatory_road_marking",
+        "road_boundary_or_obstacle",
+        "road_surface",
+        "traffic_sign",
+        "vehicle"
+      ],
+      "failure_mode_candidate": "cockpit_absorbed_by_external",
+      "hand_visibility_candidate": {
+        "left": "not_visible",
+        "right": "not_visible"
+      },
+      "confidence": 0.9716987013816833,
+      "entropy": 0.05389833450317383,
+      "provenance": {
+        "external_mask2former": 0.992656630553456,
+        "cockpit_proxy": 1.6731229528848577e-05,
+        "geometric_cockpit_proxy": 0.0018200953220794491,
+        "dense_other_environment_fill": 0.005506542894935752
+      },
+      "split_group": "external_validation",
+      "route_segment": "q3",
+      "route_progression": 0.9679823456868,
+      "pairing_id": null
+    },
+    {
+      "domain": "motorcycle",
+      "recording_id": "motorcycle_5ab8604a14df",
+      "source_frame_index": 13980,
+      "timestamp_ns": 3106821607759,
+      "timestamp_s": 3106.821607759,
+      "image_path": "output/article1/ingestion/scout/motorcycle_5ab8604a14df/frames/rectified/frame_013980.jpg",
+      "selection_reason": "[external_validation] adds 1 previously uncovered strata: failure:mirror_not_detected",
+      "strata_covered": [
+        "cockpit:prominent",
+        "domain:motorcycle",
+        "failure:mirror_not_detected",
+        "geometry:turning",
+        "hand:left:out_of_frame",
+        "hand:right:not_visible",
+        "light:normal",
+        "motion:high",
+        "provenance:external_mask2former",
+        "provenance:fallback",
+        "route:q3",
+        "scene:boundary",
+        "scene:clear",
+        "scene:markings",
+        "scene:signage",
+        "uncertainty:high_entropy",
+        "uncertainty:low_confidence",
+        "uncertainty:model_conflict"
+      ],
+      "expected_classes": [
+        "lane_marking",
+        "other_environment",
+        "road_boundary_or_obstacle",
+        "road_surface",
+        "traffic_sign"
+      ],
+      "failure_mode_candidate": "mirror_not_detected",
+      "hand_visibility_candidate": {
+        "left": "out_of_frame",
+        "right": "not_visible"
+      },
+      "confidence": 0.9467621445655823,
+      "entropy": 0.09687988460063934,
+      "provenance": {
+        "external_mask2former": 0.9837477429243302,
+        "cockpit_proxy": 0.00036546254304190814,
+        "geometric_cockpit_proxy": 0.004967206790123457,
+        "dense_other_environment_fill": 0.010919587742504408
+      },
+      "split_group": "external_validation",
+      "route_segment": "q3",
+      "route_progression": 0.9735929856284208,
       "pairing_id": null
     },
     {
@@ -4195,138 +4369,6 @@
     {
       "domain": "motorcycle",
       "recording_id": "motorcycle_5ab8604a14df",
-      "source_frame_index": 13470,
-      "timestamp_ns": 3072824237862,
-      "timestamp_s": 3072.824237862,
-      "image_path": "output/article1/ingestion/scout/motorcycle_5ab8604a14df/frames/rectified/frame_013470.jpg",
-      "selection_reason": "[external_validation] extends coverage of already represented conditions",
-      "strata_covered": [
-        "cockpit:minimal",
-        "domain:motorcycle",
-        "geometry:straight",
-        "hand:left:out_of_frame",
-        "hand:right:not_visible",
-        "light:normal",
-        "motion:medium",
-        "route:q3",
-        "scene:boundary",
-        "scene:clear",
-        "scene:signage",
-        "scene:two_wheeler"
-      ],
-      "expected_classes": [
-        "lane_marking",
-        "other_environment",
-        "road_boundary_or_obstacle",
-        "road_surface",
-        "traffic_sign",
-        "two_wheeler",
-        "vehicle"
-      ],
-      "failure_mode_candidate": null,
-      "hand_visibility_candidate": {
-        "left": "out_of_frame",
-        "right": "not_visible"
-      },
-      "confidence": null,
-      "entropy": null,
-      "provenance": {},
-      "split_group": "external_validation",
-      "route_segment": "q3",
-      "route_progression": 0.9441069586305589,
-      "pairing_id": null
-    },
-    {
-      "domain": "motorcycle",
-      "recording_id": "motorcycle_5ab8604a14df",
-      "source_frame_index": 13590,
-      "timestamp_ns": 3080823490207,
-      "timestamp_s": 3080.823490207,
-      "image_path": "output/article1/ingestion/scout/motorcycle_5ab8604a14df/frames/rectified/frame_013590.jpg",
-      "selection_reason": "[external_validation] extends coverage of already represented conditions",
-      "strata_covered": [
-        "cockpit:minimal",
-        "domain:motorcycle",
-        "geometry:straight",
-        "hand:left:not_visible",
-        "hand:right:not_visible",
-        "light:normal",
-        "motion:medium",
-        "route:q3",
-        "scene:boundary",
-        "scene:clear",
-        "scene:markings",
-        "scene:signage"
-      ],
-      "expected_classes": [
-        "lane_marking",
-        "other_environment",
-        "regulatory_road_marking",
-        "road_boundary_or_obstacle",
-        "road_surface",
-        "traffic_sign",
-        "vehicle"
-      ],
-      "failure_mode_candidate": null,
-      "hand_visibility_candidate": {
-        "left": "not_visible",
-        "right": "not_visible"
-      },
-      "confidence": null,
-      "entropy": null,
-      "provenance": {},
-      "split_group": "external_validation",
-      "route_segment": "q3",
-      "route_progression": 0.949823556095374,
-      "pairing_id": null
-    },
-    {
-      "domain": "motorcycle",
-      "recording_id": "motorcycle_5ab8604a14df",
-      "source_frame_index": 13800,
-      "timestamp_ns": 3094822587383,
-      "timestamp_s": 3094.822587383,
-      "image_path": "output/article1/ingestion/scout/motorcycle_5ab8604a14df/frames/rectified/frame_013800.jpg",
-      "selection_reason": "[external_validation] extends coverage of already represented conditions",
-      "strata_covered": [
-        "cockpit:minimal",
-        "domain:motorcycle",
-        "geometry:turning",
-        "hand:left:not_visible",
-        "hand:right:not_visible",
-        "light:normal",
-        "motion:high",
-        "route:q3",
-        "scene:boundary",
-        "scene:markings",
-        "scene:signage",
-        "scene:traffic"
-      ],
-      "expected_classes": [
-        "lane_marking",
-        "other_environment",
-        "regulatory_road_marking",
-        "road_boundary_or_obstacle",
-        "road_surface",
-        "traffic_sign",
-        "vehicle"
-      ],
-      "failure_mode_candidate": null,
-      "hand_visibility_candidate": {
-        "left": "not_visible",
-        "right": "not_visible"
-      },
-      "confidence": null,
-      "entropy": null,
-      "provenance": {},
-      "split_group": "external_validation",
-      "route_segment": "q3",
-      "route_progression": 0.9655002208411027,
-      "pairing_id": null
-    },
-    {
-      "domain": "motorcycle",
-      "recording_id": "motorcycle_5ab8604a14df",
       "source_frame_index": 8445,
       "timestamp_ns": 2737850366343,
       "timestamp_s": 2737.850366343,
@@ -4363,48 +4405,6 @@
       "split_group": "cockpit_training",
       "route_segment": "q2",
       "route_progression": 0.5628755806408711,
-      "pairing_id": null
-    },
-    {
-      "domain": "motorcycle",
-      "recording_id": "motorcycle_5ab8604a14df",
-      "source_frame_index": 13980,
-      "timestamp_ns": 3106821607759,
-      "timestamp_s": 3106.821607759,
-      "image_path": "output/article1/ingestion/scout/motorcycle_5ab8604a14df/frames/rectified/frame_013980.jpg",
-      "selection_reason": "[cockpit_training] extends coverage of already represented conditions",
-      "strata_covered": [
-        "cockpit:prominent",
-        "domain:motorcycle",
-        "geometry:turning",
-        "hand:left:out_of_frame",
-        "hand:right:not_visible",
-        "light:normal",
-        "motion:high",
-        "route:q3",
-        "scene:boundary",
-        "scene:clear",
-        "scene:markings",
-        "scene:signage"
-      ],
-      "expected_classes": [
-        "lane_marking",
-        "other_environment",
-        "road_boundary_or_obstacle",
-        "road_surface",
-        "traffic_sign"
-      ],
-      "failure_mode_candidate": null,
-      "hand_visibility_candidate": {
-        "left": "out_of_frame",
-        "right": "not_visible"
-      },
-      "confidence": null,
-      "entropy": null,
-      "provenance": {},
-      "split_group": "cockpit_training",
-      "route_segment": "q3",
-      "route_progression": 0.9735929856284208,
       "pairing_id": null
     },
     {
@@ -4485,6 +4485,46 @@
       "split_group": "cockpit_training",
       "route_segment": "q0",
       "route_progression": 0.22342947265405147,
+      "pairing_id": null
+    },
+    {
+      "domain": "motorcycle",
+      "recording_id": "motorcycle_5ab8604a14df",
+      "source_frame_index": 13635,
+      "timestamp_ns": 3083823330456,
+      "timestamp_s": 3083.823330456,
+      "image_path": "output/article1/ingestion/scout/motorcycle_5ab8604a14df/frames/rectified/frame_013635.jpg",
+      "selection_reason": "[cockpit_training] extends coverage of already represented conditions",
+      "strata_covered": [
+        "cockpit:partial",
+        "domain:motorcycle",
+        "geometry:straight",
+        "hand:left:not_visible",
+        "hand:right:not_visible",
+        "light:normal",
+        "motion:medium",
+        "route:q3",
+        "scene:boundary",
+        "scene:clear",
+        "scene:markings"
+      ],
+      "expected_classes": [
+        "lane_marking",
+        "other_environment",
+        "road_boundary_or_obstacle",
+        "road_surface"
+      ],
+      "failure_mode_candidate": null,
+      "hand_visibility_candidate": {
+        "left": "not_visible",
+        "right": "not_visible"
+      },
+      "confidence": null,
+      "entropy": null,
+      "provenance": {},
+      "split_group": "cockpit_training",
+      "route_segment": "q3",
+      "route_progression": 0.9535499484436417,
       "pairing_id": null
     },
     {
@@ -4775,49 +4815,6 @@
       "split_group": "cockpit_training",
       "route_segment": "q3",
       "route_progression": 0.7777388203357225,
-      "pairing_id": null
-    },
-    {
-      "domain": "motorcycle",
-      "recording_id": "motorcycle_5ab8604a14df",
-      "source_frame_index": 13905,
-      "timestamp_ns": 3101821923853,
-      "timestamp_s": 3101.821923853,
-      "image_path": "output/article1/ingestion/scout/motorcycle_5ab8604a14df/frames/rectified/frame_013905.jpg",
-      "selection_reason": "[cockpit_training] extends coverage of already represented conditions",
-      "strata_covered": [
-        "cockpit:partial",
-        "domain:motorcycle",
-        "geometry:straight",
-        "hand:left:out_of_frame",
-        "hand:right:not_visible",
-        "light:bright",
-        "motion:medium",
-        "route:q3",
-        "scene:boundary",
-        "scene:markings",
-        "scene:signage",
-        "scene:traffic"
-      ],
-      "expected_classes": [
-        "lane_marking",
-        "other_environment",
-        "regulatory_road_marking",
-        "road_boundary_or_obstacle",
-        "road_surface",
-        "vehicle"
-      ],
-      "failure_mode_candidate": null,
-      "hand_visibility_candidate": {
-        "left": "out_of_frame",
-        "right": "not_visible"
-      },
-      "confidence": null,
-      "entropy": null,
-      "provenance": {},
-      "split_group": "cockpit_training",
-      "route_segment": "q3",
-      "route_progression": 0.9688432683669137,
       "pairing_id": null
     },
     {
@@ -5358,15 +5355,19 @@
       "strata_covered": [
         "cockpit:partial",
         "domain:motorcycle",
+        "failure:fragmentation",
         "geometry:turning",
         "hand:left:out_of_frame",
         "hand:right:not_visible",
         "light:bright",
         "motion:high",
+        "provenance:external_mask2former",
+        "provenance:fallback",
         "route:q3",
         "scene:boundary",
         "scene:markings",
-        "scene:traffic"
+        "scene:traffic",
+        "uncertainty:model_conflict"
       ],
       "expected_classes": [
         "lane_marking",
@@ -5375,14 +5376,19 @@
         "road_surface",
         "vehicle"
       ],
-      "failure_mode_candidate": null,
+      "failure_mode_candidate": "fragmentation",
       "hand_visibility_candidate": {
         "left": "out_of_frame",
         "right": "not_visible"
       },
-      "confidence": null,
-      "entropy": null,
-      "provenance": {},
+      "confidence": 0.9683076739311218,
+      "entropy": 0.061692722141742706,
+      "provenance": {
+        "external_mask2former": 0.9944583543293861,
+        "cockpit_proxy": 0.00047273925002099605,
+        "geometric_cockpit_proxy": 0.0021740756487780297,
+        "dense_other_environment_fill": 0.0028948307718148986
+      },
       "split_group": "cockpit_training",
       "route_segment": "q3",
       "route_progression": 0.9813177723804043,
@@ -5466,47 +5472,6 @@
       "split_group": "cockpit_training",
       "route_segment": "q2",
       "route_progression": 0.6759006879535746,
-      "pairing_id": null
-    },
-    {
-      "domain": "motorcycle",
-      "recording_id": "motorcycle_5ab8604a14df",
-      "source_frame_index": 4349,
-      "timestamp_ns": 2464805248612,
-      "timestamp_s": 2464.805248612,
-      "image_path": "output/article1/ingestion/scout/motorcycle_5ab8604a14df/frames/rectified/frame_004349.jpg",
-      "selection_reason": "[cockpit_training] extends coverage of already represented conditions",
-      "strata_covered": [
-        "cockpit:partial",
-        "domain:motorcycle",
-        "geometry:straight",
-        "hand:left:not_visible",
-        "hand:right:out_of_frame",
-        "light:normal",
-        "motion:medium",
-        "quality:low_sharpness",
-        "route:q1",
-        "scene:boundary",
-        "scene:clear",
-        "scene:markings"
-      ],
-      "expected_classes": [
-        "lane_marking",
-        "other_environment",
-        "road_boundary_or_obstacle",
-        "road_surface"
-      ],
-      "failure_mode_candidate": null,
-      "hand_visibility_candidate": {
-        "left": "not_visible",
-        "right": "out_of_frame"
-      },
-      "confidence": null,
-      "entropy": null,
-      "provenance": {},
-      "split_group": "cockpit_training",
-      "route_segment": "q1",
-      "route_progression": 0.3137935449130312,
       "pairing_id": null
     },
     {
@@ -5636,6 +5601,47 @@
       "split_group": "cockpit_training",
       "route_segment": "q1",
       "route_progression": 0.33523954860961547,
+      "pairing_id": null
+    },
+    {
+      "domain": "motorcycle",
+      "recording_id": "motorcycle_5ab8604a14df",
+      "source_frame_index": 13560,
+      "timestamp_ns": 3078823602697,
+      "timestamp_s": 3078.823602697,
+      "image_path": "output/article1/ingestion/scout/motorcycle_5ab8604a14df/frames/rectified/frame_013560.jpg",
+      "selection_reason": "[cockpit_training] extends coverage of already represented conditions",
+      "strata_covered": [
+        "cockpit:partial",
+        "domain:motorcycle",
+        "geometry:straight",
+        "hand:left:not_visible",
+        "hand:right:not_visible",
+        "light:normal",
+        "motion:medium",
+        "route:q3",
+        "scene:boundary",
+        "scene:clear",
+        "scene:markings",
+        "scene:signage"
+      ],
+      "expected_classes": [
+        "lane_marking",
+        "other_environment",
+        "road_boundary_or_obstacle",
+        "road_surface"
+      ],
+      "failure_mode_candidate": null,
+      "hand_visibility_candidate": {
+        "left": "not_visible",
+        "right": "not_visible"
+      },
+      "confidence": null,
+      "entropy": null,
+      "provenance": {},
+      "split_group": "cockpit_training",
+      "route_segment": "q3",
+      "route_progression": 0.9477382985523909,
       "pairing_id": null
     },
     {
@@ -5888,50 +5894,6 @@
     {
       "domain": "motorcycle",
       "recording_id": "motorcycle_5ab8604a14df",
-      "source_frame_index": 13545,
-      "timestamp_ns": 3077823725675,
-      "timestamp_s": 3077.823725675,
-      "image_path": "output/article1/ingestion/scout/motorcycle_5ab8604a14df/frames/rectified/frame_013545.jpg",
-      "selection_reason": "[cockpit_training] extends coverage of already represented conditions",
-      "strata_covered": [
-        "cockpit:partial",
-        "domain:motorcycle",
-        "geometry:turning",
-        "hand:left:not_visible",
-        "hand:right:not_visible",
-        "light:normal",
-        "motion:high",
-        "route:q3",
-        "scene:boundary",
-        "scene:clear",
-        "scene:markings",
-        "scene:pedestrian",
-        "scene:signage"
-      ],
-      "expected_classes": [
-        "lane_marking",
-        "other_environment",
-        "regulatory_road_marking",
-        "road_boundary_or_obstacle",
-        "road_surface",
-        "traffic_sign"
-      ],
-      "failure_mode_candidate": null,
-      "hand_visibility_candidate": {
-        "left": "not_visible",
-        "right": "not_visible"
-      },
-      "confidence": null,
-      "entropy": null,
-      "provenance": {},
-      "split_group": "cockpit_training",
-      "route_segment": "q3",
-      "route_progression": 0.9467324991550805,
-      "pairing_id": null
-    },
-    {
-      "domain": "motorcycle",
-      "recording_id": "motorcycle_5ab8604a14df",
       "source_frame_index": 9315,
       "timestamp_ns": 2795845017582,
       "timestamp_s": 2795.845017582,
@@ -5969,18 +5931,300 @@
       "route_segment": "q2",
       "route_progression": 0.6531475544544902,
       "pairing_id": null
+    },
+    {
+      "domain": "motorcycle",
+      "recording_id": "motorcycle_5ab8604a14df",
+      "source_frame_index": 8745,
+      "timestamp_ns": 2757848791029,
+      "timestamp_s": 2757.848791029,
+      "image_path": "output/article1/ingestion/scout/motorcycle_5ab8604a14df/frames/rectified/frame_008745.jpg",
+      "selection_reason": "[cockpit_training] extends coverage of already represented conditions",
+      "strata_covered": [
+        "cockpit:partial",
+        "domain:motorcycle",
+        "geometry:straight",
+        "hand:left:not_visible",
+        "hand:right:not_visible",
+        "light:normal",
+        "motion:medium",
+        "route:q2",
+        "scene:markings",
+        "scene:traffic"
+      ],
+      "expected_classes": [
+        "lane_marking",
+        "other_environment",
+        "road_surface",
+        "vehicle"
+      ],
+      "failure_mode_candidate": null,
+      "hand_visibility_candidate": {
+        "left": "not_visible",
+        "right": "not_visible"
+      },
+      "confidence": null,
+      "entropy": null,
+      "provenance": {},
+      "split_group": "cockpit_training",
+      "route_segment": "q2",
+      "route_progression": 0.5993708532987064,
+      "pairing_id": null
+    },
+    {
+      "domain": "motorcycle",
+      "recording_id": "motorcycle_5ab8604a14df",
+      "source_frame_index": 7035,
+      "timestamp_ns": 2643857558603,
+      "timestamp_s": 2643.857558603,
+      "image_path": "output/article1/ingestion/scout/motorcycle_5ab8604a14df/frames/rectified/frame_007035.jpg",
+      "selection_reason": "[cockpit_training] extends coverage of already represented conditions",
+      "strata_covered": [
+        "cockpit:partial",
+        "domain:motorcycle",
+        "geometry:turning",
+        "hand:left:not_visible",
+        "hand:right:not_visible",
+        "light:normal",
+        "motion:high",
+        "route:q1",
+        "scene:boundary",
+        "scene:clear",
+        "scene:markings",
+        "scene:signage"
+      ],
+      "expected_classes": [
+        "lane_marking",
+        "other_environment",
+        "road_boundary_or_obstacle",
+        "road_surface",
+        "traffic_sign"
+      ],
+      "failure_mode_candidate": null,
+      "hand_visibility_candidate": {
+        "left": "not_visible",
+        "right": "not_visible"
+      },
+      "confidence": null,
+      "entropy": null,
+      "provenance": {},
+      "split_group": "cockpit_training",
+      "route_segment": "q1",
+      "route_progression": 0.4975266212499908,
+      "pairing_id": null
+    },
+    {
+      "domain": "motorcycle",
+      "recording_id": "motorcycle_5ab8604a14df",
+      "source_frame_index": 14280,
+      "timestamp_ns": 3126819967541,
+      "timestamp_s": 3126.819967541,
+      "image_path": "output/article1/ingestion/scout/motorcycle_5ab8604a14df/frames/rectified/frame_014280.jpg",
+      "selection_reason": "[failure_mode_review] extends coverage of already represented conditions",
+      "strata_covered": [
+        "cockpit:minimal",
+        "domain:motorcycle",
+        "failure:cockpit_absorbed_by_external",
+        "geometry:straight",
+        "hand:left:not_visible",
+        "hand:right:not_visible",
+        "light:normal",
+        "motion:medium",
+        "provenance:external_mask2former",
+        "provenance:fallback",
+        "route:q3",
+        "scene:boundary",
+        "scene:clear",
+        "scene:markings",
+        "scene:signage",
+        "uncertainty:model_conflict"
+      ],
+      "expected_classes": [
+        "lane_marking",
+        "other_environment",
+        "road_boundary_or_obstacle",
+        "road_surface"
+      ],
+      "failure_mode_candidate": "cockpit_absorbed_by_external",
+      "hand_visibility_candidate": {
+        "left": "not_visible",
+        "right": "not_visible"
+      },
+      "confidence": 0.9701027870178223,
+      "entropy": 0.05379883199930191,
+      "provenance": {
+        "external_mask2former": 0.9921720810237675,
+        "cockpit_proxy": 0.0004543677038716721,
+        "geometric_cockpit_proxy": 0.00031526885445536237,
+        "dense_other_environment_fill": 0.007058282417905434
+      },
+      "split_group": "failure_mode_review",
+      "route_segment": "q3",
+      "route_progression": 0.9983317542837955,
+      "pairing_id": null
+    },
+    {
+      "domain": "motorcycle",
+      "recording_id": "motorcycle_5ab8604a14df",
+      "source_frame_index": 14085,
+      "timestamp_ns": 3113820811259,
+      "timestamp_s": 3113.820811259,
+      "image_path": "output/article1/ingestion/scout/motorcycle_5ab8604a14df/frames/rectified/frame_014085.jpg",
+      "selection_reason": "[failure_mode_review] extends coverage of already represented conditions",
+      "strata_covered": [
+        "cockpit:minimal",
+        "domain:motorcycle",
+        "failure:fragmentation",
+        "geometry:turning",
+        "hand:left:out_of_frame",
+        "hand:right:not_visible",
+        "light:bright",
+        "motion:high",
+        "provenance:external_mask2former",
+        "provenance:fallback",
+        "route:q3",
+        "scene:boundary",
+        "scene:clear",
+        "scene:markings",
+        "uncertainty:model_conflict"
+      ],
+      "expected_classes": [
+        "lane_marking",
+        "other_environment",
+        "road_boundary_or_obstacle",
+        "road_surface",
+        "vehicle"
+      ],
+      "failure_mode_candidate": "fragmentation",
+      "hand_visibility_candidate": {
+        "left": "out_of_frame",
+        "right": "not_visible"
+      },
+      "confidence": 0.97514808177948,
+      "entropy": 0.04763617739081383,
+      "provenance": {
+        "external_mask2former": 0.9928383776350046,
+        "cockpit_proxy": 0.0013827869110607206,
+        "geometric_cockpit_proxy": 0.0022797120391366424,
+        "dense_other_environment_fill": 0.003499123414798018
+      },
+      "split_group": "failure_mode_review",
+      "route_segment": "q3",
+      "route_progression": 0.9869138426278862,
+      "pairing_id": null
+    },
+    {
+      "domain": "motorcycle",
+      "recording_id": "motorcycle_5ab8604a14df",
+      "source_frame_index": 14175,
+      "timestamp_ns": 3119820409311,
+      "timestamp_s": 3119.820409311,
+      "image_path": "output/article1/ingestion/scout/motorcycle_5ab8604a14df/frames/rectified/frame_014175.jpg",
+      "selection_reason": "[failure_mode_review] extends coverage of already represented conditions",
+      "strata_covered": [
+        "cockpit:minimal",
+        "domain:motorcycle",
+        "failure:cockpit_absorbed_by_external",
+        "geometry:straight",
+        "hand:left:out_of_frame",
+        "hand:right:not_visible",
+        "light:normal",
+        "motion:medium",
+        "provenance:external_mask2former",
+        "provenance:fallback",
+        "route:q3",
+        "scene:boundary",
+        "scene:clear",
+        "scene:markings",
+        "scene:signage",
+        "uncertainty:model_conflict"
+      ],
+      "expected_classes": [
+        "lane_marking",
+        "other_environment",
+        "regulatory_road_marking",
+        "road_boundary_or_obstacle",
+        "road_surface",
+        "traffic_sign"
+      ],
+      "failure_mode_candidate": "cockpit_absorbed_by_external",
+      "hand_visibility_candidate": {
+        "left": "out_of_frame",
+        "right": "not_visible"
+      },
+      "confidence": 0.9703707695007324,
+      "entropy": 0.05484879016876221,
+      "provenance": {
+        "external_mask2former": 0.9930929547745024,
+        "cockpit_proxy": 1.0169963046947173e-05,
+        "geometric_cockpit_proxy": 0.0005882175401024607,
+        "dense_other_environment_fill": 0.006308657722348198
+      },
+      "split_group": "failure_mode_review",
+      "route_segment": "q3",
+      "route_progression": 0.9940320299083414,
+      "pairing_id": null
+    },
+    {
+      "domain": "motorcycle",
+      "recording_id": "motorcycle_5ab8604a14df",
+      "source_frame_index": 14130,
+      "timestamp_ns": 3116820531404,
+      "timestamp_s": 3116.820531404,
+      "image_path": "output/article1/ingestion/scout/motorcycle_5ab8604a14df/frames/rectified/frame_014130.jpg",
+      "selection_reason": "[failure_mode_review] extends coverage of already represented conditions",
+      "strata_covered": [
+        "cockpit:minimal",
+        "domain:motorcycle",
+        "failure:cockpit_absorbed_by_external",
+        "geometry:turning",
+        "hand:left:out_of_frame",
+        "hand:right:not_visible",
+        "light:bright",
+        "motion:high",
+        "provenance:external_mask2former",
+        "provenance:fallback",
+        "route:q3",
+        "scene:boundary",
+        "scene:clear",
+        "scene:markings",
+        "uncertainty:model_conflict"
+      ],
+      "expected_classes": [
+        "lane_marking",
+        "other_environment",
+        "road_boundary_or_obstacle",
+        "road_surface"
+      ],
+      "failure_mode_candidate": "cockpit_absorbed_by_external",
+      "hand_visibility_candidate": {
+        "left": "out_of_frame",
+        "right": "not_visible"
+      },
+      "confidence": 0.9812354445457458,
+      "entropy": 0.03842639550566673,
+      "provenance": {
+        "external_mask2former": 0.9960953903166204,
+        "cockpit_proxy": 0.0,
+        "geometric_cockpit_proxy": 0.0008965970647518267,
+        "dense_other_environment_fill": 0.003008012618627698
+      },
+      "split_group": "failure_mode_review",
+      "route_segment": "q3",
+      "route_progression": 0.99121872157217,
+      "pairing_id": null
     }
   ],
   "counts": {
-    "total": 140,
+    "total": 144,
     "per_domain": {
       "car": 70,
-      "motorcycle": 70
+      "motorcycle": 74
     },
     "per_group": {
       "external_validation": 60,
       "cockpit_training": 80,
-      "failure_mode_review": 0
+      "failure_mode_review": 4
     }
   },
   "per_domain_group_stats": {
@@ -6010,43 +6254,59 @@
         "selected": 40,
         "pool_size": 1005,
         "shortfall_reason": null
+      },
+      "failure_mode_review": {
+        "requested": 15,
+        "selected": 4,
+        "pool_size": 30,
+        "shortfall_reason": "the pool ran out of frames separated enough in time and appearance to remain non-duplicated"
       }
     }
   },
   "stratum_coverage": {
-    "cockpit:minimal": 26,
-    "cockpit:partial": 43,
+    "cockpit:minimal": 28,
+    "cockpit:partial": 45,
     "cockpit:prominent": 71,
     "domain:car": 70,
-    "domain:motorcycle": 70,
-    "geometry:straight": 94,
-    "geometry:turning": 46,
-    "hand:left:not_visible": 43,
-    "hand:left:out_of_frame": 34,
+    "domain:motorcycle": 74,
+    "failure:blur_related_failure": 1,
+    "failure:cockpit_absorbed_by_external": 4,
+    "failure:fragmentation": 3,
+    "failure:mirror_not_detected": 1,
+    "geometry:straight": 96,
+    "geometry:turning": 48,
+    "hand:left:not_visible": 45,
+    "hand:left:out_of_frame": 36,
     "hand:left:partially_visible": 8,
     "hand:left:visible": 55,
-    "hand:right:not_visible": 59,
-    "hand:right:out_of_frame": 57,
+    "hand:right:not_visible": 64,
+    "hand:right:out_of_frame": 56,
     "hand:right:partially_visible": 9,
     "hand:right:visible": 15,
-    "light:bright": 20,
+    "light:bright": 21,
     "light:dark": 32,
-    "light:normal": 88,
-    "motion:high": 46,
+    "light:normal": 91,
+    "motion:high": 48,
     "motion:low": 15,
-    "motion:medium": 79,
-    "quality:low_sharpness": 9,
+    "motion:medium": 81,
+    "provenance:external_mask2former": 9,
+    "provenance:fallback": 9,
+    "provenance:geometric_cockpit_proxy": 1,
+    "quality:low_sharpness": 8,
     "route:q0": 34,
     "route:q1": 28,
-    "route:q2": 31,
-    "route:q3": 47,
-    "scene:boundary": 126,
-    "scene:clear": 62,
-    "scene:markings": 104,
-    "scene:pedestrian": 56,
-    "scene:signage": 83,
+    "route:q2": 32,
+    "route:q3": 50,
+    "scene:boundary": 129,
+    "scene:clear": 66,
+    "scene:markings": 109,
+    "scene:pedestrian": 55,
+    "scene:signage": 85,
     "scene:traffic": 78,
-    "scene:two_wheeler": 15
+    "scene:two_wheeler": 15,
+    "uncertainty:high_entropy": 3,
+    "uncertainty:low_confidence": 3,
+    "uncertainty:model_conflict": 9
   },
   "uncovered_note": "a stratum with a low count is a genuine scarcity in the source recordings, not a sampling bug",
   "quota_rationale": [

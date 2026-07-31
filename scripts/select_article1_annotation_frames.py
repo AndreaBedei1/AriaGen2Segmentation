@@ -272,6 +272,10 @@ def main() -> int:
                             "hand_visibility_candidate", "provenance")},
             "strata_covered": ";".join(s["strata_covered"]),
             "expected_classes": ";".join(s["expected_classes"]),
+            # a group unit finer than the recording: with one recording per domain
+            # a recording-level split cannot produce both a train and a validation
+            # side, while route quarters are spatially disjoint stretches
+            "route_group_id": f"{s['recording_id']}|{s['route_segment']}",
             "hand_visibility_candidate": json.dumps(s["hand_visibility_candidate"]),
             "provenance": json.dumps(s["provenance"]),
         })

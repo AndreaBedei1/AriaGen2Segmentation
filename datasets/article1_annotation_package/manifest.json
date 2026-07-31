@@ -1,6 +1,6 @@
 {
   "schema": "article1_annotation_package_v1",
-  "generated_utc": "2026-07-31T17:54:28.673477+00:00",
+  "generated_utc": "2026-07-31T21:23:47.796107+00:00",
   "taxonomy": {
     "classes": [
       {
@@ -146,20 +146,21 @@
     ]
   },
   "preannotations": {
-    "present": false,
+    "present": true,
     "source": "frozen Article 1 semantic camera (Mask2Former external + Grounding DINO/SAM2.1 cockpit proxy + geometric fallback)",
     "status": "PRE_ANNOTATION_NOT_GROUND_TRUTH",
     "instruction": "every pre-annotated pixel must be reviewed; nothing here is validated"
   },
   "counts": {
-    "items": 140,
+    "items": 144,
     "per_domain": {
       "car": 70,
-      "motorcycle": 70
+      "motorcycle": 74
     },
     "per_group": {
       "cockpit_training": 80,
-      "external_validation": 60
+      "external_validation": 60,
+      "failure_mode_review": 4
     }
   },
   "items": [
@@ -2187,6 +2188,63 @@
       "preannotation_sha256": null
     },
     {
+      "image_name": "motorcycle_5ab8604a14df_014205.jpg",
+      "image_relative_path": "images/motorcycle_5ab8604a14df_014205.jpg",
+      "preannotation_relative_path": "preannotations_not_ground_truth/SegmentationClass/motorcycle_5ab8604a14df_014205.png",
+      "domain": "motorcycle",
+      "recording_id": "motorcycle_5ab8604a14df",
+      "source_frame_index": 14205,
+      "timestamp_ns": 3121820435811,
+      "split_group": "external_validation",
+      "selection_reason": "[external_validation] adds 20 previously uncovered strata: cockpit:minimal, domain:motorcycle, failure:blur_related_failure, geometry:straight, hand:left:out_of_frame, hand:right:not_visible",
+      "expected_classes": [
+        "lane_marking",
+        "other_environment",
+        "road_boundary_or_obstacle",
+        "road_surface",
+        "traffic_sign",
+        "vehicle"
+      ],
+      "failure_mode_candidate": "blur_related_failure",
+      "hand_visibility_candidate": {
+        "left": "out_of_frame",
+        "right": "not_visible"
+      },
+      "route_segment": "q3",
+      "route_progression": 0.9954693213813076,
+      "pairing_id": null,
+      "image_sha256": "b875df04accba369baeaefddbe33b8eebd3e44af89ce312e4c511f3e42026e28",
+      "preannotation_sha256": "e55365014b2e98c623cd5fce00a7c94d3f0d590e4988687b81a1dffad2df8a1e"
+    },
+    {
+      "image_name": "motorcycle_5ab8604a14df_004259.jpg",
+      "image_relative_path": "images/motorcycle_5ab8604a14df_004259.jpg",
+      "preannotation_relative_path": null,
+      "domain": "motorcycle",
+      "recording_id": "motorcycle_5ab8604a14df",
+      "source_frame_index": 4259,
+      "timestamp_ns": 2458805782770,
+      "split_group": "external_validation",
+      "selection_reason": "[external_validation] adds 8 previously uncovered strata: cockpit:partial, geometry:turning, hand:right:out_of_frame, light:bright, motion:high, quality:low_sharpness",
+      "expected_classes": [
+        "lane_marking",
+        "other_environment",
+        "road_boundary_or_obstacle",
+        "road_surface",
+        "traffic_sign"
+      ],
+      "failure_mode_candidate": null,
+      "hand_visibility_candidate": {
+        "left": "out_of_frame",
+        "right": "out_of_frame"
+      },
+      "route_segment": "q1",
+      "route_progression": 0.3052159210029387,
+      "pairing_id": null,
+      "image_sha256": "228468211b450e3a0f9e1ec9f171d5086171826f9d64624af5177f8bb1b27e3e",
+      "preannotation_sha256": null
+    },
+    {
       "image_name": "motorcycle_5ab8604a14df_001439.jpg",
       "image_relative_path": "images/motorcycle_5ab8604a14df_001439.jpg",
       "preannotation_relative_path": null,
@@ -2195,7 +2253,7 @@
       "source_frame_index": 1439,
       "timestamp_ns": 2270820429935,
       "split_group": "external_validation",
-      "selection_reason": "[external_validation] adds 15 previously uncovered strata: cockpit:partial, domain:motorcycle, geometry:straight, hand:left:not_visible, hand:right:not_visible, light:normal",
+      "selection_reason": "[external_validation] adds 4 previously uncovered strata: hand:left:not_visible, motion:low, route:q0, scene:pedestrian",
       "expected_classes": [
         "lane_marking",
         "other_environment",
@@ -2217,60 +2275,34 @@
       "preannotation_sha256": null
     },
     {
-      "image_name": "motorcycle_5ab8604a14df_004049.jpg",
-      "image_relative_path": "images/motorcycle_5ab8604a14df_004049.jpg",
-      "preannotation_relative_path": null,
+      "image_name": "motorcycle_5ab8604a14df_013950.jpg",
+      "image_relative_path": "images/motorcycle_5ab8604a14df_013950.jpg",
+      "preannotation_relative_path": "preannotations_not_ground_truth/SegmentationClass/motorcycle_5ab8604a14df_013950.png",
       "domain": "motorcycle",
       "recording_id": "motorcycle_5ab8604a14df",
-      "source_frame_index": 4049,
-      "timestamp_ns": 2444806970394,
+      "source_frame_index": 13950,
+      "timestamp_ns": 3104821549760,
       "split_group": "external_validation",
-      "selection_reason": "[external_validation] adds 7 previously uncovered strata: cockpit:minimal, hand:left:out_of_frame, hand:right:out_of_frame, light:bright, motion:medium, route:q1",
+      "selection_reason": "[external_validation] adds 2 previously uncovered strata: cockpit:prominent, failure:fragmentation",
       "expected_classes": [
         "lane_marking",
         "other_environment",
+        "pedestrian",
         "road_boundary_or_obstacle",
         "road_surface",
+        "two_wheeler",
         "vehicle"
       ],
-      "failure_mode_candidate": null,
+      "failure_mode_candidate": "fragmentation",
       "hand_visibility_candidate": {
         "left": "out_of_frame",
-        "right": "out_of_frame"
-      },
-      "route_segment": "q1",
-      "route_progression": 0.27976189822587066,
-      "pairing_id": null,
-      "image_sha256": "b0a48cdf3c24e7083582f30052e2b7d4b828aef8685b1ffc58cd00320eb6b3a0",
-      "preannotation_sha256": null
-    },
-    {
-      "image_name": "motorcycle_5ab8604a14df_014415.jpg",
-      "image_relative_path": "images/motorcycle_5ab8604a14df_014415.jpg",
-      "preannotation_relative_path": null,
-      "domain": "motorcycle",
-      "recording_id": "motorcycle_5ab8604a14df",
-      "source_frame_index": 14415,
-      "timestamp_ns": 3135815587623,
-      "split_group": "external_validation",
-      "selection_reason": "[external_validation] adds 5 previously uncovered strata: geometry:turning, hand:left:partially_visible, hand:right:visible, motion:high, route:q3",
-      "expected_classes": [
-        "other_environment",
-        "road_boundary_or_obstacle",
-        "road_surface",
-        "traffic_sign",
-        "two_wheeler"
-      ],
-      "failure_mode_candidate": null,
-      "hand_visibility_candidate": {
-        "left": "partially_visible",
-        "right": "visible"
+        "right": "not_visible"
       },
       "route_segment": "q3",
-      "route_progression": 1.0,
+      "route_progression": 0.9709789103401247,
       "pairing_id": null,
-      "image_sha256": "e377debde32d64f6210b44acb2b976eec9df2ab4c49879f2d5242011094ebd6c",
-      "preannotation_sha256": null
+      "image_sha256": "14deeb2e29772797ff60c4da1d6a42698b0fc7d8b0a1e0fed22b2ade1dce0de0",
+      "preannotation_sha256": "20187782730f6350c9e39ddd391b1b5f3dd66ebbec4fa26cced2cba67b530192"
     },
     {
       "image_name": "motorcycle_5ab8604a14df_007110.jpg",
@@ -2302,34 +2334,90 @@
       "preannotation_sha256": null
     },
     {
-      "image_name": "motorcycle_5ab8604a14df_013950.jpg",
-      "image_relative_path": "images/motorcycle_5ab8604a14df_013950.jpg",
+      "image_name": "motorcycle_5ab8604a14df_014415.jpg",
+      "image_relative_path": "images/motorcycle_5ab8604a14df_014415.jpg",
       "preannotation_relative_path": null,
       "domain": "motorcycle",
       "recording_id": "motorcycle_5ab8604a14df",
-      "source_frame_index": 13950,
-      "timestamp_ns": 3104821549760,
+      "source_frame_index": 14415,
+      "timestamp_ns": 3135815587623,
       "split_group": "external_validation",
-      "selection_reason": "[external_validation] adds 1 previously uncovered strata: cockpit:prominent",
+      "selection_reason": "[external_validation] adds 2 previously uncovered strata: hand:left:partially_visible, hand:right:visible",
+      "expected_classes": [
+        "other_environment",
+        "road_boundary_or_obstacle",
+        "road_surface",
+        "traffic_sign",
+        "two_wheeler"
+      ],
+      "failure_mode_candidate": null,
+      "hand_visibility_candidate": {
+        "left": "partially_visible",
+        "right": "visible"
+      },
+      "route_segment": "q3",
+      "route_progression": 1.0,
+      "pairing_id": null,
+      "image_sha256": "e377debde32d64f6210b44acb2b976eec9df2ab4c49879f2d5242011094ebd6c",
+      "preannotation_sha256": null
+    },
+    {
+      "image_name": "motorcycle_5ab8604a14df_013875.jpg",
+      "image_relative_path": "images/motorcycle_5ab8604a14df_013875.jpg",
+      "preannotation_relative_path": "preannotations_not_ground_truth/SegmentationClass/motorcycle_5ab8604a14df_013875.png",
+      "domain": "motorcycle",
+      "recording_id": "motorcycle_5ab8604a14df",
+      "source_frame_index": 13875,
+      "timestamp_ns": 3099822119217,
+      "split_group": "external_validation",
+      "selection_reason": "[external_validation] adds 1 previously uncovered strata: failure:cockpit_absorbed_by_external",
       "expected_classes": [
         "lane_marking",
         "other_environment",
-        "pedestrian",
+        "regulatory_road_marking",
         "road_boundary_or_obstacle",
         "road_surface",
-        "two_wheeler",
+        "traffic_sign",
         "vehicle"
       ],
-      "failure_mode_candidate": null,
+      "failure_mode_candidate": "cockpit_absorbed_by_external",
+      "hand_visibility_candidate": {
+        "left": "not_visible",
+        "right": "not_visible"
+      },
+      "route_segment": "q3",
+      "route_progression": 0.9679823456868,
+      "pairing_id": null,
+      "image_sha256": "c0e552506f10c72e2bb0d29c148b756f51bdce9955430aeea1f96de46aae1a40",
+      "preannotation_sha256": "c0ce6784653270bcaa4c0d443afb0d73bc4c133dbdd1db3c64eca7e94da139d0"
+    },
+    {
+      "image_name": "motorcycle_5ab8604a14df_013980.jpg",
+      "image_relative_path": "images/motorcycle_5ab8604a14df_013980.jpg",
+      "preannotation_relative_path": "preannotations_not_ground_truth/SegmentationClass/motorcycle_5ab8604a14df_013980.png",
+      "domain": "motorcycle",
+      "recording_id": "motorcycle_5ab8604a14df",
+      "source_frame_index": 13980,
+      "timestamp_ns": 3106821607759,
+      "split_group": "external_validation",
+      "selection_reason": "[external_validation] adds 1 previously uncovered strata: failure:mirror_not_detected",
+      "expected_classes": [
+        "lane_marking",
+        "other_environment",
+        "road_boundary_or_obstacle",
+        "road_surface",
+        "traffic_sign"
+      ],
+      "failure_mode_candidate": "mirror_not_detected",
       "hand_visibility_candidate": {
         "left": "out_of_frame",
         "right": "not_visible"
       },
       "route_segment": "q3",
-      "route_progression": 0.9709789103401247,
+      "route_progression": 0.9735929856284208,
       "pairing_id": null,
-      "image_sha256": "14deeb2e29772797ff60c4da1d6a42698b0fc7d8b0a1e0fed22b2ade1dce0de0",
-      "preannotation_sha256": null
+      "image_sha256": "b0b1ff8dd3cb26d6b854ad027fd22d9d2524dd93029cd4351b871f9e39d6c6d2",
+      "preannotation_sha256": "afa0ea2e39f3b63ba9bc1baab75b19a022448f7ae595199b0acc539855fc234f"
     },
     {
       "image_name": "motorcycle_5ab8604a14df_006344.jpg",
@@ -2994,96 +3082,6 @@
       "preannotation_sha256": null
     },
     {
-      "image_name": "motorcycle_5ab8604a14df_013470.jpg",
-      "image_relative_path": "images/motorcycle_5ab8604a14df_013470.jpg",
-      "preannotation_relative_path": null,
-      "domain": "motorcycle",
-      "recording_id": "motorcycle_5ab8604a14df",
-      "source_frame_index": 13470,
-      "timestamp_ns": 3072824237862,
-      "split_group": "external_validation",
-      "selection_reason": "[external_validation] extends coverage of already represented conditions",
-      "expected_classes": [
-        "lane_marking",
-        "other_environment",
-        "road_boundary_or_obstacle",
-        "road_surface",
-        "traffic_sign",
-        "two_wheeler",
-        "vehicle"
-      ],
-      "failure_mode_candidate": null,
-      "hand_visibility_candidate": {
-        "left": "out_of_frame",
-        "right": "not_visible"
-      },
-      "route_segment": "q3",
-      "route_progression": 0.9441069586305589,
-      "pairing_id": null,
-      "image_sha256": "5a4c34c2ef9de3acd407ea75d3c33923671fa2f6e49e0926178db00129c436ca",
-      "preannotation_sha256": null
-    },
-    {
-      "image_name": "motorcycle_5ab8604a14df_013590.jpg",
-      "image_relative_path": "images/motorcycle_5ab8604a14df_013590.jpg",
-      "preannotation_relative_path": null,
-      "domain": "motorcycle",
-      "recording_id": "motorcycle_5ab8604a14df",
-      "source_frame_index": 13590,
-      "timestamp_ns": 3080823490207,
-      "split_group": "external_validation",
-      "selection_reason": "[external_validation] extends coverage of already represented conditions",
-      "expected_classes": [
-        "lane_marking",
-        "other_environment",
-        "regulatory_road_marking",
-        "road_boundary_or_obstacle",
-        "road_surface",
-        "traffic_sign",
-        "vehicle"
-      ],
-      "failure_mode_candidate": null,
-      "hand_visibility_candidate": {
-        "left": "not_visible",
-        "right": "not_visible"
-      },
-      "route_segment": "q3",
-      "route_progression": 0.949823556095374,
-      "pairing_id": null,
-      "image_sha256": "ff6467e3f299301a5ed9eeb5871c3c0006bf099db19628b61b6c49cbf7bb55ce",
-      "preannotation_sha256": null
-    },
-    {
-      "image_name": "motorcycle_5ab8604a14df_013800.jpg",
-      "image_relative_path": "images/motorcycle_5ab8604a14df_013800.jpg",
-      "preannotation_relative_path": null,
-      "domain": "motorcycle",
-      "recording_id": "motorcycle_5ab8604a14df",
-      "source_frame_index": 13800,
-      "timestamp_ns": 3094822587383,
-      "split_group": "external_validation",
-      "selection_reason": "[external_validation] extends coverage of already represented conditions",
-      "expected_classes": [
-        "lane_marking",
-        "other_environment",
-        "regulatory_road_marking",
-        "road_boundary_or_obstacle",
-        "road_surface",
-        "traffic_sign",
-        "vehicle"
-      ],
-      "failure_mode_candidate": null,
-      "hand_visibility_candidate": {
-        "left": "not_visible",
-        "right": "not_visible"
-      },
-      "route_segment": "q3",
-      "route_progression": 0.9655002208411027,
-      "pairing_id": null,
-      "image_sha256": "84454f28b5a7f82f1baf36ede8edaba8e0e5949445bcf04f06c0835b67d02eda",
-      "preannotation_sha256": null
-    },
-    {
       "image_name": "motorcycle_5ab8604a14df_008445.jpg",
       "image_relative_path": "images/motorcycle_5ab8604a14df_008445.jpg",
       "preannotation_relative_path": null,
@@ -3109,34 +3107,6 @@
       "route_progression": 0.5628755806408711,
       "pairing_id": null,
       "image_sha256": "16a4e61dc48209a1ebc894fbd61ef53c07566f4f8362c861e8a7b5dd8ec1a88a",
-      "preannotation_sha256": null
-    },
-    {
-      "image_name": "motorcycle_5ab8604a14df_013980.jpg",
-      "image_relative_path": "images/motorcycle_5ab8604a14df_013980.jpg",
-      "preannotation_relative_path": null,
-      "domain": "motorcycle",
-      "recording_id": "motorcycle_5ab8604a14df",
-      "source_frame_index": 13980,
-      "timestamp_ns": 3106821607759,
-      "split_group": "cockpit_training",
-      "selection_reason": "[cockpit_training] extends coverage of already represented conditions",
-      "expected_classes": [
-        "lane_marking",
-        "other_environment",
-        "road_boundary_or_obstacle",
-        "road_surface",
-        "traffic_sign"
-      ],
-      "failure_mode_candidate": null,
-      "hand_visibility_candidate": {
-        "left": "out_of_frame",
-        "right": "not_visible"
-      },
-      "route_segment": "q3",
-      "route_progression": 0.9735929856284208,
-      "pairing_id": null,
-      "image_sha256": "b0b1ff8dd3cb26d6b854ad027fd22d9d2524dd93029cd4351b871f9e39d6c6d2",
       "preannotation_sha256": null
     },
     {
@@ -3191,6 +3161,33 @@
       "route_progression": 0.22342947265405147,
       "pairing_id": null,
       "image_sha256": "da909de31b30ec6912f200763e3e5cf2d56ed373abe6cd30963ef36c64746f97",
+      "preannotation_sha256": null
+    },
+    {
+      "image_name": "motorcycle_5ab8604a14df_013635.jpg",
+      "image_relative_path": "images/motorcycle_5ab8604a14df_013635.jpg",
+      "preannotation_relative_path": null,
+      "domain": "motorcycle",
+      "recording_id": "motorcycle_5ab8604a14df",
+      "source_frame_index": 13635,
+      "timestamp_ns": 3083823330456,
+      "split_group": "cockpit_training",
+      "selection_reason": "[cockpit_training] extends coverage of already represented conditions",
+      "expected_classes": [
+        "lane_marking",
+        "other_environment",
+        "road_boundary_or_obstacle",
+        "road_surface"
+      ],
+      "failure_mode_candidate": null,
+      "hand_visibility_candidate": {
+        "left": "not_visible",
+        "right": "not_visible"
+      },
+      "route_segment": "q3",
+      "route_progression": 0.9535499484436417,
+      "pairing_id": null,
+      "image_sha256": "03eab0a5f85ccc24ee1e5d8293fd75bffcda9f399a04d8b6deb98cb2225958a9",
       "preannotation_sha256": null
     },
     {
@@ -3386,35 +3383,6 @@
       "route_progression": 0.7777388203357225,
       "pairing_id": null,
       "image_sha256": "2c753e94934520769efbf94414fd7c36422d5317cde919cde415eaf558c35f59",
-      "preannotation_sha256": null
-    },
-    {
-      "image_name": "motorcycle_5ab8604a14df_013905.jpg",
-      "image_relative_path": "images/motorcycle_5ab8604a14df_013905.jpg",
-      "preannotation_relative_path": null,
-      "domain": "motorcycle",
-      "recording_id": "motorcycle_5ab8604a14df",
-      "source_frame_index": 13905,
-      "timestamp_ns": 3101821923853,
-      "split_group": "cockpit_training",
-      "selection_reason": "[cockpit_training] extends coverage of already represented conditions",
-      "expected_classes": [
-        "lane_marking",
-        "other_environment",
-        "regulatory_road_marking",
-        "road_boundary_or_obstacle",
-        "road_surface",
-        "vehicle"
-      ],
-      "failure_mode_candidate": null,
-      "hand_visibility_candidate": {
-        "left": "out_of_frame",
-        "right": "not_visible"
-      },
-      "route_segment": "q3",
-      "route_progression": 0.9688432683669137,
-      "pairing_id": null,
-      "image_sha256": "11903eef7cae04c8dc019072cd82eab0dcb52742553d6693dffcc65c09e1a55c",
       "preannotation_sha256": null
     },
     {
@@ -3775,7 +3743,7 @@
     {
       "image_name": "motorcycle_5ab8604a14df_014040.jpg",
       "image_relative_path": "images/motorcycle_5ab8604a14df_014040.jpg",
-      "preannotation_relative_path": null,
+      "preannotation_relative_path": "preannotations_not_ground_truth/SegmentationClass/motorcycle_5ab8604a14df_014040.png",
       "domain": "motorcycle",
       "recording_id": "motorcycle_5ab8604a14df",
       "source_frame_index": 14040,
@@ -3789,7 +3757,7 @@
         "road_surface",
         "vehicle"
       ],
-      "failure_mode_candidate": null,
+      "failure_mode_candidate": "fragmentation",
       "hand_visibility_candidate": {
         "left": "out_of_frame",
         "right": "not_visible"
@@ -3798,7 +3766,7 @@
       "route_progression": 0.9813177723804043,
       "pairing_id": null,
       "image_sha256": "26bf0b4d939ce7590492de33d351ab8c74c5c7dbd82a0603d966a6616bfb27f3",
-      "preannotation_sha256": null
+      "preannotation_sha256": "cdb7f805e18f92edbe784f79e59380c1d352c8a311e3fb81cd7e0f3c14d24529"
     },
     {
       "image_name": "motorcycle_5ab8604a14df_008670.jpg",
@@ -3853,33 +3821,6 @@
       "route_progression": 0.6759006879535746,
       "pairing_id": null,
       "image_sha256": "0f1cc56a85584f100f9137de718f3445c9d1b43ad04939c9eb7d817ef1b17fc7",
-      "preannotation_sha256": null
-    },
-    {
-      "image_name": "motorcycle_5ab8604a14df_004349.jpg",
-      "image_relative_path": "images/motorcycle_5ab8604a14df_004349.jpg",
-      "preannotation_relative_path": null,
-      "domain": "motorcycle",
-      "recording_id": "motorcycle_5ab8604a14df",
-      "source_frame_index": 4349,
-      "timestamp_ns": 2464805248612,
-      "split_group": "cockpit_training",
-      "selection_reason": "[cockpit_training] extends coverage of already represented conditions",
-      "expected_classes": [
-        "lane_marking",
-        "other_environment",
-        "road_boundary_or_obstacle",
-        "road_surface"
-      ],
-      "failure_mode_candidate": null,
-      "hand_visibility_candidate": {
-        "left": "not_visible",
-        "right": "out_of_frame"
-      },
-      "route_segment": "q1",
-      "route_progression": 0.3137935449130312,
-      "pairing_id": null,
-      "image_sha256": "6c919f7dc796f87b6ea3dd5ce2d593e5906e97513c5d4ae62089282e4f665eef",
       "preannotation_sha256": null
     },
     {
@@ -3966,6 +3907,33 @@
       "route_progression": 0.33523954860961547,
       "pairing_id": null,
       "image_sha256": "674b53ccdd79e8649f04d848548d816d136b4cf9c5a1ac9386bb52a07b2c62c4",
+      "preannotation_sha256": null
+    },
+    {
+      "image_name": "motorcycle_5ab8604a14df_013560.jpg",
+      "image_relative_path": "images/motorcycle_5ab8604a14df_013560.jpg",
+      "preannotation_relative_path": null,
+      "domain": "motorcycle",
+      "recording_id": "motorcycle_5ab8604a14df",
+      "source_frame_index": 13560,
+      "timestamp_ns": 3078823602697,
+      "split_group": "cockpit_training",
+      "selection_reason": "[cockpit_training] extends coverage of already represented conditions",
+      "expected_classes": [
+        "lane_marking",
+        "other_environment",
+        "road_boundary_or_obstacle",
+        "road_surface"
+      ],
+      "failure_mode_candidate": null,
+      "hand_visibility_candidate": {
+        "left": "not_visible",
+        "right": "not_visible"
+      },
+      "route_segment": "q3",
+      "route_progression": 0.9477382985523909,
+      "pairing_id": null,
+      "image_sha256": "1b572d37e5f21c2c3ff9aea80bbd42e02de1d48cb097bb2363fd38776e3ec13b",
       "preannotation_sha256": null
     },
     {
@@ -4135,35 +4103,6 @@
       "preannotation_sha256": null
     },
     {
-      "image_name": "motorcycle_5ab8604a14df_013545.jpg",
-      "image_relative_path": "images/motorcycle_5ab8604a14df_013545.jpg",
-      "preannotation_relative_path": null,
-      "domain": "motorcycle",
-      "recording_id": "motorcycle_5ab8604a14df",
-      "source_frame_index": 13545,
-      "timestamp_ns": 3077823725675,
-      "split_group": "cockpit_training",
-      "selection_reason": "[cockpit_training] extends coverage of already represented conditions",
-      "expected_classes": [
-        "lane_marking",
-        "other_environment",
-        "regulatory_road_marking",
-        "road_boundary_or_obstacle",
-        "road_surface",
-        "traffic_sign"
-      ],
-      "failure_mode_candidate": null,
-      "hand_visibility_candidate": {
-        "left": "not_visible",
-        "right": "not_visible"
-      },
-      "route_segment": "q3",
-      "route_progression": 0.9467324991550805,
-      "pairing_id": null,
-      "image_sha256": "862c60e29ba7b8c17caf4126891224cdb22ad59d34dd60de1f7d7eeffdbab9ee",
-      "preannotation_sha256": null
-    },
-    {
       "image_name": "motorcycle_5ab8604a14df_009315.jpg",
       "image_relative_path": "images/motorcycle_5ab8604a14df_009315.jpg",
       "preannotation_relative_path": null,
@@ -4190,6 +4129,172 @@
       "pairing_id": null,
       "image_sha256": "fa3022c44687ceff5cc31938812420de860c1275e43a8518ffb26775202c633b",
       "preannotation_sha256": null
+    },
+    {
+      "image_name": "motorcycle_5ab8604a14df_008745.jpg",
+      "image_relative_path": "images/motorcycle_5ab8604a14df_008745.jpg",
+      "preannotation_relative_path": null,
+      "domain": "motorcycle",
+      "recording_id": "motorcycle_5ab8604a14df",
+      "source_frame_index": 8745,
+      "timestamp_ns": 2757848791029,
+      "split_group": "cockpit_training",
+      "selection_reason": "[cockpit_training] extends coverage of already represented conditions",
+      "expected_classes": [
+        "lane_marking",
+        "other_environment",
+        "road_surface",
+        "vehicle"
+      ],
+      "failure_mode_candidate": null,
+      "hand_visibility_candidate": {
+        "left": "not_visible",
+        "right": "not_visible"
+      },
+      "route_segment": "q2",
+      "route_progression": 0.5993708532987064,
+      "pairing_id": null,
+      "image_sha256": "8f2408617e5a494fc10b56d9f175959dd63d75cb6e41736c27d57501ab1051e0",
+      "preannotation_sha256": null
+    },
+    {
+      "image_name": "motorcycle_5ab8604a14df_007035.jpg",
+      "image_relative_path": "images/motorcycle_5ab8604a14df_007035.jpg",
+      "preannotation_relative_path": null,
+      "domain": "motorcycle",
+      "recording_id": "motorcycle_5ab8604a14df",
+      "source_frame_index": 7035,
+      "timestamp_ns": 2643857558603,
+      "split_group": "cockpit_training",
+      "selection_reason": "[cockpit_training] extends coverage of already represented conditions",
+      "expected_classes": [
+        "lane_marking",
+        "other_environment",
+        "road_boundary_or_obstacle",
+        "road_surface",
+        "traffic_sign"
+      ],
+      "failure_mode_candidate": null,
+      "hand_visibility_candidate": {
+        "left": "not_visible",
+        "right": "not_visible"
+      },
+      "route_segment": "q1",
+      "route_progression": 0.4975266212499908,
+      "pairing_id": null,
+      "image_sha256": "0142c25257a340d65af6148d2c88bdd9345d0647ff31f3f79e12cce092baa3cb",
+      "preannotation_sha256": null
+    },
+    {
+      "image_name": "motorcycle_5ab8604a14df_014280.jpg",
+      "image_relative_path": "images/motorcycle_5ab8604a14df_014280.jpg",
+      "preannotation_relative_path": "preannotations_not_ground_truth/SegmentationClass/motorcycle_5ab8604a14df_014280.png",
+      "domain": "motorcycle",
+      "recording_id": "motorcycle_5ab8604a14df",
+      "source_frame_index": 14280,
+      "timestamp_ns": 3126819967541,
+      "split_group": "failure_mode_review",
+      "selection_reason": "[failure_mode_review] extends coverage of already represented conditions",
+      "expected_classes": [
+        "lane_marking",
+        "other_environment",
+        "road_boundary_or_obstacle",
+        "road_surface"
+      ],
+      "failure_mode_candidate": "cockpit_absorbed_by_external",
+      "hand_visibility_candidate": {
+        "left": "not_visible",
+        "right": "not_visible"
+      },
+      "route_segment": "q3",
+      "route_progression": 0.9983317542837955,
+      "pairing_id": null,
+      "image_sha256": "00b6a8e7217ba959b299f3adf570b70fa69c66caebbb0c756d90781019aa7370",
+      "preannotation_sha256": "852ee7074c4f0124cc0a9b65e361ab25f0f676a46cd220edbc807ef054736d94"
+    },
+    {
+      "image_name": "motorcycle_5ab8604a14df_014085.jpg",
+      "image_relative_path": "images/motorcycle_5ab8604a14df_014085.jpg",
+      "preannotation_relative_path": "preannotations_not_ground_truth/SegmentationClass/motorcycle_5ab8604a14df_014085.png",
+      "domain": "motorcycle",
+      "recording_id": "motorcycle_5ab8604a14df",
+      "source_frame_index": 14085,
+      "timestamp_ns": 3113820811259,
+      "split_group": "failure_mode_review",
+      "selection_reason": "[failure_mode_review] extends coverage of already represented conditions",
+      "expected_classes": [
+        "lane_marking",
+        "other_environment",
+        "road_boundary_or_obstacle",
+        "road_surface",
+        "vehicle"
+      ],
+      "failure_mode_candidate": "fragmentation",
+      "hand_visibility_candidate": {
+        "left": "out_of_frame",
+        "right": "not_visible"
+      },
+      "route_segment": "q3",
+      "route_progression": 0.9869138426278862,
+      "pairing_id": null,
+      "image_sha256": "9d6d87d7d7d5ce27a04b7ba4ead34ee932aefaed72abc4c8f276116973d6f2e1",
+      "preannotation_sha256": "f14b00018ab2c285174188cefa39d48119c419daacd446293c3106f500025a0f"
+    },
+    {
+      "image_name": "motorcycle_5ab8604a14df_014175.jpg",
+      "image_relative_path": "images/motorcycle_5ab8604a14df_014175.jpg",
+      "preannotation_relative_path": "preannotations_not_ground_truth/SegmentationClass/motorcycle_5ab8604a14df_014175.png",
+      "domain": "motorcycle",
+      "recording_id": "motorcycle_5ab8604a14df",
+      "source_frame_index": 14175,
+      "timestamp_ns": 3119820409311,
+      "split_group": "failure_mode_review",
+      "selection_reason": "[failure_mode_review] extends coverage of already represented conditions",
+      "expected_classes": [
+        "lane_marking",
+        "other_environment",
+        "regulatory_road_marking",
+        "road_boundary_or_obstacle",
+        "road_surface",
+        "traffic_sign"
+      ],
+      "failure_mode_candidate": "cockpit_absorbed_by_external",
+      "hand_visibility_candidate": {
+        "left": "out_of_frame",
+        "right": "not_visible"
+      },
+      "route_segment": "q3",
+      "route_progression": 0.9940320299083414,
+      "pairing_id": null,
+      "image_sha256": "f5a05fb71a8bce3129afb9940c396de0d8c5cc33b13a98bf4137814df43e9ffb",
+      "preannotation_sha256": "33bd5cb10c4b2c11bdef501125202974fdc07822528e8ac98763325a0450010d"
+    },
+    {
+      "image_name": "motorcycle_5ab8604a14df_014130.jpg",
+      "image_relative_path": "images/motorcycle_5ab8604a14df_014130.jpg",
+      "preannotation_relative_path": "preannotations_not_ground_truth/SegmentationClass/motorcycle_5ab8604a14df_014130.png",
+      "domain": "motorcycle",
+      "recording_id": "motorcycle_5ab8604a14df",
+      "source_frame_index": 14130,
+      "timestamp_ns": 3116820531404,
+      "split_group": "failure_mode_review",
+      "selection_reason": "[failure_mode_review] extends coverage of already represented conditions",
+      "expected_classes": [
+        "lane_marking",
+        "other_environment",
+        "road_boundary_or_obstacle",
+        "road_surface"
+      ],
+      "failure_mode_candidate": "cockpit_absorbed_by_external",
+      "hand_visibility_candidate": {
+        "left": "out_of_frame",
+        "right": "not_visible"
+      },
+      "route_segment": "q3",
+      "route_progression": 0.99121872157217,
+      "pairing_id": null,
+      "image_sha256": "6b36a1d9d542164e0b06db804443822e9d3898c70fe1742f42462e9972dad7c7",
+      "preannotation_sha256": "d376aca474a518212f7867b1c1580d774744c018ebc8d28c653cd8e79f86623c"
     }
   ],
   "cvat_import": {

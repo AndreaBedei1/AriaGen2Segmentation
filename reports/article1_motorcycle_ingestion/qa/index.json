@@ -1,0 +1,284 @@
+{
+  "status": "candidate_failure_modes_pre_ground_truth",
+  "is_confirmed_error_list": false,
+  "sequences": [
+    {
+      "directory": "01_cockpit_absorbed_by_external",
+      "mode": "cockpit_absorbed_by_external",
+      "frames": [
+        {
+          "source_frame_index": 14145,
+          "timestamp_ns": 3117820629697,
+          "timestamp_s": 3117.820629697
+        },
+        {
+          "source_frame_index": 14146,
+          "timestamp_ns": 3117887284758,
+          "timestamp_s": 3117.887284758
+        },
+        {
+          "source_frame_index": 14147,
+          "timestamp_ns": 3117953940165,
+          "timestamp_s": 3117.953940165
+        },
+        {
+          "source_frame_index": 14148,
+          "timestamp_ns": 3118020576310,
+          "timestamp_s": 3118.02057631
+        },
+        {
+          "source_frame_index": 14149,
+          "timestamp_ns": 3118087199697,
+          "timestamp_s": 3118.087199697
+        }
+      ],
+      "severity": 1.0
+    },
+    {
+      "directory": "02_mirror_not_detected",
+      "mode": "mirror_not_detected",
+      "frames": [
+        {
+          "source_frame_index": 13875,
+          "timestamp_ns": 3099822119217,
+          "timestamp_s": 3099.822119217
+        },
+        {
+          "source_frame_index": 13876,
+          "timestamp_ns": 3099888768020,
+          "timestamp_s": 3099.88876802
+        },
+        {
+          "source_frame_index": 13877,
+          "timestamp_ns": 3099955410165,
+          "timestamp_s": 3099.955410165
+        }
+      ],
+      "severity": 0.5
+    },
+    {
+      "directory": "03_instrument_display_not_detected",
+      "mode": "instrument_display_not_detected",
+      "frames": [
+        {
+          "source_frame_index": 13885,
+          "timestamp_ns": 3100488657321,
+          "timestamp_s": 3100.488657321
+        },
+        {
+          "source_frame_index": 13886,
+          "timestamp_ns": 3100555318781,
+          "timestamp_s": 3100.555318781
+        },
+        {
+          "source_frame_index": 13887,
+          "timestamp_ns": 3100621980186,
+          "timestamp_s": 3100.621980186
+        },
+        {
+          "source_frame_index": 13888,
+          "timestamp_ns": 3100688628989,
+          "timestamp_s": 3100.688628989
+        },
+        {
+          "source_frame_index": 13889,
+          "timestamp_ns": 3100755296894,
+          "timestamp_s": 3100.755296894
+        }
+      ],
+      "severity": 0.5
+    },
+    {
+      "directory": "04_excessive_fallback",
+      "mode": "excessive_fallback",
+      "frames": [
+        {
+          "source_frame_index": 14303,
+          "timestamp_ns": 3128353034936,
+          "timestamp_s": 3128.353034936
+        },
+        {
+          "source_frame_index": 14304,
+          "timestamp_ns": 3128419670979,
+          "timestamp_s": 3128.419670979
+        },
+        {
+          "source_frame_index": 14305,
+          "timestamp_ns": 3128486300811,
+          "timestamp_s": 3128.486300811
+        },
+        {
+          "source_frame_index": 14306,
+          "timestamp_ns": 3128552924539,
+          "timestamp_s": 3128.552924539
+        },
+        {
+          "source_frame_index": 14307,
+          "timestamp_ns": 3128619541614,
+          "timestamp_s": 3128.619541614
+        }
+      ],
+      "severity": 0.18112540154950868
+    },
+    {
+      "directory": "05_fragmentation",
+      "mode": "fragmentation",
+      "frames": [
+        {
+          "source_frame_index": 13882,
+          "timestamp_ns": 3100288679310,
+          "timestamp_s": 3100.28867931
+        },
+        {
+          "source_frame_index": 13883,
+          "timestamp_ns": 3100355321957,
+          "timestamp_s": 3100.355321957
+        },
+        {
+          "source_frame_index": 13884,
+          "timestamp_ns": 3100421995914,
+          "timestamp_s": 3100.421995914
+        },
+        {
+          "source_frame_index": 13885,
+          "timestamp_ns": 3100488657321,
+          "timestamp_s": 3100.488657321
+        },
+        {
+          "source_frame_index": 13886,
+          "timestamp_ns": 3100555318781,
+          "timestamp_s": 3100.555318781
+        }
+      ],
+      "severity": 1.0
+    },
+    {
+      "directory": "06_high_entropy",
+      "mode": "high_entropy",
+      "frames": [
+        {
+          "source_frame_index": 14303,
+          "timestamp_ns": 3128353034936,
+          "timestamp_s": 3128.353034936
+        },
+        {
+          "source_frame_index": 14304,
+          "timestamp_ns": 3128419670979,
+          "timestamp_s": 3128.419670979
+        },
+        {
+          "source_frame_index": 14305,
+          "timestamp_ns": 3128486300811,
+          "timestamp_s": 3128.486300811
+        },
+        {
+          "source_frame_index": 14306,
+          "timestamp_ns": 3128552924539,
+          "timestamp_s": 3128.552924539
+        },
+        {
+          "source_frame_index": 14307,
+          "timestamp_ns": 3128619541614,
+          "timestamp_s": 3128.619541614
+        }
+      ],
+      "severity": 1.0
+    },
+    {
+      "directory": "07_blur_related_failure",
+      "mode": "blur_related_failure",
+      "frames": [
+        {
+          "source_frame_index": 14203,
+          "timestamp_ns": 3121687112947,
+          "timestamp_s": 3121.687112947
+        },
+        {
+          "source_frame_index": 14204,
+          "timestamp_ns": 3121753774352,
+          "timestamp_s": 3121.753774352
+        },
+        {
+          "source_frame_index": 14205,
+          "timestamp_ns": 3121820435811,
+          "timestamp_s": 3121.820435811
+        },
+        {
+          "source_frame_index": 14206,
+          "timestamp_ns": 3121887097217,
+          "timestamp_s": 3121.887097217
+        },
+        {
+          "source_frame_index": 14207,
+          "timestamp_ns": 3121953758676,
+          "timestamp_s": 3121.953758676
+        }
+      ],
+      "severity": 0.6
+    },
+    {
+      "directory": "08_vibration_related_failure",
+      "mode": "vibration_related_failure",
+      "frames": [
+        {
+          "source_frame_index": 13951,
+          "timestamp_ns": 3104888236477,
+          "timestamp_s": 3104.888236477
+        },
+        {
+          "source_frame_index": 13952,
+          "timestamp_ns": 3104954935457,
+          "timestamp_s": 3104.954935457
+        },
+        {
+          "source_frame_index": 13953,
+          "timestamp_ns": 3105021647800,
+          "timestamp_s": 3105.0216478
+        },
+        {
+          "source_frame_index": 13954,
+          "timestamp_ns": 3105088359748,
+          "timestamp_s": 3105.088359748
+        },
+        {
+          "source_frame_index": 13955,
+          "timestamp_ns": 3105155014572,
+          "timestamp_s": 3105.155014572
+        }
+      ],
+      "severity": 0.6
+    },
+    {
+      "directory": "09_internal_external_fusion_error",
+      "mode": "internal_external_fusion_error",
+      "frames": [
+        {
+          "source_frame_index": 13953,
+          "timestamp_ns": 3105021647800,
+          "timestamp_s": 3105.0216478
+        },
+        {
+          "source_frame_index": 13954,
+          "timestamp_ns": 3105088359748,
+          "timestamp_s": 3105.088359748
+        },
+        {
+          "source_frame_index": 13955,
+          "timestamp_ns": 3105155014572,
+          "timestamp_s": 3105.155014572
+        },
+        {
+          "source_frame_index": 13956,
+          "timestamp_ns": 3105221694946,
+          "timestamp_s": 3105.221694946
+        },
+        {
+          "source_frame_index": 13957,
+          "timestamp_ns": 3105288350061,
+          "timestamp_s": 3105.288350061
+        }
+      ],
+      "severity": 0.5188905423280423
+    }
+  ]
+}

@@ -1,0 +1,110 @@
+{
+  "status": "review_candidates_only",
+  "is_ground_truth": false,
+  "total_candidates": 900,
+  "per_state": {
+    "visible": 0,
+    "partially_visible": 0,
+    "occluded": 0,
+    "out_of_frame": 304,
+    "motion_blurred": 8,
+    "uncertain": 175,
+    "not_visible": 413
+  },
+  "per_state_by_side": {
+    "left": {
+      "visible": 0,
+      "partially_visible": 0,
+      "occluded": 0,
+      "out_of_frame": 304,
+      "motion_blurred": 8,
+      "uncertain": 36,
+      "not_visible": 102
+    },
+    "right": {
+      "visible": 0,
+      "partially_visible": 0,
+      "occluded": 0,
+      "out_of_frame": 0,
+      "motion_blurred": 0,
+      "uncertain": 139,
+      "not_visible": 311
+    }
+  },
+  "per_agreement_case": {
+    "1": {
+      "count": 0,
+      "label": "hand visible and proxy present"
+    },
+    "2": {
+      "count": 0,
+      "label": "hand visible and proxy absent"
+    },
+    "3": {
+      "count": 413,
+      "label": "hand not visible and proxy absent"
+    },
+    "4": {
+      "count": 132,
+      "label": "hand not visible but a false mask is present"
+    },
+    "5": {
+      "count": 304,
+      "label": "tracking present but the hand is not visible in the RGB frame"
+    },
+    "6": {
+      "count": 0,
+      "label": "hand visible but tracking absent"
+    },
+    "7": {
+      "count": 8,
+      "label": "blurred hand"
+    },
+    "8": {
+      "count": 0,
+      "label": "partially visible hand"
+    },
+    "9": {
+      "count": 43,
+      "label": "mask propagated for too long"
+    },
+    "10": {
+      "count": 0,
+      "label": "confusion with the handlebar or a mirror"
+    }
+  },
+  "evaluable_candidates": 0,
+  "evaluable_fraction": 0.0,
+  "candidate_false_mask_count": 132,
+  "candidate_over_propagation_count": 43,
+  "notes": [
+    "Intermittent hand visibility is expected on a motorcycle; a frame with no hand mask is not by itself a failure.",
+    "A model may be evaluated on hands only in frames a reviewer confirms as visible or partially_visible.",
+    "Recall, precision and accuracy are deliberately not reported: there is no reviewed hand ground truth yet.",
+    "Hands remain part of control_and_ego_vehicle (12); they are not a new taxonomy class."
+  ],
+  "frames": 450,
+  "effective_fps": 15.001183518373683,
+  "duration_s": 29.929642793,
+  "persistence_window_s": 0.8,
+  "persistence_window_frames": 12,
+  "association_window_s": 0.1,
+  "proxy_available": true,
+  "proxy_plausibility_bounds": {
+    "min_area_fraction": 0.0005,
+    "max_area_fraction": 0.05,
+    "rationale": "the open-vocabulary probe regularly returns a whole-quadrant box labelled 'a hand'; detections outside this area band are kept in the record but are not treated as hand evidence"
+  },
+  "proxy_frames_with_raw_region": 150,
+  "proxy_frames_with_plausible_region": 139,
+  "proxy_implausible_detections": 40,
+  "per_state_per_second": {
+    "visible": 0.0,
+    "partially_visible": 0.0,
+    "occluded": 0.0,
+    "out_of_frame": 10.157154300254465,
+    "motion_blurred": 0.26729353421722274,
+    "uncertain": 5.847046061001748,
+    "not_visible": 13.799028703964126
+  }
+}

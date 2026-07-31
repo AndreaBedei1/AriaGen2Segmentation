@@ -67,6 +67,16 @@ def build_split_plan(selection_csv: Path, unit: str,
         train, valid = grouped_split(df, unit, validation)
         plan["train_frames"] = int(len(train))
         plan["validation_frames"] = int(len(valid))
+        # A split that leaves one side empty is not a split. With a single
+        # recording per domain, `recording_id` cannot produce one, which is why a
+        # finer group unit is needed until more recordings exist.
+        if len(train) == 0 or len(valid) == 0:
+            plan["available"] = False
+            plan["error"] = (
+                f"splitting on `{unit}` leaves {len(train)} training and "
+                f"{len(valid)} validation frames; this unit has too few groups in "
+                "the current data")
+            return plan
         plan["train_per_domain"] = train["domain"].value_counts().to_dict()
         plan["validation_per_domain"] = valid["domain"].value_counts().to_dict()
         try:
@@ -89,7 +99,7 @@ def main() -> int:
     ap.add_argument("--config", default="configs/article1/segformer_cockpit.yaml")
     ap.add_argument("--output",
                     default="reports/article1_motorcycle_ingestion/cockpit_training_plan.json")
-    ap.add_argument("--split-unit", default="recording_id",
+    ap.add_argument("--split-unit", default="route_group_id",
                     choices=list(SAFE_SPLIT_UNITS))
     ap.add_argument("--log-level", default="INFO")
     args = ap.parse_args()

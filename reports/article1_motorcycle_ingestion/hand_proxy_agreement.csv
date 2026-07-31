@@ -1,0 +1,901 @@
+recording_id,source_frame_index,timestamp_ns,side,agreement_case,agreement_label,state_candidate,hand_tracking_valid,landmarks_in_frame,landmarks_total,tracking_dt_ms,proxy_available,proxy_mask_present,proxy_mask_present_before_plausibility,proxy_implausible_detections,proxy_score,proxy_area_fraction,proxy_raw_area_fraction,proxy_tracking_overlap,local_blur_variance,reference_blur_variance,proxy_persisted_frames
+motorcycle_5ab8604a14df,13875,3099822119217,left,3,hand not visible and proxy absent,not_visible,False,0,0,-27.477217,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,13875,3099822119217,right,3,hand not visible and proxy absent,not_visible,False,0,0,-27.477217,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,13876,3099888768020,left,3,hand not visible and proxy absent,not_visible,False,0,0,5.87398,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,13876,3099888768020,right,3,hand not visible and proxy absent,not_visible,False,0,0,5.87398,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,13877,3099955410165,left,3,hand not visible and proxy absent,not_visible,False,0,0,39.231835,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,13877,3099955410165,right,3,hand not visible and proxy absent,not_visible,False,0,0,39.231835,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,13878,3100022058812,left,3,hand not visible and proxy absent,not_visible,False,0,0,-27.416812,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,13878,3100022058812,right,3,hand not visible and proxy absent,not_visible,False,0,0,-27.416812,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,13879,3100088720613,left,3,hand not visible and proxy absent,not_visible,False,0,0,5.922387,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,13879,3100088720613,right,3,hand not visible and proxy absent,not_visible,False,0,0,5.922387,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,13880,3100155362760,left,3,hand not visible and proxy absent,not_visible,False,0,0,39.28024,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,13880,3100155362760,right,3,hand not visible and proxy absent,not_visible,False,0,0,39.28024,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,13881,3100222024509,left,3,hand not visible and proxy absent,not_visible,False,0,0,-27.381509,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,13881,3100222024509,right,3,hand not visible and proxy absent,not_visible,False,0,0,-27.381509,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,13882,3100288679310,left,3,hand not visible and proxy absent,not_visible,False,0,0,5.96469,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,13882,3100288679310,right,3,hand not visible and proxy absent,not_visible,False,0,0,5.96469,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,13883,3100355321957,left,3,hand not visible and proxy absent,not_visible,False,0,0,39.320043,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,13883,3100355321957,right,3,hand not visible and proxy absent,not_visible,False,0,0,39.320043,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,13884,3100421995914,left,3,hand not visible and proxy absent,not_visible,False,0,0,-27.353914,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,13884,3100421995914,right,3,hand not visible and proxy absent,not_visible,False,0,0,-27.353914,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,13885,3100488657321,left,3,hand not visible and proxy absent,not_visible,False,0,0,5.983679,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,13885,3100488657321,right,3,hand not visible and proxy absent,not_visible,False,0,0,5.983679,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,13886,3100555318781,left,3,hand not visible and proxy absent,not_visible,False,0,0,39.323219,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,13886,3100555318781,right,3,hand not visible and proxy absent,not_visible,False,0,0,39.323219,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,13887,3100621980186,left,3,hand not visible and proxy absent,not_visible,False,0,0,-27.338186,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,13887,3100621980186,right,3,hand not visible and proxy absent,not_visible,False,0,0,-27.338186,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,13888,3100688628989,left,3,hand not visible and proxy absent,not_visible,False,0,0,6.013011,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,13888,3100688628989,right,3,hand not visible and proxy absent,not_visible,False,0,0,6.013011,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,13889,3100755296894,left,3,hand not visible and proxy absent,not_visible,False,0,0,39.345106,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,13889,3100755296894,right,3,hand not visible and proxy absent,not_visible,False,0,0,39.345106,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,13890,3100821958353,left,3,hand not visible and proxy absent,not_visible,False,0,0,-27.316353,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,13890,3100821958353,right,3,hand not visible and proxy absent,not_visible,False,0,0,-27.316353,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,13891,3100888645071,left,3,hand not visible and proxy absent,not_visible,False,0,0,5.996929,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,13891,3100888645071,right,3,hand not visible and proxy absent,not_visible,False,0,0,5.996929,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,13892,3100955306634,left,3,hand not visible and proxy absent,not_visible,False,0,0,39.350366,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,13892,3100955306634,right,3,hand not visible and proxy absent,not_visible,False,0,0,39.350366,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,13893,3101021961592,left,3,hand not visible and proxy absent,not_visible,False,0,0,-27.304592,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,13893,3101021961592,right,3,hand not visible and proxy absent,not_visible,False,0,0,-27.304592,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,13894,3101088622999,left,3,hand not visible and proxy absent,not_visible,False,0,0,6.029001,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,13894,3101088622999,right,3,hand not visible and proxy absent,not_visible,False,0,0,6.029001,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,13895,3101155284456,left,3,hand not visible and proxy absent,not_visible,False,0,0,39.357544,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,13895,3101155284456,right,3,hand not visible and proxy absent,not_visible,False,0,0,39.357544,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,13896,3101221958520,left,3,hand not visible and proxy absent,not_visible,False,0,0,-27.31652,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,13896,3101221958520,right,3,hand not visible and proxy absent,not_visible,False,0,0,-27.31652,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,13897,3101288613477,left,3,hand not visible and proxy absent,not_visible,False,0,0,6.029523,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,13897,3101288613477,right,3,hand not visible and proxy absent,not_visible,False,0,0,6.029523,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,13898,3101355274884,left,3,hand not visible and proxy absent,not_visible,False,0,0,39.375116,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,13898,3101355274884,right,3,hand not visible and proxy absent,not_visible,False,0,0,39.375116,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,13899,3101421936341,left,3,hand not visible and proxy absent,not_visible,False,0,0,-27.286341,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,13899,3101421936341,right,3,hand not visible and proxy absent,not_visible,False,0,0,-27.286341,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,13900,3101488597749,left,3,hand not visible and proxy absent,not_visible,False,0,0,6.044251,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,13900,3101488597749,right,3,hand not visible and proxy absent,not_visible,False,0,0,6.044251,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,13901,3101555284468,left,4,hand not visible but a false mask is present,uncertain,False,0,0,39.356532,True,True,True,0,0.2950267493724823,0.007234124359620391,0.007234124359620391,,,,1
+motorcycle_5ab8604a14df,13901,3101555284468,right,4,hand not visible but a false mask is present,uncertain,False,0,0,39.356532,True,True,True,0,0.2950267493724823,0.007234124359620391,0.007234124359620391,,,,1
+motorcycle_5ab8604a14df,13902,3101621946082,left,3,hand not visible and proxy absent,not_visible,False,0,0,-27.305082,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,13902,3101621946082,right,3,hand not visible and proxy absent,not_visible,False,0,0,-27.305082,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,13903,3101688600989,left,5,tracking present but the hand is not visible in the RGB frame,out_of_frame,True,0,21,6.041011,True,True,True,0,0.3407045006752014,0.0033564158688166625,0.0033564158688166625,,,,0
+motorcycle_5ab8604a14df,13903,3101688600989,right,4,hand not visible but a false mask is present,uncertain,False,0,0,6.041011,True,True,True,0,0.3407045006752014,0.0033564158688166625,0.0033564158688166625,,,,1
+motorcycle_5ab8604a14df,13904,3101755262446,left,5,tracking present but the hand is not visible in the RGB frame,out_of_frame,True,0,21,39.379554,True,True,True,0,0.34510529041290283,0.004247435857058873,0.004247435857058873,,,,0
+motorcycle_5ab8604a14df,13904,3101755262446,right,4,hand not visible but a false mask is present,uncertain,False,0,0,39.379554,True,True,True,0,0.34510529041290283,0.004247435857058873,0.004247435857058873,,,,2
+motorcycle_5ab8604a14df,13905,3101821923853,left,5,tracking present but the hand is not visible in the RGB frame,out_of_frame,True,0,21,-27.281853,True,True,True,0,0.3007456064224243,0.004087012891576384,0.004087012891576384,,,,0
+motorcycle_5ab8604a14df,13905,3101821923853,right,4,hand not visible but a false mask is present,uncertain,False,0,0,-27.281853,True,True,True,0,0.3007456064224243,0.004087012891576384,0.004087012891576384,,,,3
+motorcycle_5ab8604a14df,13906,3101888585311,left,5,tracking present but the hand is not visible in the RGB frame,out_of_frame,True,0,21,6.057689,True,True,True,0,0.34246158599853516,0.00397547136138406,0.00397547136138406,,,,0
+motorcycle_5ab8604a14df,13906,3101888585311,right,4,hand not visible but a false mask is present,uncertain,False,0,0,6.057689,True,True,True,0,0.34246158599853516,0.00397547136138406,0.00397547136138406,,,,4
+motorcycle_5ab8604a14df,13907,3101955246718,left,5,tracking present but the hand is not visible in the RGB frame,out_of_frame,True,0,21,39.395282,True,True,True,0,0.28776782751083374,0.002076640841521794,0.002076640841521794,,,,0
+motorcycle_5ab8604a14df,13907,3101955246718,right,4,hand not visible but a false mask is present,uncertain,False,0,0,39.395282,True,True,True,0,0.28776782751083374,0.002076640841521794,0.002076640841521794,,,,5
+motorcycle_5ab8604a14df,13908,3102021908175,left,5,tracking present but the hand is not visible in the RGB frame,out_of_frame,True,0,21,-27.266175,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,13908,3102021908175,right,3,hand not visible and proxy absent,not_visible,False,0,0,-27.266175,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,13909,3102088582239,left,5,tracking present but the hand is not visible in the RGB frame,out_of_frame,True,0,21,6.060761,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,13909,3102088582239,right,3,hand not visible and proxy absent,not_visible,False,0,0,6.060761,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,13910,3102155250300,left,5,tracking present but the hand is not visible in the RGB frame,out_of_frame,True,0,21,39.3937,True,True,True,0,0.26435837149620056,0.004487578210296465,0.002432589548164945,,,,0
+motorcycle_5ab8604a14df,13910,3102155250300,right,4,hand not visible but a false mask is present,uncertain,False,0,0,39.3937,True,True,True,0,0.26435837149620056,0.004487578210296465,0.002432589548164945,,,,1
+motorcycle_5ab8604a14df,13911,3102221930520,left,5,tracking present but the hand is not visible in the RGB frame,out_of_frame,True,0,21,-27.28652,True,True,True,0,0.2934044599533081,0.004085044511631813,0.004085044511631813,,,,0
+motorcycle_5ab8604a14df,13911,3102221930520,right,4,hand not visible but a false mask is present,uncertain,False,0,0,-27.28652,True,True,True,0,0.2934044599533081,0.004085044511631813,0.004085044511631813,,,,2
+motorcycle_5ab8604a14df,13912,3102288579477,left,5,tracking present but the hand is not visible in the RGB frame,out_of_frame,True,0,21,6.063523,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,13912,3102288579477,right,3,hand not visible and proxy absent,not_visible,False,0,0,6.063523,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,13913,3102355240936,left,5,tracking present but the hand is not visible in the RGB frame,out_of_frame,True,0,21,39.422064,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,13913,3102355240936,right,3,hand not visible and proxy absent,not_visible,False,0,0,39.422064,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,13914,3102421902341,left,5,tracking present but the hand is not visible in the RGB frame,out_of_frame,True,0,21,-27.239341,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,13914,3102421902341,right,3,hand not visible and proxy absent,not_visible,False,0,0,-27.239341,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,13915,3102488563801,left,5,tracking present but the hand is not visible in the RGB frame,out_of_frame,True,0,21,6.093199,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,13915,3102488563801,right,3,hand not visible and proxy absent,not_visible,False,0,0,6.093199,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,13916,3102555237864,left,5,tracking present but the hand is not visible in the RGB frame,out_of_frame,True,0,21,39.404136,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,13916,3102555237864,right,3,hand not visible and proxy absent,not_visible,False,0,0,39.404136,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,13917,3102621905425,left,5,tracking present but the hand is not visible in the RGB frame,out_of_frame,True,0,21,-27.263425,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,13917,3102621905425,right,3,hand not visible and proxy absent,not_visible,False,0,0,-27.263425,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,13918,3102688560885,left,5,tracking present but the hand is not visible in the RGB frame,out_of_frame,True,0,21,6.081115,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,13918,3102688560885,right,3,hand not visible and proxy absent,not_visible,False,0,0,6.081115,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,13919,3102755234946,left,5,tracking present but the hand is not visible in the RGB frame,out_of_frame,True,0,21,39.427054,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,13919,3102755234946,right,3,hand not visible and proxy absent,not_visible,False,0,0,39.427054,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,13920,3102821889906,left,5,tracking present but the hand is not visible in the RGB frame,out_of_frame,True,0,21,-27.227906,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,13920,3102821889906,right,3,hand not visible and proxy absent,not_visible,False,0,0,-27.227906,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,13921,3102888538654,left,5,tracking present but the hand is not visible in the RGB frame,out_of_frame,True,0,21,6.103346,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,13921,3102888538654,right,3,hand not visible and proxy absent,not_visible,False,0,0,6.103346,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,13922,3102955181301,left,5,tracking present but the hand is not visible in the RGB frame,out_of_frame,True,0,21,39.461699,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,13922,3102955181301,right,3,hand not visible and proxy absent,not_visible,False,0,0,39.461699,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,13923,3103021817342,left,5,tracking present but the hand is not visible in the RGB frame,out_of_frame,True,0,21,-27.174342,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,13923,3103021817342,right,3,hand not visible and proxy absent,not_visible,False,0,0,-27.174342,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,13924,3103088472489,left,5,tracking present but the hand is not visible in the RGB frame,out_of_frame,True,0,21,6.169511,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,13924,3103088472489,right,3,hand not visible and proxy absent,not_visible,False,0,0,6.169511,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,13925,3103155121134,left,5,tracking present but the hand is not visible in the RGB frame,out_of_frame,True,0,21,39.520866,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,13925,3103155121134,right,3,hand not visible and proxy absent,not_visible,False,0,0,39.520866,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,13926,3103221795041,left,5,tracking present but the hand is not visible in the RGB frame,out_of_frame,True,0,21,-27.153041,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,13926,3103221795041,right,3,hand not visible and proxy absent,not_visible,False,0,0,-27.153041,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,13927,3103288481759,left,5,tracking present but the hand is not visible in the RGB frame,out_of_frame,True,0,21,6.161241,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,13927,3103288481759,right,3,hand not visible and proxy absent,not_visible,False,0,0,6.161241,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,13928,3103355168635,left,5,tracking present but the hand is not visible in the RGB frame,out_of_frame,True,0,21,39.473365,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,13928,3103355168635,right,3,hand not visible and proxy absent,not_visible,False,0,0,39.473365,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,13929,3103421836352,left,5,tracking present but the hand is not visible in the RGB frame,out_of_frame,True,0,21,-27.194352,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,13929,3103421836352,right,3,hand not visible and proxy absent,not_visible,False,0,0,-27.194352,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,13930,3103488510572,left,5,tracking present but the hand is not visible in the RGB frame,out_of_frame,True,0,21,6.135428,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,13930,3103488510572,right,3,hand not visible and proxy absent,not_visible,False,0,0,6.135428,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,13931,3103555159529,left,5,tracking present but the hand is not visible in the RGB frame,out_of_frame,True,0,21,39.482471,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,13931,3103555159529,right,3,hand not visible and proxy absent,not_visible,False,0,0,39.482471,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,13932,3103621820936,left,5,tracking present but the hand is not visible in the RGB frame,out_of_frame,True,0,21,-27.178936,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,13932,3103621820936,right,3,hand not visible and proxy absent,not_visible,False,0,0,-27.178936,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,13933,3103688495050,left,5,tracking present but the hand is not visible in the RGB frame,out_of_frame,True,0,21,6.14795,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,13933,3103688495050,right,3,hand not visible and proxy absent,not_visible,False,0,0,6.14795,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,13934,3103755149957,left,5,tracking present but the hand is not visible in the RGB frame,out_of_frame,True,0,21,39.493043,True,True,True,0,0.29992473125457764,0.035126068174183254,0.027625556395397665,,,,0
+motorcycle_5ab8604a14df,13934,3103755149957,right,4,hand not visible but a false mask is present,uncertain,False,0,0,39.493043,True,True,True,0,0.29992473125457764,0.035126068174183254,0.027625556395397665,,,,1
+motorcycle_5ab8604a14df,13935,3103821798758,left,5,tracking present but the hand is not visible in the RGB frame,out_of_frame,True,0,21,-27.155758,True,True,True,0,0.2901756167411804,0.04731985386747292,0.02825806248425296,,,,0
+motorcycle_5ab8604a14df,13935,3103821798758,right,4,hand not visible but a false mask is present,uncertain,False,0,0,-27.155758,True,True,True,0,0.2901756167411804,0.04731985386747292,0.02825806248425296,,,,2
+motorcycle_5ab8604a14df,13936,3103888441405,left,5,tracking present but the hand is not visible in the RGB frame,out_of_frame,True,0,21,6.200595,True,True,True,0,0.30569732189178467,0.05344118743176282,0.029270793965734444,,,,0
+motorcycle_5ab8604a14df,13936,3103888441405,right,4,hand not visible but a false mask is present,uncertain,False,0,0,6.200595,True,True,True,0,0.30569732189178467,0.05344118743176282,0.029270793965734444,,,,3
+motorcycle_5ab8604a14df,13937,3103955102706,left,5,tracking present but the hand is not visible in the RGB frame,out_of_frame,True,0,21,39.539294,True,True,True,0,0.332852303981781,0.08940676965230537,0.03234540343915344,,,,0
+motorcycle_5ab8604a14df,13937,3103955102706,right,4,hand not visible but a false mask is present,uncertain,False,0,0,39.539294,True,True,True,0,0.332852303981781,0.08940676965230537,0.03234540343915344,,,,4
+motorcycle_5ab8604a14df,13938,3104021770113,left,5,tracking present but the hand is not visible in the RGB frame,out_of_frame,True,0,21,-27.128113,True,True,True,0,0.34510529041290283,0.022933594734189974,0.019006020618123794,,,,0
+motorcycle_5ab8604a14df,13938,3104021770113,right,4,hand not visible but a false mask is present,uncertain,False,0,0,-27.128113,True,True,True,0,0.34510529041290283,0.022933594734189974,0.019006020618123794,,,,5
+motorcycle_5ab8604a14df,13939,3104088431571,left,5,tracking present but the hand is not visible in the RGB frame,out_of_frame,True,0,21,6.210429,True,True,True,0,0.3584653437137604,0.061600122302007225,0.03250648253128412,,,,0
+motorcycle_5ab8604a14df,13939,3104088431571,right,4,hand not visible but a false mask is present,uncertain,False,0,0,6.210429,True,True,True,0,0.3584653437137604,0.061600122302007225,0.03250648253128412,,,,6
+motorcycle_5ab8604a14df,13940,3104155093030,left,5,tracking present but the hand is not visible in the RGB frame,out_of_frame,True,0,21,39.54997,True,True,True,0,0.3250918686389923,0.06429811507936509,0.03179294480137734,,,,0
+motorcycle_5ab8604a14df,13940,3104155093030,right,4,hand not visible but a false mask is present,uncertain,False,0,0,39.54997,True,True,True,0,0.3250918686389923,0.06429811507936509,0.03179294480137734,,,,7
+motorcycle_5ab8604a14df,13941,3104221741779,left,5,tracking present but the hand is not visible in the RGB frame,out_of_frame,True,0,21,-27.098779,True,True,True,0,0.319121390581131,0.040383611006130846,0.032156110901150586,,,,0
+motorcycle_5ab8604a14df,13941,3104221741779,right,9,mask propagated for too long,uncertain,False,0,0,-27.098779,True,True,True,0,0.319121390581131,0.040383611006130846,0.032156110901150586,,,,8
+motorcycle_5ab8604a14df,13942,3104288371822,left,5,tracking present but the hand is not visible in the RGB frame,out_of_frame,True,0,21,6.271178,True,True,True,0,0.30985841155052185,0.04936565675652978,0.03266985806668346,,,,0
+motorcycle_5ab8604a14df,13942,3104288371822,right,9,mask propagated for too long,uncertain,False,0,0,6.271178,True,True,True,0,0.30985841155052185,0.04936565675652978,0.03266985806668346,,,,9
+motorcycle_5ab8604a14df,13943,3104355014310,left,5,tracking present but the hand is not visible in the RGB frame,out_of_frame,True,0,21,39.62769,True,True,True,0,0.3259495198726654,0.05630124349122365,0.032748265201142185,,,,0
+motorcycle_5ab8604a14df,13943,3104355014310,right,9,mask propagated for too long,uncertain,False,0,0,39.62769,True,True,True,0,0.3259495198726654,0.05630124349122365,0.032748265201142185,,,,10
+motorcycle_5ab8604a14df,13944,3104421656801,left,5,tracking present but the hand is not visible in the RGB frame,out_of_frame,True,0,21,-27.014801,True,True,True,0,0.3319854736328125,0.050298996913580245,0.03253994499034182,,,,0
+motorcycle_5ab8604a14df,13944,3104421656801,right,9,mask propagated for too long,uncertain,False,0,0,-27.014801,True,True,True,0,0.3319854736328125,0.050298996913580245,0.03253994499034182,,,,11
+motorcycle_5ab8604a14df,13945,3104488286633,left,5,tracking present but the hand is not visible in the RGB frame,out_of_frame,True,0,21,6.365367,True,True,True,0,0.32338011264801025,0.04788182634164777,0.03156559691777946,,,,0
+motorcycle_5ab8604a14df,13945,3104488286633,right,9,mask propagated for too long,uncertain,False,0,0,6.365367,True,True,True,0,0.32338011264801025,0.04788182634164777,0.03156559691777946,,,,12
+motorcycle_5ab8604a14df,13946,3104554923020,left,5,tracking present but the hand is not visible in the RGB frame,out_of_frame,True,0,21,39.71898,True,True,True,0,0.3073579967021942,0.029632647812211303,0.017522518266565885,,,,0
+motorcycle_5ab8604a14df,13946,3104554923020,right,9,mask propagated for too long,uncertain,False,0,0,39.71898,True,True,True,0,0.3073579967021942,0.029632647812211303,0.017522518266565885,,,,13
+motorcycle_5ab8604a14df,13947,3104621546248,left,5,tracking present but the hand is not visible in the RGB frame,out_of_frame,True,0,21,-26.904248,True,True,True,2,0.27747300267219543,0.00766946439069455,0.0054757049424708154,,,,0
+motorcycle_5ab8604a14df,13947,3104621546248,right,9,mask propagated for too long,uncertain,False,0,0,-26.904248,True,True,True,2,0.27747300267219543,0.00766946439069455,0.0054757049424708154,,,,14
+motorcycle_5ab8604a14df,13948,3104688213895,left,5,tracking present but the hand is not visible in the RGB frame,out_of_frame,True,0,21,6.429105,True,True,True,0,0.2743513584136963,0.008696958721760309,0.005550175317040397,,,,0
+motorcycle_5ab8604a14df,13948,3104688213895,right,9,mask propagated for too long,uncertain,False,0,0,6.429105,True,True,True,0,0.2743513584136963,0.008696958721760309,0.005550175317040397,,,,15
+motorcycle_5ab8604a14df,13949,3104754888300,left,5,tracking present but the hand is not visible in the RGB frame,out_of_frame,True,0,21,39.7527,True,True,True,4,0.25982561707496643,0.0034978111615016376,0.004415732342319644,,,,0
+motorcycle_5ab8604a14df,13949,3104754888300,right,9,mask propagated for too long,uncertain,False,0,0,39.7527,True,True,True,4,0.25982561707496643,0.0034978111615016376,0.004415732342319644,,,,16
+motorcycle_5ab8604a14df,13950,3104821549760,left,5,tracking present but the hand is not visible in the RGB frame,out_of_frame,True,0,21,-26.90876,True,False,True,5,0.0,0.0,0.0008572294658604182,,,,0
+motorcycle_5ab8604a14df,13950,3104821549760,right,3,hand not visible and proxy absent,not_visible,False,0,0,-26.90876,True,False,True,5,0.0,0.0,0.0008572294658604182,,,,0
+motorcycle_5ab8604a14df,13951,3104888236477,left,5,tracking present but the hand is not visible in the RGB frame,out_of_frame,True,0,21,6.406523,True,False,True,4,0.0,0.0,0.0008496840094062316,,,,0
+motorcycle_5ab8604a14df,13951,3104888236477,right,3,hand not visible and proxy absent,not_visible,False,0,0,6.406523,True,False,True,4,0.0,0.0,0.0008496840094062316,,,,0
+motorcycle_5ab8604a14df,13952,3104954935457,left,5,tracking present but the hand is not visible in the RGB frame,out_of_frame,True,0,21,39.707543,True,True,True,4,0.32338011264801025,0.0020894353111615017,0.0016964154488956077,,,,0
+motorcycle_5ab8604a14df,13952,3104954935457,right,4,hand not visible but a false mask is present,uncertain,False,0,0,39.707543,True,True,True,4,0.32338011264801025,0.0020894353111615017,0.0016964154488956077,,,,1
+motorcycle_5ab8604a14df,13953,3105021647800,left,5,tracking present but the hand is not visible in the RGB frame,out_of_frame,True,0,21,-27.0048,True,True,True,3,0.3970029056072235,0.0013673679348282523,0.0019211388259007306,,,,0
+motorcycle_5ab8604a14df,13953,3105021647800,right,4,hand not visible but a false mask is present,uncertain,False,0,0,-27.0048,True,True,True,3,0.3970029056072235,0.0013673679348282523,0.0019211388259007306,,,,2
+motorcycle_5ab8604a14df,13954,3105088359748,left,5,tracking present but the hand is not visible in the RGB frame,out_of_frame,True,0,21,6.283252,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,13954,3105088359748,right,3,hand not visible and proxy absent,not_visible,False,0,0,6.283252,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,13955,3105155014572,left,5,tracking present but the hand is not visible in the RGB frame,out_of_frame,True,0,21,39.627428,True,True,True,0,0.31489261984825134,0.045616877152095406,0.037636736793482825,,,,0
+motorcycle_5ab8604a14df,13955,3105155014572,right,4,hand not visible but a false mask is present,uncertain,False,0,0,39.627428,True,True,True,0,0.31489261984825134,0.045616877152095406,0.037636736793482825,,,,1
+motorcycle_5ab8604a14df,13956,3105221694946,left,5,tracking present but the hand is not visible in the RGB frame,out_of_frame,True,0,21,-27.052946,True,True,True,0,0.2991051971912384,0.026393350550096582,0.013198643654992862,,,,0
+motorcycle_5ab8604a14df,13956,3105221694946,right,4,hand not visible but a false mask is present,uncertain,False,0,0,-27.052946,True,True,True,0,0.2991051971912384,0.026393350550096582,0.013198643654992862,,,,2
+motorcycle_5ab8604a14df,13957,3105288350061,left,5,tracking present but the hand is not visible in the RGB frame,out_of_frame,True,0,21,6.292939,True,True,True,0,0.28378137946128845,0.004159842949525489,0.004159842949525489,,,,0
+motorcycle_5ab8604a14df,13957,3105288350061,right,4,hand not visible but a false mask is present,uncertain,False,0,0,6.292939,True,True,True,0,0.28378137946128845,0.004159842949525489,0.004159842949525489,,,,3
+motorcycle_5ab8604a14df,13958,3105355005466,left,5,tracking present but the hand is not visible in the RGB frame,out_of_frame,True,0,21,39.636534,True,True,True,0,0.3199707269668579,0.004226439804316789,0.004226439804316789,,,,0
+motorcycle_5ab8604a14df,13958,3105355005466,right,4,hand not visible but a false mask is present,uncertain,False,0,0,39.636534,True,True,True,0,0.3199707269668579,0.004226439804316789,0.004226439804316789,,,,4
+motorcycle_5ab8604a14df,13959,3105421666926,left,5,tracking present but the hand is not visible in the RGB frame,out_of_frame,True,0,21,-27.024926,True,True,True,0,0.32766830921173096,0.005273289871504157,0.004441649344923154,,,,0
+motorcycle_5ab8604a14df,13959,3105421666926,right,4,hand not visible but a false mask is present,uncertain,False,0,0,-27.024926,True,True,True,0,0.32766830921173096,0.005273289871504157,0.004441649344923154,,,,5
+motorcycle_5ab8604a14df,13960,3105488328331,left,5,tracking present but the hand is not visible in the RGB frame,out_of_frame,True,0,21,6.313669,True,True,True,0,0.35042136907577515,0.013077916351725876,0.007736717372134039,,,,0
+motorcycle_5ab8604a14df,13960,3105488328331,right,4,hand not visible but a false mask is present,uncertain,False,0,0,6.313669,True,True,True,0,0.35042136907577515,0.013077916351725876,0.007736717372134039,,,,6
+motorcycle_5ab8604a14df,13961,3105554964478,left,5,tracking present but the hand is not visible in the RGB frame,out_of_frame,True,0,21,39.679522,True,True,True,0,0.2782568037509918,0.045226481796422274,0.045226481796422274,,,,0
+motorcycle_5ab8604a14df,13961,3105554964478,right,4,hand not visible but a false mask is present,uncertain,False,0,0,39.679522,True,True,True,0,0.2782568037509918,0.045226481796422274,0.045226481796422274,,,,7
+motorcycle_5ab8604a14df,13962,3105621562550,left,5,tracking present but the hand is not visible in the RGB frame,out_of_frame,True,0,21,-26.91855,True,True,True,0,0.28378137946128845,0.019153649113966574,0.019153649113966574,,,,0
+motorcycle_5ab8604a14df,13962,3105621562550,right,9,mask propagated for too long,uncertain,False,0,0,-26.91855,True,True,True,0,0.28378137946128845,0.019153649113966574,0.019153649113966574,,,,8
+motorcycle_5ab8604a14df,13963,3105688084977,left,5,tracking present but the hand is not visible in the RGB frame,out_of_frame,True,0,21,6.558023,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,13963,3105688084977,right,3,hand not visible and proxy absent,not_visible,False,0,0,6.558023,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,13964,3105754657906,left,5,tracking present but the hand is not visible in the RGB frame,out_of_frame,True,0,21,39.985094,True,True,True,0,0.25534364581108093,0.006659029352481733,0.006659029352481733,,,,0
+motorcycle_5ab8604a14df,13964,3105754657906,right,4,hand not visible but a false mask is present,uncertain,False,0,0,39.985094,True,True,True,0,0.25534364581108093,0.006659029352481733,0.006659029352481733,,,,1
+motorcycle_5ab8604a14df,13965,3105821306665,left,5,tracking present but the hand is not visible in the RGB frame,out_of_frame,True,0,21,-26.663665,True,True,True,0,0.25091278553009033,0.0038107835726883346,0.0038107835726883346,,,,0
+motorcycle_5ab8604a14df,13965,3105821306665,right,4,hand not visible but a false mask is present,uncertain,False,0,0,-26.663665,True,True,True,0,0.25091278553009033,0.0038107835726883346,0.0038107835726883346,,,,2
+motorcycle_5ab8604a14df,13966,3105888018571,left,5,tracking present but the hand is not visible in the RGB frame,out_of_frame,True,0,21,6.624429,True,True,True,0,0.29665425419807434,0.021763064793818763,0.010166682413706224,,,,0
+motorcycle_5ab8604a14df,13966,3105888018571,right,4,hand not visible but a false mask is present,uncertain,False,0,0,6.624429,True,True,True,0,0.29665425419807434,0.021763064793818763,0.010166682413706224,,,,3
+motorcycle_5ab8604a14df,13967,3105954781175,left,7,blurred hand,motion_blurred,True,5,21,39.864825,True,True,True,0,0.31658050417900085,0.007109132233140169,0.0037727282270933063,0.0,2.468094825744629,18.341310501098633,0
+motorcycle_5ab8604a14df,13967,3105954781175,right,4,hand not visible but a false mask is present,uncertain,False,0,0,39.864825,True,True,True,0,0.31658050417900085,0.007109132233140169,0.0037727282270933063,,,18.341310501098633,4
+motorcycle_5ab8604a14df,13968,3106021594425,left,7,blurred hand,motion_blurred,True,5,21,-26.948425,True,True,True,0,0.2806163728237152,0.0032258466658268248,0.0032258466658268248,0.0,2.3520452976226807,15.84288501739502,0
+motorcycle_5ab8604a14df,13968,3106021594425,right,4,hand not visible but a false mask is present,uncertain,False,0,0,-26.948425,True,True,True,0,0.2806163728237152,0.0032258466658268248,0.0032258466658268248,,,15.84288501739502,5
+motorcycle_5ab8604a14df,13969,3106088344519,left,7,blurred hand,motion_blurred,True,8,21,6.297481,True,True,True,0,0.270480215549469,0.013145825459813555,0.006858491853531536,0.30702402257300654,1.716431975364685,13.823165893554688,0
+motorcycle_5ab8604a14df,13969,3106088344519,right,4,hand not visible but a false mask is present,uncertain,False,0,0,6.297481,True,True,True,0,0.270480215549469,0.013145825459813555,0.006858491853531536,,,13.823165893554688,6
+motorcycle_5ab8604a14df,13970,3106155012124,left,7,blurred hand,motion_blurred,True,4,21,39.657876,True,True,True,0,0.32167303562164307,0.0032917873939699335,0.0032917873939699335,0.0,1.6868802309036255,12.416723251342773,0
+motorcycle_5ab8604a14df,13970,3106155012124,right,4,hand not visible but a false mask is present,uncertain,False,0,0,39.657876,True,True,True,0,0.32167303562164307,0.0032917873939699335,0.0032917873939699335,,,12.416723251342773,7
+motorcycle_5ab8604a14df,13971,3106221673654,left,7,blurred hand,motion_blurred,True,4,21,-27.003654,True,True,True,0,0.2950267493724823,0.0034003763542454018,0.0034003763542454018,0.0,1.4991681575775146,11.447906494140625,0
+motorcycle_5ab8604a14df,13971,3106221673654,right,9,mask propagated for too long,uncertain,False,0,0,-27.003654,True,True,True,0,0.2950267493724823,0.0034003763542454018,0.0034003763542454018,,,11.447906494140625,8
+motorcycle_5ab8604a14df,13972,3106288347478,left,7,blurred hand,motion_blurred,True,2,21,6.294522,True,True,True,0,0.30569732189178467,0.010693880175527002,0.0066262230200722265,0.22977292334531585,1.3552932739257812,10.905542373657227,0
+motorcycle_5ab8604a14df,13972,3106288347478,right,9,mask propagated for too long,uncertain,False,0,0,6.294522,True,True,True,0,0.30569732189178467,0.010693880175527002,0.0066262230200722265,,,10.905542373657227,9
+motorcycle_5ab8604a14df,13973,3106354989937,left,7,blurred hand,motion_blurred,True,1,21,39.652063,True,True,True,0,0.2568320035934448,0.0034774712354077434,0.0034774712354077434,0.0,2.4263718128204346,10.816770553588867,0
+motorcycle_5ab8604a14df,13973,3106354989937,right,9,mask propagated for too long,uncertain,False,0,0,39.652063,True,True,True,0,0.2568320035934448,0.0034774712354077434,0.0034774712354077434,,,10.816770553588867,10
+motorcycle_5ab8604a14df,13974,3106421537593,left,7,blurred hand,motion_blurred,True,1,21,-26.895593,True,True,True,0,0.29421496391296387,0.015627952569916857,0.015627952569916857,0.0,1.350056767463684,11.984041213989258,0
+motorcycle_5ab8604a14df,13974,3106421537593,right,9,mask propagated for too long,uncertain,False,0,0,-26.895593,True,True,True,0,0.29421496391296387,0.015627952569916857,0.015627952569916857,,,11.984041213989258,11
+motorcycle_5ab8604a14df,13975,3106488116936,left,5,tracking present but the hand is not visible in the RGB frame,out_of_frame,True,0,21,6.526064,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,13975,3106488116936,right,3,hand not visible and proxy absent,not_visible,False,0,0,6.526064,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,13976,3106554771956,left,5,tracking present but the hand is not visible in the RGB frame,out_of_frame,True,0,21,39.870044,True,True,True,0,0.29746994376182556,0.0134023709792559,0.009742168472327202,,,,0
+motorcycle_5ab8604a14df,13976,3106554771956,right,4,hand not visible but a false mask is present,uncertain,False,0,0,39.870044,True,True,True,0,0.29746994376182556,0.0134023709792559,0.009742168472327202,,,,1
+motorcycle_5ab8604a14df,13977,3106621534644,left,5,tracking present but the hand is not visible in the RGB frame,out_of_frame,True,0,21,-26.892644,True,True,True,0,0.32167303562164307,0.00677910052910053,0.0061180529310489624,,,,0
+motorcycle_5ab8604a14df,13977,3106621534644,right,4,hand not visible but a false mask is present,uncertain,False,0,0,-26.892644,True,True,True,0,0.32167303562164307,0.00677910052910053,0.0061180529310489624,,,,2
+motorcycle_5ab8604a14df,13978,3106688265749,left,5,tracking present but the hand is not visible in the RGB frame,out_of_frame,True,0,21,6.377251,True,True,True,0,0.332852303981781,0.04471207850424121,0.03394996115730243,,,,0
+motorcycle_5ab8604a14df,13978,3106688265749,right,4,hand not visible but a false mask is present,uncertain,False,0,0,6.377251,True,True,True,0,0.332852303981781,0.04471207850424121,0.03394996115730243,,,,3
+motorcycle_5ab8604a14df,13979,3106754939883,left,5,tracking present but the hand is not visible in the RGB frame,out_of_frame,True,0,21,39.702117,True,True,True,0,0.3729618787765503,0.04818987780297305,0.03681198559670782,,,,0
+motorcycle_5ab8604a14df,13979,3106754939883,right,4,hand not visible but a false mask is present,uncertain,False,0,0,39.702117,True,True,True,0,0.3729618787765503,0.04818987780297305,0.03681198559670782,,,,4
+motorcycle_5ab8604a14df,13980,3106821607759,left,5,tracking present but the hand is not visible in the RGB frame,out_of_frame,True,0,21,-26.965759,True,True,True,0,0.34510529041290283,0.049270518392542206,0.0344574751196775,,,,0
+motorcycle_5ab8604a14df,13980,3106821607759,right,4,hand not visible but a false mask is present,uncertain,False,0,0,-26.965759,True,True,True,0,0.34510529041290283,0.049270518392542206,0.0344574751196775,,,,5
+motorcycle_5ab8604a14df,13981,3106888275478,left,5,tracking present but the hand is not visible in the RGB frame,out_of_frame,True,0,21,6.369522,True,True,True,0,0.36206647753715515,0.01266160399344923,0.006616381120349375,,,,0
+motorcycle_5ab8604a14df,13981,3106888275478,right,4,hand not visible but a false mask is present,uncertain,False,0,0,6.369522,True,True,True,0,0.36206647753715515,0.01266160399344923,0.006616381120349375,,,,6
+motorcycle_5ab8604a14df,13982,3106954923884,left,5,tracking present but the hand is not visible in the RGB frame,out_of_frame,True,0,21,39.718116,True,True,True,0,0.3319854736328125,0.048875530150331734,0.03944764634248761,,,,0
+motorcycle_5ab8604a14df,13982,3106954923884,right,4,hand not visible but a false mask is present,uncertain,False,0,0,39.718116,True,True,True,0,0.3319854736328125,0.048875530150331734,0.03944764634248761,,,,7
+motorcycle_5ab8604a14df,13983,3107021522114,left,5,tracking present but the hand is not visible in the RGB frame,out_of_frame,True,0,21,-26.880114,True,True,True,0,0.34775856137275696,0.012361426051902243,0.007284318048206937,,,,0
+motorcycle_5ab8604a14df,13983,3107021522114,right,9,mask propagated for too long,uncertain,False,0,0,-26.880114,True,True,True,0,0.34775856137275696,0.012361426051902243,0.007284318048206937,,,,8
+motorcycle_5ab8604a14df,13984,3107088114374,left,5,tracking present but the hand is not visible in the RGB frame,out_of_frame,True,0,21,6.527626,True,True,True,0,0.2925952970981598,0.006681009595196103,0.006681009595196103,,,,0
+motorcycle_5ab8604a14df,13984,3107088114374,right,9,mask propagated for too long,uncertain,False,0,0,6.527626,True,True,True,0,0.2925952970981598,0.006681009595196103,0.006681009595196103,,,,9
+motorcycle_5ab8604a14df,13985,3107154737842,left,5,tracking present but the hand is not visible in the RGB frame,out_of_frame,True,0,21,39.916158,True,True,True,0,0.2628418207168579,0.005533116024187453,0.005533116024187453,,,,0
+motorcycle_5ab8604a14df,13985,3107154737842,right,9,mask propagated for too long,uncertain,False,0,0,39.916158,True,True,True,0,0.2628418207168579,0.005533116024187453,0.005533116024187453,,,,10
+motorcycle_5ab8604a14df,13986,3107221392676,left,5,tracking present but the hand is not visible in the RGB frame,out_of_frame,True,0,21,-26.738676,True,True,True,0,0.3302551507949829,0.010263133030990173,0.005764400667674478,,,,0
+motorcycle_5ab8604a14df,13986,3107221392676,right,9,mask propagated for too long,uncertain,False,0,0,-26.738676,True,True,True,0,0.3302551507949829,0.010263133030990173,0.005764400667674478,,,,11
+motorcycle_5ab8604a14df,13987,3107288142810,left,5,tracking present but the hand is not visible in the RGB frame,out_of_frame,True,0,21,6.50019,True,True,True,0,0.31153160333633423,0.0633910199882422,0.034667435647098344,,,,0
+motorcycle_5ab8604a14df,13987,3107288142810,right,9,mask propagated for too long,uncertain,False,0,0,6.50019,True,True,True,0,0.31153160333633423,0.0633910199882422,0.034667435647098344,,,,12
+motorcycle_5ab8604a14df,13988,3107354911832,left,5,tracking present but the hand is not visible in the RGB frame,out_of_frame,True,0,21,39.731168,True,True,True,0,0.2658804655075073,0.004520056479381876,0.004520056479381876,,,,0
+motorcycle_5ab8604a14df,13988,3107354911832,right,9,mask propagated for too long,uncertain,False,0,0,39.731168,True,True,True,0,0.2658804655075073,0.004520056479381876,0.004520056479381876,,,,13
+motorcycle_5ab8604a14df,13989,3107421579176,left,5,tracking present but the hand is not visible in the RGB frame,out_of_frame,True,0,21,-26.936176,True,True,True,0,0.25091278553009033,0.004474783740656757,0.004474783740656757,,,,0
+motorcycle_5ab8604a14df,13989,3107421579176,right,9,mask propagated for too long,uncertain,False,0,0,-26.936176,True,True,True,0,0.25091278553009033,0.004474783740656757,0.004474783740656757,,,,14
+motorcycle_5ab8604a14df,13990,3107488240998,left,5,tracking present but the hand is not visible in the RGB frame,out_of_frame,True,0,21,6.404002,True,True,True,0,0.27125170826911926,0.0010639093600403125,0.0010639093600403125,,,,0
+motorcycle_5ab8604a14df,13990,3107488240998,right,9,mask propagated for too long,uncertain,False,0,0,6.404002,True,True,True,0,0.27125170826911926,0.0010639093600403125,0.0010639093600403125,,,,15
+motorcycle_5ab8604a14df,13991,3107554870801,left,5,tracking present but the hand is not visible in the RGB frame,out_of_frame,True,0,21,39.773199,True,True,True,0,0.3132096529006958,0.016882466721256404,0.014955750818846057,,,,0
+motorcycle_5ab8604a14df,13991,3107554870801,right,9,mask propagated for too long,uncertain,False,0,0,39.773199,True,True,True,0,0.3132096529006958,0.016882466721256404,0.014955750818846057,,,,16
+motorcycle_5ab8604a14df,13992,3107621449717,left,5,tracking present but the hand is not visible in the RGB frame,out_of_frame,True,0,21,-26.805717,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,13992,3107621449717,right,3,hand not visible and proxy absent,not_visible,False,0,0,-26.805717,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,13993,3107688003904,left,5,tracking present but the hand is not visible in the RGB frame,out_of_frame,True,0,21,6.639096,True,True,True,0,0.33895185589790344,0.025796931426891746,0.01799755395985555,,,,0
+motorcycle_5ab8604a14df,13993,3107688003904,right,4,hand not visible but a false mask is present,uncertain,False,0,0,6.639096,True,True,True,0,0.33895185589790344,0.025796931426891746,0.01799755395985555,,,,1
+motorcycle_5ab8604a14df,13994,3107754640218,left,5,tracking present but the hand is not visible in the RGB frame,out_of_frame,True,0,21,40.001782,True,True,True,0,0.31742626428604126,0.006441195305282607,0.004346839044259679,,,,0
+motorcycle_5ab8604a14df,13994,3107754640218,right,4,hand not visible but a false mask is present,uncertain,False,0,0,40.001782,True,True,True,0,0.31742626428604126,0.006441195305282607,0.004346839044259679,,,,2
+motorcycle_5ab8604a14df,13995,3107821352123,left,5,tracking present but the hand is not visible in the RGB frame,out_of_frame,True,0,21,-26.710123,True,True,True,1,0.3073579967021942,0.007634361615016377,0.005454708889728731,,,,0
+motorcycle_5ab8604a14df,13995,3107821352123,right,4,hand not visible but a false mask is present,uncertain,False,0,0,-26.710123,True,True,True,1,0.3073579967021942,0.007634361615016377,0.005454708889728731,,,,3
+motorcycle_5ab8604a14df,13996,3107888089415,left,5,tracking present but the hand is not visible in the RGB frame,out_of_frame,True,0,21,6.563585,True,True,True,0,0.3225259780883789,0.04852023757033678,0.03202718201478122,,,,0
+motorcycle_5ab8604a14df,13996,3107888089415,right,4,hand not visible but a false mask is present,uncertain,False,0,0,6.563585,True,True,True,0,0.3225259780883789,0.04852023757033678,0.03202718201478122,,,,4
+motorcycle_5ab8604a14df,13997,3107954776103,left,5,tracking present but the hand is not visible in the RGB frame,out_of_frame,True,0,21,39.865897,True,True,True,0,0.31153160333633423,0.04836145492147476,0.03277746283698665,,,,0
+motorcycle_5ab8604a14df,13997,3107954776103,right,4,hand not visible but a false mask is present,uncertain,False,0,0,39.865897,True,True,True,0,0.31153160333633423,0.04836145492147476,0.03277746283698665,,,,5
+motorcycle_5ab8604a14df,13998,3108021431321,left,5,tracking present but the hand is not visible in the RGB frame,out_of_frame,True,0,21,-26.789321,True,True,True,0,0.33111974596977234,0.04158137020240195,0.030066019463340893,,,,0
+motorcycle_5ab8604a14df,13998,3108021431321,right,4,hand not visible but a false mask is present,uncertain,False,0,0,-26.789321,True,True,True,0,0.33111974596977234,0.04158137020240195,0.030066019463340893,,,,6
+motorcycle_5ab8604a14df,13999,3108088079728,left,5,tracking present but the hand is not visible in the RGB frame,out_of_frame,True,0,21,6.564272,True,True,True,0,0.27904197573661804,0.036010526895943556,0.027404769778281685,,,,0
+motorcycle_5ab8604a14df,13999,3108088079728,right,4,hand not visible but a false mask is present,uncertain,False,0,0,6.564272,True,True,True,0,0.27904197573661804,0.036010526895943556,0.027404769778281685,,,,7
+motorcycle_5ab8604a14df,14000,3108154715873,left,5,tracking present but the hand is not visible in the RGB frame,out_of_frame,True,0,21,39.927127,True,True,True,0,0.32338011264801025,0.04651642678676409,0.02910315360712186,,,,0
+motorcycle_5ab8604a14df,14000,3108154715873,right,9,mask propagated for too long,uncertain,False,0,0,39.927127,True,True,True,0,0.32338011264801025,0.04651642678676409,0.02910315360712186,,,,8
+motorcycle_5ab8604a14df,14001,3108221339708,left,5,tracking present but the hand is not visible in the RGB frame,out_of_frame,True,0,21,-26.696708,True,True,True,0,0.29665425419807434,0.02641139403292181,0.019298653103216594,,,,0
+motorcycle_5ab8604a14df,14001,3108221339708,right,9,mask propagated for too long,uncertain,False,0,0,-26.696708,True,True,True,0,0.29665425419807434,0.02641139403292181,0.019298653103216594,,,,9
+motorcycle_5ab8604a14df,14002,3108287962936,left,5,tracking present but the hand is not visible in the RGB frame,out_of_frame,True,0,21,6.680064,True,True,True,0,0.35667070746421814,0.019610641324431004,0.014043406714537666,,,,0
+motorcycle_5ab8604a14df,14002,3108287962936,right,9,mask propagated for too long,uncertain,False,0,0,6.680064,True,True,True,0,0.35667070746421814,0.019610641324431004,0.014043406714537666,,,,10
+motorcycle_5ab8604a14df,14003,3108354605269,left,5,tracking present but the hand is not visible in the RGB frame,out_of_frame,True,0,21,40.037731,True,True,True,0,0.34334173798561096,0.005810657596371882,0.003980720374569581,,,,0
+motorcycle_5ab8604a14df,14003,3108354605269,right,9,mask propagated for too long,uncertain,False,0,0,40.037731,True,True,True,0,0.34334173798561096,0.005810657596371882,0.003980720374569581,,,,11
+motorcycle_5ab8604a14df,14004,3108421292228,left,5,tracking present but the hand is not visible in the RGB frame,out_of_frame,True,0,21,-26.649228,True,True,True,0,0.32766830921173096,0.007638298374905518,0.00428089831611657,,,,0
+motorcycle_5ab8604a14df,14004,3108421292228,right,9,mask propagated for too long,uncertain,False,0,0,-26.649228,True,True,True,0,0.32766830921173096,0.007638298374905518,0.00428089831611657,,,,12
+motorcycle_5ab8604a14df,14005,3108487978946,left,5,tracking present but the hand is not visible in the RGB frame,out_of_frame,True,0,21,6.663054,True,True,True,0,0.29992473125457764,0.03338339579659024,0.024706448937599733,,,,0
+motorcycle_5ab8604a14df,14005,3108487978946,right,9,mask propagated for too long,uncertain,False,0,0,6.663054,True,True,True,0,0.29992473125457764,0.03338339579659024,0.024706448937599733,,,,13
+motorcycle_5ab8604a14df,14006,3108554665821,left,5,tracking present but the hand is not visible in the RGB frame,out_of_frame,True,0,21,39.979179,True,True,True,0,0.2727987766265869,0.039410575186864874,0.025900599437305785,,,,0
+motorcycle_5ab8604a14df,14006,3108554665821,right,9,mask propagated for too long,uncertain,False,0,0,39.979179,True,True,True,0,0.2727987766265869,0.039410575186864874,0.025900599437305785,,,,14
+motorcycle_5ab8604a14df,14007,3108621346145,left,5,tracking present but the hand is not visible in the RGB frame,out_of_frame,True,0,21,-26.701145,True,True,True,0,0.30985841155052185,0.028792149575879736,0.02507650436717897,,,,0
+motorcycle_5ab8604a14df,14007,3108621346145,right,9,mask propagated for too long,uncertain,False,0,0,-26.701145,True,True,True,0,0.30985841155052185,0.028792149575879736,0.02507650436717897,,,,15
+motorcycle_5ab8604a14df,14008,3108687988602,left,5,tracking present but the hand is not visible in the RGB frame,out_of_frame,True,0,21,6.654398,True,True,True,0,0.3259495198726654,0.032598012198706644,0.020382902389350803,,,,0
+motorcycle_5ab8604a14df,14008,3108687988602,right,9,mask propagated for too long,uncertain,False,0,0,6.654398,True,True,True,0,0.3259495198726654,0.032598012198706644,0.020382902389350803,,,,16
+motorcycle_5ab8604a14df,14009,3108754650009,left,5,tracking present but the hand is not visible in the RGB frame,out_of_frame,True,0,21,39.991991,True,True,True,0,0.2991051971912384,0.06668051093894348,0.038260385172587556,,,,0
+motorcycle_5ab8604a14df,14009,3108754650009,right,9,mask propagated for too long,uncertain,False,0,0,39.991991,True,True,True,0,0.2991051971912384,0.06668051093894348,0.038260385172587556,,,,17
+motorcycle_5ab8604a14df,14010,3108821248238,left,5,tracking present but the hand is not visible in the RGB frame,out_of_frame,True,0,21,-26.606238,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14010,3108821248238,right,3,hand not visible and proxy absent,not_visible,False,0,0,-26.606238,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14011,3108887890572,left,5,tracking present but the hand is not visible in the RGB frame,out_of_frame,True,0,21,6.761428,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14011,3108887890572,right,3,hand not visible and proxy absent,not_visible,False,0,0,6.761428,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14012,3108954564873,left,5,tracking present but the hand is not visible in the RGB frame,out_of_frame,True,0,21,40.078127,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14012,3108954564873,right,3,hand not visible and proxy absent,not_visible,False,0,0,40.078127,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14013,3109021257593,left,5,tracking present but the hand is not visible in the RGB frame,out_of_frame,True,0,21,-26.614593,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14013,3109021257593,right,3,hand not visible and proxy absent,not_visible,False,0,0,-26.614593,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14014,3109087982383,left,5,tracking present but the hand is not visible in the RGB frame,out_of_frame,True,0,21,6.674617,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14014,3109087982383,right,3,hand not visible and proxy absent,not_visible,False,0,0,6.674617,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14015,3109154681676,left,5,tracking present but the hand is not visible in the RGB frame,out_of_frame,True,0,21,39.960324,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14015,3109154681676,right,3,hand not visible and proxy absent,not_visible,False,0,0,39.960324,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14016,3109221343052,left,5,tracking present but the hand is not visible in the RGB frame,out_of_frame,True,0,21,-26.701052,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14016,3109221343052,right,3,hand not visible and proxy absent,not_visible,False,0,0,-26.701052,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14017,3109287972853,left,5,tracking present but the hand is not visible in the RGB frame,out_of_frame,True,0,21,6.669147,True,True,True,0,0.3182732164859772,0.04259311749391115,0.04259311749391115,,,,0
+motorcycle_5ab8604a14df,14017,3109287972853,right,4,hand not visible but a false mask is present,uncertain,False,0,0,6.669147,True,True,True,0,0.3182732164859772,0.04259311749391115,0.04259311749391115,,,,1
+motorcycle_5ab8604a14df,14018,3109354539612,left,5,tracking present but the hand is not visible in the RGB frame,out_of_frame,True,0,21,40.103388,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14018,3109354539612,right,3,hand not visible and proxy absent,not_visible,False,0,0,40.103388,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14019,3109421125114,left,5,tracking present but the hand is not visible in the RGB frame,out_of_frame,True,0,21,-26.482114,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14019,3109421125114,right,3,hand not visible and proxy absent,not_visible,False,0,0,-26.482114,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14020,3109487723613,left,5,tracking present but the hand is not visible in the RGB frame,out_of_frame,True,0,21,6.918387,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14020,3109487723613,right,3,hand not visible and proxy absent,not_visible,False,0,0,6.918387,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14021,3109554397446,left,5,tracking present but the hand is not visible in the RGB frame,out_of_frame,True,0,21,40.246554,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14021,3109554397446,right,3,hand not visible and proxy absent,not_visible,False,0,0,40.246554,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14022,3109621122322,left,5,tracking present but the hand is not visible in the RGB frame,out_of_frame,True,0,21,-26.478322,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14022,3109621122322,right,3,hand not visible and proxy absent,not_visible,False,0,0,-26.478322,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14023,3109687878530,left,5,tracking present but the hand is not visible in the RGB frame,out_of_frame,True,0,21,6.76247,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14023,3109687878530,right,3,hand not visible and proxy absent,not_visible,False,0,0,6.76247,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14024,3109754571477,left,5,tracking present but the hand is not visible in the RGB frame,out_of_frame,True,0,21,40.071523,True,True,True,0,0.2628418207168579,0.0015891387419165197,0.0015891387419165197,,,,0
+motorcycle_5ab8604a14df,14024,3109754571477,right,4,hand not visible but a false mask is present,uncertain,False,0,0,40.071523,True,True,True,0,0.2628418207168579,0.0015891387419165197,0.0015891387419165197,,,,1
+motorcycle_5ab8604a14df,14025,3109821226353,left,5,tracking present but the hand is not visible in the RGB frame,out_of_frame,True,0,21,-26.583353,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14025,3109821226353,right,3,hand not visible and proxy absent,not_visible,False,0,0,-26.583353,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14026,3109887830841,left,5,tracking present but the hand is not visible in the RGB frame,out_of_frame,True,0,21,6.812159,True,True,True,0,0.2958398759365082,0.047818838183421516,0.047818838183421516,,,,0
+motorcycle_5ab8604a14df,14026,3109887830841,right,4,hand not visible but a false mask is present,uncertain,False,0,0,6.812159,True,True,True,0,0.2958398759365082,0.047818838183421516,0.047818838183421516,,,,1
+motorcycle_5ab8604a14df,14027,3109954397499,left,5,tracking present but the hand is not visible in the RGB frame,out_of_frame,True,0,21,40.244501,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14027,3109954397499,right,3,hand not visible and proxy absent,not_visible,False,0,0,40.244501,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14028,3110021002103,left,5,tracking present but the hand is not visible in the RGB frame,out_of_frame,True,0,21,-26.360103,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14028,3110021002103,right,3,hand not visible and proxy absent,not_visible,False,0,0,-26.360103,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14029,3110087632019,left,5,tracking present but the hand is not visible in the RGB frame,out_of_frame,True,0,21,7.009981,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14029,3110087632019,right,3,hand not visible and proxy absent,not_visible,False,0,0,7.009981,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14030,3110154312166,left,5,tracking present but the hand is not visible in the RGB frame,out_of_frame,True,0,21,40.329834,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14030,3110154312166,right,3,hand not visible and proxy absent,not_visible,False,0,0,40.329834,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14031,3110221011883,left,5,tracking present but the hand is not visible in the RGB frame,out_of_frame,True,0,21,-26.369883,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14031,3110221011883,right,3,hand not visible and proxy absent,not_visible,False,0,0,-26.369883,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14032,3110287723571,left,5,tracking present but the hand is not visible in the RGB frame,out_of_frame,True,0,21,6.920429,True,True,True,0,0.3302551507949829,0.0014621782354917276,0.0014621782354917276,,,,0
+motorcycle_5ab8604a14df,14032,3110287723571,right,4,hand not visible but a false mask is present,uncertain,False,0,0,6.920429,True,True,True,0,0.3302551507949829,0.0014621782354917276,0.0014621782354917276,,,,1
+motorcycle_5ab8604a14df,14033,3110354404051,left,5,tracking present but the hand is not visible in the RGB frame,out_of_frame,True,0,21,40.238949,True,True,True,0,0.3486451208591461,0.021504878957755942,0.019816665091962712,,,,0
+motorcycle_5ab8604a14df,14033,3110354404051,right,4,hand not visible but a false mask is present,uncertain,False,0,0,40.238949,True,True,True,0,0.3486451208591461,0.021504878957755942,0.019816665091962712,,,,2
+motorcycle_5ab8604a14df,14034,3110421065769,left,5,tracking present but the hand is not visible in the RGB frame,out_of_frame,True,0,21,-26.422769,True,True,True,0,0.28219619393348694,0.0491376527462837,0.0491376527462837,,,,0
+motorcycle_5ab8604a14df,14034,3110421065769,right,4,hand not visible but a false mask is present,uncertain,False,0,0,-26.422769,True,True,True,0,0.28219619393348694,0.0491376527462837,0.0491376527462837,,,,3
+motorcycle_5ab8604a14df,14035,3110487650999,left,5,tracking present but the hand is not visible in the RGB frame,out_of_frame,True,0,21,6.993001,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14035,3110487650999,right,3,hand not visible and proxy absent,not_visible,False,0,0,6.993001,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14036,3110554230603,left,5,tracking present but the hand is not visible in the RGB frame,out_of_frame,True,0,21,40.411397,True,True,True,0,0.2925952970981598,0.004040427899554884,0.004040427899554884,,,,0
+motorcycle_5ab8604a14df,14036,3110554230603,right,4,hand not visible but a false mask is present,uncertain,False,0,0,40.411397,True,True,True,0,0.2925952970981598,0.004040427899554884,0.004040427899554884,,,,1
+motorcycle_5ab8604a14df,14037,3110620847415,left,5,tracking present but the hand is not visible in the RGB frame,out_of_frame,True,0,21,-26.205415,True,True,True,0,0.29098087549209595,0.00427827380952381,0.00427827380952381,,,,0
+motorcycle_5ab8604a14df,14037,3110620847415,right,4,hand not visible but a false mask is present,uncertain,False,0,0,-26.205415,True,True,True,0,0.29098087549209595,0.00427827380952381,0.00427827380952381,,,,2
+motorcycle_5ab8604a14df,14038,3110687559822,left,5,tracking present but the hand is not visible in the RGB frame,out_of_frame,True,0,21,7.082178,True,True,True,0,0.34334173798561096,0.011089196481061561,0.0045456454186612915,,,,0
+motorcycle_5ab8604a14df,14038,3110687559822,right,4,hand not visible but a false mask is present,uncertain,False,0,0,7.082178,True,True,True,0,0.34334173798561096,0.011089196481061561,0.0045456454186612915,,,,3
+motorcycle_5ab8604a14df,14039,3110754309768,left,5,tracking present but the hand is not visible in the RGB frame,out_of_frame,True,0,21,40.331232,True,True,True,0,0.35042136907577515,0.031206039514571262,0.027160362601830856,,,,0
+motorcycle_5ab8604a14df,14039,3110754309768,right,4,hand not visible but a false mask is present,uncertain,False,0,0,40.331232,True,True,True,0,0.35042136907577515,0.031206039514571262,0.027160362601830856,,,,4
+motorcycle_5ab8604a14df,14040,3110821027873,left,5,tracking present but the hand is not visible in the RGB frame,out_of_frame,True,0,21,-26.386873,True,True,True,0,0.35398629307746887,0.042256852586713696,0.027447418010414042,,,,0
+motorcycle_5ab8604a14df,14040,3110821027873,right,4,hand not visible but a false mask is present,uncertain,False,0,0,-26.386873,True,True,True,0,0.35398629307746887,0.042256852586713696,0.027447418010414042,,,,5
+motorcycle_5ab8604a14df,14041,3110887714665,left,5,tracking present but the hand is not visible in the RGB frame,out_of_frame,True,0,21,6.928335,True,True,True,0,0.33895185589790344,0.006254855337196608,0.0044918430335097,,,,0
+motorcycle_5ab8604a14df,14041,3110887714665,right,4,hand not visible but a false mask is present,uncertain,False,0,0,6.928335,True,True,True,0,0.33895185589790344,0.006254855337196608,0.0044918430335097,,,,6
+motorcycle_5ab8604a14df,14042,3110954338071,left,5,tracking present but the hand is not visible in the RGB frame,out_of_frame,True,0,21,40.303929,True,True,True,0,0.270480215549469,0.03883187148316117,0.03883187148316117,,,,0
+motorcycle_5ab8604a14df,14042,3110954338071,right,4,hand not visible but a false mask is present,uncertain,False,0,0,40.303929,True,True,True,0,0.270480215549469,0.03883187148316117,0.03883187148316117,,,,7
+motorcycle_5ab8604a14df,14043,3111020923645,left,5,tracking present but the hand is not visible in the RGB frame,out_of_frame,True,0,21,-26.281645,True,True,True,0,0.29746994376182556,0.0039147796464264716,0.0039147796464264716,,,,0
+motorcycle_5ab8604a14df,14043,3111020923645,right,9,mask propagated for too long,uncertain,False,0,0,-26.281645,True,True,True,0,0.29746994376182556,0.0039147796464264716,0.0039147796464264716,,,,8
+motorcycle_5ab8604a14df,14044,3111087509300,left,5,tracking present but the hand is not visible in the RGB frame,out_of_frame,True,0,21,7.1337,True,True,True,0,0.314050555229187,0.003946929852187788,0.003946929852187788,,,,0
+motorcycle_5ab8604a14df,14044,3111087509300,right,9,mask propagated for too long,uncertain,False,0,0,7.1337,True,True,True,0,0.314050555229187,0.003946929852187788,0.003946929852187788,,,,9
+motorcycle_5ab8604a14df,14045,3111154126560,left,5,tracking present but the hand is not visible in the RGB frame,out_of_frame,True,0,21,40.51544,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14045,3111154126560,right,3,hand not visible and proxy absent,not_visible,False,0,0,40.51544,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14046,3111220813207,left,5,tracking present but the hand is not visible in the RGB frame,out_of_frame,True,0,21,-26.171207,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14046,3111220813207,right,3,hand not visible and proxy absent,not_visible,False,0,0,-26.171207,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14047,3111287563000,left,5,tracking present but the hand is not visible in the RGB frame,out_of_frame,True,0,21,7.088,True,True,True,0,0.31489261984825134,0.004700491307634165,0.002487704186612917,,,,0
+motorcycle_5ab8604a14df,14047,3111287563000,right,4,hand not visible but a false mask is present,uncertain,False,0,0,7.088,True,True,True,0,0.31489261984825134,0.004700491307634165,0.002487704186612917,,,,1
+motorcycle_5ab8604a14df,14048,3111354300206,left,5,tracking present but the hand is not visible in the RGB frame,out_of_frame,True,0,21,40.346794,True,True,True,0,0.29828691482543945,0.004915372784916436,0.004915372784916436,,,,0
+motorcycle_5ab8604a14df,14048,3111354300206,right,4,hand not visible but a false mask is present,uncertain,False,0,0,40.346794,True,True,True,0,0.29828691482543945,0.004915372784916436,0.004915372784916436,,,,2
+motorcycle_5ab8604a14df,14049,3111421031071,left,5,tracking present but the hand is not visible in the RGB frame,out_of_frame,True,0,21,-26.384071,True,True,True,0,0.3242354094982147,0.015399948559670782,0.015399948559670782,,,,0
+motorcycle_5ab8604a14df,14049,3111421031071,right,4,hand not visible but a false mask is present,uncertain,False,0,0,-26.384071,True,True,True,0,0.3242354094982147,0.015399948559670782,0.015399948559670782,,,,3
+motorcycle_5ab8604a14df,14050,3111487680103,left,5,tracking present but the hand is not visible in the RGB frame,out_of_frame,True,0,21,6.961897,True,True,True,0,0.2782568037509918,0.018678285357352817,0.016222731376501216,,,,0
+motorcycle_5ab8604a14df,14050,3111487680103,right,4,hand not visible but a false mask is present,uncertain,False,0,0,6.961897,True,True,True,0,0.2782568037509918,0.018678285357352817,0.016222731376501216,,,,4
+motorcycle_5ab8604a14df,14051,3111554316008,left,5,tracking present but the hand is not visible in the RGB frame,out_of_frame,True,0,21,40.326992,True,True,True,0,0.29828691482543945,0.039082183799445704,0.039082183799445704,,,,0
+motorcycle_5ab8604a14df,14051,3111554316008,right,4,hand not visible but a false mask is present,uncertain,False,0,0,40.326992,True,True,True,0,0.29828691482543945,0.039082183799445704,0.039082183799445704,,,,5
+motorcycle_5ab8604a14df,14052,3111620876322,left,5,tracking present but the hand is not visible in the RGB frame,out_of_frame,True,0,21,-26.233322,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14052,3111620876322,right,3,hand not visible and proxy absent,not_visible,False,0,0,-26.233322,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14053,3111687500238,left,5,tracking present but the hand is not visible in the RGB frame,out_of_frame,True,0,21,7.140762,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14053,3111687500238,right,3,hand not visible and proxy absent,not_visible,False,0,0,7.140762,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14054,3111754205644,left,5,tracking present but the hand is not visible in the RGB frame,out_of_frame,True,0,21,40.435356,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14054,3111754205644,right,3,hand not visible and proxy absent,not_visible,False,0,0,40.435356,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14055,3111820968248,left,5,tracking present but the hand is not visible in the RGB frame,out_of_frame,True,0,21,-26.327248,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14055,3111820968248,right,3,hand not visible and proxy absent,not_visible,False,0,0,-26.327248,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14056,3111887705613,left,5,tracking present but the hand is not visible in the RGB frame,out_of_frame,True,0,21,6.936387,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14056,3111887705613,right,3,hand not visible and proxy absent,not_visible,False,0,0,6.936387,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14057,3111954379906,left,5,tracking present but the hand is not visible in the RGB frame,out_of_frame,True,0,21,40.267094,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14057,3111954379906,right,3,hand not visible and proxy absent,not_visible,False,0,0,40.267094,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14058,3112021028623,left,5,tracking present but the hand is not visible in the RGB frame,out_of_frame,True,0,21,-26.381623,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14058,3112021028623,right,3,hand not visible and proxy absent,not_visible,False,0,0,-26.381623,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14059,3112087651770,left,5,tracking present but the hand is not visible in the RGB frame,out_of_frame,True,0,21,6.99023,True,True,True,0,0.2568320035934448,0.011371659003107416,0.011371659003107416,,,,0
+motorcycle_5ab8604a14df,14059,3112087651770,right,4,hand not visible but a false mask is present,uncertain,False,0,0,6.99023,True,True,True,0,0.2568320035934448,0.011371659003107416,0.011371659003107416,,,,1
+motorcycle_5ab8604a14df,14060,3112154250342,left,5,tracking present but the hand is not visible in the RGB frame,out_of_frame,True,0,21,40.391658,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14060,3112154250342,right,3,hand not visible and proxy absent,not_visible,False,0,0,40.391658,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14061,3112220848602,left,5,tracking present but the hand is not visible in the RGB frame,out_of_frame,True,0,21,-26.206602,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14061,3112220848602,right,3,hand not visible and proxy absent,not_visible,False,0,0,-26.206602,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14062,3112287497333,left,5,tracking present but the hand is not visible in the RGB frame,out_of_frame,True,0,21,7.157667,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14062,3112287497333,right,3,hand not visible and proxy absent,not_visible,False,0,0,7.157667,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14063,3112354228154,left,5,tracking present but the hand is not visible in the RGB frame,out_of_frame,True,0,21,40.412846,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14063,3112354228154,right,3,hand not visible and proxy absent,not_visible,False,0,0,40.412846,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14064,3112420971759,left,5,tracking present but the hand is not visible in the RGB frame,out_of_frame,True,0,21,-26.330759,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14064,3112420971759,right,3,hand not visible and proxy absent,not_visible,False,0,0,-26.330759,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14065,3112487671207,left,5,tracking present but the hand is not visible in the RGB frame,out_of_frame,True,0,21,6.971793,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14065,3112487671207,right,3,hand not visible and proxy absent,not_visible,False,0,0,6.971793,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14066,3112554338685,left,5,tracking present but the hand is not visible in the RGB frame,out_of_frame,True,0,21,40.306315,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14066,3112554338685,right,3,hand not visible and proxy absent,not_visible,False,0,0,40.306315,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14067,3112620975145,left,5,tracking present but the hand is not visible in the RGB frame,out_of_frame,True,0,21,-26.330145,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14067,3112620975145,right,3,hand not visible and proxy absent,not_visible,False,0,0,-26.330145,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14068,3112687585977,left,5,tracking present but the hand is not visible in the RGB frame,out_of_frame,True,0,21,7.056023,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14068,3112687585977,right,3,hand not visible and proxy absent,not_visible,False,0,0,7.056023,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14069,3112754196551,left,5,tracking present but the hand is not visible in the RGB frame,out_of_frame,True,0,21,40.446449,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14069,3112754196551,right,3,hand not visible and proxy absent,not_visible,False,0,0,40.446449,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14070,3112820782155,left,5,tracking present but the hand is not visible in the RGB frame,out_of_frame,True,0,21,-26.139155,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14070,3112820782155,right,3,hand not visible and proxy absent,not_visible,False,0,0,-26.139155,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14071,3112887437383,left,5,tracking present but the hand is not visible in the RGB frame,out_of_frame,True,0,21,7.204617,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14071,3112887437383,right,3,hand not visible and proxy absent,not_visible,False,0,0,7.204617,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14072,3112954168259,left,5,tracking present but the hand is not visible in the RGB frame,out_of_frame,True,0,21,40.486741,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14072,3112954168259,right,3,hand not visible and proxy absent,not_visible,False,0,0,40.486741,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14073,3113020886551,left,5,tracking present but the hand is not visible in the RGB frame,out_of_frame,True,0,21,-26.231551,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14073,3113020886551,right,3,hand not visible and proxy absent,not_visible,False,0,0,-26.231551,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14074,3113087585842,left,5,tracking present but the hand is not visible in the RGB frame,out_of_frame,True,0,21,7.057158,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14074,3113087585842,right,3,hand not visible and proxy absent,not_visible,False,0,0,7.057158,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14075,3113154247718,left,5,tracking present but the hand is not visible in the RGB frame,out_of_frame,True,0,21,40.396282,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14075,3113154247718,right,3,hand not visible and proxy absent,not_visible,False,0,0,40.396282,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14076,3113220890123,left,5,tracking present but the hand is not visible in the RGB frame,out_of_frame,True,0,21,-26.246123,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14076,3113220890123,right,3,hand not visible and proxy absent,not_visible,False,0,0,-26.246123,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14077,3113287551582,left,5,tracking present but the hand is not visible in the RGB frame,out_of_frame,True,0,21,7.090418,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14077,3113287551582,right,3,hand not visible and proxy absent,not_visible,False,0,0,7.090418,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14078,3113354175071,left,5,tracking present but the hand is not visible in the RGB frame,out_of_frame,True,0,21,40.477929,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14078,3113354175071,right,3,hand not visible and proxy absent,not_visible,False,0,0,40.477929,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14079,3113420779645,left,5,tracking present but the hand is not visible in the RGB frame,out_of_frame,True,0,21,-26.126645,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14079,3113420779645,right,3,hand not visible and proxy absent,not_visible,False,0,0,-26.126645,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14080,3113487402665,left,5,tracking present but the hand is not visible in the RGB frame,out_of_frame,True,0,21,7.239335,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14080,3113487402665,right,3,hand not visible and proxy absent,not_visible,False,0,0,7.239335,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14081,3113554076812,left,5,tracking present but the hand is not visible in the RGB frame,out_of_frame,True,0,21,40.566188,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14081,3113554076812,right,3,hand not visible and proxy absent,not_visible,False,0,0,40.566188,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14082,3113620801842,left,5,tracking present but the hand is not visible in the RGB frame,out_of_frame,True,0,21,-26.158842,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14082,3113620801842,right,3,hand not visible and proxy absent,not_visible,False,0,0,-26.158842,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14083,3113687513634,left,5,tracking present but the hand is not visible in the RGB frame,out_of_frame,True,0,21,7.129366,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14083,3113687513634,right,3,hand not visible and proxy absent,not_visible,False,0,0,7.129366,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14084,3113754162352,left,5,tracking present but the hand is not visible in the RGB frame,out_of_frame,True,0,21,40.479648,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14084,3113754162352,right,3,hand not visible and proxy absent,not_visible,False,0,0,40.479648,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14085,3113820811259,left,5,tracking present but the hand is not visible in the RGB frame,out_of_frame,True,0,21,-26.169259,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14085,3113820811259,right,3,hand not visible and proxy absent,not_visible,False,0,0,-26.169259,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14086,3113887472718,left,5,tracking present but the hand is not visible in the RGB frame,out_of_frame,True,0,21,7.169282,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14086,3113887472718,right,3,hand not visible and proxy absent,not_visible,False,0,0,7.169282,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14087,3113954121467,left,5,tracking present but the hand is not visible in the RGB frame,out_of_frame,True,0,21,40.519533,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14087,3113954121467,right,3,hand not visible and proxy absent,not_visible,False,0,0,40.519533,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14088,3114020738352,left,5,tracking present but the hand is not visible in the RGB frame,out_of_frame,True,0,21,-26.097352,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14088,3114020738352,right,3,hand not visible and proxy absent,not_visible,False,0,0,-26.097352,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14089,3114087349374,left,5,tracking present but the hand is not visible in the RGB frame,out_of_frame,True,0,21,7.292626,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14089,3114087349374,right,3,hand not visible and proxy absent,not_visible,False,0,0,7.292626,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14090,3114153998258,left,5,tracking present but the hand is not visible in the RGB frame,out_of_frame,True,0,21,40.644742,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14090,3114153998258,right,3,hand not visible and proxy absent,not_visible,False,0,0,40.644742,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14091,3114220684666,left,5,tracking present but the hand is not visible in the RGB frame,out_of_frame,True,0,21,-26.041666,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14091,3114220684666,right,3,hand not visible and proxy absent,not_visible,False,0,0,-26.041666,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14092,3114287421956,left,5,tracking present but the hand is not visible in the RGB frame,out_of_frame,True,0,21,7.226044,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14092,3114287421956,right,3,hand not visible and proxy absent,not_visible,False,0,0,7.226044,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14093,3114354134404,left,5,tracking present but the hand is not visible in the RGB frame,out_of_frame,True,0,21,40.507596,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14093,3114354134404,right,3,hand not visible and proxy absent,not_visible,False,0,0,40.507596,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14094,3114420814593,left,5,tracking present but the hand is not visible in the RGB frame,out_of_frame,True,0,21,-26.172593,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14094,3114420814593,right,3,hand not visible and proxy absent,not_visible,False,0,0,-26.172593,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14095,3114487469810,left,5,tracking present but the hand is not visible in the RGB frame,out_of_frame,True,0,21,7.17419,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14095,3114487469810,right,3,hand not visible and proxy absent,not_visible,False,0,0,7.17419,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14096,3114554118718,left,5,tracking present but the hand is not visible in the RGB frame,out_of_frame,True,0,21,40.522282,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14096,3114554118718,right,3,hand not visible and proxy absent,not_visible,False,0,0,40.522282,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14097,3114620742206,left,5,tracking present but the hand is not visible in the RGB frame,out_of_frame,True,0,21,-26.101206,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14097,3114620742206,right,3,hand not visible and proxy absent,not_visible,False,0,0,-26.101206,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14098,3114687359436,left,5,tracking present but the hand is not visible in the RGB frame,out_of_frame,True,0,21,7.303564,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14098,3114687359436,right,3,hand not visible and proxy absent,not_visible,False,0,0,7.303564,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14099,3114753976509,left,5,tracking present but the hand is not visible in the RGB frame,out_of_frame,True,0,21,40.665491,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14099,3114753976509,right,3,hand not visible and proxy absent,not_visible,False,0,0,40.665491,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14100,3114820637999,left,5,tracking present but the hand is not visible in the RGB frame,out_of_frame,True,0,21,-25.995999,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14100,3114820637999,right,3,hand not visible and proxy absent,not_visible,False,0,0,-25.995999,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14101,3114887318405,left,5,tracking present but the hand is not visible in the RGB frame,out_of_frame,True,0,21,7.337595,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14101,3114887318405,right,3,hand not visible and proxy absent,not_visible,False,0,0,7.337595,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14102,3114954030437,left,5,tracking present but the hand is not visible in the RGB frame,out_of_frame,True,0,21,40.611563,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14102,3114954030437,right,3,hand not visible and proxy absent,not_visible,False,0,0,40.611563,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14103,3115020716914,left,5,tracking present but the hand is not visible in the RGB frame,out_of_frame,True,0,21,-26.074914,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14103,3115020716914,right,3,hand not visible and proxy absent,not_visible,False,0,0,-26.074914,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14104,3115087378134,left,5,tracking present but the hand is not visible in the RGB frame,out_of_frame,True,0,21,7.264866,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14104,3115087378134,right,3,hand not visible and proxy absent,not_visible,False,0,0,7.264866,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14105,3115154027091,left,5,tracking present but the hand is not visible in the RGB frame,out_of_frame,True,0,21,40.615909,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14105,3115154027091,right,3,hand not visible and proxy absent,not_visible,False,0,0,40.615909,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14106,3115220688499,left,5,tracking present but the hand is not visible in the RGB frame,out_of_frame,True,0,21,-26.045499,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14106,3115220688499,right,3,hand not visible and proxy absent,not_visible,False,0,0,-26.045499,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14107,3115287349956,left,5,tracking present but the hand is not visible in the RGB frame,out_of_frame,True,0,21,7.305044,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14107,3115287349956,right,3,hand not visible and proxy absent,not_visible,False,0,0,7.305044,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14108,3115353973447,left,5,tracking present but the hand is not visible in the RGB frame,out_of_frame,True,0,21,40.669553,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14108,3115353973447,right,3,hand not visible and proxy absent,not_visible,False,0,0,40.669553,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14109,3115420578019,left,5,tracking present but the hand is not visible in the RGB frame,out_of_frame,True,0,21,-25.935019,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14109,3115420578019,right,3,hand not visible and proxy absent,not_visible,False,0,0,-25.935019,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14110,3115487214197,left,5,tracking present but the hand is not visible in the RGB frame,out_of_frame,True,0,21,7.427803,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14110,3115487214197,right,3,hand not visible and proxy absent,not_visible,False,0,0,7.427803,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14111,3115553869186,left,5,tracking present but the hand is not visible in the RGB frame,out_of_frame,True,0,21,40.774814,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14111,3115553869186,right,3,hand not visible and proxy absent,not_visible,False,0,0,40.774814,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14112,3115620587562,left,5,tracking present but the hand is not visible in the RGB frame,out_of_frame,True,0,21,-25.943562,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14112,3115620587562,right,3,hand not visible and proxy absent,not_visible,False,0,0,-25.943562,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14113,3115687305852,left,5,tracking present but the hand is not visible in the RGB frame,out_of_frame,True,0,21,7.337148,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14113,3115687305852,right,3,hand not visible and proxy absent,not_visible,False,0,0,7.337148,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14114,3115754005144,left,5,tracking present but the hand is not visible in the RGB frame,out_of_frame,True,0,21,40.635856,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14114,3115754005144,right,3,hand not visible and proxy absent,not_visible,False,0,0,40.635856,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14115,3115820666520,left,5,tracking present but the hand is not visible in the RGB frame,out_of_frame,True,0,21,-26.02552,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14115,3115820666520,right,3,hand not visible and proxy absent,not_visible,False,0,0,-26.02552,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14116,3115887308977,left,5,tracking present but the hand is not visible in the RGB frame,out_of_frame,True,0,21,7.335023,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14116,3115887308977,right,3,hand not visible and proxy absent,not_visible,False,0,0,7.335023,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14117,3115953970385,left,5,tracking present but the hand is not visible in the RGB frame,out_of_frame,True,0,21,40.671615,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14117,3115953970385,right,3,hand not visible and proxy absent,not_visible,False,0,0,40.671615,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14118,3116020631790,left,5,tracking present but the hand is not visible in the RGB frame,out_of_frame,True,0,21,-25.98979,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14118,3116020631790,right,3,hand not visible and proxy absent,not_visible,False,0,0,-25.98979,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14119,3116087293249,left,5,tracking present but the hand is not visible in the RGB frame,out_of_frame,True,0,21,7.349751,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14119,3116087293249,right,3,hand not visible and proxy absent,not_visible,False,0,0,7.349751,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14120,3116153929394,left,5,tracking present but the hand is not visible in the RGB frame,out_of_frame,True,0,21,40.712606,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14120,3116153929394,right,3,hand not visible and proxy absent,not_visible,False,0,0,40.712606,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14121,3116220540572,left,5,tracking present but the hand is not visible in the RGB frame,out_of_frame,True,0,21,-25.898572,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14121,3116220540572,right,3,hand not visible and proxy absent,not_visible,False,0,0,-25.898572,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14122,3116287170301,left,5,tracking present but the hand is not visible in the RGB frame,out_of_frame,True,0,21,7.471699,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14122,3116287170301,right,3,hand not visible and proxy absent,not_visible,False,0,0,7.471699,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14123,3116353787373,left,5,tracking present but the hand is not visible in the RGB frame,out_of_frame,True,0,21,40.856627,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14123,3116353787373,right,3,hand not visible and proxy absent,not_visible,False,0,0,40.856627,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14124,3116420486780,left,5,tracking present but the hand is not visible in the RGB frame,out_of_frame,True,0,21,-25.84278,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14124,3116420486780,right,3,hand not visible and proxy absent,not_visible,False,0,0,-25.84278,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14125,3116487211468,left,5,tracking present but the hand is not visible in the RGB frame,out_of_frame,True,0,21,7.433532,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14125,3116487211468,right,3,hand not visible and proxy absent,not_visible,False,0,0,7.433532,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14126,3116553929915,left,5,tracking present but the hand is not visible in the RGB frame,out_of_frame,True,0,21,40.713085,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14126,3116553929915,right,3,hand not visible and proxy absent,not_visible,False,0,0,40.713085,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14127,3116620597395,left,5,tracking present but the hand is not visible in the RGB frame,out_of_frame,True,0,21,-25.954395,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14127,3116620597395,right,3,hand not visible and proxy absent,not_visible,False,0,0,-25.954395,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14128,3116687233852,left,5,tracking present but the hand is not visible in the RGB frame,out_of_frame,True,0,21,7.409148,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14128,3116687233852,right,3,hand not visible and proxy absent,not_visible,False,0,0,7.409148,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14129,3116753895259,left,5,tracking present but the hand is not visible in the RGB frame,out_of_frame,True,0,21,40.746741,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14129,3116753895259,right,3,hand not visible and proxy absent,not_visible,False,0,0,40.746741,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14130,3116820531404,left,5,tracking present but the hand is not visible in the RGB frame,out_of_frame,True,0,21,-25.889404,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14130,3116820531404,right,3,hand not visible and proxy absent,not_visible,False,0,0,-25.889404,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14131,3116887180051,left,5,tracking present but the hand is not visible in the RGB frame,out_of_frame,True,0,21,7.461949,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14131,3116887180051,right,3,hand not visible and proxy absent,not_visible,False,0,0,7.461949,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14132,3116953853956,left,5,tracking present but the hand is not visible in the RGB frame,out_of_frame,True,0,21,40.788044,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14132,3116953853956,right,3,hand not visible and proxy absent,not_visible,False,0,0,40.788044,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14133,3117020515415,left,5,tracking present but the hand is not visible in the RGB frame,out_of_frame,True,0,21,-25.873415,True,True,True,0,0.2727987766265869,0.012449675086083816,0.012449675086083816,,,,0
+motorcycle_5ab8604a14df,14133,3117020515415,right,4,hand not visible but a false mask is present,uncertain,False,0,0,-25.873415,True,True,True,0,0.2727987766265869,0.012449675086083816,0.012449675086083816,,,,1
+motorcycle_5ab8604a14df,14134,3117087151560,left,5,tracking present but the hand is not visible in the RGB frame,out_of_frame,True,0,21,7.49044,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14134,3117087151560,right,3,hand not visible and proxy absent,not_visible,False,0,0,7.49044,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14135,3117153788051,left,5,tracking present but the hand is not visible in the RGB frame,out_of_frame,True,0,21,40.854949,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14135,3117153788051,right,3,hand not visible and proxy absent,not_visible,False,0,0,40.854949,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14136,3117220468456,left,5,tracking present but the hand is not visible in the RGB frame,out_of_frame,True,0,21,-25.825456,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14136,3117220468456,right,3,hand not visible and proxy absent,not_visible,False,0,0,-25.825456,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14137,3117287129915,left,5,tracking present but the hand is not visible in the RGB frame,out_of_frame,True,0,21,7.513085,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14137,3117287129915,right,3,hand not visible and proxy absent,not_visible,False,0,0,7.513085,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14138,3117353791321,left,5,tracking present but the hand is not visible in the RGB frame,out_of_frame,True,0,21,40.850679,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14138,3117353791321,right,3,hand not visible and proxy absent,not_visible,False,0,0,40.850679,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14139,3117420516009,left,5,tracking present but the hand is not visible in the RGB frame,out_of_frame,True,0,21,-25.874009,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14139,3117420516009,right,3,hand not visible and proxy absent,not_visible,False,0,0,-25.874009,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14140,3117487221301,left,5,tracking present but the hand is not visible in the RGB frame,out_of_frame,True,0,21,7.421699,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14140,3117487221301,right,3,hand not visible and proxy absent,not_visible,False,0,0,7.421699,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14141,3117553907935,left,5,tracking present but the hand is not visible in the RGB frame,out_of_frame,True,0,21,40.734065,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14141,3117553907935,right,3,hand not visible and proxy absent,not_visible,False,0,0,40.734065,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14142,3117620588467,left,5,tracking present but the hand is not visible in the RGB frame,out_of_frame,True,0,21,-25.946467,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14142,3117620588467,right,3,hand not visible and proxy absent,not_visible,False,0,0,-25.946467,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14143,3117687275447,left,5,tracking present but the hand is not visible in the RGB frame,out_of_frame,True,0,21,7.366553,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14143,3117687275447,right,3,hand not visible and proxy absent,not_visible,False,0,0,7.366553,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14144,3117753949321,left,5,tracking present but the hand is not visible in the RGB frame,out_of_frame,True,0,21,40.696679,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14144,3117753949321,right,3,hand not visible and proxy absent,not_visible,False,0,0,40.696679,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14145,3117820629697,left,5,tracking present but the hand is not visible in the RGB frame,out_of_frame,True,0,21,-25.983697,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14145,3117820629697,right,3,hand not visible and proxy absent,not_visible,False,0,0,-25.983697,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14146,3117887284758,left,5,tracking present but the hand is not visible in the RGB frame,out_of_frame,True,0,21,7.363242,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14146,3117887284758,right,3,hand not visible and proxy absent,not_visible,False,0,0,7.363242,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14147,3117953940165,left,5,tracking present but the hand is not visible in the RGB frame,out_of_frame,True,0,21,40.702835,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14147,3117953940165,right,3,hand not visible and proxy absent,not_visible,False,0,0,40.702835,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14148,3118020576310,left,5,tracking present but the hand is not visible in the RGB frame,out_of_frame,True,0,21,-25.93331,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14148,3118020576310,right,3,hand not visible and proxy absent,not_visible,False,0,0,-25.93331,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14149,3118087199697,left,5,tracking present but the hand is not visible in the RGB frame,out_of_frame,True,0,21,7.443303,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14149,3118087199697,right,3,hand not visible and proxy absent,not_visible,False,0,0,7.443303,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14150,3118153848186,left,5,tracking present but the hand is not visible in the RGB frame,out_of_frame,True,0,21,40.795814,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14150,3118153848186,right,3,hand not visible and proxy absent,not_visible,False,0,0,40.795814,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14151,3118220503333,left,5,tracking present but the hand is not visible in the RGB frame,out_of_frame,True,0,21,-25.859333,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14151,3118220503333,right,3,hand not visible and proxy absent,not_visible,False,0,0,-25.859333,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14152,3118287203050,left,5,tracking present but the hand is not visible in the RGB frame,out_of_frame,True,0,21,7.43895,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14152,3118287203050,right,3,hand not visible and proxy absent,not_visible,False,0,0,7.43895,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14153,3118353902030,left,5,tracking present but the hand is not visible in the RGB frame,out_of_frame,True,0,21,40.73997,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14153,3118353902030,right,3,hand not visible and proxy absent,not_visible,False,0,0,40.73997,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14154,3118420626979,left,5,tracking present but the hand is not visible in the RGB frame,out_of_frame,True,0,21,-25.984979,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14154,3118420626979,right,3,hand not visible and proxy absent,not_visible,False,0,0,-25.984979,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14155,3118487332425,left,5,tracking present but the hand is not visible in the RGB frame,out_of_frame,True,0,21,7.318575,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14155,3118487332425,right,3,hand not visible and proxy absent,not_visible,False,0,0,7.318575,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14156,3118554038374,left,5,tracking present but the hand is not visible in the RGB frame,out_of_frame,True,0,21,40.620626,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14156,3118554038374,right,3,hand not visible and proxy absent,not_visible,False,0,0,40.620626,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14157,3118620731166,left,5,tracking present but the hand is not visible in the RGB frame,out_of_frame,True,0,21,-26.072166,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14157,3118620731166,right,3,hand not visible and proxy absent,not_visible,False,0,0,-26.072166,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14158,3118687392540,left,5,tracking present but the hand is not visible in the RGB frame,out_of_frame,True,0,21,7.26546,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14158,3118687392540,right,3,hand not visible and proxy absent,not_visible,False,0,0,7.26546,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14159,3118754034999,left,5,tracking present but the hand is not visible in the RGB frame,out_of_frame,True,0,21,40.607001,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14159,3118754034999,right,3,hand not visible and proxy absent,not_visible,False,0,0,40.607001,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14160,3118820683748,left,5,tracking present but the hand is not visible in the RGB frame,out_of_frame,True,0,21,-26.041748,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14160,3118820683748,right,3,hand not visible and proxy absent,not_visible,False,0,0,-26.041748,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14161,3118887326395,left,5,tracking present but the hand is not visible in the RGB frame,out_of_frame,True,0,21,7.315605,True,False,True,1,0.0,0.0,0.00027098030570252795,,,,0
+motorcycle_5ab8604a14df,14161,3118887326395,right,3,hand not visible and proxy absent,not_visible,False,0,0,7.315605,True,False,True,1,0.0,0.0,0.00027098030570252795,,,,0
+motorcycle_5ab8604a14df,14162,3118953937123,left,5,tracking present but the hand is not visible in the RGB frame,out_of_frame,True,0,21,40.707877,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14162,3118953937123,right,3,hand not visible and proxy absent,not_visible,False,0,0,40.707877,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14163,3119020567301,left,5,tracking present but the hand is not visible in the RGB frame,out_of_frame,True,0,21,-25.922301,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14163,3119020567301,right,3,hand not visible and proxy absent,not_visible,False,0,0,-25.922301,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14164,3119087209686,left,5,tracking present but the hand is not visible in the RGB frame,out_of_frame,True,0,21,7.431314,True,False,True,2,0.0,0.0,0.000341513920382968,,,,0
+motorcycle_5ab8604a14df,14164,3119087209686,right,3,hand not visible and proxy absent,not_visible,False,0,0,7.431314,True,False,True,2,0.0,0.0,0.000341513920382968,,,,0
+motorcycle_5ab8604a14df,14165,3119153845519,left,5,tracking present but the hand is not visible in the RGB frame,out_of_frame,True,0,21,40.796481,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14165,3119153845519,right,3,hand not visible and proxy absent,not_visible,False,0,0,40.796481,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14166,3119220507166,left,5,tracking present but the hand is not visible in the RGB frame,out_of_frame,True,0,21,-25.865166,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14166,3119220507166,right,3,hand not visible and proxy absent,not_visible,False,0,0,-25.865166,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14167,3119287143154,left,5,tracking present but the hand is not visible in the RGB frame,out_of_frame,True,0,21,7.499846,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14167,3119287143154,right,3,hand not visible and proxy absent,not_visible,False,0,0,7.499846,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14168,3119353773041,left,5,tracking present but the hand is not visible in the RGB frame,out_of_frame,True,0,21,40.869959,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14168,3119353773041,right,3,hand not visible and proxy absent,not_visible,False,0,0,40.869959,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14169,3119420409373,left,5,tracking present but the hand is not visible in the RGB frame,out_of_frame,True,0,21,-25.766373,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14169,3119420409373,right,3,hand not visible and proxy absent,not_visible,False,0,0,-25.766373,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14170,3119487057864,left,5,tracking present but the hand is not visible in the RGB frame,out_of_frame,True,0,21,7.584136,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14170,3119487057864,right,3,hand not visible and proxy absent,not_visible,False,0,0,7.584136,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14171,3119553738321,left,5,tracking present but the hand is not visible in the RGB frame,out_of_frame,True,0,21,40.905679,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14171,3119553738321,right,3,hand not visible and proxy absent,not_visible,False,0,0,40.905679,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14172,3119620399728,left,5,tracking present but the hand is not visible in the RGB frame,out_of_frame,True,0,21,-25.755728,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14172,3119620399728,right,3,hand not visible and proxy absent,not_visible,False,0,0,-25.755728,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14173,3119687061186,left,5,tracking present but the hand is not visible in the RGB frame,out_of_frame,True,0,21,7.581814,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14173,3119687061186,right,3,hand not visible and proxy absent,not_visible,False,0,0,7.581814,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14174,3119753722593,left,5,tracking present but the hand is not visible in the RGB frame,out_of_frame,True,0,21,40.921407,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14174,3119753722593,right,3,hand not visible and proxy absent,not_visible,False,0,0,40.921407,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14175,3119820409311,left,5,tracking present but the hand is not visible in the RGB frame,out_of_frame,True,0,21,-25.765311,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14175,3119820409311,right,3,hand not visible and proxy absent,not_visible,False,0,0,-25.765311,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14176,3119887083530,left,5,tracking present but the hand is not visible in the RGB frame,out_of_frame,True,0,21,7.55947,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14176,3119887083530,right,3,hand not visible and proxy absent,not_visible,False,0,0,7.55947,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14177,3119953757748,left,5,tracking present but the hand is not visible in the RGB frame,out_of_frame,True,0,21,40.891252,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14177,3119953757748,right,3,hand not visible and proxy absent,not_visible,False,0,0,40.891252,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14178,3120020431467,left,5,tracking present but the hand is not visible in the RGB frame,out_of_frame,True,0,21,-25.782467,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14178,3120020431467,right,3,hand not visible and proxy absent,not_visible,False,0,0,-25.782467,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14179,3120087118343,left,5,tracking present but the hand is not visible in the RGB frame,out_of_frame,True,0,21,7.524657,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14179,3120087118343,right,3,hand not visible and proxy absent,not_visible,False,0,0,7.524657,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14180,3120153786061,left,5,tracking present but the hand is not visible in the RGB frame,out_of_frame,True,0,21,40.858939,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14180,3120153786061,right,3,hand not visible and proxy absent,not_visible,False,0,0,40.858939,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14181,3120220472936,left,5,tracking present but the hand is not visible in the RGB frame,out_of_frame,True,0,21,-25.827936,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14181,3120220472936,right,3,hand not visible and proxy absent,not_visible,False,0,0,-25.827936,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14182,3120287153310,left,5,tracking present but the hand is not visible in the RGB frame,out_of_frame,True,0,21,7.48769,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14182,3120287153310,right,3,hand not visible and proxy absent,not_visible,False,0,0,7.48769,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14183,3120353833686,left,5,tracking present but the hand is not visible in the RGB frame,out_of_frame,True,0,21,40.807314,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14183,3120353833686,right,3,hand not visible and proxy absent,not_visible,False,0,0,40.807314,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14184,3120420514062,left,5,tracking present but the hand is not visible in the RGB frame,out_of_frame,True,0,21,-25.873062,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14184,3120420514062,right,3,hand not visible and proxy absent,not_visible,False,0,0,-25.873062,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14185,3120487181780,left,5,tracking present but the hand is not visible in the RGB frame,out_of_frame,True,0,21,7.45922,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14185,3120487181780,right,3,hand not visible and proxy absent,not_visible,False,0,0,7.45922,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14186,3120553843343,left,5,tracking present but the hand is not visible in the RGB frame,out_of_frame,True,0,21,40.797657,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14186,3120553843343,right,3,hand not visible and proxy absent,not_visible,False,0,0,40.797657,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14187,3120620498248,left,5,tracking present but the hand is not visible in the RGB frame,out_of_frame,True,0,21,-25.857248,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14187,3120620498248,right,3,hand not visible and proxy absent,not_visible,False,0,0,-25.857248,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14188,3120687159707,left,5,tracking present but the hand is not visible in the RGB frame,out_of_frame,True,0,21,7.482293,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14188,3120687159707,right,3,hand not visible and proxy absent,not_visible,False,0,0,7.482293,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14189,3120753821113,left,5,tracking present but the hand is not visible in the RGB frame,out_of_frame,True,0,21,40.820887,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14189,3120753821113,right,3,hand not visible and proxy absent,not_visible,False,0,0,40.820887,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14190,3120820482572,left,5,tracking present but the hand is not visible in the RGB frame,out_of_frame,True,0,21,-25.840572,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14190,3120820482572,right,3,hand not visible and proxy absent,not_visible,False,0,0,-25.840572,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14191,3120887156633,left,5,tracking present but the hand is not visible in the RGB frame,out_of_frame,True,0,21,7.485367,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14191,3120887156633,right,3,hand not visible and proxy absent,not_visible,False,0,0,7.485367,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14192,3120953824697,left,5,tracking present but the hand is not visible in the RGB frame,out_of_frame,True,0,21,40.818303,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14192,3120953824697,right,3,hand not visible and proxy absent,not_visible,False,0,0,40.818303,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14193,3121020479654,left,5,tracking present but the hand is not visible in the RGB frame,out_of_frame,True,0,21,-25.836654,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14193,3121020479654,right,3,hand not visible and proxy absent,not_visible,False,0,0,-25.836654,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14194,3121087141061,left,5,tracking present but the hand is not visible in the RGB frame,out_of_frame,True,0,21,7.499939,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14194,3121087141061,right,3,hand not visible and proxy absent,not_visible,False,0,0,7.499939,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14195,3121153802518,left,5,tracking present but the hand is not visible in the RGB frame,out_of_frame,True,0,21,40.840482,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14195,3121153802518,right,3,hand not visible and proxy absent,not_visible,False,0,0,40.840482,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14196,3121220463926,left,5,tracking present but the hand is not visible in the RGB frame,out_of_frame,True,0,21,-25.820926,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14196,3121220463926,right,3,hand not visible and proxy absent,not_visible,False,0,0,-25.820926,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14197,3121287125383,left,5,tracking present but the hand is not visible in the RGB frame,out_of_frame,True,0,21,7.521617,True,True,True,0,0.27904197573661804,0.023942389455782313,0.022250238830099942,,,,0
+motorcycle_5ab8604a14df,14197,3121287125383,right,4,hand not visible but a false mask is present,uncertain,False,0,0,7.521617,True,True,True,0,0.27904197573661804,0.023942389455782313,0.022250238830099942,,,,1
+motorcycle_5ab8604a14df,14198,3121353786842,left,5,tracking present but the hand is not visible in the RGB frame,out_of_frame,True,0,21,40.855158,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14198,3121353786842,right,3,hand not visible and proxy absent,not_visible,False,0,0,40.855158,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14199,3121420460906,left,5,tracking present but the hand is not visible in the RGB frame,out_of_frame,True,0,21,-25.818906,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14199,3121420460906,right,3,hand not visible and proxy absent,not_visible,False,0,0,-25.818906,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14200,3121487128467,left,5,tracking present but the hand is not visible in the RGB frame,out_of_frame,True,0,21,7.516533,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14200,3121487128467,right,3,hand not visible and proxy absent,not_visible,False,0,0,7.516533,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14201,3121553796583,left,5,tracking present but the hand is not visible in the RGB frame,out_of_frame,True,0,21,40.843417,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14201,3121553796583,right,3,hand not visible and proxy absent,not_visible,False,0,0,40.843417,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14202,3121620451488,left,5,tracking present but the hand is not visible in the RGB frame,out_of_frame,True,0,21,-25.811488,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14202,3121620451488,right,3,hand not visible and proxy absent,not_visible,False,0,0,-25.811488,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14203,3121687112947,left,5,tracking present but the hand is not visible in the RGB frame,out_of_frame,True,0,21,7.541053,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14203,3121687112947,right,3,hand not visible and proxy absent,not_visible,False,0,0,7.541053,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14204,3121753774352,left,5,tracking present but the hand is not visible in the RGB frame,out_of_frame,True,0,21,40.870648,True,True,True,0,0.2538610100746155,0.014608987885277569,0.014608987885277569,,,,0
+motorcycle_5ab8604a14df,14204,3121753774352,right,4,hand not visible but a false mask is present,uncertain,False,0,0,40.870648,True,True,True,0,0.2538610100746155,0.014608987885277569,0.014608987885277569,,,,1
+motorcycle_5ab8604a14df,14205,3121820435811,left,5,tracking present but the hand is not visible in the RGB frame,out_of_frame,True,0,21,-25.790811,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14205,3121820435811,right,3,hand not visible and proxy absent,not_visible,False,0,0,-25.790811,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14206,3121887097217,left,5,tracking present but the hand is not visible in the RGB frame,out_of_frame,True,0,21,7.552783,True,True,True,0,0.2613309323787689,0.013369564646846393,0.013369564646846393,,,,0
+motorcycle_5ab8604a14df,14206,3121887097217,right,4,hand not visible but a false mask is present,uncertain,False,0,0,7.552783,True,True,True,0,0.2613309323787689,0.013369564646846393,0.013369564646846393,,,,1
+motorcycle_5ab8604a14df,14207,3121953758676,left,5,tracking present but the hand is not visible in the RGB frame,out_of_frame,True,0,21,40.883324,True,True,True,0,0.2885690927505493,0.008368567334341144,0.008368567334341144,,,,0
+motorcycle_5ab8604a14df,14207,3121953758676,right,4,hand not visible but a false mask is present,uncertain,False,0,0,40.883324,True,True,True,0,0.2885690927505493,0.008368567334341144,0.008368567334341144,,,,2
+motorcycle_5ab8604a14df,14208,3122020420081,left,5,tracking present but the hand is not visible in the RGB frame,out_of_frame,True,0,21,-25.778081,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14208,3122020420081,right,3,hand not visible and proxy absent,not_visible,False,0,0,-25.778081,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14209,3122087081540,left,5,tracking present but the hand is not visible in the RGB frame,out_of_frame,True,0,21,7.56046,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14209,3122087081540,right,3,hand not visible and proxy absent,not_visible,False,0,0,7.56046,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14210,3122153742946,left,5,tracking present but the hand is not visible in the RGB frame,out_of_frame,True,0,21,40.899054,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14210,3122153742946,right,3,hand not visible and proxy absent,not_visible,False,0,0,40.899054,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14211,3122220404405,left,5,tracking present but the hand is not visible in the RGB frame,out_of_frame,True,0,21,-25.762405,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14211,3122220404405,right,3,hand not visible and proxy absent,not_visible,False,0,0,-25.762405,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14212,3122287065810,left,5,tracking present but the hand is not visible in the RGB frame,out_of_frame,True,0,21,7.57619,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14212,3122287065810,right,3,hand not visible and proxy absent,not_visible,False,0,0,7.57619,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14213,3122353727270,left,5,tracking present but the hand is not visible in the RGB frame,out_of_frame,True,0,21,40.91473,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14213,3122353727270,right,3,hand not visible and proxy absent,not_visible,False,0,0,40.91473,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14214,3122420376019,left,5,tracking present but the hand is not visible in the RGB frame,out_of_frame,True,0,21,-25.734019,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14214,3122420376019,right,3,hand not visible and proxy absent,not_visible,False,0,0,-25.734019,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14215,3122487031321,left,3,hand not visible and proxy absent,not_visible,False,0,0,7.610679,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14215,3122487031321,right,3,hand not visible and proxy absent,not_visible,False,0,0,7.610679,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14216,3122553686123,left,3,hand not visible and proxy absent,not_visible,False,0,0,40.970877,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14216,3122553686123,right,3,hand not visible and proxy absent,not_visible,False,0,0,40.970877,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14217,3122620354030,left,3,hand not visible and proxy absent,not_visible,False,0,0,-25.69703,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14217,3122620354030,right,3,hand not visible and proxy absent,not_visible,False,0,0,-25.69703,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14218,3122687015487,left,3,hand not visible and proxy absent,not_visible,False,0,0,7.627513,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14218,3122687015487,right,3,hand not visible and proxy absent,not_visible,False,0,0,7.627513,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14219,3122753676946,left,3,hand not visible and proxy absent,not_visible,False,0,0,40.965054,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14219,3122753676946,right,3,hand not visible and proxy absent,not_visible,False,0,0,40.965054,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14220,3122820338354,left,3,hand not visible and proxy absent,not_visible,False,0,0,-25.696354,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14220,3122820338354,right,3,hand not visible and proxy absent,not_visible,False,0,0,-25.696354,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14221,3122886999811,left,3,hand not visible and proxy absent,not_visible,False,0,0,7.641189,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14221,3122886999811,right,3,hand not visible and proxy absent,not_visible,False,0,0,7.641189,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14222,3122953661218,left,3,hand not visible and proxy absent,not_visible,False,0,0,40.982782,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14222,3122953661218,right,3,hand not visible and proxy absent,not_visible,False,0,0,40.982782,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14223,3123020322675,left,3,hand not visible and proxy absent,not_visible,False,0,0,-25.678675,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14223,3123020322675,right,3,hand not visible and proxy absent,not_visible,False,0,0,-25.678675,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14224,3123086996739,left,4,hand not visible but a false mask is present,uncertain,False,0,0,7.644261,True,True,True,0,0.2925952970981598,0.007036630238515159,0.007036630238515159,,,,1
+motorcycle_5ab8604a14df,14224,3123086996739,right,4,hand not visible but a false mask is present,uncertain,False,0,0,7.644261,True,True,True,0,0.2925952970981598,0.007036630238515159,0.007036630238515159,,,,1
+motorcycle_5ab8604a14df,14225,3123153676956,left,3,hand not visible and proxy absent,not_visible,False,0,0,40.982044,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14225,3123153676956,right,3,hand not visible and proxy absent,not_visible,False,0,0,40.982044,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14226,3123220338520,left,3,hand not visible and proxy absent,not_visible,False,0,0,-25.67952,True,False,True,1,0.0,0.0,0.00018732415805828504,,,,0
+motorcycle_5ab8604a14df,14226,3123220338520,right,3,hand not visible and proxy absent,not_visible,False,0,0,-25.67952,True,False,True,1,0.0,0.0,0.00018732415805828504,,,,0
+motorcycle_5ab8604a14df,14227,3123286993477,left,3,hand not visible and proxy absent,not_visible,False,0,0,7.669523,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14227,3123286993477,right,3,hand not visible and proxy absent,not_visible,False,0,0,7.669523,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14228,3123353654884,left,3,hand not visible and proxy absent,not_visible,False,0,0,40.995116,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14228,3123353654884,right,3,hand not visible and proxy absent,not_visible,False,0,0,40.995116,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14229,3123420316342,left,3,hand not visible and proxy absent,not_visible,False,0,0,-25.666342,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14229,3123420316342,right,3,hand not visible and proxy absent,not_visible,False,0,0,-25.666342,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14230,3123486990405,left,4,hand not visible but a false mask is present,uncertain,False,0,0,7.653595,True,True,True,0,0.2727987766265869,0.0005573795876375241,0.0005573795876375241,,,,1
+motorcycle_5ab8604a14df,14230,3123486990405,right,4,hand not visible but a false mask is present,uncertain,False,0,0,7.653595,True,True,True,0,0.2727987766265869,0.0005573795876375241,0.0005573795876375241,,,,1
+motorcycle_5ab8604a14df,14231,3123553658519,left,3,hand not visible and proxy absent,not_visible,False,0,0,40.996481,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14231,3123553658519,right,3,hand not visible and proxy absent,not_visible,False,0,0,40.996481,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14232,3123620326082,left,3,hand not visible and proxy absent,not_visible,False,0,0,-25.671082,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14232,3123620326082,right,3,hand not visible and proxy absent,not_visible,False,0,0,-25.671082,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14233,3123686980987,left,3,hand not visible and proxy absent,not_visible,False,0,0,7.664013,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14233,3123686980987,right,3,hand not visible and proxy absent,not_visible,False,0,0,7.664013,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14234,3123753642446,left,3,hand not visible and proxy absent,not_visible,False,0,0,41.001554,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14234,3123753642446,right,3,hand not visible and proxy absent,not_visible,False,0,0,41.001554,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14235,3123820303854,left,3,hand not visible and proxy absent,not_visible,False,0,0,-25.659854,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14235,3123820303854,right,3,hand not visible and proxy absent,not_visible,False,0,0,-25.659854,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14236,3123886977967,left,3,hand not visible and proxy absent,not_visible,False,0,0,7.667033,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14236,3123886977967,right,3,hand not visible and proxy absent,not_visible,False,0,0,7.667033,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14237,3123953646031,left,3,hand not visible and proxy absent,not_visible,False,0,0,40.996969,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14237,3123953646031,right,3,hand not visible and proxy absent,not_visible,False,0,0,40.996969,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14238,3124020313592,left,4,hand not visible but a false mask is present,uncertain,False,0,0,-25.670592,True,True,True,1,0.25534364581108093,0.0005934665532879819,0.0010455378138909885,,,,1
+motorcycle_5ab8604a14df,14238,3124020313592,right,4,hand not visible but a false mask is present,uncertain,False,0,0,-25.670592,True,True,True,1,0.25534364581108093,0.0005934665532879819,0.0010455378138909885,,,,1
+motorcycle_5ab8604a14df,14239,3124086969051,left,4,hand not visible but a false mask is present,uncertain,False,0,0,7.674949,True,True,True,0,0.25534364581108093,0.0005373677248677248,0.0005373677248677248,,,,2
+motorcycle_5ab8604a14df,14239,3124086969051,right,4,hand not visible but a false mask is present,uncertain,False,0,0,7.674949,True,True,True,0,0.25534364581108093,0.0005373677248677248,0.0005373677248677248,,,,2
+motorcycle_5ab8604a14df,14240,3124153630456,left,3,hand not visible and proxy absent,not_visible,False,0,0,41.012544,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14240,3124153630456,right,3,hand not visible and proxy absent,not_visible,False,0,0,41.012544,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14241,3124220291916,left,3,hand not visible and proxy absent,not_visible,False,0,0,-25.648916,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14241,3124220291916,right,3,hand not visible and proxy absent,not_visible,False,0,0,-25.648916,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14242,3124286953373,left,3,hand not visible and proxy absent,not_visible,False,0,0,7.689627,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14242,3124286953373,right,3,hand not visible and proxy absent,not_visible,False,0,0,7.689627,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14243,3124353614780,left,3,hand not visible and proxy absent,not_visible,False,0,0,41.02722,True,False,True,2,0.0,0.0,0.00040581433190560174,,,,0
+motorcycle_5ab8604a14df,14243,3124353614780,right,3,hand not visible and proxy absent,not_visible,False,0,0,41.02722,True,False,True,2,0.0,0.0,0.00040581433190560174,,,,0
+motorcycle_5ab8604a14df,14244,3124420276237,left,3,hand not visible and proxy absent,not_visible,False,0,0,-25.634237,True,False,True,1,0.0,0.0,0.000332328147308306,,,,0
+motorcycle_5ab8604a14df,14244,3124420276237,right,3,hand not visible and proxy absent,not_visible,False,0,0,-25.634237,True,False,True,1,0.0,0.0,0.000332328147308306,,,,0
+motorcycle_5ab8604a14df,14245,3124486937645,left,3,hand not visible and proxy absent,not_visible,False,0,0,7.705355,True,False,True,1,0.0,0.0,0.0003480751868648694,,,,0
+motorcycle_5ab8604a14df,14245,3124486937645,right,3,hand not visible and proxy absent,not_visible,False,0,0,7.705355,True,False,True,1,0.0,0.0,0.0003480751868648694,,,,0
+motorcycle_5ab8604a14df,14246,3124553599102,left,3,hand not visible and proxy absent,not_visible,False,0,0,41.042898,True,False,True,1,0.0,0.0,0.00031658110775174267,,,,0
+motorcycle_5ab8604a14df,14246,3124553599102,right,3,hand not visible and proxy absent,not_visible,False,0,0,41.042898,True,False,True,1,0.0,0.0,0.00031658110775174267,,,,0
+motorcycle_5ab8604a14df,14247,3124620273165,left,3,hand not visible and proxy absent,not_visible,False,0,0,-25.631165,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14247,3124620273165,right,3,hand not visible and proxy absent,not_visible,False,0,0,-25.631165,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14248,3124686940727,left,3,hand not visible and proxy absent,not_visible,False,0,0,7.702273,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14248,3124686940727,right,3,hand not visible and proxy absent,not_visible,False,0,0,7.702273,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14249,3124753608290,left,4,hand not visible but a false mask is present,uncertain,False,0,0,41.03371,True,True,True,0,0.27904197573661804,0.0018227198286722096,0.0018227198286722096,,,,1
+motorcycle_5ab8604a14df,14249,3124753608290,right,4,hand not visible but a false mask is present,uncertain,False,0,0,41.03371,True,True,True,0,0.27904197573661804,0.0018227198286722096,0.0018227198286722096,,,,1
+motorcycle_5ab8604a14df,14250,3124820276406,left,4,hand not visible but a false mask is present,uncertain,False,0,0,-25.634406,True,True,True,0,0.2568320035934448,0.0014972810111699001,0.0014972810111699001,,,,2
+motorcycle_5ab8604a14df,14250,3124820276406,right,4,hand not visible but a false mask is present,uncertain,False,0,0,-25.634406,True,True,True,0,0.2568320035934448,0.0014972810111699001,0.0014972810111699001,,,,2
+motorcycle_5ab8604a14df,14251,3124886943967,left,3,hand not visible and proxy absent,not_visible,False,0,0,7.698033,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14251,3124886943967,right,3,hand not visible and proxy absent,not_visible,False,0,0,7.698033,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14252,3124953611530,left,3,hand not visible and proxy absent,not_visible,False,0,0,41.03947,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14252,3124953611530,right,3,hand not visible and proxy absent,not_visible,False,0,0,41.03947,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14253,3125020279644,left,3,hand not visible and proxy absent,not_visible,False,0,0,-25.628644,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14253,3125020279644,right,3,hand not visible and proxy absent,not_visible,False,0,0,-25.628644,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14254,3125086947207,left,3,hand not visible and proxy absent,not_visible,False,0,0,7.708793,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14254,3125086947207,right,3,hand not visible and proxy absent,not_visible,False,0,0,7.708793,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14255,3125153614769,left,4,hand not visible but a false mask is present,uncertain,False,0,0,41.027231,True,True,True,0,0.2613309323787689,0.013325276098093558,0.013325276098093558,,,,1
+motorcycle_5ab8604a14df,14255,3125153614769,right,4,hand not visible but a false mask is present,uncertain,False,0,0,41.027231,True,True,True,0,0.2613309323787689,0.013325276098093558,0.013325276098093558,,,,1
+motorcycle_5ab8604a14df,14256,3125220282832,left,3,hand not visible and proxy absent,not_visible,False,0,0,-25.640832,True,False,True,2,0.0,0.0,0.00032248624758545396,,,,0
+motorcycle_5ab8604a14df,14256,3125220282832,right,3,hand not visible and proxy absent,not_visible,False,0,0,-25.640832,True,False,True,2,0.0,0.0,0.00032248624758545396,,,,0
+motorcycle_5ab8604a14df,14257,3125286950446,left,3,hand not visible and proxy absent,not_visible,False,0,0,7.691554,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14257,3125286950446,right,3,hand not visible and proxy absent,not_visible,False,0,0,7.691554,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14258,3125353618009,left,3,hand not visible and proxy absent,not_visible,False,0,0,41.023991,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14258,3125353618009,right,3,hand not visible and proxy absent,not_visible,False,0,0,41.023991,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14259,3125420273466,left,3,hand not visible and proxy absent,not_visible,False,0,0,-25.631466,True,False,True,1,0.0,0.0,0.00042451394137902075,,,,0
+motorcycle_5ab8604a14df,14259,3125420273466,right,3,hand not visible and proxy absent,not_visible,False,0,0,-25.631466,True,False,True,1,0.0,0.0,0.00042451394137902075,,,,0
+motorcycle_5ab8604a14df,14260,3125486922217,left,4,hand not visible but a false mask is present,uncertain,False,0,0,7.720783,True,True,True,1,0.2538610100746155,0.0015891387419165197,0.0018640558075081885,,,,1
+motorcycle_5ab8604a14df,14260,3125486922217,right,4,hand not visible but a false mask is present,uncertain,False,0,0,7.720783,True,True,True,1,0.2538610100746155,0.0015891387419165197,0.0018640558075081885,,,,1
+motorcycle_5ab8604a14df,14261,3125553577018,left,4,hand not visible but a false mask is present,uncertain,False,0,0,41.083982,True,True,True,1,0.25534364581108093,0.017782672482573276,0.017799403712102126,,,,2
+motorcycle_5ab8604a14df,14261,3125553577018,right,4,hand not visible but a false mask is present,uncertain,False,0,0,41.083982,True,True,True,1,0.25534364581108093,0.017782672482573276,0.017799403712102126,,,,2
+motorcycle_5ab8604a14df,14262,3125620232321,left,4,hand not visible but a false mask is present,uncertain,False,0,0,-25.571321,True,True,True,1,0.26435837149620056,0.02139038485764676,0.019281921873687748,,,,3
+motorcycle_5ab8604a14df,14262,3125620232321,right,4,hand not visible but a false mask is present,uncertain,False,0,0,-25.571321,True,True,True,1,0.26435837149620056,0.02139038485764676,0.019281921873687748,,,,3
+motorcycle_5ab8604a14df,14263,3125686874966,left,4,hand not visible but a false mask is present,uncertain,False,0,0,7.769034,True,True,True,0,0.25982561707496643,0.022143946313093136,0.019474823108255646,,,,4
+motorcycle_5ab8604a14df,14263,3125686874966,right,4,hand not visible but a false mask is present,uncertain,False,0,0,7.769034,True,True,True,0,0.25982561707496643,0.022143946313093136,0.019474823108255646,,,,4
+motorcycle_5ab8604a14df,14264,3125753523613,left,4,hand not visible but a false mask is present,uncertain,False,0,0,41.118387,True,True,True,0,0.2568320035934448,0.018347925589989083,0.018347925589989083,,,,5
+motorcycle_5ab8604a14df,14264,3125753523613,right,4,hand not visible but a false mask is present,uncertain,False,0,0,41.118387,True,True,True,0,0.2568320035934448,0.018347925589989083,0.018347925589989083,,,,5
+motorcycle_5ab8604a14df,14265,3125820172258,left,4,hand not visible but a false mask is present,uncertain,False,0,0,-25.530258,True,True,True,0,0.2829881012439728,0.022349642017300747,0.019328506865709246,,,,6
+motorcycle_5ab8604a14df,14265,3125820172258,right,4,hand not visible but a false mask is present,uncertain,False,0,0,-25.530258,True,True,True,0,0.2829881012439728,0.022349642017300747,0.019328506865709246,,,,6
+motorcycle_5ab8604a14df,14266,3125886808749,left,4,hand not visible but a false mask is present,uncertain,False,0,0,7.832251,True,True,True,0,0.2523840367794037,0.002942399953808684,0.002942399953808684,,,,7
+motorcycle_5ab8604a14df,14266,3125886808749,right,4,hand not visible but a false mask is present,uncertain,False,0,0,7.832251,True,True,True,0,0.2523840367794037,0.002942399953808684,0.002942399953808684,,,,7
+motorcycle_5ab8604a14df,14267,3125953438581,left,9,mask propagated for too long,uncertain,False,0,0,41.202419,True,True,True,0,0.2583259642124176,0.0024168425086083817,0.0024168425086083817,,,,8
+motorcycle_5ab8604a14df,14267,3125953438581,right,9,mask propagated for too long,uncertain,False,0,0,41.202419,True,True,True,0,0.2583259642124176,0.0024168425086083817,0.0024168425086083817,,,,8
+motorcycle_5ab8604a14df,14268,3126020074468,left,9,mask propagated for too long,uncertain,False,0,0,-25.433468,True,True,True,0,0.26740819215774536,0.01636707923910305,0.01636707923910305,,,,9
+motorcycle_5ab8604a14df,14268,3126020074468,right,9,mask propagated for too long,uncertain,False,0,0,-25.433468,True,True,True,0,0.26740819215774536,0.01636707923910305,0.01636707923910305,,,,9
+motorcycle_5ab8604a14df,14269,3126086710800,left,9,mask propagated for too long,uncertain,False,0,0,7.9342,True,True,True,0,0.270480215549469,0.016887059607793735,0.015552826068699085,,,,10
+motorcycle_5ab8604a14df,14269,3126086710800,right,9,mask propagated for too long,uncertain,False,0,0,7.9342,True,True,True,0,0.270480215549469,0.016887059607793735,0.015552826068699085,,,,10
+motorcycle_5ab8604a14df,14270,3126153359291,left,9,mask propagated for too long,uncertain,False,0,0,41.281709,True,True,True,0,0.2523840367794037,0.0024542417275552194,0.0024542417275552194,,,,11
+motorcycle_5ab8604a14df,14270,3126153359291,right,9,mask propagated for too long,uncertain,False,0,0,41.281709,True,True,True,0,0.2523840367794037,0.0024542417275552194,0.0024542417275552194,,,,11
+motorcycle_5ab8604a14df,14271,3126220014436,left,3,hand not visible and proxy absent,not_visible,False,0,0,-25.373436,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14271,3126220014436,right,3,hand not visible and proxy absent,not_visible,False,0,0,-25.373436,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14272,3126286663081,left,4,hand not visible but a false mask is present,uncertain,False,0,0,7.979919,True,True,True,0,0.2583259642124176,0.011418900121777107,0.011418900121777107,,,,1
+motorcycle_5ab8604a14df,14272,3126286663081,right,4,hand not visible but a false mask is present,uncertain,False,0,0,7.979919,True,True,True,0,0.2583259642124176,0.011418900121777107,0.011418900121777107,,,,1
+motorcycle_5ab8604a14df,14273,3126353337540,left,4,hand not visible but a false mask is present,uncertain,False,0,0,41.30846,True,True,True,1,0.25091278553009033,0.0007269883261946754,0.0007269883261946754,,,,2
+motorcycle_5ab8604a14df,14273,3126353337540,right,4,hand not visible but a false mask is present,uncertain,False,0,0,41.30846,True,True,True,1,0.25091278553009033,0.0007269883261946754,0.0007269883261946754,,,,2
+motorcycle_5ab8604a14df,14274,3126419998945,left,3,hand not visible and proxy absent,not_visible,False,0,0,-25.352945,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14274,3126419998945,right,3,hand not visible and proxy absent,not_visible,False,0,0,-25.352945,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14275,3126486660405,left,3,hand not visible and proxy absent,not_visible,False,0,0,7.980595,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14275,3126486660405,right,3,hand not visible and proxy absent,not_visible,False,0,0,7.980595,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14276,3126553321812,left,3,hand not visible and proxy absent,not_visible,False,0,0,41.321188,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14276,3126553321812,right,3,hand not visible and proxy absent,not_visible,False,0,0,41.321188,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14277,3126619983269,left,3,hand not visible and proxy absent,not_visible,False,0,0,-25.340269,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14277,3126619983269,right,3,hand not visible and proxy absent,not_visible,False,0,0,-25.340269,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14278,3126686644676,left,3,hand not visible and proxy absent,not_visible,False,0,0,7.997324,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14278,3126686644676,right,3,hand not visible and proxy absent,not_visible,False,0,0,7.997324,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14279,3126753306134,left,3,hand not visible and proxy absent,not_visible,False,0,0,41.336866,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14279,3126753306134,right,3,hand not visible and proxy absent,not_visible,False,0,0,41.336866,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14280,3126819967541,left,3,hand not visible and proxy absent,not_visible,False,0,0,-25.324541,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14280,3126819967541,right,3,hand not visible and proxy absent,not_visible,False,0,0,-25.324541,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14281,3126886628998,left,3,hand not visible and proxy absent,not_visible,False,0,0,8.014002,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14281,3126886628998,right,3,hand not visible and proxy absent,not_visible,False,0,0,8.014002,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14282,3126953290405,left,3,hand not visible and proxy absent,not_visible,False,0,0,41.351595,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14282,3126953290405,right,3,hand not visible and proxy absent,not_visible,False,0,0,41.351595,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14283,3127019951863,left,3,hand not visible and proxy absent,not_visible,False,0,0,-25.309863,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14283,3127019951863,right,3,hand not visible and proxy absent,not_visible,False,0,0,-25.309863,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14284,3127086613270,left,3,hand not visible and proxy absent,not_visible,False,0,0,8.02873,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14284,3127086613270,right,3,hand not visible and proxy absent,not_visible,False,0,0,8.02873,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14285,3127153274727,left,3,hand not visible and proxy absent,not_visible,False,0,0,41.367273,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14285,3127153274727,right,3,hand not visible and proxy absent,not_visible,False,0,0,41.367273,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14286,3127219923478,left,3,hand not visible and proxy absent,not_visible,False,0,0,-25.281478,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14286,3127219923478,right,3,hand not visible and proxy absent,not_visible,False,0,0,-25.281478,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14287,3127286578279,left,3,hand not visible and proxy absent,not_visible,False,0,0,8.063721,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14287,3127286578279,right,3,hand not visible and proxy absent,not_visible,False,0,0,8.063721,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14288,3127353220926,left,4,hand not visible but a false mask is present,uncertain,False,0,0,41.421074,True,True,True,0,0.27125170826911926,0.0009851741622574955,0.0009851741622574955,,,,1
+motorcycle_5ab8604a14df,14288,3127353220926,right,4,hand not visible but a false mask is present,uncertain,False,0,0,41.421074,True,True,True,0,0.27125170826911926,0.0009851741622574955,0.0009851741622574955,,,,1
+motorcycle_5ab8604a14df,14289,3127419882227,left,4,hand not visible but a false mask is present,uncertain,False,0,0,-25.240227,True,True,True,0,0.3065270483493805,0.013571651654488957,0.009972468925841941,,,,2
+motorcycle_5ab8604a14df,14289,3127419882227,right,4,hand not visible but a false mask is present,uncertain,False,0,0,-25.240227,True,True,True,0,0.3065270483493805,0.013571651654488957,0.009972468925841941,,,,2
+motorcycle_5ab8604a14df,14290,3127486524874,left,4,hand not visible but a false mask is present,uncertain,False,0,0,8.117126,True,True,True,0,0.2845759987831116,0.014904244876963131,0.010999635193583606,,,,3
+motorcycle_5ab8604a14df,14290,3127486524874,right,4,hand not visible but a false mask is present,uncertain,False,0,0,8.117126,True,True,True,0,0.2845759987831116,0.014904244876963131,0.010999635193583606,,,,3
+motorcycle_5ab8604a14df,14291,3127553186123,left,4,hand not visible but a false mask is present,uncertain,False,0,0,41.454877,True,True,True,0,0.27747300267219543,0.010360895901570504,0.010360895901570504,,,,4
+motorcycle_5ab8604a14df,14291,3127553186123,right,4,hand not visible but a false mask is present,uncertain,False,0,0,41.454877,True,True,True,0,0.27747300267219543,0.010360895901570504,0.010360895901570504,,,,4
+motorcycle_5ab8604a14df,14292,3127619828770,left,4,hand not visible but a false mask is present,uncertain,False,0,0,-25.18777,True,True,True,0,0.3584653437137604,0.02093798553371966,0.010434054022843706,,,,5
+motorcycle_5ab8604a14df,14292,3127619828770,right,4,hand not visible but a false mask is present,uncertain,False,0,0,-25.18777,True,True,True,0,0.3584653437137604,0.02093798553371966,0.010434054022843706,,,,5
+motorcycle_5ab8604a14df,14293,3127686490071,left,3,hand not visible and proxy absent,not_visible,False,0,0,8.153929,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14293,3127686490071,right,3,hand not visible and proxy absent,not_visible,False,0,0,8.153929,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14294,3127753132718,left,3,hand not visible and proxy absent,not_visible,False,0,0,41.511282,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14294,3127753132718,right,3,hand not visible and proxy absent,not_visible,False,0,0,41.511282,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14295,3127819794019,left,3,hand not visible and proxy absent,not_visible,False,0,0,-25.150019,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14295,3127819794019,right,3,hand not visible and proxy absent,not_visible,False,0,0,-25.150019,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14296,3127886461926,left,3,hand not visible and proxy absent,not_visible,False,0,0,8.180074,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14296,3127886461926,right,3,hand not visible and proxy absent,not_visible,False,0,0,8.180074,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14297,3127953123384,left,3,hand not visible and proxy absent,not_visible,False,0,0,41.518616,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14297,3127953123384,right,3,hand not visible and proxy absent,not_visible,False,0,0,41.518616,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14298,3128019784791,left,4,hand not visible but a false mask is present,uncertain,False,0,0,-25.142791,True,True,True,0,0.319121390581131,0.00890724731250525,0.006780740845721004,,,,1
+motorcycle_5ab8604a14df,14298,3128019784791,right,4,hand not visible but a false mask is present,uncertain,False,0,0,-25.142791,True,True,True,0,0.319121390581131,0.00890724731250525,0.006780740845721004,,,,1
+motorcycle_5ab8604a14df,14299,3128086420936,left,3,hand not visible and proxy absent,not_visible,False,0,0,8.222064,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14299,3128086420936,right,3,hand not visible and proxy absent,not_visible,False,0,0,8.222064,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14300,3128153082239,left,4,hand not visible but a false mask is present,uncertain,False,0,0,41.559761,True,True,True,0,0.29421496391296387,0.009483654572940287,0.007417839821113631,,,,1
+motorcycle_5ab8604a14df,14300,3128153082239,right,4,hand not visible but a false mask is present,uncertain,False,0,0,41.559761,True,True,True,0,0.29421496391296387,0.009483654572940287,0.007417839821113631,,,,1
+motorcycle_5ab8604a14df,14301,3128219750196,left,3,hand not visible and proxy absent,not_visible,False,0,0,-25.108196,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14301,3128219750196,right,3,hand not visible and proxy absent,not_visible,False,0,0,-25.108196,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14302,3128286386343,left,3,hand not visible and proxy absent,not_visible,False,0,0,8.255657,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14302,3128286386343,right,3,hand not visible and proxy absent,not_visible,False,0,0,8.255657,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14303,3128353034936,left,3,hand not visible and proxy absent,not_visible,False,0,0,41.621064,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14303,3128353034936,right,3,hand not visible and proxy absent,not_visible,False,0,0,41.621064,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14304,3128419670979,left,4,hand not visible but a false mask is present,uncertain,False,0,0,-25.014979,True,True,True,0,0.2727987766265869,0.002856775426219871,0.002856775426219871,,,,1
+motorcycle_5ab8604a14df,14304,3128419670979,right,4,hand not visible but a false mask is present,uncertain,False,0,0,-25.014979,True,True,True,0,0.2727987766265869,0.002856775426219871,0.002856775426219871,,,,1
+motorcycle_5ab8604a14df,14305,3128486300811,left,3,hand not visible and proxy absent,not_visible,False,0,0,8.341189,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14305,3128486300811,right,3,hand not visible and proxy absent,not_visible,False,0,0,8.341189,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14306,3128552924539,left,3,hand not visible and proxy absent,not_visible,False,0,0,41.718461,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14306,3128552924539,right,3,hand not visible and proxy absent,not_visible,False,0,0,41.718461,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14307,3128619541614,left,3,hand not visible and proxy absent,not_visible,False,0,0,-24.898614,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14307,3128619541614,right,3,hand not visible and proxy absent,not_visible,False,0,0,-24.898614,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14308,3128686165186,left,3,hand not visible and proxy absent,not_visible,False,0,0,8.476814,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14308,3128686165186,right,3,hand not visible and proxy absent,not_visible,False,0,0,8.476814,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14309,3128752788706,left,3,hand not visible and proxy absent,not_visible,False,0,0,41.854294,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14309,3128752788706,right,3,hand not visible and proxy absent,not_visible,False,0,0,41.854294,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14310,3128819412280,left,3,hand not visible and proxy absent,not_visible,False,0,0,-24.76928,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14310,3128819412280,right,3,hand not visible and proxy absent,not_visible,False,0,0,-24.76928,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14311,3128886035852,left,3,hand not visible and proxy absent,not_visible,False,0,0,8.606148,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14311,3128886035852,right,3,hand not visible and proxy absent,not_visible,False,0,0,8.606148,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14312,3128952658926,left,3,hand not visible and proxy absent,not_visible,False,0,0,41.983074,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14312,3128952658926,right,3,hand not visible and proxy absent,not_visible,False,0,0,41.983074,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14313,3129019282499,left,4,hand not visible but a false mask is present,uncertain,False,0,0,-24.640499,True,True,True,0,0.272024542093277,0.014602754682119762,0.011601303329973965,,,,1
+motorcycle_5ab8604a14df,14313,3129019282499,right,4,hand not visible but a false mask is present,uncertain,False,0,0,-24.640499,True,True,True,0,0.272024542093277,0.014602754682119762,0.011601303329973965,,,,1
+motorcycle_5ab8604a14df,14314,3129085893415,left,4,hand not visible but a false mask is present,uncertain,False,0,0,8.748585,True,True,True,0,0.2658804655075073,0.0026222101494918957,0.0026222101494918957,,,,2
+motorcycle_5ab8604a14df,14314,3129085893415,right,4,hand not visible but a false mask is present,uncertain,False,0,0,8.748585,True,True,True,0,0.2658804655075073,0.0026222101494918957,0.0026222101494918957,,,,2
+motorcycle_5ab8604a14df,14315,3129152523489,left,4,hand not visible but a false mask is present,uncertain,False,0,0,42.119511,True,True,True,0,0.3065270483493805,0.017369640757537583,0.014384264508272444,,,,3
+motorcycle_5ab8604a14df,14315,3129152523489,right,4,hand not visible but a false mask is present,uncertain,False,0,0,42.119511,True,True,True,0,0.3065270483493805,0.017369640757537583,0.014384264508272444,,,,3
+motorcycle_5ab8604a14df,14316,3129219146561,left,4,hand not visible but a false mask is present,uncertain,False,0,0,-24.503561,True,True,True,0,0.3380771279335022,0.019916068279163517,0.010138797031158142,,,,4
+motorcycle_5ab8604a14df,14316,3129219146561,right,4,hand not visible but a false mask is present,uncertain,False,0,0,-24.503561,True,True,True,0,0.3380771279335022,0.019916068279163517,0.010138797031158142,,,,4
+motorcycle_5ab8604a14df,14317,3129285770133,left,4,hand not visible but a false mask is present,uncertain,False,0,0,8.873867,True,True,True,0,0.2751297354698181,0.00339315896111531,0.0033931589611153105,,,,5
+motorcycle_5ab8604a14df,14317,3129285770133,right,4,hand not visible but a false mask is present,uncertain,False,0,0,8.873867,True,True,True,0,0.2751297354698181,0.00339315896111531,0.0033931589611153105,,,,5
+motorcycle_5ab8604a14df,14318,3129352343135,left,3,hand not visible and proxy absent,not_visible,False,0,0,42.299865,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14318,3129352343135,right,3,hand not visible and proxy absent,not_visible,False,0,0,42.299865,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14319,3129418954238,left,3,hand not visible and proxy absent,not_visible,False,0,0,-24.311238,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14319,3129418954238,right,3,hand not visible and proxy absent,not_visible,False,0,0,-24.311238,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14320,3129485533082,left,3,hand not visible and proxy absent,not_visible,False,0,0,9.110918,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14320,3129485533082,right,3,hand not visible and proxy absent,not_visible,False,0,0,9.110918,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14321,3129552100164,left,3,hand not visible and proxy absent,not_visible,False,0,0,42.541836,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14321,3129552100164,right,3,hand not visible and proxy absent,not_visible,False,0,0,42.541836,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14322,3129618653883,left,3,hand not visible and proxy absent,not_visible,False,0,0,-24.011883,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14322,3129618653883,right,3,hand not visible and proxy absent,not_visible,False,0,0,-24.011883,True,False,False,0,0.0,0.0,0.0,,,,0
+motorcycle_5ab8604a14df,14323,3129685195395,left,4,hand not visible but a false mask is present,uncertain,False,0,0,9.446605,True,True,True,0,0.2901756167411804,0.02427996661627614,0.02427996661627614,,,,1
+motorcycle_5ab8604a14df,14323,3129685195395,right,4,hand not visible but a false mask is present,uncertain,False,0,0,9.446605,True,True,True,0,0.2901756167411804,0.02427996661627614,0.02427996661627614,,,,1
+motorcycle_5ab8604a14df,14324,3129751762010,left,4,hand not visible but a false mask is present,uncertain,False,0,0,42.90399,True,True,True,0,0.272024542093277,0.030225786302175192,0.030225786302175192,,,,2
+motorcycle_5ab8604a14df,14324,3129751762010,right,4,hand not visible but a false mask is present,uncertain,False,0,0,42.90399,True,True,True,0,0.272024542093277,0.030225786302175192,0.030225786302175192,,,,2

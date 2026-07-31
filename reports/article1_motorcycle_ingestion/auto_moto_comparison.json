@@ -1,0 +1,442 @@
+{
+  "status": "exploratory_preliminary",
+  "is_scientific_conclusion": false,
+  "caveats": [
+    "The car recording is a provisional 10 fps development baseline; the final protocol is 15 fps for both vehicles.",
+    "No reviewed ground truth exists, so no accuracy, IoU, precision or recall is reported: these are coverage, stability and agreement diagnostics only.",
+    "The sampling-rate difference is never used as a feature and no vehicle classifier is trained here.",
+    "The definitive comparison must be repeated when both recordings are acquired at the final protocol rate."
+  ],
+  "rate_sensitive_metrics": {
+    "class_switch_rate_per_second": "the two recordings are currently sampled at different rates; this metric is rate sensitive and must be recomputed once both are at the final protocol rate",
+    "mean_frame_difference": "the two recordings are currently sampled at different rates; this metric is rate sensitive and must be recomputed once both are at the final protocol rate",
+    "component_churn_per_second": "the two recordings are currently sampled at different rates; this metric is rate sensitive and must be recomputed once both are at the final protocol rate"
+  },
+  "car": {
+    "recording_id": "car_2e84f0c3e245",
+    "domain": "car",
+    "frame_count": 300,
+    "duration_s": 29.89780049,
+    "effective_fps": 10.000760357810003,
+    "class_pixel_fraction": {
+      "unknown": 0.0,
+      "road_surface": 0.03421548905055848,
+      "lane_marking": 0.0046139930380588445,
+      "regulatory_road_marking": 0.0009113271080036954,
+      "vehicle": 0.024639048327664385,
+      "two_wheeler": 0.00020330302903054224,
+      "pedestrian": 0.001416340134304751,
+      "traffic_light": 1.5222138238011251e-06,
+      "traffic_sign": 0.0008546694783880628,
+      "road_boundary_or_obstacle": 0.01075097850354133,
+      "mirror": 2.6703261036925062e-05,
+      "instrument_display": 0.00045930068272164826,
+      "control_and_ego_vehicle": 0.017547561527182884,
+      "other_environment": 0.9043597636456849
+    },
+    "class_presence_fraction": {
+      "unknown": 0.0,
+      "road_surface": 1.0,
+      "lane_marking": 0.95,
+      "regulatory_road_marking": 0.22666666666666666,
+      "vehicle": 1.0,
+      "two_wheeler": 0.11333333333333333,
+      "pedestrian": 0.25,
+      "traffic_light": 0.023333333333333334,
+      "traffic_sign": 0.6533333333333333,
+      "road_boundary_or_obstacle": 0.9966666666666667,
+      "mirror": 0.08,
+      "instrument_display": 0.3,
+      "control_and_ego_vehicle": 1.0,
+      "other_environment": 1.0
+    },
+    "mean_confidence": 0.9106409871578216,
+    "confidence_percentiles": {
+      "p5": 0.7976449429988861,
+      "p25": 0.8902026861906052,
+      "p50": 0.9255797564983368,
+      "p75": 0.9515336602926254,
+      "p95": 0.969824555516243
+    },
+    "mean_entropy": 0.16124369734277327,
+    "entropy_percentiles": {
+      "p5": 0.06502843797206878,
+      "p25": 0.1000713724642992,
+      "p50": 0.13981424272060394,
+      "p75": 0.20441563054919243,
+      "p95": 0.3039534300565721
+    },
+    "provenance_fraction": {
+      "external_mask2former": 0.6548305563866492,
+      "dense_other_environment_fill": 0.01142801809509812,
+      "conflict_external_wins": 0.31570786004731105,
+      "conflict_internal_wins": 0.01803356547094146
+    },
+    "fallback_fraction": 1.0,
+    "dense_coverage": 1.0,
+    "invalid_id_count": 0,
+    "class_switch_rate_per_second": 0.6478333326270324,
+    "component_count_per_class_frame": {
+      "unknown": 0.0,
+      "road_surface": 5.38,
+      "lane_marking": 10.428070175438597,
+      "regulatory_road_marking": 2.764705882352941,
+      "vehicle": 6.85,
+      "two_wheeler": 1.088235294117647,
+      "pedestrian": 6.32,
+      "traffic_light": 1.4285714285714286,
+      "traffic_sign": 2.107142857142857,
+      "road_boundary_or_obstacle": 4.872909698996655,
+      "mirror": 8.833333333333334,
+      "instrument_display": 8.877777777777778,
+      "control_and_ego_vehicle": 66.41333333333333,
+      "other_environment": 240.57333333333332
+    },
+    "mean_component_area_px": {
+      "unknown": 0.0,
+      "road_surface": 27357.228978003477,
+      "lane_marking": 2044.1825622087067,
+      "regulatory_road_marking": 6919.650135811901,
+      "vehicle": 11984.617168663766,
+      "two_wheeler": 5324.85294117647,
+      "pedestrian": 2555.1023233488418,
+      "traffic_light": 159.0,
+      "traffic_sign": 1936.8556122448977,
+      "road_boundary_or_obstacle": 8619.839473625596,
+      "mirror": 163.41947490253412,
+      "instrument_display": 790.5368750811284,
+      "control_and_ego_vehicle": 1327.47284584709,
+      "other_environment": 13184.644006823462
+    },
+    "lane_continuity": 0.95,
+    "boundary_continuity": 0.9966666666666667,
+    "cockpit_fraction": 0.018033565470941457,
+    "gaze": {
+      "available": true,
+      "frames": 300,
+      "valid_fraction": 0.95,
+      "abs_dt_ms_median": 15.403864500000001,
+      "note": "gaze is used only after segmentation and never as a segmentation input"
+    },
+    "hands": {
+      "available": false
+    }
+  },
+  "motorcycle": {
+    "recording_id": "motorcycle_5ab8604a14df",
+    "domain": "motorcycle",
+    "frame_count": 450,
+    "duration_s": 29.929642793,
+    "effective_fps": 15.001183518373683,
+    "class_pixel_fraction": {
+      "unknown": 0.0,
+      "road_surface": 0.2858831603200266,
+      "lane_marking": 0.0352021548073962,
+      "regulatory_road_marking": 0.01645334677080709,
+      "vehicle": 0.006711577806705669,
+      "two_wheeler": 0.0004278448776629993,
+      "pedestrian": 7.316541156929166e-05,
+      "traffic_light": 1.2376735673693345e-05,
+      "traffic_sign": 0.0023342631376967794,
+      "road_boundary_or_obstacle": 0.07146423045384136,
+      "mirror": 0.0001953777481500145,
+      "instrument_display": 0.00020183549242742382,
+      "control_and_ego_vehicle": 0.0076997504677453876,
+      "other_environment": 0.5733409159702979
+    },
+    "class_presence_fraction": {
+      "unknown": 0.0,
+      "road_surface": 0.9688888888888889,
+      "lane_marking": 0.9888888888888889,
+      "regulatory_road_marking": 0.4488888888888889,
+      "vehicle": 0.8355555555555556,
+      "two_wheeler": 0.2,
+      "pedestrian": 0.21555555555555556,
+      "traffic_light": 0.051111111111111114,
+      "traffic_sign": 0.7844444444444445,
+      "road_boundary_or_obstacle": 1.0,
+      "mirror": 0.2222222222222222,
+      "instrument_display": 0.4888888888888889,
+      "control_and_ego_vehicle": 0.9933333333333333,
+      "other_environment": 1.0
+    },
+    "mean_confidence": 0.9615059081713359,
+    "confidence_percentiles": {
+      "p5": 0.9163886994123459,
+      "p25": 0.9554198682308197,
+      "p50": 0.9687515497207642,
+      "p75": 0.9765669107437134,
+      "p95": 0.9821238160133362
+    },
+    "mean_entropy": 0.06537036821246148,
+    "entropy_percentiles": {
+      "p5": 0.03499574922025204,
+      "p25": 0.043694328516721725,
+      "p50": 0.05551784671843052,
+      "p75": 0.07669754326343536,
+      "p95": 0.1264929547905922
+    },
+    "provenance_fraction": {
+      "external_mask2former": 0.6501389326306654,
+      "dense_other_environment_fill": 0.007175640875348773,
+      "conflict_external_wins": 0.33458846278566323,
+      "conflict_internal_wins": 0.008096963708322828
+    },
+    "fallback_fraction": 1.0,
+    "dense_coverage": 1.0,
+    "invalid_id_count": 0,
+    "class_switch_rate_per_second": 1.149518636868622,
+    "component_count_per_class_frame": {
+      "unknown": 0.0,
+      "road_surface": 11.403669724770642,
+      "lane_marking": 27.6,
+      "regulatory_road_marking": 2.3415841584158414,
+      "vehicle": 2.2632978723404253,
+      "two_wheeler": 1.5555555555555556,
+      "pedestrian": 1.288659793814433,
+      "traffic_light": 1.2608695652173914,
+      "traffic_sign": 3.0169971671388103,
+      "road_boundary_or_obstacle": 7.566666666666666,
+      "mirror": 12.01,
+      "instrument_display": 11.340909090909092,
+      "control_and_ego_vehicle": 165.8791946308725,
+      "other_environment": 961.4711111111111
+    },
+    "mean_component_area_px": {
+      "unknown": 0.0,
+      "road_surface": 111961.49613385952,
+      "lane_marking": 5880.64454082148,
+      "regulatory_road_marking": 72892.18484159341,
+      "vehicle": 12630.028001519757,
+      "two_wheeler": 3850.4403086419748,
+      "pedestrian": 830.0644329896908,
+      "traffic_light": 645.6485507246376,
+      "traffic_sign": 3169.227975424009,
+      "road_boundary_or_obstacle": 43974.15748948539,
+      "mirror": 1385.9008088653668,
+      "instrument_display": 681.8663700540312,
+      "control_and_ego_vehicle": 1680.6356821031102,
+      "other_environment": 5077.956360842594
+    },
+    "lane_continuity": 0.9888888888888889,
+    "boundary_continuity": 1.0,
+    "cockpit_fraction": 0.008096963708322826,
+    "gaze": {
+      "available": true,
+      "frames": 450,
+      "valid_fraction": 0.94,
+      "abs_dt_ms_median": 15.567246,
+      "note": "gaze is used only after segmentation and never as a segmentation input"
+    },
+    "hands": {
+      "available": true,
+      "status": "review_candidates_only",
+      "per_state": {
+        "visible": 0,
+        "partially_visible": 0,
+        "occluded": 0,
+        "out_of_frame": 304,
+        "motion_blurred": 8,
+        "uncertain": 175,
+        "not_visible": 413
+      },
+      "evaluable_fraction": 0.0,
+      "candidate_false_mask_count": 132,
+      "note": "candidate states only; no hand ground truth exists"
+    }
+  },
+  "per_class": {
+    "unknown": {
+      "car_pixel_fraction": 0.0,
+      "motorcycle_pixel_fraction": 0.0,
+      "difference": 0.0,
+      "car_presence_fraction": 0.0,
+      "motorcycle_presence_fraction": 0.0,
+      "car_components_per_class_frame": 0.0,
+      "motorcycle_components_per_class_frame": 0.0
+    },
+    "road_surface": {
+      "car_pixel_fraction": 0.03421548905055848,
+      "motorcycle_pixel_fraction": 0.2858831603200266,
+      "difference": 0.2516676712694681,
+      "car_presence_fraction": 1.0,
+      "motorcycle_presence_fraction": 0.9688888888888889,
+      "car_components_per_class_frame": 5.38,
+      "motorcycle_components_per_class_frame": 11.403669724770642
+    },
+    "lane_marking": {
+      "car_pixel_fraction": 0.0046139930380588445,
+      "motorcycle_pixel_fraction": 0.0352021548073962,
+      "difference": 0.030588161769337353,
+      "car_presence_fraction": 0.95,
+      "motorcycle_presence_fraction": 0.9888888888888889,
+      "car_components_per_class_frame": 10.428070175438597,
+      "motorcycle_components_per_class_frame": 27.6
+    },
+    "regulatory_road_marking": {
+      "car_pixel_fraction": 0.0009113271080036954,
+      "motorcycle_pixel_fraction": 0.01645334677080709,
+      "difference": 0.015542019662803393,
+      "car_presence_fraction": 0.22666666666666666,
+      "motorcycle_presence_fraction": 0.4488888888888889,
+      "car_components_per_class_frame": 2.764705882352941,
+      "motorcycle_components_per_class_frame": 2.3415841584158414
+    },
+    "vehicle": {
+      "car_pixel_fraction": 0.024639048327664385,
+      "motorcycle_pixel_fraction": 0.006711577806705669,
+      "difference": -0.017927470520958715,
+      "car_presence_fraction": 1.0,
+      "motorcycle_presence_fraction": 0.8355555555555556,
+      "car_components_per_class_frame": 6.85,
+      "motorcycle_components_per_class_frame": 2.2632978723404253
+    },
+    "two_wheeler": {
+      "car_pixel_fraction": 0.00020330302903054224,
+      "motorcycle_pixel_fraction": 0.0004278448776629993,
+      "difference": 0.00022454184863245704,
+      "car_presence_fraction": 0.11333333333333333,
+      "motorcycle_presence_fraction": 0.2,
+      "car_components_per_class_frame": 1.088235294117647,
+      "motorcycle_components_per_class_frame": 1.5555555555555556
+    },
+    "pedestrian": {
+      "car_pixel_fraction": 0.001416340134304751,
+      "motorcycle_pixel_fraction": 7.316541156929166e-05,
+      "difference": -0.0013431747227354593,
+      "car_presence_fraction": 0.25,
+      "motorcycle_presence_fraction": 0.21555555555555556,
+      "car_components_per_class_frame": 6.32,
+      "motorcycle_components_per_class_frame": 1.288659793814433
+    },
+    "traffic_light": {
+      "car_pixel_fraction": 1.5222138238011251e-06,
+      "motorcycle_pixel_fraction": 1.2376735673693345e-05,
+      "difference": 1.085452184989222e-05,
+      "car_presence_fraction": 0.023333333333333334,
+      "motorcycle_presence_fraction": 0.051111111111111114,
+      "car_components_per_class_frame": 1.4285714285714286,
+      "motorcycle_components_per_class_frame": 1.2608695652173914
+    },
+    "traffic_sign": {
+      "car_pixel_fraction": 0.0008546694783880628,
+      "motorcycle_pixel_fraction": 0.0023342631376967794,
+      "difference": 0.0014795936593087165,
+      "car_presence_fraction": 0.6533333333333333,
+      "motorcycle_presence_fraction": 0.7844444444444445,
+      "car_components_per_class_frame": 2.107142857142857,
+      "motorcycle_components_per_class_frame": 3.0169971671388103
+    },
+    "road_boundary_or_obstacle": {
+      "car_pixel_fraction": 0.01075097850354133,
+      "motorcycle_pixel_fraction": 0.07146423045384136,
+      "difference": 0.06071325195030003,
+      "car_presence_fraction": 0.9966666666666667,
+      "motorcycle_presence_fraction": 1.0,
+      "car_components_per_class_frame": 4.872909698996655,
+      "motorcycle_components_per_class_frame": 7.566666666666666
+    },
+    "mirror": {
+      "car_pixel_fraction": 2.6703261036925062e-05,
+      "motorcycle_pixel_fraction": 0.0001953777481500145,
+      "difference": 0.00016867448711308945,
+      "car_presence_fraction": 0.08,
+      "motorcycle_presence_fraction": 0.2222222222222222,
+      "car_components_per_class_frame": 8.833333333333334,
+      "motorcycle_components_per_class_frame": 12.01
+    },
+    "instrument_display": {
+      "car_pixel_fraction": 0.00045930068272164826,
+      "motorcycle_pixel_fraction": 0.00020183549242742382,
+      "difference": -0.0002574651902942244,
+      "car_presence_fraction": 0.3,
+      "motorcycle_presence_fraction": 0.4888888888888889,
+      "car_components_per_class_frame": 8.877777777777778,
+      "motorcycle_components_per_class_frame": 11.340909090909092
+    },
+    "control_and_ego_vehicle": {
+      "car_pixel_fraction": 0.017547561527182884,
+      "motorcycle_pixel_fraction": 0.0076997504677453876,
+      "difference": -0.009847811059437496,
+      "car_presence_fraction": 1.0,
+      "motorcycle_presence_fraction": 0.9933333333333333,
+      "car_components_per_class_frame": 66.41333333333333,
+      "motorcycle_components_per_class_frame": 165.8791946308725
+    },
+    "other_environment": {
+      "car_pixel_fraction": 0.9043597636456849,
+      "motorcycle_pixel_fraction": 0.5733409159702979,
+      "difference": -0.33101884767538703,
+      "car_presence_fraction": 1.0,
+      "motorcycle_presence_fraction": 1.0,
+      "car_components_per_class_frame": 240.57333333333332,
+      "motorcycle_components_per_class_frame": 961.4711111111111
+    }
+  },
+  "temporal_per_second": {
+    "car_class_switch_rate_per_second": 0.6478333326270324,
+    "motorcycle_class_switch_rate_per_second": 1.149518636868622,
+    "note": "switch rates are normalised per second; raw per-frame counts of recordings sampled at different rates are never compared",
+    "caveat": "the two recordings are currently sampled at different rates; this metric is rate sensitive and must be recomputed once both are at the final protocol rate"
+  },
+  "findings": {
+    "common_problems": [
+      "both recordings use the unreviewed Grounding DINO + SAM2.1 cockpit fallback: no trained cockpit model exists yet",
+      "dense coverage is complete in both recordings",
+      "no invalid class id in either recording"
+    ],
+    "motorcycle_specific": [],
+    "car_specific": [],
+    "external_model": [
+      "road_surface: 28.59% on the motorcycle vs 3.42% on the car",
+      "lane_marking: 3.52% on the motorcycle vs 0.46% on the car",
+      "regulatory_road_marking: 1.65% on the motorcycle vs 0.09% on the car",
+      "vehicle: 0.67% on the motorcycle vs 2.46% on the car",
+      "road_boundary_or_obstacle: 7.15% on the motorcycle vs 1.08% on the car",
+      "other_environment: 57.33% on the motorcycle vs 90.44% on the car"
+    ],
+    "cockpit_proxy": [],
+    "fusion": [
+      "mean final entropy differs (0.065 vs 0.161): the fusion is less certain in one domain"
+    ],
+    "temporal": [
+      "per-second class switching is 1.150 on the motorcycle vs 0.648 on the car"
+    ],
+    "probably_due_to_sampling_rate": [
+      "per-second switching still depends on how densely the motion was sampled; part of this difference is the 10 vs 15 fps artefact rather than a property of the vehicle"
+    ],
+    "probably_due_to_domain_shift": [
+      "lane_marking differs markedly: the rider's viewpoint is higher, less occluded and more roll-dynamic than the driver's",
+      "other_environment differs markedly: the rider's viewpoint is higher, less occluded and more roll-dynamic than the driver's",
+      "regulatory_road_marking differs markedly: the rider's viewpoint is higher, less occluded and more roll-dynamic than the driver's",
+      "road_boundary_or_obstacle differs markedly: the rider's viewpoint is higher, less occluded and more roll-dynamic than the driver's",
+      "road_surface differs markedly: the rider's viewpoint is higher, less occluded and more roll-dynamic than the driver's",
+      "vibration, roll and the absence of a windscreen change the motorcycle's image statistics independently of any model quality difference"
+    ]
+  },
+  "route_pairing_quality": {
+    "status": "exploratory_preliminary",
+    "accepted_count": 181,
+    "accepted_fraction": 0.18992654774396642,
+    "median_pair_distance_m": 16.290381687866986,
+    "median_pair_quality": 0.5098116984703378,
+    "common_route": {
+      "motorcycle_progression_range": [
+        0.8128802769948967,
+        0.9679823456868
+      ],
+      "car_progression_range": [
+        0.0,
+        0.9923835505256435
+      ],
+      "motorcycle_covered_fraction": 0.15510206869190324,
+      "car_covered_fraction": 0.9923835505256435,
+      "motorcycle_time_range_ns": [
+        2915248134007,
+        3100248148851
+      ],
+      "approximate_common_distance_m": 2222.4462010744614,
+      "progression_monotonic": true
+    }
+  }
+}
