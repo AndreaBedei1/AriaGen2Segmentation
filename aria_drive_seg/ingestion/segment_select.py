@@ -61,6 +61,9 @@ class SegmentCandidate:
     instrument_proxy_fraction: Optional[float] = None
     hand_tracked_fraction: Optional[float] = None
     hand_proxy_frames: Optional[int] = None
+    median_speed_mps: Optional[float] = None
+    moving_fraction: Optional[float] = None
+    gps_coverage: Optional[float] = None
     passes_quality_gate: bool = True
     rejection_reasons: List[str] = field(default_factory=list)
     score: float = 0.0
@@ -101,10 +104,24 @@ def _entropy(fractions: np.ndarray) -> float:
     return float(-(p * np.log(p)).sum() / np.log(len(p)) if len(p) > 1 else 0.0)
 
 
+# A candidate window must be actual riding. Without this gate the ranking is happy
+# to pick the descent into a parking garage: a spiral ramp has enormous visual
+# variety and parked cars register as traffic, while none of it is driving.
+MIN_MEDIAN_SPEED_MPS = 3.0        # ~11 km/h
+MIN_MOVING_FRACTION = 0.80        # share of the window above the stop threshold
+# Every frame of the window must have a satellite fix. GPS at 1 Hz is always
+# available outdoors and is lost under a roof, so full coverage is direct evidence
+# that the vehicle was outside and located for the whole window. A partially
+# covered window is one that drives into a structure.
+MIN_GPS_COVERAGE = 1.0
+STOP_SPEED_MPS = 1.0
+
+
 def build_candidates(scan: RgbScan, domain: str, duration_s: float = 30.0,
                      stride_s: float = 5.0,
                      scout: Optional[Dict[str, Any]] = None,
                      hand_tracked_by_frame: Optional[Dict[int, bool]] = None,
+                     speed_by_frame: Optional[Dict[int, float]] = None,
                      max_missing_fraction: float = 0.02,
                      max_gap_ms: float = 250.0) -> List[SegmentCandidate]:
     """Slide a fixed-duration window over the recording and measure every position.
@@ -200,7 +217,42 @@ def build_candidates(scan: RgbScan, domain: str, duration_s: float = 30.0,
             cand.hand_proxy_frames = int(sum(flags))
             cand.hand_tracked_fraction = float(np.mean(flags)) if flags else 0.0
 
+        if speed_by_frame is not None:
+            speeds = [speed_by_frame.get(int(scan.frame_index[i]))
+                      for i in range(start, end + 1)]
+            known = [s for s in speeds if s is not None]
+            cand.gps_coverage = len(known) / max(1, len(speeds))
+            if known:
+                cand.median_speed_mps = float(np.median(known))
+                cand.moving_fraction = float(
+                    np.mean([s >= STOP_SPEED_MPS for s in known]))
+
         # --- hard quality gates ---------------------------------------------
+        if speed_by_frame is not None:
+            if cand.gps_coverage is not None and cand.gps_coverage < MIN_GPS_COVERAGE:
+                cand.passes_quality_gate = False
+                cand.rejection_reasons.append(
+                    f"GPS covers only {cand.gps_coverage:.0%} of the window; the "
+                    "vehicle is probably indoors or the fix is lost")
+            if cand.median_speed_mps is None:
+                cand.passes_quality_gate = False
+                cand.rejection_reasons.append(
+                    "no GPS speed in this window: cannot confirm the vehicle is "
+                    "actually being ridden")
+            else:
+                if cand.median_speed_mps < MIN_MEDIAN_SPEED_MPS:
+                    cand.passes_quality_gate = False
+                    cand.rejection_reasons.append(
+                        f"median speed {cand.median_speed_mps:.1f} m/s is below "
+                        f"{MIN_MEDIAN_SPEED_MPS} m/s: this is manoeuvring or "
+                        "parking, not riding")
+                if (cand.moving_fraction is not None
+                        and cand.moving_fraction < MIN_MOVING_FRACTION):
+                    cand.passes_quality_gate = False
+                    cand.rejection_reasons.append(
+                        f"the vehicle is moving in only "
+                        f"{cand.moving_fraction:.0%} of the window")
+
         if missing > max_missing_fraction * expected:
             cand.passes_quality_gate = False
             cand.rejection_reasons.append(

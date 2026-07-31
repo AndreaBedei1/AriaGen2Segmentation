@@ -15,7 +15,9 @@ import pandas as pd
 
 from aria_drive_seg.ingestion.rgb_scan import RgbScan
 from aria_drive_seg.ingestion.segment_select import build_candidates, select_segment
-from aria_drive_seg.ingestion.streams import associate_by_timestamp
+from aria_drive_seg.ingestion.route_align import build_track
+from aria_drive_seg.ingestion.streams import (GpsSample, associate_by_timestamp,
+                                              valid_gps)
 from aria_drive_seg.io_utils import atomic_write_json
 from aria_drive_seg.logging_utils import get_logger, setup_logging
 
@@ -70,9 +72,38 @@ def main() -> int:
         log.info("using hand-tracking flags for %d of %d RGB frames",
                  len(hand_flags), scan.frame_index.size)
 
+    # GPS speed is the driving gate. Without it the ranking happily picks the
+    # descent into a parking garage, whose spiral ramp has huge visual variety and
+    # whose parked cars register as traffic.
+    speed_flags = None
+    gps_path = Path(args.work) / "gps" / f"{rec_id}.parquet"
+    if gps_path.exists():
+        gps = pd.read_parquet(gps_path)
+        usable = valid_gps([
+            GpsSample(int(r.Index), int(r.timestamp_ns), r.latitude, r.longitude,
+                      r.altitude, r.accuracy, r.speed, r.utc_time_ms)
+            for r in gps.itertuples()])
+        if len(usable) >= 2:
+            track = build_track(rec_id, args.domain,
+                               [s.timestamp_ns for s in usable],
+                               [s.latitude for s in usable],
+                               [s.longitude for s in usable],
+                               [s.accuracy for s in usable],
+                               [s.speed for s in usable])
+            assoc = associate_by_timestamp(
+                scan.timestamp_ns, track.timestamp_ns, window_s=1.5,
+                frame_indices=scan.frame_index.tolist())
+            speed_flags = {
+                a.frame_index: float(track.speed_mps[a.nearest_index])
+                for a in assoc
+                if a.nearest_index is not None
+                and abs(a.nearest_dt_ms or 1e9) <= 1500.0}
+            log.info("using GPS speed for %d of %d RGB frames",
+                     len(speed_flags), scan.frame_index.size)
+
     candidates = build_candidates(
         scan, args.domain, duration_s=args.duration_s, stride_s=args.stride_s,
-        scout=scout, hand_tracked_by_frame=hand_flags)
+        scout=scout, hand_tracked_by_frame=hand_flags, speed_by_frame=speed_flags)
     log.info("evaluated %d candidate windows", len(candidates))
 
     result = select_segment(candidates)

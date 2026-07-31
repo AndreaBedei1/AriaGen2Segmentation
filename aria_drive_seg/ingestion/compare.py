@@ -1,8 +1,9 @@
 """Exploratory car/motorcycle comparison of semantic-camera outputs.
 
-Everything produced here is labelled `exploratory_preliminary`. It exists to expose
-failure modes and domain shift before annotation, not to support a scientific claim
-about how the vehicle changes visual attention.
+Everything produced here is labelled `exploratory_preliminary`. These are offline
+diagnostics computed over two already-produced runs: they exist to expose failure
+modes and domain shift before annotation, not to support a scientific claim about
+how the vehicle changes visual attention. Nothing here writes or alters a mask.
 
 Two rules shape every metric:
 

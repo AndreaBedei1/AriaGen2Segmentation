@@ -159,3 +159,55 @@ def test_stratum_coverage_is_reported():
     coverage = result["stratum_coverage"]
     assert coverage
     assert "domain:car" in coverage and "domain:motorcycle" in coverage
+
+
+# --------------------------------------------------------------------------- #
+# the driving gate
+# --------------------------------------------------------------------------- #
+def test_segment_selection_rejects_a_window_that_is_not_riding():
+    """A parking-garage descent must not win on visual variety alone.
+
+    This is the failure the gate exists for: the first ranking of the real
+    motorcycle recording picked the ride's final 30 s, in which the rider descends
+    a spiral ramp into a garage. The ramp has enormous visual variety and the
+    parked cars register as traffic, but none of it is riding.
+    """
+    import numpy as np
+
+    from aria_drive_seg.ingestion.rgb_scan import RgbScan
+    from aria_drive_seg.ingestion.segment_select import build_candidates
+
+    n, fps = 900, 15.0
+    step = int(1e9 / fps)
+    rng = np.random.default_rng(0)
+    scan = RgbScan(
+        recording_id="moto", source_file_sha256="0" * 64, source_stream_id="214-1",
+        frame_index=np.arange(n, dtype=np.int64),
+        timestamp_ns=np.arange(n, dtype=np.int64) * step,
+        width=2016, height=1512,
+        mean_luminance=np.full(n, 0.35, dtype=np.float32),
+        std_luminance=np.full(n, 0.15, dtype=np.float32),
+        blur_variance=np.full(n, 500.0, dtype=np.float32),
+        dark_fraction=np.zeros(n, dtype=np.float32),
+        bright_fraction=np.zeros(n, dtype=np.float32),
+        dhash=rng.integers(0, 2**63, size=n, dtype=np.int64).astype(np.uint64),
+        frame_difference=np.full(n, 0.03, dtype=np.float32),
+        thumbnails=rng.integers(0, 255, size=(n, 96, 128), dtype=np.uint8),
+    )
+    # the second half is the garage: slow, and no satellite fix at all
+    speeds = {i: (12.0 if i < 450 else 1.5) for i in range(450)}
+    speeds.update({i: 1.5 for i in range(450, 900)})
+    indoors = {i: v for i, v in speeds.items() if i < 500}
+
+    candidates = build_candidates(scan, "motorcycle", duration_s=10.0,
+                                  stride_s=5.0, speed_by_frame=indoors)
+    passing = [c for c in candidates if c.passes_quality_gate]
+    assert passing, "the riding part of the recording must still be selectable"
+    for c in passing:
+        assert c.start_frame_index < 450
+        assert c.gps_coverage == 1.0
+        assert c.median_speed_mps >= 3.0
+    rejected = [c for c in candidates if not c.passes_quality_gate]
+    assert rejected
+    assert any("indoors" in r or "not riding" in r
+               for c in rejected for r in c.rejection_reasons)
