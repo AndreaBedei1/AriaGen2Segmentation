@@ -117,17 +117,20 @@ def build_stratifier(pool: Sequence[FrameCandidate]) -> Callable[[FrameCandidate
     conf_lo = _q(conf, 0.20) if conf else None
 
     def strata(c: FrameCandidate) -> List[str]:
+        # Comparisons are strict on purpose. With a non-strict comparison a pool
+        # whose values are nearly constant would put every frame in the extreme
+        # bucket, and the one genuinely dark frame would stop being distinctive.
         out = [f"domain:{c.domain}"]
-        out.append("light:dark" if c.mean_luminance <= lum_lo else
-                   "light:bright" if c.mean_luminance >= lum_hi else "light:normal")
-        if c.blur_variance <= blur_lo:
+        out.append("light:dark" if c.mean_luminance < lum_lo else
+                   "light:bright" if c.mean_luminance > lum_hi else "light:normal")
+        if c.blur_variance < blur_lo:
             out.append("quality:low_sharpness")
-        out.append("motion:low" if c.frame_difference <= motion_lo else
-                   "motion:high" if c.frame_difference >= motion_hi else
+        out.append("motion:low" if c.frame_difference < motion_lo else
+                   "motion:high" if c.frame_difference > motion_hi else
                    "motion:medium")
         # A near-stationary frame with high scene change is a turn; low change with
         # high motion is forward translation on a straight.
-        out.append("geometry:turning" if c.frame_difference >= motion_hi
+        out.append("geometry:turning" if c.frame_difference > motion_hi
                    else "geometry:straight")
 
         cf = c.class_fraction or {}
@@ -156,9 +159,9 @@ def build_stratifier(pool: Sequence[FrameCandidate]) -> Callable[[FrameCandidate
         if cf.get("instrument_display", 0) > 0.001:
             out.append("cockpit:instrument")
 
-        if ent_hi is not None and c.entropy is not None and c.entropy >= ent_hi:
+        if ent_hi is not None and c.entropy is not None and c.entropy > ent_hi:
             out.append("uncertainty:high_entropy")
-        if conf_lo is not None and c.confidence is not None and c.confidence <= conf_lo:
+        if conf_lo is not None and c.confidence is not None and c.confidence < conf_lo:
             out.append("uncertainty:low_confidence")
         if c.conflict_fraction is not None and c.conflict_fraction > 0.3:
             out.append("uncertainty:model_conflict")
@@ -193,10 +196,20 @@ def select_group(pool: Sequence[FrameCandidate], quota: int,
 
     Returns (candidate, covered_strata, reason) tuples.
     """
+    # strata are a pure function of the candidate; computing them once keeps the
+    # greedy loop linear in pool size per pick instead of recomputing every time
+    strata_cache: Dict[int, List[str]] = {}
+
+    def strata_of(c: FrameCandidate) -> List[str]:
+        key = id(c)
+        if key not in strata_cache:
+            strata_cache[key] = strata_fn(c)
+        return strata_cache[key]
+
     chosen: List[FrameCandidate] = list(already_selected or [])
     covered: set = set()
     for c in chosen:
-        covered.update(strata_fn(c))
+        covered.update(strata_of(c))
 
     result: List[tuple] = []
     remaining = list(pool)
@@ -206,14 +219,14 @@ def select_group(pool: Sequence[FrameCandidate], quota: int,
         for c in remaining:
             if not _separated(c, chosen, min_separation_s, min_hamming):
                 continue
-            s = set(strata_fn(c))
+            s = set(strata_of(c))
             gain = len(s - covered)
             score = (float(gain), float(priority(c)) if priority else 0.0)
             if score > best_gain:
                 best_gain, best = score, c
         if best is None:
             break
-        s = strata_fn(best)
+        s = strata_of(best)
         new = sorted(set(s) - covered)
         covered.update(s)
         chosen.append(best)
@@ -225,18 +238,36 @@ def select_group(pool: Sequence[FrameCandidate], quota: int,
     return result
 
 
+# Beyond this separation, two similar-looking frames are a genuine revisit of the
+# same street rather than a near duplicate, and rejecting them would throw away a
+# legitimately distinct sample. Visual deduplication is therefore local.
+VISUAL_DEDUP_WINDOW_S = 30.0
+
+
 def _separated(c: FrameCandidate, chosen: Sequence[FrameCandidate],
-               min_separation_s: float, min_hamming: int) -> bool:
-    """Reject near duplicates in time and in appearance."""
+               min_separation_s: float, min_hamming: int,
+               visual_window_s: float = VISUAL_DEDUP_WINDOW_S) -> bool:
+    """Reject near duplicates in time and, locally, in appearance.
+
+    A hard minimum temporal separation always applies. The perceptual-hash test
+    applies only inside `visual_window_s`: a driving route revisits similar views
+    minutes apart, and treating those as duplicates would starve a short recording
+    of candidates for no scientific reason.
+
+    The Hamming distance is computed on plain Python integers with `bit_count`;
+    routing single scalars through the array helper would cost 64 NumPy operations
+    per comparison, and this runs inside the greedy selection's inner loop.
+    """
+    separation_ns = min_separation_s * NS_PER_S
+    visual_ns = visual_window_s * NS_PER_S
     for other in chosen:
         if other.recording_id != c.recording_id:
             continue
-        if abs(c.timestamp_ns - other.timestamp_ns) < min_separation_s * NS_PER_S:
+        delta = abs(c.timestamp_ns - other.timestamp_ns)
+        if delta < separation_ns:
             return False
-        if c.dhash and other.dhash:
-            d = int(hamming(np.array([c.dhash], dtype=np.uint64),
-                            np.array([other.dhash], dtype=np.uint64))[0])
-            if d < min_hamming:
+        if delta < visual_ns and c.dhash and other.dhash:
+            if int(c.dhash ^ other.dhash).bit_count() < min_hamming:
                 return False
     return True
 
@@ -318,6 +349,11 @@ def build_selection(pools: Dict[str, List[FrameCandidate]],
         "deduplication": {
             "min_temporal_separation_s": min_separation_s,
             "min_perceptual_hash_distance": min_hamming,
+            "visual_dedup_window_s": VISUAL_DEDUP_WINDOW_S,
+            "rule": ("a hard minimum temporal separation always applies; the "
+                     "perceptual-hash test applies only within the visual window, "
+                     "because a route revisited minutes later is a distinct sample "
+                     "rather than a duplicate"),
         },
         "selected": [s.to_dict() for s in selected],
         "counts": {

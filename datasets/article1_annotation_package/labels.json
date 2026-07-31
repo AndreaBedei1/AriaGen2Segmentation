@@ -1,0 +1,1059 @@
+[
+  {
+    "name": "unknown",
+    "id": 0,
+    "color": "#000000",
+    "type": "mask",
+    "attributes": [
+      {
+        "name": "domain",
+        "input_type": "select",
+        "mutable": false,
+        "values": [
+          "car",
+          "motorcycle"
+        ],
+        "default_value": "car"
+      },
+      {
+        "name": "recording_id",
+        "input_type": "text",
+        "mutable": false,
+        "values": [],
+        "default_value": ""
+      },
+      {
+        "name": "route_segment",
+        "input_type": "text",
+        "mutable": false,
+        "values": [],
+        "default_value": ""
+      },
+      {
+        "name": "image_quality",
+        "input_type": "select",
+        "mutable": false,
+        "values": [
+          "good",
+          "motion_blurred",
+          "vibration",
+          "low_light",
+          "overexposed",
+          "unusable"
+        ],
+        "default_value": "good"
+      },
+      {
+        "name": "ambiguity_flag",
+        "input_type": "checkbox",
+        "mutable": true,
+        "values": [],
+        "default_value": "false"
+      }
+    ]
+  },
+  {
+    "name": "road_surface",
+    "id": 1,
+    "color": "#804080",
+    "type": "mask",
+    "attributes": [
+      {
+        "name": "domain",
+        "input_type": "select",
+        "mutable": false,
+        "values": [
+          "car",
+          "motorcycle"
+        ],
+        "default_value": "car"
+      },
+      {
+        "name": "recording_id",
+        "input_type": "text",
+        "mutable": false,
+        "values": [],
+        "default_value": ""
+      },
+      {
+        "name": "route_segment",
+        "input_type": "text",
+        "mutable": false,
+        "values": [],
+        "default_value": ""
+      },
+      {
+        "name": "image_quality",
+        "input_type": "select",
+        "mutable": false,
+        "values": [
+          "good",
+          "motion_blurred",
+          "vibration",
+          "low_light",
+          "overexposed",
+          "unusable"
+        ],
+        "default_value": "good"
+      },
+      {
+        "name": "ambiguity_flag",
+        "input_type": "checkbox",
+        "mutable": true,
+        "values": [],
+        "default_value": "false"
+      }
+    ]
+  },
+  {
+    "name": "lane_marking",
+    "id": 2,
+    "color": "#ffffff",
+    "type": "mask",
+    "attributes": [
+      {
+        "name": "domain",
+        "input_type": "select",
+        "mutable": false,
+        "values": [
+          "car",
+          "motorcycle"
+        ],
+        "default_value": "car"
+      },
+      {
+        "name": "recording_id",
+        "input_type": "text",
+        "mutable": false,
+        "values": [],
+        "default_value": ""
+      },
+      {
+        "name": "route_segment",
+        "input_type": "text",
+        "mutable": false,
+        "values": [],
+        "default_value": ""
+      },
+      {
+        "name": "image_quality",
+        "input_type": "select",
+        "mutable": false,
+        "values": [
+          "good",
+          "motion_blurred",
+          "vibration",
+          "low_light",
+          "overexposed",
+          "unusable"
+        ],
+        "default_value": "good"
+      },
+      {
+        "name": "ambiguity_flag",
+        "input_type": "checkbox",
+        "mutable": true,
+        "values": [],
+        "default_value": "false"
+      }
+    ]
+  },
+  {
+    "name": "regulatory_road_marking",
+    "id": 3,
+    "color": "#dcaaff",
+    "type": "mask",
+    "attributes": [
+      {
+        "name": "domain",
+        "input_type": "select",
+        "mutable": false,
+        "values": [
+          "car",
+          "motorcycle"
+        ],
+        "default_value": "car"
+      },
+      {
+        "name": "recording_id",
+        "input_type": "text",
+        "mutable": false,
+        "values": [],
+        "default_value": ""
+      },
+      {
+        "name": "route_segment",
+        "input_type": "text",
+        "mutable": false,
+        "values": [],
+        "default_value": ""
+      },
+      {
+        "name": "image_quality",
+        "input_type": "select",
+        "mutable": false,
+        "values": [
+          "good",
+          "motion_blurred",
+          "vibration",
+          "low_light",
+          "overexposed",
+          "unusable"
+        ],
+        "default_value": "good"
+      },
+      {
+        "name": "ambiguity_flag",
+        "input_type": "checkbox",
+        "mutable": true,
+        "values": [],
+        "default_value": "false"
+      }
+    ]
+  },
+  {
+    "name": "vehicle",
+    "id": 4,
+    "color": "#00008e",
+    "type": "mask",
+    "attributes": [
+      {
+        "name": "domain",
+        "input_type": "select",
+        "mutable": false,
+        "values": [
+          "car",
+          "motorcycle"
+        ],
+        "default_value": "car"
+      },
+      {
+        "name": "recording_id",
+        "input_type": "text",
+        "mutable": false,
+        "values": [],
+        "default_value": ""
+      },
+      {
+        "name": "route_segment",
+        "input_type": "text",
+        "mutable": false,
+        "values": [],
+        "default_value": ""
+      },
+      {
+        "name": "image_quality",
+        "input_type": "select",
+        "mutable": false,
+        "values": [
+          "good",
+          "motion_blurred",
+          "vibration",
+          "low_light",
+          "overexposed",
+          "unusable"
+        ],
+        "default_value": "good"
+      },
+      {
+        "name": "ambiguity_flag",
+        "input_type": "checkbox",
+        "mutable": true,
+        "values": [],
+        "default_value": "false"
+      }
+    ]
+  },
+  {
+    "name": "two_wheeler",
+    "id": 5,
+    "color": "#770b20",
+    "type": "mask",
+    "attributes": [
+      {
+        "name": "domain",
+        "input_type": "select",
+        "mutable": false,
+        "values": [
+          "car",
+          "motorcycle"
+        ],
+        "default_value": "car"
+      },
+      {
+        "name": "recording_id",
+        "input_type": "text",
+        "mutable": false,
+        "values": [],
+        "default_value": ""
+      },
+      {
+        "name": "route_segment",
+        "input_type": "text",
+        "mutable": false,
+        "values": [],
+        "default_value": ""
+      },
+      {
+        "name": "image_quality",
+        "input_type": "select",
+        "mutable": false,
+        "values": [
+          "good",
+          "motion_blurred",
+          "vibration",
+          "low_light",
+          "overexposed",
+          "unusable"
+        ],
+        "default_value": "good"
+      },
+      {
+        "name": "ambiguity_flag",
+        "input_type": "checkbox",
+        "mutable": true,
+        "values": [],
+        "default_value": "false"
+      }
+    ]
+  },
+  {
+    "name": "pedestrian",
+    "id": 6,
+    "color": "#dc143c",
+    "type": "mask",
+    "attributes": [
+      {
+        "name": "domain",
+        "input_type": "select",
+        "mutable": false,
+        "values": [
+          "car",
+          "motorcycle"
+        ],
+        "default_value": "car"
+      },
+      {
+        "name": "recording_id",
+        "input_type": "text",
+        "mutable": false,
+        "values": [],
+        "default_value": ""
+      },
+      {
+        "name": "route_segment",
+        "input_type": "text",
+        "mutable": false,
+        "values": [],
+        "default_value": ""
+      },
+      {
+        "name": "image_quality",
+        "input_type": "select",
+        "mutable": false,
+        "values": [
+          "good",
+          "motion_blurred",
+          "vibration",
+          "low_light",
+          "overexposed",
+          "unusable"
+        ],
+        "default_value": "good"
+      },
+      {
+        "name": "ambiguity_flag",
+        "input_type": "checkbox",
+        "mutable": true,
+        "values": [],
+        "default_value": "false"
+      }
+    ]
+  },
+  {
+    "name": "traffic_light",
+    "id": 7,
+    "color": "#faaa1e",
+    "type": "mask",
+    "attributes": [
+      {
+        "name": "domain",
+        "input_type": "select",
+        "mutable": false,
+        "values": [
+          "car",
+          "motorcycle"
+        ],
+        "default_value": "car"
+      },
+      {
+        "name": "recording_id",
+        "input_type": "text",
+        "mutable": false,
+        "values": [],
+        "default_value": ""
+      },
+      {
+        "name": "route_segment",
+        "input_type": "text",
+        "mutable": false,
+        "values": [],
+        "default_value": ""
+      },
+      {
+        "name": "image_quality",
+        "input_type": "select",
+        "mutable": false,
+        "values": [
+          "good",
+          "motion_blurred",
+          "vibration",
+          "low_light",
+          "overexposed",
+          "unusable"
+        ],
+        "default_value": "good"
+      },
+      {
+        "name": "ambiguity_flag",
+        "input_type": "checkbox",
+        "mutable": true,
+        "values": [],
+        "default_value": "false"
+      }
+    ]
+  },
+  {
+    "name": "traffic_sign",
+    "id": 8,
+    "color": "#dcdc00",
+    "type": "mask",
+    "attributes": [
+      {
+        "name": "domain",
+        "input_type": "select",
+        "mutable": false,
+        "values": [
+          "car",
+          "motorcycle"
+        ],
+        "default_value": "car"
+      },
+      {
+        "name": "recording_id",
+        "input_type": "text",
+        "mutable": false,
+        "values": [],
+        "default_value": ""
+      },
+      {
+        "name": "route_segment",
+        "input_type": "text",
+        "mutable": false,
+        "values": [],
+        "default_value": ""
+      },
+      {
+        "name": "image_quality",
+        "input_type": "select",
+        "mutable": false,
+        "values": [
+          "good",
+          "motion_blurred",
+          "vibration",
+          "low_light",
+          "overexposed",
+          "unusable"
+        ],
+        "default_value": "good"
+      },
+      {
+        "name": "ambiguity_flag",
+        "input_type": "checkbox",
+        "mutable": true,
+        "values": [],
+        "default_value": "false"
+      }
+    ]
+  },
+  {
+    "name": "road_boundary_or_obstacle",
+    "id": 9,
+    "color": "#f423e8",
+    "type": "mask",
+    "attributes": [
+      {
+        "name": "domain",
+        "input_type": "select",
+        "mutable": false,
+        "values": [
+          "car",
+          "motorcycle"
+        ],
+        "default_value": "car"
+      },
+      {
+        "name": "recording_id",
+        "input_type": "text",
+        "mutable": false,
+        "values": [],
+        "default_value": ""
+      },
+      {
+        "name": "route_segment",
+        "input_type": "text",
+        "mutable": false,
+        "values": [],
+        "default_value": ""
+      },
+      {
+        "name": "image_quality",
+        "input_type": "select",
+        "mutable": false,
+        "values": [
+          "good",
+          "motion_blurred",
+          "vibration",
+          "low_light",
+          "overexposed",
+          "unusable"
+        ],
+        "default_value": "good"
+      },
+      {
+        "name": "ambiguity_flag",
+        "input_type": "checkbox",
+        "mutable": true,
+        "values": [],
+        "default_value": "false"
+      }
+    ]
+  },
+  {
+    "name": "mirror",
+    "id": 10,
+    "color": "#ff00ff",
+    "type": "mask",
+    "attributes": [
+      {
+        "name": "domain",
+        "input_type": "select",
+        "mutable": false,
+        "values": [
+          "car",
+          "motorcycle"
+        ],
+        "default_value": "car"
+      },
+      {
+        "name": "recording_id",
+        "input_type": "text",
+        "mutable": false,
+        "values": [],
+        "default_value": ""
+      },
+      {
+        "name": "route_segment",
+        "input_type": "text",
+        "mutable": false,
+        "values": [],
+        "default_value": ""
+      },
+      {
+        "name": "image_quality",
+        "input_type": "select",
+        "mutable": false,
+        "values": [
+          "good",
+          "motion_blurred",
+          "vibration",
+          "low_light",
+          "overexposed",
+          "unusable"
+        ],
+        "default_value": "good"
+      },
+      {
+        "name": "ambiguity_flag",
+        "input_type": "checkbox",
+        "mutable": true,
+        "values": [],
+        "default_value": "false"
+      },
+      {
+        "name": "left_hand_visible",
+        "input_type": "checkbox",
+        "mutable": true,
+        "values": [],
+        "default_value": "false"
+      },
+      {
+        "name": "right_hand_visible",
+        "input_type": "checkbox",
+        "mutable": true,
+        "values": [],
+        "default_value": "false"
+      },
+      {
+        "name": "left_hand_partially_visible",
+        "input_type": "checkbox",
+        "mutable": true,
+        "values": [],
+        "default_value": "false"
+      },
+      {
+        "name": "right_hand_partially_visible",
+        "input_type": "checkbox",
+        "mutable": true,
+        "values": [],
+        "default_value": "false"
+      },
+      {
+        "name": "left_hand_occluded",
+        "input_type": "checkbox",
+        "mutable": true,
+        "values": [],
+        "default_value": "false"
+      },
+      {
+        "name": "right_hand_occluded",
+        "input_type": "checkbox",
+        "mutable": true,
+        "values": [],
+        "default_value": "false"
+      },
+      {
+        "name": "left_hand_out_of_frame",
+        "input_type": "checkbox",
+        "mutable": true,
+        "values": [],
+        "default_value": "false"
+      },
+      {
+        "name": "right_hand_out_of_frame",
+        "input_type": "checkbox",
+        "mutable": true,
+        "values": [],
+        "default_value": "false"
+      },
+      {
+        "name": "left_hand_motion_blurred",
+        "input_type": "checkbox",
+        "mutable": true,
+        "values": [],
+        "default_value": "false"
+      },
+      {
+        "name": "right_hand_motion_blurred",
+        "input_type": "checkbox",
+        "mutable": true,
+        "values": [],
+        "default_value": "false"
+      },
+      {
+        "name": "left_arm_visible",
+        "input_type": "checkbox",
+        "mutable": true,
+        "values": [],
+        "default_value": "false"
+      },
+      {
+        "name": "right_arm_visible",
+        "input_type": "checkbox",
+        "mutable": true,
+        "values": [],
+        "default_value": "false"
+      },
+      {
+        "name": "hand_tracking_available",
+        "input_type": "checkbox",
+        "mutable": true,
+        "values": [],
+        "default_value": "false"
+      },
+      {
+        "name": "hand_tracking_valid",
+        "input_type": "checkbox",
+        "mutable": true,
+        "values": [],
+        "default_value": "false"
+      },
+      {
+        "name": "hand_segmentation_proxy_available",
+        "input_type": "checkbox",
+        "mutable": true,
+        "values": [],
+        "default_value": "false"
+      }
+    ]
+  },
+  {
+    "name": "instrument_display",
+    "id": 11,
+    "color": "#00ffff",
+    "type": "mask",
+    "attributes": [
+      {
+        "name": "domain",
+        "input_type": "select",
+        "mutable": false,
+        "values": [
+          "car",
+          "motorcycle"
+        ],
+        "default_value": "car"
+      },
+      {
+        "name": "recording_id",
+        "input_type": "text",
+        "mutable": false,
+        "values": [],
+        "default_value": ""
+      },
+      {
+        "name": "route_segment",
+        "input_type": "text",
+        "mutable": false,
+        "values": [],
+        "default_value": ""
+      },
+      {
+        "name": "image_quality",
+        "input_type": "select",
+        "mutable": false,
+        "values": [
+          "good",
+          "motion_blurred",
+          "vibration",
+          "low_light",
+          "overexposed",
+          "unusable"
+        ],
+        "default_value": "good"
+      },
+      {
+        "name": "ambiguity_flag",
+        "input_type": "checkbox",
+        "mutable": true,
+        "values": [],
+        "default_value": "false"
+      },
+      {
+        "name": "left_hand_visible",
+        "input_type": "checkbox",
+        "mutable": true,
+        "values": [],
+        "default_value": "false"
+      },
+      {
+        "name": "right_hand_visible",
+        "input_type": "checkbox",
+        "mutable": true,
+        "values": [],
+        "default_value": "false"
+      },
+      {
+        "name": "left_hand_partially_visible",
+        "input_type": "checkbox",
+        "mutable": true,
+        "values": [],
+        "default_value": "false"
+      },
+      {
+        "name": "right_hand_partially_visible",
+        "input_type": "checkbox",
+        "mutable": true,
+        "values": [],
+        "default_value": "false"
+      },
+      {
+        "name": "left_hand_occluded",
+        "input_type": "checkbox",
+        "mutable": true,
+        "values": [],
+        "default_value": "false"
+      },
+      {
+        "name": "right_hand_occluded",
+        "input_type": "checkbox",
+        "mutable": true,
+        "values": [],
+        "default_value": "false"
+      },
+      {
+        "name": "left_hand_out_of_frame",
+        "input_type": "checkbox",
+        "mutable": true,
+        "values": [],
+        "default_value": "false"
+      },
+      {
+        "name": "right_hand_out_of_frame",
+        "input_type": "checkbox",
+        "mutable": true,
+        "values": [],
+        "default_value": "false"
+      },
+      {
+        "name": "left_hand_motion_blurred",
+        "input_type": "checkbox",
+        "mutable": true,
+        "values": [],
+        "default_value": "false"
+      },
+      {
+        "name": "right_hand_motion_blurred",
+        "input_type": "checkbox",
+        "mutable": true,
+        "values": [],
+        "default_value": "false"
+      },
+      {
+        "name": "left_arm_visible",
+        "input_type": "checkbox",
+        "mutable": true,
+        "values": [],
+        "default_value": "false"
+      },
+      {
+        "name": "right_arm_visible",
+        "input_type": "checkbox",
+        "mutable": true,
+        "values": [],
+        "default_value": "false"
+      },
+      {
+        "name": "hand_tracking_available",
+        "input_type": "checkbox",
+        "mutable": true,
+        "values": [],
+        "default_value": "false"
+      },
+      {
+        "name": "hand_tracking_valid",
+        "input_type": "checkbox",
+        "mutable": true,
+        "values": [],
+        "default_value": "false"
+      },
+      {
+        "name": "hand_segmentation_proxy_available",
+        "input_type": "checkbox",
+        "mutable": true,
+        "values": [],
+        "default_value": "false"
+      }
+    ]
+  },
+  {
+    "name": "control_and_ego_vehicle",
+    "id": 12,
+    "color": "#ff8c00",
+    "type": "mask",
+    "attributes": [
+      {
+        "name": "domain",
+        "input_type": "select",
+        "mutable": false,
+        "values": [
+          "car",
+          "motorcycle"
+        ],
+        "default_value": "car"
+      },
+      {
+        "name": "recording_id",
+        "input_type": "text",
+        "mutable": false,
+        "values": [],
+        "default_value": ""
+      },
+      {
+        "name": "route_segment",
+        "input_type": "text",
+        "mutable": false,
+        "values": [],
+        "default_value": ""
+      },
+      {
+        "name": "image_quality",
+        "input_type": "select",
+        "mutable": false,
+        "values": [
+          "good",
+          "motion_blurred",
+          "vibration",
+          "low_light",
+          "overexposed",
+          "unusable"
+        ],
+        "default_value": "good"
+      },
+      {
+        "name": "ambiguity_flag",
+        "input_type": "checkbox",
+        "mutable": true,
+        "values": [],
+        "default_value": "false"
+      },
+      {
+        "name": "left_hand_visible",
+        "input_type": "checkbox",
+        "mutable": true,
+        "values": [],
+        "default_value": "false"
+      },
+      {
+        "name": "right_hand_visible",
+        "input_type": "checkbox",
+        "mutable": true,
+        "values": [],
+        "default_value": "false"
+      },
+      {
+        "name": "left_hand_partially_visible",
+        "input_type": "checkbox",
+        "mutable": true,
+        "values": [],
+        "default_value": "false"
+      },
+      {
+        "name": "right_hand_partially_visible",
+        "input_type": "checkbox",
+        "mutable": true,
+        "values": [],
+        "default_value": "false"
+      },
+      {
+        "name": "left_hand_occluded",
+        "input_type": "checkbox",
+        "mutable": true,
+        "values": [],
+        "default_value": "false"
+      },
+      {
+        "name": "right_hand_occluded",
+        "input_type": "checkbox",
+        "mutable": true,
+        "values": [],
+        "default_value": "false"
+      },
+      {
+        "name": "left_hand_out_of_frame",
+        "input_type": "checkbox",
+        "mutable": true,
+        "values": [],
+        "default_value": "false"
+      },
+      {
+        "name": "right_hand_out_of_frame",
+        "input_type": "checkbox",
+        "mutable": true,
+        "values": [],
+        "default_value": "false"
+      },
+      {
+        "name": "left_hand_motion_blurred",
+        "input_type": "checkbox",
+        "mutable": true,
+        "values": [],
+        "default_value": "false"
+      },
+      {
+        "name": "right_hand_motion_blurred",
+        "input_type": "checkbox",
+        "mutable": true,
+        "values": [],
+        "default_value": "false"
+      },
+      {
+        "name": "left_arm_visible",
+        "input_type": "checkbox",
+        "mutable": true,
+        "values": [],
+        "default_value": "false"
+      },
+      {
+        "name": "right_arm_visible",
+        "input_type": "checkbox",
+        "mutable": true,
+        "values": [],
+        "default_value": "false"
+      },
+      {
+        "name": "hand_tracking_available",
+        "input_type": "checkbox",
+        "mutable": true,
+        "values": [],
+        "default_value": "false"
+      },
+      {
+        "name": "hand_tracking_valid",
+        "input_type": "checkbox",
+        "mutable": true,
+        "values": [],
+        "default_value": "false"
+      },
+      {
+        "name": "hand_segmentation_proxy_available",
+        "input_type": "checkbox",
+        "mutable": true,
+        "values": [],
+        "default_value": "false"
+      }
+    ]
+  },
+  {
+    "name": "other_environment",
+    "id": 13,
+    "color": "#5a6e5a",
+    "type": "mask",
+    "attributes": [
+      {
+        "name": "domain",
+        "input_type": "select",
+        "mutable": false,
+        "values": [
+          "car",
+          "motorcycle"
+        ],
+        "default_value": "car"
+      },
+      {
+        "name": "recording_id",
+        "input_type": "text",
+        "mutable": false,
+        "values": [],
+        "default_value": ""
+      },
+      {
+        "name": "route_segment",
+        "input_type": "text",
+        "mutable": false,
+        "values": [],
+        "default_value": ""
+      },
+      {
+        "name": "image_quality",
+        "input_type": "select",
+        "mutable": false,
+        "values": [
+          "good",
+          "motion_blurred",
+          "vibration",
+          "low_light",
+          "overexposed",
+          "unusable"
+        ],
+        "default_value": "good"
+      },
+      {
+        "name": "ambiguity_flag",
+        "input_type": "checkbox",
+        "mutable": true,
+        "values": [],
+        "default_value": "false"
+      }
+    ]
+  }
+]

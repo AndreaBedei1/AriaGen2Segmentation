@@ -79,3 +79,9 @@ temp/
 # Experimental / ablation RUN outputs (heavy). Config files under configs/ are tracked.
 runs/
 /ablation/
+
+# Article 1 annotation package: track the manifest, labels, guide, frame list,
+# QA thumbnails and checksums; the full-resolution images and the automatic
+# pre-annotation masks stay local.
+datasets/article1_annotation_package/images/
+datasets/article1_annotation_package/preannotations_not_ground_truth/SegmentationClass/

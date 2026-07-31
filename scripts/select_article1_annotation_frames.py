@@ -79,12 +79,32 @@ def _hand_states(work: Path, recording_id: str) -> Dict[int, Dict[str, str]]:
     return out
 
 
-def _nearest(mapping: Dict[int, Any], ts: int, tolerance_ns: int) -> Optional[Any]:
-    if not mapping:
-        return None
-    keys = np.fromiter(mapping.keys(), dtype=np.int64)
-    i = int(np.argmin(np.abs(keys - ts)))
-    return mapping[int(keys[i])] if abs(int(keys[i]) - ts) <= tolerance_ns else None
+class NearestByTimestamp:
+    """Nearest-sample lookup over a fixed timestamp index.
+
+    The key array is built once; rebuilding it per frame would make the lookup
+    quadratic in the number of samples.
+    """
+
+    def __init__(self, mapping: Dict[int, Any], tolerance_ns: int):
+        self.mapping = mapping
+        self.tolerance_ns = tolerance_ns
+        self.keys = np.sort(np.fromiter(mapping.keys(), dtype=np.int64,
+                                        count=len(mapping))) if mapping else None
+
+    def __call__(self, ts: int) -> Optional[Any]:
+        if self.keys is None or self.keys.size == 0:
+            return None
+        pos = int(np.searchsorted(self.keys, ts))
+        best = None
+        for candidate in (pos - 1, pos):
+            if 0 <= candidate < self.keys.size:
+                delta = abs(int(self.keys[candidate]) - ts)
+                if best is None or delta < best[0]:
+                    best = (delta, int(self.keys[candidate]))
+        if best is None or best[0] > self.tolerance_ns:
+            return None
+        return self.mapping[best[1]]
 
 
 def _segment_diagnostics(path: Optional[str]) -> Dict[int, Dict[str, Any]]:
@@ -129,7 +149,7 @@ def build_pool(domain: str, recording_id: str, sha12: str, work: Path,
     by_index = {int(fi): i for i, fi in enumerate(scan.frame_index)}
     scout = _load_scout(scout_dir / "semantics.npz")
     track = _route_track(work, recording_id, domain)
-    hands = _hand_states(work, recording_id)
+    hands = NearestByTimestamp(_hand_states(work, recording_id), 150_000_000)
     diagnostics = _segment_diagnostics(segment_dir)
     failures = _failure_lookup(failure_json)
 
@@ -170,7 +190,7 @@ def build_pool(domain: str, recording_id: str, sha12: str, work: Path,
             fallback=bool(diag.get("fallback", False)),
             conflict_fraction=diag.get("conflict_fraction"),
             failure_mode_candidate=failures.get(fi),
-            hand_visibility_candidate=_nearest(hands, ts, 150_000_000) or {},
+            hand_visibility_candidate=hands(ts) or {},
             route_progression=progression,
             route_segment=segment,
             has_semantic_camera_output=bool(diag),
@@ -190,10 +210,14 @@ def main() -> int:
     ap.add_argument("--segment-dir", default=None,
                     help="frozen baseline semantic_camera directory (motorcycle)")
     ap.add_argument("--failure-json", default=None)
-    ap.add_argument("--external-validation", type=int, default=40)
-    ap.add_argument("--cockpit-training", type=int, default=60)
-    ap.add_argument("--failure-mode-review", type=int, default=20)
-    ap.add_argument("--min-separation-s", type=float, default=4.0)
+    ap.add_argument("--external-validation", type=int, default=30)
+    ap.add_argument("--cockpit-training", type=int, default=40)
+    ap.add_argument("--failure-mode-review", type=int, default=15)
+    # 2 s at the 1 Hz scouting density is two distinct scout frames, about 19 m of
+    # road at the car's average speed. Larger values cannot be met by the 376 s car
+    # recording without starving it relative to the 1004 s motorcycle, which would
+    # unbalance the very thing the quotas exist to balance.
+    ap.add_argument("--min-separation-s", type=float, default=2.0)
     ap.add_argument("--min-hamming", type=int, default=8)
     ap.add_argument("--log-level", default="INFO")
     args = ap.parse_args()

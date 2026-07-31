@@ -1,0 +1,114 @@
+{
+  "0": {
+    "name": "unknown",
+    "rgb": [
+      0,
+      0,
+      0
+    ]
+  },
+  "1": {
+    "name": "road_surface",
+    "rgb": [
+      128,
+      64,
+      128
+    ]
+  },
+  "2": {
+    "name": "lane_marking",
+    "rgb": [
+      255,
+      255,
+      255
+    ]
+  },
+  "3": {
+    "name": "regulatory_road_marking",
+    "rgb": [
+      220,
+      170,
+      255
+    ]
+  },
+  "4": {
+    "name": "vehicle",
+    "rgb": [
+      0,
+      0,
+      142
+    ]
+  },
+  "5": {
+    "name": "two_wheeler",
+    "rgb": [
+      119,
+      11,
+      32
+    ]
+  },
+  "6": {
+    "name": "pedestrian",
+    "rgb": [
+      220,
+      20,
+      60
+    ]
+  },
+  "7": {
+    "name": "traffic_light",
+    "rgb": [
+      250,
+      170,
+      30
+    ]
+  },
+  "8": {
+    "name": "traffic_sign",
+    "rgb": [
+      220,
+      220,
+      0
+    ]
+  },
+  "9": {
+    "name": "road_boundary_or_obstacle",
+    "rgb": [
+      244,
+      35,
+      232
+    ]
+  },
+  "10": {
+    "name": "mirror",
+    "rgb": [
+      255,
+      0,
+      255
+    ]
+  },
+  "11": {
+    "name": "instrument_display",
+    "rgb": [
+      0,
+      255,
+      255
+    ]
+  },
+  "12": {
+    "name": "control_and_ego_vehicle",
+    "rgb": [
+      255,
+      140,
+      0
+    ]
+  },
+  "13": {
+    "name": "other_environment",
+    "rgb": [
+      90,
+      110,
+      90
+    ]
+  }
+}

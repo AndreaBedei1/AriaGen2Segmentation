@@ -1,0 +1,15 @@
+# label:color_rgb:parts:actions
+unknown:0,0,0::
+road_surface:128,64,128::
+lane_marking:255,255,255::
+regulatory_road_marking:220,170,255::
+vehicle:0,0,142::
+two_wheeler:119,11,32::
+pedestrian:220,20,60::
+traffic_light:250,170,30::
+traffic_sign:220,220,0::
+road_boundary_or_obstacle:244,35,232::
+mirror:255,0,255::
+instrument_display:0,255,255::
+control_and_ego_vehicle:255,140,0::
+other_environment:90,110,90::
