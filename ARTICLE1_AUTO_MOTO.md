@@ -26,9 +26,17 @@ example search and active learning.
 | Probabilistic external segmentation | Checkpoint-2 stop gate completed on 60 auto frames |
 | Thin road-marking preservation | Raw/filtered layers and rejection provenance implemented; calibration pending GT |
 | External diagnostic renderer | Implemented |
-| Cockpit SegFormer schema/config | Dataset, balanced sampler, loss, entropy, resume and split checks implemented; training blocked by reviewed annotations |
-| Fusion, temporal gaze, route pairing | Planned for later operational steps |
-| Motorcycle and paired results | Blocked: no motorcycle VRS supplied |
+| Cockpit SegFormer schema/config | Dataset, balanced sampler, loss, entropy, resume, split and anti-leakage checks implemented; training blocked by reviewed annotations |
+| Fusion, temporal gaze | Implemented; dense semantic camera with causal stabilisation and a separate presentation final pass |
+| Motorcycle acquisition | Ingested and validated: 15069 RGB frames at a measured 15.0012 Hz over 1004.5 s, one continuous segment, all 17 streams present |
+| Multi-rate policy | Rates measured from timestamps, temporal windows declared in seconds, metrics normalised per second; target protocol declared at 15 fps for both vehicles |
+| Frozen motorcycle baseline | Run on a selected 30 s segment with the car-tuned configuration unchanged, to expose domain shift before adapting anything |
+| Route pairing | Preliminary and GPS-based: the car route coincides with the final ~2.2 km of the motorcycle ride, same direction |
+| Annotation package | Prepared, balanced 70 frames per domain, with pre-annotations marked as not ground truth |
+| Paired scientific results | Blocked: the car is still a provisional 10 fps baseline and no reviewed ground truth exists |
+
+See `docs/article1_motorcycle_ingestion.md` and
+`reports/article1_motorcycle_ingestion/`.
 
 No pseudo-label is treated as ground truth and no accuracy is reported without reviewed GT.
 The Mapillary Ego Vehicle/Car Mount labels are external provenance only and never scientific
