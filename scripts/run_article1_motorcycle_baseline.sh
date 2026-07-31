@@ -11,6 +11,9 @@
 #   VRS I/O env  : extraction and gaze alignment (projectaria_tools)
 #   ML env       : Mask2Former, Grounding DINO + SAM 2.1, optical flow
 set -euo pipefail
+# Stages are piped through tee; without pipefail a crashed stage would report the
+# exit status of tee and the run would march on to the next stage.
+set -o pipefail
 
 RUN_DIR="${RUN_DIR:?set RUN_DIR}"
 VRS="${VRS:?set VRS}"
