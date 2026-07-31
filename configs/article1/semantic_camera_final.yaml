@@ -1,0 +1,108 @@
+semantic_camera_final:
+  version: 1
+  processing_scale: 0.5
+  output_subdir: semantic_camera_final_pass
+
+  temporal:
+    non_causal: true
+    window_radius_frames: 10
+    current_weight: 1.0
+    current_confidence_floor: 0.30
+    temporal_decay: 0.88
+    flow_validity_weight_floor: 0.30
+    flow_validity_neighborhood_px: 7
+    switch_margin: 0.055
+    thin_switch_margin: -0.035
+    thin_minimum_support_frames: 1
+    internal_minimum_support_frames: 1
+    internal_activation_relaxation: 0.16
+    internal_current_keep_confidence: 0.18
+    internal_deactivation_ratio: 0.40
+    strong_external_thresholds:
+      road_surface: 0.74
+      lane_marking: 0.70
+      regulatory_road_marking: 0.70
+      vehicle: 0.80
+      two_wheeler: 0.78
+      pedestrian: 0.78
+      traffic_light: 0.70
+      traffic_sign: 0.70
+    classes:
+      unknown:
+        {ttl_frames: 0, vote_weight: 0.0, minimum_confidence: 1.0}
+      road_surface:
+        {ttl_frames: 2, vote_weight: 0.90, minimum_confidence: 0.48}
+      lane_marking:
+        {ttl_frames: 10, vote_weight: 1.50, minimum_confidence: 0.22,
+         temporal_decay: 0.94}
+      regulatory_road_marking:
+        {ttl_frames: 10, vote_weight: 1.42, minimum_confidence: 0.22,
+         temporal_decay: 0.94}
+      vehicle:
+        {ttl_frames: 2, vote_weight: 0.62, minimum_confidence: 0.62,
+         temporal_decay: 0.74}
+      two_wheeler:
+        {ttl_frames: 2, vote_weight: 0.58, minimum_confidence: 0.64,
+         temporal_decay: 0.72}
+      pedestrian:
+        {ttl_frames: 2, vote_weight: 0.54, minimum_confidence: 0.66,
+         temporal_decay: 0.70}
+      traffic_light:
+        {ttl_frames: 2, vote_weight: 0.78, minimum_confidence: 0.55}
+      traffic_sign:
+        {ttl_frames: 2, vote_weight: 0.78, minimum_confidence: 0.55}
+      road_boundary_or_obstacle:
+        {ttl_frames: 8, vote_weight: 1.20, minimum_confidence: 0.30,
+         temporal_decay: 0.92}
+      mirror:
+        {ttl_frames: 10, vote_weight: 2.00, minimum_confidence: 0.14,
+         temporal_decay: 0.95}
+      instrument_display:
+        {ttl_frames: 10, vote_weight: 1.95, minimum_confidence: 0.14,
+         temporal_decay: 0.95}
+      control_and_ego_vehicle:
+        {ttl_frames: 10, vote_weight: 1.75, minimum_confidence: 0.16,
+         temporal_decay: 0.95}
+      other_environment:
+        {ttl_frames: 0, vote_weight: 0.30, minimum_confidence: 1.0}
+
+  geometry:
+    road_closing_kernel_px: 11
+    road_support_radius_px: 8
+    barrier_dilation_px: 2
+    fill_confidence: 0.30
+    line_filter:
+      common:
+        closing_orientations_deg: [0, 30, 60, 90, 120, 150]
+        closing_kernel_length_px: 17
+        maximum_gap_px: 26
+        orientation_tolerance_deg: 18
+        endpoint_alignment_tolerance_deg: 24
+        seed_minimum_area_px: 3
+        probability_support_floor: 0.23
+        skeletonize_after_linking: true
+        maximum_thickness_px: 7
+        added_confidence: 0.48
+      lane_marking:
+        minimum_length_px: 11
+        minimum_aspect_ratio: 2.0
+      regulatory_road_marking:
+        closing_kernel_length_px: 13
+        maximum_gap_px: 20
+        minimum_length_px: 8
+        minimum_aspect_ratio: 1.35
+    road_boundary_filter:
+      road_edge_radius_px: 18
+      probability_support_floor: 0.26
+      closing_kernel_px: 7
+      maximum_hole_area_px: 100
+      minimum_component_area_px: 16
+      minimum_road_edge_fraction: 0.20
+      added_confidence: 0.46
+
+  optical_flow:
+    backend: opencv_dis
+    grayscale: true
+    use_forward_backward_check: true
+    forward_backward_threshold_px: 1.75
+    photometric_error_threshold: 0.20

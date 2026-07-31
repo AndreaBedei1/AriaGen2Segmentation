@@ -378,6 +378,16 @@ def stabilize_presentation_frame(
             * vote_weight[warped_mask]
             * np.power(decay[warped_mask], distance)
         )
+        flow_floor = float(cfg.get("flow_validity_weight_floor", 1.0))
+        if flow_floor < 1.0:
+            kernel = max(
+                1, int(cfg.get("flow_validity_neighborhood_px", 5)))
+            if kernel % 2 == 0:
+                kernel += 1
+            local_validity = cv2.boxFilter(
+                valid.astype(np.float32), -1, (kernel, kernel),
+                normalize=True, borderType=cv2.BORDER_REPLICATE)
+            values *= flow_floor + (1.0 - flow_floor) * local_validity
         direction_scores = (
             past_scores if source_index < target_index else future_scores)
         _add_votes(
