@@ -1,0 +1,1106 @@
+# Shared car + motorcycle cockpit prompts.
+#
+# Derived from configs/grounded_prompts.yaml by extending the phrasings of the
+# concepts that exist in both vehicles. The frozen file is unchanged and the
+# class names are unchanged; only what the open-vocabulary detector is asked
+# changes. The frozen set describes a car only ("interior rear view mirror",
+# "car side wing mirror", "exterior door mirror"), so a bar-end mirror has no
+# phrasing that can match it.
+#
+# There is no domain switch here: both vehicles are described in the same list
+# and the detector decides what is present.
+defaults:
+  box_threshold: 0.28
+  text_threshold: 0.25
+  candidate_box_threshold: 0.14
+  candidate_text_threshold: 0.1
+  min_map_confidence: 0.28
+  min_area: 400
+  max_area_frac: 0.55
+  morph_close: 3
+  max_instances: null
+  prompt_mode: variants
+  solo: false
+prompt_strategy: grouped
+hierarchy:
+  subclass_min_score: 0.35
+  subclass_min_margin: 0.08
+  max_parents_per_frame: 12
+  min_parent_area_frac: 0.002
+  parents:
+    person:
+    - pedestrian
+    - child
+    - cyclist
+    - motorcyclist
+    - scooter_rider
+    - wheelchair_user
+    - person_with_stroller
+    rider:
+    - cyclist
+    - motorcyclist
+    - scooter_rider
+    car:
+    - van
+    - pickup
+    - emergency_vehicle
+    truck:
+    - construction_vehicle
+    - trailer
+classes:
+  road_surface:
+    prompt: road surface
+    prompt_variants:
+    - roadway
+    - asphalt road
+    - paved road surface
+    synonyms:
+    - street surface
+    - tarmac
+    box_threshold: 0.3
+    priority: 10
+    min_area: 3000
+    max_area_frac: 0.95
+    morph_close: 7
+    max_instances: 3
+    group_tag: surfaces
+  lane_marking:
+    prompt: lane marking
+    prompt_variants:
+    - white lane line
+    - yellow lane line
+    - dashed lane line
+    - road paint line
+    synonyms:
+    - road marking
+    box_threshold: 0.22
+    text_threshold: 0.18
+    priority: 70
+    min_area: 60
+    max_area_frac: 0.5
+    morph_close: 1
+    max_instances: 25
+    group_tag: thin
+  crosswalk:
+    prompt: pedestrian crossing
+    prompt_variants:
+    - zebra crossing
+    - crosswalk
+    - zebra stripes on road
+    box_threshold: 0.25
+    priority: 68
+    min_area: 300
+    max_area_frac: 0.4
+    max_instances: 6
+    group_tag: thin
+  sidewalk:
+    prompt: sidewalk
+    prompt_variants:
+    - pavement for pedestrians
+    - footpath
+    priority: 12
+    min_area: 1500
+    max_area_frac: 0.6
+    morph_close: 5
+    max_instances: 4
+    group_tag: surfaces
+  curb:
+    prompt: road curb
+    prompt_variants:
+    - kerb
+    - curbstone edge
+    - street curb
+    box_threshold: 0.28
+    priority: 22
+    min_area: 200
+    max_area_frac: 0.5
+    max_instances: 6
+    group_tag: surfaces
+  parking_area:
+    prompt: parking lot pavement
+    prompt_variants:
+    - parking area asphalt
+    - parking space on street
+    box_threshold: 0.32
+    priority: 12
+    min_area: 2000
+    max_area_frac: 0.6
+    max_instances: 3
+    group_tag: surfaces
+  rail_track:
+    prompt: railway track
+    prompt_variants:
+    - train rails on ground
+    - tram track in road
+    box_threshold: 0.35
+    priority: 25
+    min_area: 300
+    max_area_frac: 0.5
+    max_instances: 6
+    group_tag: surfaces
+  person:
+    prompt: person
+    prompt_variants:
+    - pedestrian
+    - human walking
+    synonyms:
+    - man
+    - woman
+    negative_contexts:
+    - mannequin
+    - statue
+    priority: 80
+    min_area: 150
+    max_area_frac: 0.4
+    min_box_height: 12
+    max_instances: 30
+    group_tag: dynamic
+  rider:
+    prompt: person riding a bicycle
+    prompt_variants:
+    - person riding a motorcycle
+    - cyclist on a bike
+    - motorcyclist
+    priority: 82
+    min_area: 200
+    max_area_frac: 0.4
+    max_instances: 20
+    group_tag: dynamic
+  car:
+    prompt: car
+    prompt_variants:
+    - automobile
+    - passenger car
+    - sedan
+    - suv
+    - parked car
+    negative_contexts:
+    - car interior
+    - car dashboard
+    - steering wheel
+    priority: 40
+    min_area: 400
+    max_area_frac: 0.3
+    max_instances: 30
+    group_tag: vehicles
+  truck:
+    prompt: truck
+    prompt_variants:
+    - lorry
+    - cargo truck
+    - semi truck
+    priority: 41
+    min_area: 600
+    max_area_frac: 0.35
+    max_instances: 15
+    group_tag: vehicles
+  bus:
+    prompt: bus
+    prompt_variants:
+    - coach bus
+    - city bus
+    priority: 42
+    min_area: 600
+    max_area_frac: 0.4
+    max_instances: 10
+    group_tag: vehicles
+  motorcycle:
+    prompt: motorcycle
+    prompt_variants:
+    - motorbike
+    - scooter
+    - moped
+    priority: 78
+    min_area: 200
+    max_area_frac: 0.25
+    max_instances: 15
+    group_tag: vehicles
+  bicycle:
+    prompt: bicycle
+    prompt_variants:
+    - bike
+    - pushbike
+    priority: 78
+    min_area: 200
+    max_area_frac: 0.25
+    max_instances: 15
+    group_tag: vehicles
+  traffic_light:
+    prompt: traffic light
+    prompt_variants:
+    - traffic signal
+    - road traffic light
+    - red amber green traffic signal
+    synonyms:
+    - stop light
+    box_threshold: 0.28
+    priority: 75
+    min_area: 80
+    max_area_frac: 0.06
+    max_instances: 12
+    group_tag: furniture
+  traffic_sign:
+    prompt: traffic sign
+    prompt_variants:
+    - road sign
+    - street sign
+    - warning road sign
+    negative_contexts:
+    - billboard
+    - shop sign
+    - advertisement
+    box_threshold: 0.28
+    priority: 72
+    min_area: 100
+    max_area_frac: 0.12
+    max_instances: 20
+    group_tag: furniture
+  pole:
+    prompt: pole
+    prompt_variants:
+    - street pole
+    - sign pole
+    - utility pole
+    - lamp post
+    box_threshold: 0.26
+    priority: 30
+    min_area: 120
+    max_area_frac: 0.4
+    max_instances: 25
+    group_tag: furniture
+  guardrail:
+    prompt: metal guardrail along road
+    prompt_variants:
+    - metal crash barrier
+    - armco barrier
+    box_threshold: 0.3
+    priority: 24
+    min_area: 400
+    max_area_frac: 0.5
+    max_instances: 6
+    group_tag: barriers
+  barrier:
+    prompt: concrete road barrier
+    prompt_variants:
+    - jersey barrier
+    - traffic barrier
+    box_threshold: 0.3
+    priority: 26
+    min_area: 400
+    max_area_frac: 0.5
+    max_instances: 8
+    group_tag: barriers
+  wall:
+    prompt: wall
+    prompt_variants:
+    - retaining wall
+    - stone wall
+    box_threshold: 0.3
+    priority: 15
+    min_area: 800
+    max_area_frac: 0.6
+    max_instances: 5
+    group_tag: barriers
+  fence:
+    prompt: fence
+    prompt_variants:
+    - metal fence
+    - wooden fence
+    - railing
+    box_threshold: 0.28
+    priority: 16
+    min_area: 400
+    max_area_frac: 0.55
+    max_instances: 8
+    group_tag: barriers
+  building:
+    prompt: building
+    prompt_variants:
+    - house
+    - building facade
+    - apartment block
+    - shop building
+    priority: 7
+    min_area: 3000
+    max_area_frac: 0.85
+    morph_close: 5
+    max_instances: 10
+    group_tag: background
+  vegetation:
+    prompt: vegetation
+    prompt_variants:
+    - tree
+    - bush
+    - hedge
+    - foliage
+    priority: 8
+    min_area: 1500
+    max_area_frac: 0.85
+    morph_close: 5
+    max_instances: 15
+    group_tag: background
+  terrain:
+    prompt: grass field
+    prompt_variants:
+    - terrain ground
+    - soil ground
+    - lawn grass
+    priority: 11
+    min_area: 2000
+    max_area_frac: 0.7
+    morph_close: 5
+    max_instances: 6
+    group_tag: background
+  sky:
+    prompt: sky
+    prompt_variants:
+    - clouds in the sky
+    priority: 5
+    min_area: 3000
+    max_area_frac: 0.98
+    morph_close: 7
+    max_instances: 2
+    group_tag: background
+  bridge:
+    prompt: bridge over road
+    prompt_variants:
+    - highway overpass
+    - viaduct
+    box_threshold: 0.38
+    priority: 6
+    min_area: 2000
+    max_area_frac: 0.6
+    max_instances: 3
+    group_tag: background
+  tunnel:
+    prompt: road tunnel entrance
+    prompt_variants:
+    - highway tunnel opening
+    box_threshold: 0.42
+    priority: 6
+    min_area: 2000
+    max_area_frac: 0.6
+    max_instances: 2
+    group_tag: background
+  steering_wheel:
+    prompt: car steering wheel
+    prompt_variants:
+    - steering wheel rim
+    - handlebar
+    - motorcycle handlebar
+    - vehicle controls
+    box_threshold: 0.3
+    priority: 55
+    min_area: 500
+    max_area_frac: 0.3
+    max_instances: 1
+    group_tag: cockpit
+  instrument_cluster:
+    prompt: car speedometer gauge cluster
+    prompt_variants:
+    - dashboard instrument dials
+    - speedometer display behind wheel
+    - speedometer
+    - motorcycle instrument cluster
+    - dashboard display
+    box_threshold: 0.28
+    priority: 60
+    min_area: 300
+    max_area_frac: 0.15
+    max_instances: 2
+    group_tag: cockpit
+  dashboard:
+    prompt: car dashboard
+    prompt_variants:
+    - car dash panel
+    - dashboard top surface
+    - motorcycle fairing
+    - fuel tank
+    - cockpit structure
+    box_threshold: 0.3
+    priority: 30
+    min_area: 2000
+    max_area_frac: 0.5
+    max_instances: 2
+    group_tag: cockpit
+  infotainment_screen:
+    prompt: car infotainment touchscreen
+    prompt_variants:
+    - center console display screen
+    - car navigation screen
+    box_threshold: 0.28
+    priority: 58
+    min_area: 200
+    max_area_frac: 0.15
+    max_instances: 2
+    group_tag: cockpit
+  rear_view_mirror:
+    prompt: interior rear view mirror
+    prompt_variants:
+    - rearview mirror inside car
+    - rear view mirror
+    - round mirror on a stalk
+    box_threshold: 0.28
+    priority: 60
+    min_area: 120
+    max_area_frac: 0.03
+    max_instances: 1
+    group_tag: cockpit
+  side_mirror:
+    prompt: car side wing mirror
+    prompt_variants:
+    - exterior door mirror
+    - motorcycle mirror
+    - handlebar mirror
+    - bar end mirror
+    - wing mirror
+    - round mirror on a stalk
+    box_threshold: 0.28
+    priority: 60
+    min_area: 120
+    max_area_frac: 0.03
+    max_instances: 2
+    group_tag: cockpit
+  windshield:
+    prompt: car windshield glass
+    prompt_variants:
+    - front windscreen
+    box_threshold: 0.28
+    priority: 6
+    min_area: 3000
+    max_area_frac: 0.9
+    max_instances: 1
+    group_tag: cockpit
+  a_pillar:
+    prompt: car windshield pillar
+    prompt_variants:
+    - a-pillar interior trim
+    box_threshold: 0.3
+    priority: 35
+    min_area: 800
+    max_area_frac: 0.35
+    max_instances: 2
+    group_tag: cockpit
+  driver_hand:
+    prompt: human hand on steering wheel
+    prompt_variants:
+    - driver hand gripping wheel
+    box_threshold: 0.28
+    priority: 85
+    min_area: 300
+    max_area_frac: 0.2
+    max_instances: 2
+    group_tag: cockpit
+  smartphone:
+    prompt: smartphone
+    prompt_variants:
+    - mobile phone
+    - cell phone
+    box_threshold: 0.28
+    priority: 88
+    min_area: 150
+    max_area_frac: 0.1
+    max_instances: 3
+    group_tag: cockpit
+  other_cockpit:
+    prompt: car interior door panel
+    prompt_variants:
+    - gear shifter
+    - car interior trim
+    box_threshold: 0.3
+    priority: 25
+    min_area: 800
+    max_area_frac: 0.45
+    max_instances: 6
+    group_tag: cockpit
+  road_edge:
+    prompt: edge of the road
+    prompt_variants:
+    - road boundary line
+    - road side edge
+    priority: 23
+    max_area_frac: 0.5
+    max_instances: 6
+    group_tag: surfaces
+  lane_divider:
+    prompt: lane divider line
+    prompt_variants:
+    - double yellow center line
+    - solid lane separator line
+    box_threshold: 0.24
+    priority: 71
+    min_area: 60
+    max_area_frac: 0.4
+    max_instances: 10
+    group_tag: thin
+  stop_line:
+    prompt: white stop line on road
+    prompt_variants:
+    - stop bar marking at intersection
+    box_threshold: 0.24
+    priority: 72
+    min_area: 80
+    max_area_frac: 0.3
+    max_instances: 4
+    group_tag: thin
+  yield_marking:
+    prompt: give way triangle marking on road
+    prompt_variants:
+    - yield line marking
+    box_threshold: 0.24
+    priority: 72
+    min_area: 80
+    max_area_frac: 0.3
+    max_instances: 4
+    group_tag: thin
+  direction_arrow:
+    prompt: road direction arrow marking
+    prompt_variants:
+    - turn arrow painted on road
+    - lane arrow marking
+    box_threshold: 0.24
+    priority: 73
+    min_area: 80
+    max_area_frac: 0.2
+    max_instances: 8
+    group_tag: thin
+  speed_bump:
+    prompt: speed bump on road
+    prompt_variants:
+    - speed hump
+    - traffic calming bump
+    priority: 60
+    max_area_frac: 0.3
+    max_instances: 4
+    group_tag: surfaces
+  road_shoulder:
+    prompt: road shoulder
+    prompt_variants:
+    - hard shoulder
+    - roadside verge strip
+    priority: 14
+    max_area_frac: 0.4
+    max_instances: 4
+    group_tag: surfaces
+  traffic_island:
+    prompt: traffic island
+    prompt_variants:
+    - pedestrian refuge island
+    - raised road island
+    priority: 28
+    max_area_frac: 0.3
+    max_instances: 4
+    group_tag: surfaces
+  median:
+    prompt: road median strip
+    prompt_variants:
+    - central reservation
+    - road central divider
+    priority: 27
+    max_area_frac: 0.4
+    max_instances: 4
+    group_tag: barriers
+  intersection_area:
+    prompt: road intersection
+    prompt_variants:
+    - junction area
+    - crossroads
+    priority: 11
+    max_area_frac: 0.6
+    max_instances: 2
+    group_tag: surfaces
+  driveway:
+    prompt: driveway entrance
+    prompt_variants:
+    - property access road
+    priority: 13
+    max_area_frac: 0.4
+    max_instances: 3
+    group_tag: surfaces
+  pothole:
+    prompt: pothole in road
+    prompt_variants:
+    - road surface hole
+    box_threshold: 0.3
+    priority: 45
+    min_area: 100
+    max_area_frac: 0.1
+    max_instances: 8
+    group_tag: surfaces
+  manhole:
+    prompt: manhole cover on road
+    prompt_variants:
+    - road drain cover
+    box_threshold: 0.3
+    priority: 33
+    min_area: 100
+    max_area_frac: 0.1
+    max_instances: 8
+    group_tag: surfaces
+  pedestrian:
+    prompt: pedestrian walking
+    prompt_variants:
+    - person crossing the street on foot
+    priority: 81
+    max_area_frac: 0.4
+    max_instances: 30
+    group_tag: dynamic
+  child:
+    prompt: child pedestrian
+    prompt_variants:
+    - small kid walking
+    priority: 86
+    max_area_frac: 0.3
+    max_instances: 15
+    group_tag: dynamic
+  cyclist:
+    prompt: cyclist riding a bicycle
+    prompt_variants:
+    - person cycling on the road
+    priority: 83
+    max_area_frac: 0.35
+    max_instances: 20
+    group_tag: dynamic
+  motorcyclist:
+    prompt: motorcyclist riding a motorcycle
+    prompt_variants:
+    - person riding a motorbike
+    priority: 83
+    max_area_frac: 0.35
+    max_instances: 20
+    group_tag: dynamic
+  scooter_rider:
+    prompt: person riding a scooter
+    prompt_variants:
+    - e-scooter rider
+    - kick scooter rider
+    priority: 83
+    max_area_frac: 0.3
+    max_instances: 15
+    group_tag: dynamic
+  wheelchair_user:
+    prompt: person in a wheelchair
+    prompt_variants:
+    - wheelchair user crossing
+    priority: 86
+    max_area_frac: 0.3
+    max_instances: 10
+    group_tag: dynamic
+  person_with_stroller:
+    prompt: person pushing a stroller
+    prompt_variants:
+    - pedestrian with a baby pram
+    priority: 86
+    max_area_frac: 0.35
+    max_instances: 10
+    group_tag: dynamic
+  animal_on_road:
+    prompt: animal on the road
+    prompt_variants:
+    - dog on the street
+    - deer crossing road
+    box_threshold: 0.3
+    priority: 84
+    max_area_frac: 0.3
+    max_instances: 10
+    group_tag: dynamic
+  van:
+    prompt: delivery van
+    prompt_variants:
+    - cargo van
+    - minivan
+    priority: 43
+    max_area_frac: 0.35
+    max_instances: 15
+    group_tag: vehicles
+  pickup:
+    prompt: pickup truck
+    prompt_variants:
+    - pick-up truck with open bed
+    priority: 43
+    max_area_frac: 0.35
+    max_instances: 15
+    group_tag: vehicles
+  emergency_vehicle:
+    prompt: emergency vehicle
+    prompt_variants:
+    - police car
+    - ambulance
+    - fire truck
+    priority: 84
+    max_area_frac: 0.4
+    max_instances: 8
+    group_tag: vehicles
+  construction_vehicle:
+    prompt: construction vehicle
+    prompt_variants:
+    - excavator
+    - bulldozer
+    - road roller
+    priority: 50
+    max_area_frac: 0.4
+    max_instances: 8
+    group_tag: vehicles
+  trailer:
+    prompt: vehicle trailer
+    prompt_variants:
+    - towed trailer
+    - semi trailer
+    priority: 43
+    max_area_frac: 0.4
+    max_instances: 8
+    group_tag: vehicles
+  tram:
+    prompt: tram
+    prompt_variants:
+    - streetcar on rails
+    - light rail tram
+    priority: 50
+    max_area_frac: 0.5
+    max_instances: 6
+    group_tag: vehicles
+  train:
+    prompt: train
+    prompt_variants:
+    - railway train
+    - locomotive
+    box_threshold: 0.32
+    priority: 50
+    max_area_frac: 0.5
+    max_instances: 4
+    group_tag: vehicles
+  stop_sign:
+    prompt: red octagonal stop sign
+    prompt_variants:
+    - stop road sign
+    box_threshold: 0.28
+    priority: 76
+    min_area: 100
+    max_area_frac: 0.1
+    max_instances: 8
+    group_tag: furniture
+  yield_sign:
+    prompt: yield sign
+    prompt_variants:
+    - give way triangular sign
+    box_threshold: 0.28
+    priority: 76
+    min_area: 100
+    max_area_frac: 0.1
+    max_instances: 8
+    group_tag: furniture
+  speed_limit_sign:
+    prompt: speed limit sign
+    prompt_variants:
+    - round speed limit road sign with number
+    box_threshold: 0.28
+    priority: 74
+    min_area: 100
+    max_area_frac: 0.08
+    max_instances: 8
+    group_tag: furniture
+  warning_sign:
+    prompt: triangular warning road sign
+    prompt_variants:
+    - hazard warning sign
+    box_threshold: 0.28
+    priority: 74
+    min_area: 100
+    max_area_frac: 0.1
+    max_instances: 10
+    group_tag: furniture
+  direction_sign:
+    prompt: direction road sign
+    prompt_variants:
+    - highway destination sign
+    - street direction signpost
+    box_threshold: 0.28
+    priority: 73
+    min_area: 150
+    max_area_frac: 0.2
+    max_instances: 10
+    group_tag: furniture
+  railway_crossing:
+    prompt: railway level crossing sign
+    prompt_variants:
+    - railroad crossing barrier gate
+    box_threshold: 0.3
+    priority: 77
+    min_area: 150
+    max_area_frac: 0.3
+    max_instances: 4
+    group_tag: furniture
+  bollard:
+    prompt: bollard post
+    prompt_variants:
+    - short traffic bollard
+    - street bollard
+    box_threshold: 0.28
+    priority: 60
+    min_area: 100
+    max_area_frac: 0.1
+    max_instances: 20
+    group_tag: furniture
+  traffic_cone:
+    prompt: traffic cone
+    prompt_variants:
+    - orange road cone
+    - safety cone
+    box_threshold: 0.26
+    priority: 79
+    min_area: 80
+    max_area_frac: 0.08
+    max_instances: 20
+    group_tag: furniture
+  delineator_post:
+    prompt: roadside delineator post
+    prompt_variants:
+    - reflective guide post
+    - marker post at road edge
+    box_threshold: 0.28
+    priority: 40
+    min_area: 80
+    max_area_frac: 0.08
+    max_instances: 20
+    group_tag: furniture
+  street_light:
+    prompt: street light lamp
+    prompt_variants:
+    - street lamp on a pole
+    - road lighting pole
+    box_threshold: 0.26
+    priority: 31
+    min_area: 100
+    max_area_frac: 0.2
+    max_instances: 15
+    group_tag: furniture
+  bus_stop:
+    prompt: bus stop shelter
+    prompt_variants:
+    - bus stop sign and shelter
+    box_threshold: 0.3
+    priority: 34
+    min_area: 200
+    max_area_frac: 0.3
+    max_instances: 4
+    group_tag: furniture
+  temporary_barrier:
+    prompt: temporary construction barrier
+    prompt_variants:
+    - roadworks barrier
+    - plastic water-filled barrier
+    box_threshold: 0.28
+    priority: 28
+    min_area: 200
+    max_area_frac: 0.4
+    max_instances: 10
+    group_tag: barriers
+  speedometer_display:
+    prompt: speedometer dial
+    prompt_variants:
+    - speedometer needle gauge
+    - speed display behind steering wheel
+    box_threshold: 0.28
+    priority: 62
+    min_area: 200
+    max_area_frac: 0.12
+    max_instances: 2
+    group_tag: cockpit
+  warning_indicator:
+    prompt: dashboard warning light indicator
+    prompt_variants:
+    - illuminated warning symbol on dashboard
+    box_threshold: 0.3
+    priority: 63
+    min_area: 60
+    max_area_frac: 0.05
+    max_instances: 6
+    group_tag: cockpit
+  navigation_display:
+    prompt: car navigation map screen
+    prompt_variants:
+    - gps navigation display in car
+    box_threshold: 0.28
+    priority: 59
+    min_area: 200
+    max_area_frac: 0.15
+    max_instances: 2
+    group_tag: cockpit
+  center_console:
+    prompt: car center console
+    prompt_variants:
+    - central console between front seats
+    box_threshold: 0.3
+    priority: 31
+    min_area: 500
+    max_area_frac: 0.25
+    max_instances: 2
+    group_tag: cockpit
+  climate_controls:
+    prompt: car climate control panel
+    prompt_variants:
+    - air conditioning control buttons
+    - hvac dials in car
+    box_threshold: 0.3
+    priority: 57
+    min_area: 200
+    max_area_frac: 0.12
+    max_instances: 2
+    group_tag: cockpit
+  gear_selector:
+    prompt: gear selector lever
+    prompt_variants:
+    - gear shift stick
+    - automatic gear shifter
+    box_threshold: 0.3
+    priority: 57
+    min_area: 150
+    max_area_frac: 0.1
+    max_instances: 2
+    group_tag: cockpit
+  left_air_vent:
+    prompt: car dashboard air vent on the left
+    prompt_variants:
+    - left air conditioning vent
+    box_threshold: 0.3
+    priority: 40
+    min_area: 150
+    max_area_frac: 0.08
+    max_instances: 2
+    group_tag: cockpit
+  right_air_vent:
+    prompt: car dashboard air vent on the right
+    prompt_variants:
+    - right air conditioning vent
+    box_threshold: 0.3
+    priority: 40
+    min_area: 150
+    max_area_frac: 0.08
+    max_instances: 2
+    group_tag: cockpit
+  left_side_mirror:
+    prompt: left side wing mirror
+    prompt_variants:
+    - driver side door mirror
+    - left motorcycle mirror
+    - left handlebar mirror
+    - left bar end mirror
+    box_threshold: 0.28
+    priority: 61
+    min_area: 120
+    max_area_frac: 0.03
+    max_instances: 1
+    group_tag: cockpit
+  right_side_mirror:
+    prompt: right side wing mirror
+    prompt_variants:
+    - passenger side door mirror
+    - right motorcycle mirror
+    - right handlebar mirror
+    - right bar end mirror
+    box_threshold: 0.28
+    priority: 61
+    min_area: 120
+    max_area_frac: 0.03
+    max_instances: 1
+    group_tag: cockpit
+  left_window:
+    prompt: car left side window
+    prompt_variants:
+    - driver door window glass
+    box_threshold: 0.28
+    priority: 7
+    min_area: 2000
+    max_area_frac: 0.45
+    max_instances: 1
+    group_tag: cockpit
+  right_window:
+    prompt: car right side window
+    prompt_variants:
+    - passenger door window glass
+    box_threshold: 0.28
+    priority: 7
+    min_area: 2000
+    max_area_frac: 0.45
+    max_instances: 1
+    group_tag: cockpit
+  a_pillar_left:
+    prompt: left windshield pillar of car
+    prompt_variants:
+    - driver side a-pillar
+    box_threshold: 0.3
+    priority: 36
+    min_area: 500
+    max_area_frac: 0.25
+    max_instances: 1
+    group_tag: cockpit
+  a_pillar_right:
+    prompt: right windshield pillar of car
+    prompt_variants:
+    - passenger side a-pillar
+    box_threshold: 0.3
+    priority: 36
+    min_area: 500
+    max_area_frac: 0.25
+    max_instances: 1
+    group_tag: cockpit
+  sun_visor:
+    prompt: car sun visor
+    prompt_variants:
+    - sun shade flap above windshield
+    box_threshold: 0.3
+    priority: 33
+    min_area: 300
+    max_area_frac: 0.2
+    max_instances: 2
+    group_tag: cockpit
+  door_panel:
+    prompt: car interior door panel
+    prompt_variants:
+    - inner door trim with armrest
+    box_threshold: 0.3
+    priority: 26
+    min_area: 500
+    max_area_frac: 0.3
+    max_instances: 2
+    group_tag: cockpit
+  driver_arm:
+    prompt: driver forearm
+    prompt_variants:
+    - human arm reaching to steering wheel
+    box_threshold: 0.28
+    priority: 84
+    min_area: 300
+    max_area_frac: 0.2
+    max_instances: 2
+    group_tag: cockpit
+  phone_mount:
+    prompt: phone holder mount in car
+    prompt_variants:
+    - smartphone cradle on dashboard
+    box_threshold: 0.3
+    priority: 58
+    min_area: 100
+    max_area_frac: 0.08
+    max_instances: 2
+    group_tag: cockpit
+  passenger:
+    prompt: passenger sitting in the car
+    prompt_variants:
+    - front seat passenger person
+    box_threshold: 0.3
+    priority: 80
+    min_area: 500
+    max_area_frac: 0.4
+    max_instances: 3
+    group_tag: cockpit
+  headrest:
+    prompt: car seat headrest
+    prompt_variants:
+    - head restraint on car seat
+    box_threshold: 0.3
+    priority: 24
+    min_area: 300
+    max_area_frac: 0.15
+    max_instances: 3
+    group_tag: cockpit
