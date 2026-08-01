@@ -1,0 +1,286 @@
+{
+  "schema": "article1_geometry_audit_v1",
+  "generated_utc": "2026-08-01T19:14:23.074524+00:00",
+  "source": {
+    "vrs": "/home/andreabedei/Scrivania/AndreaSegmentazione/unknown_20260731_162521.vrs",
+    "frame_index": 13950,
+    "timestamp_ns": 3104821549760,
+    "width": 2016,
+    "height": 1512,
+    "aspect_ratio": 1.3333333333333333,
+    "camera_model": "CameraModelType.FISHEYE624",
+    "focal": [
+      878.9958933834978,
+      878.9958933834978
+    ],
+    "principal_point": [
+      999.5984910732839,
+      763.3637603974663
+    ],
+    "angular_coverage": {
+      "left_deg": 65.74730763207704,
+      "right_deg": 66.93643762618774,
+      "top_deg": 50.10767897040652,
+      "bottom_deg": 48.75241068166392,
+      "corner_top_left_deg": null,
+      "corner_bottom_right_deg": null,
+      "horizontal_fov_deg": 132.68374525826476,
+      "vertical_fov_deg": 98.86008965207043
+    },
+    "model_valid_pixels": 2933993,
+    "model_valid_fraction": 0.9625354964516671
+  },
+  "rectification": {
+    "target": [
+      2016,
+      1512
+    ],
+    "focal": 879.0,
+    "rotate_ccw90": 0,
+    "angular_coverage": {
+      "left_deg": 48.896718353884125,
+      "right_deg": 48.896718353884125,
+      "top_deg": 40.67904633639361,
+      "bottom_deg": 40.67904633639361,
+      "corner_top_left_deg": 55.08469615670352,
+      "corner_bottom_right_deg": 55.08469615670352,
+      "horizontal_fov_deg": 97.79343670776825,
+      "vertical_fov_deg": 81.35809267278722
+    },
+    "retained_source_fraction": 0.5484910399344923,
+    "retained_valid_fraction": 0.5698398053437755,
+    "discarded_valid_pixels": 1262087,
+    "pixels_lost_left": 252,
+    "pixels_lost_right": 269,
+    "pixels_lost_top": 145,
+    "pixels_lost_bottom": 126,
+    "valid_extent_horizontal": [
+      0,
+      2015
+    ],
+    "retained_extent_horizontal": [
+      252,
+      1746
+    ],
+    "valid_extent_vertical": [
+      0,
+      1511
+    ],
+    "retained_extent_vertical": [
+      145,
+      1385
+    ]
+  },
+  "crop_checks": {
+    "rectification": {
+      "source_aspect": 1.3333333333333333,
+      "destination_aspect": 1.3333333333333333,
+      "aspect_changed": false,
+      "is_centre_crop": false,
+      "widescreen_conversion": false
+    },
+    "final_video": {
+      "source_aspect": 1.3333333333333333,
+      "destination_aspect": 1.3333333333333333,
+      "aspect_changed": false,
+      "is_centre_crop": false,
+      "widescreen_conversion": false
+    }
+  },
+  "final_video": {
+    "available": true,
+    "path": "output/article1/motorcycle_baseline_30s/semantic_camera_moto_final.mp4",
+    "width": 1280,
+    "height": 960,
+    "frames": 450,
+    "fps": 15.0,
+    "aspect_ratio": 1.3333333333333333
+  },
+  "overlay": {
+    "path": "reports/article1_motorcycle_fov_mirror_refinement/geometry/retained_region_overlay.jpg",
+    "lost_pixels": 1262087,
+    "outside_model_pixels": 114199
+  },
+  "stages": [
+    {
+      "stage": "01_vrs_rgb",
+      "description": "raw RGB frame decoded from the VRS",
+      "width": 2016,
+      "height": 1512,
+      "aspect_ratio": 1.3333333333333333,
+      "transform": "identity",
+      "inverse_transform": "identity",
+      "crop_box": null,
+      "padding": null,
+      "scale_x": 1.0,
+      "scale_y": 1.0,
+      "source_frame_retained_fraction": 0.9625354964516671,
+      "valid_region_retained_fraction": 1.0,
+      "pixels_lost_left": 0,
+      "pixels_lost_right": 0,
+      "pixels_lost_top": 0,
+      "pixels_lost_bottom": 0,
+      "aspect_preserved": true,
+      "notes": [
+        "camera model CameraModelType.FISHEYE624, focal 879.00, principal point (999.6, 763.4)"
+      ]
+    },
+    {
+      "stage": "02_rectify_pinhole",
+      "description": "fisheye624 -> linear pinhole at focal 879.0",
+      "width": 2016,
+      "height": 1512,
+      "aspect_ratio": 1.3333333333333333,
+      "transform": "unproject(fisheye) then project(pinhole)",
+      "inverse_transform": "unproject(pinhole) then project(fisheye)",
+      "crop_box": null,
+      "padding": null,
+      "scale_x": 1.0,
+      "scale_y": 1.0,
+      "source_frame_retained_fraction": 0.5484910399344923,
+      "valid_region_retained_fraction": 0.5698398053437755,
+      "pixels_lost_left": 252,
+      "pixels_lost_right": 269,
+      "pixels_lost_top": 145,
+      "pixels_lost_bottom": 126,
+      "aspect_preserved": true,
+      "notes": []
+    },
+    {
+      "stage": "03_mask2former_input",
+      "description": "Mask2Former image processor resize to a fixed square",
+      "width": 384,
+      "height": 384,
+      "aspect_ratio": 1.0,
+      "transform": "resize",
+      "inverse_transform": "inverse resize",
+      "crop_box": null,
+      "padding": null,
+      "scale_x": 0.19047619047619047,
+      "scale_y": 0.25396825396825395,
+      "source_frame_retained_fraction": null,
+      "valid_region_retained_fraction": null,
+      "pixels_lost_left": null,
+      "pixels_lost_right": null,
+      "pixels_lost_top": null,
+      "pixels_lost_bottom": null,
+      "aspect_preserved": false,
+      "notes": [
+        "model-space geometry only; the produced mask is mapped back to the rectified frame before fusion"
+      ]
+    },
+    {
+      "stage": "04_grounding_dino_input",
+      "description": "Grounding DINO processor resize (shortest edge 800, longest 1333)",
+      "width": 1333,
+      "height": 1000,
+      "aspect_ratio": 1.333,
+      "transform": "resize",
+      "inverse_transform": "inverse resize",
+      "crop_box": null,
+      "padding": null,
+      "scale_x": 0.6612103174603174,
+      "scale_y": 0.6613756613756614,
+      "source_frame_retained_fraction": null,
+      "valid_region_retained_fraction": null,
+      "pixels_lost_left": null,
+      "pixels_lost_right": null,
+      "pixels_lost_top": null,
+      "pixels_lost_bottom": null,
+      "aspect_preserved": false,
+      "notes": [
+        "model-space geometry only; the produced mask is mapped back to the rectified frame before fusion"
+      ]
+    },
+    {
+      "stage": "05_sam2_input",
+      "description": "SAM 2.1 operates on the rectified frame directly",
+      "width": 2016,
+      "height": 1512,
+      "aspect_ratio": 1.3333333333333333,
+      "transform": "resize",
+      "inverse_transform": "inverse resize",
+      "crop_box": null,
+      "padding": null,
+      "scale_x": 1.0,
+      "scale_y": 1.0,
+      "source_frame_retained_fraction": null,
+      "valid_region_retained_fraction": null,
+      "pixels_lost_left": null,
+      "pixels_lost_right": null,
+      "pixels_lost_top": null,
+      "pixels_lost_bottom": null,
+      "aspect_preserved": true,
+      "notes": [
+        "model-space geometry only; the produced mask is mapped back to the rectified frame before fusion"
+      ]
+    },
+    {
+      "stage": "06_semantic_camera_masks",
+      "description": "dense fused mask in rectified geometry",
+      "width": 2016,
+      "height": 1512,
+      "aspect_ratio": 1.3333333333333333,
+      "transform": "identity",
+      "inverse_transform": "identity",
+      "crop_box": null,
+      "padding": null,
+      "scale_x": 1.0,
+      "scale_y": 1.0,
+      "source_frame_retained_fraction": null,
+      "valid_region_retained_fraction": null,
+      "pixels_lost_left": null,
+      "pixels_lost_right": null,
+      "pixels_lost_top": null,
+      "pixels_lost_bottom": null,
+      "aspect_preserved": true,
+      "notes": []
+    },
+    {
+      "stage": "07_temporal_processing_scale",
+      "description": "temporal stages operate at processing_scale=0.5",
+      "width": 1008,
+      "height": 756,
+      "aspect_ratio": 1.3333333333333333,
+      "transform": "resize",
+      "inverse_transform": "resize back",
+      "crop_box": null,
+      "padding": null,
+      "scale_x": 0.5,
+      "scale_y": 0.5,
+      "source_frame_retained_fraction": null,
+      "valid_region_retained_fraction": null,
+      "pixels_lost_left": null,
+      "pixels_lost_right": null,
+      "pixels_lost_top": null,
+      "pixels_lost_bottom": null,
+      "aspect_preserved": true,
+      "notes": [
+        "aspect ratio preserved; no crop"
+      ]
+    },
+    {
+      "stage": "08_final_video",
+      "description": "rendered presentation video",
+      "width": 1280,
+      "height": 960,
+      "aspect_ratio": 1.3333333333333333,
+      "transform": "resize",
+      "inverse_transform": "n/a (presentation only)",
+      "crop_box": null,
+      "padding": null,
+      "scale_x": 0.6349206349206349,
+      "scale_y": 0.6349206349206349,
+      "source_frame_retained_fraction": null,
+      "valid_region_retained_fraction": null,
+      "pixels_lost_left": null,
+      "pixels_lost_right": null,
+      "pixels_lost_top": null,
+      "pixels_lost_bottom": null,
+      "aspect_preserved": true,
+      "notes": [
+        "450 frames at 15.0000 fps"
+      ]
+    }
+  ]
+}
