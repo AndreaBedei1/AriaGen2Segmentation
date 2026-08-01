@@ -1,0 +1,206 @@
+{
+  "sequences": [
+    {
+      "slug": "01_lane_dropout",
+      "problem": "Linee stradali che scompaiono e ricompaiono",
+      "correction": "La finestra flow-aligned \u00b110 recupera evidenza lane nei frame intermedi e il filtro geometrico la limita al supporto stradale.",
+      "center_position": 114,
+      "start_position": 109,
+      "end_position": 119,
+      "score_pixels_at_qa_scale": 8089,
+      "frame_range": [
+        13984,
+        13993
+      ],
+      "center_frame": 13989,
+      "capture_timestamp_ns": 3107421579176,
+      "source_timestamp_seconds": 932.599459959,
+      "contact_sheet": "01_lane_dropout/contact_sheet.jpg",
+      "individuals": [
+        {
+          "frame_index": 13984,
+          "capture_timestamp_ns": 3107088114374,
+          "rgb": "frame_013984_rgb.jpg",
+          "mask": "frame_013984_mask.png",
+          "overlay": "frame_013984_overlay.jpg"
+        },
+        {
+          "frame_index": 13989,
+          "capture_timestamp_ns": 3107421579176,
+          "rgb": "frame_013989_rgb.jpg",
+          "mask": "frame_013989_mask.png",
+          "overlay": "frame_013989_overlay.jpg"
+        },
+        {
+          "frame_index": 13993,
+          "capture_timestamp_ns": 3107688003904,
+          "rgb": "frame_013993_rgb.jpg",
+          "mask": "frame_013993_mask.png",
+          "overlay": "frame_013993_overlay.jpg"
+        }
+      ]
+    },
+    {
+      "slug": "02_broken_lane_link",
+      "problem": "Linee spezzate con gap compatibili",
+      "correction": "Closing multi-orientamento e collegamento controllato degli estremi riducono piccoli gap senza attraversare barriere semantiche.",
+      "center_position": 393,
+      "start_position": 388,
+      "end_position": 398,
+      "score_pixels_at_qa_scale": 1180,
+      "frame_range": [
+        14263,
+        14272
+      ],
+      "center_frame": 14268,
+      "capture_timestamp_ns": 3126020074468,
+      "source_timestamp_seconds": 951.197955251,
+      "contact_sheet": "02_broken_lane_link/contact_sheet.jpg",
+      "individuals": [
+        {
+          "frame_index": 14263,
+          "capture_timestamp_ns": 3125686874966,
+          "rgb": "frame_014263_rgb.jpg",
+          "mask": "frame_014263_mask.png",
+          "overlay": "frame_014263_overlay.jpg"
+        },
+        {
+          "frame_index": 14268,
+          "capture_timestamp_ns": 3126020074468,
+          "rgb": "frame_014268_rgb.jpg",
+          "mask": "frame_014268_mask.png",
+          "overlay": "frame_014268_overlay.jpg"
+        },
+        {
+          "frame_index": 14272,
+          "capture_timestamp_ns": 3126286663081,
+          "rgb": "frame_014272_rgb.jpg",
+          "mask": "frame_014272_mask.png",
+          "overlay": "frame_014272_overlay.jpg"
+        }
+      ]
+    },
+    {
+      "slug": "03_intermittent_boundary",
+      "problem": "Cordolo o bordo strada intermittente",
+      "correction": "Persistenza temporale, prossimit\u00e0 al bordo strada e pulizia delle componenti rendono pi\u00f9 continuo road_boundary_or_obstacle.",
+      "center_position": 370,
+      "start_position": 365,
+      "end_position": 375,
+      "score_pixels_at_qa_scale": 10256,
+      "frame_range": [
+        14240,
+        14249
+      ],
+      "center_frame": 14245,
+      "capture_timestamp_ns": 3124486937645,
+      "source_timestamp_seconds": 949.664818428,
+      "contact_sheet": "03_intermittent_boundary/contact_sheet.jpg",
+      "individuals": [
+        {
+          "frame_index": 14240,
+          "capture_timestamp_ns": 3124153630456,
+          "rgb": "frame_014240_rgb.jpg",
+          "mask": "frame_014240_mask.png",
+          "overlay": "frame_014240_overlay.jpg"
+        },
+        {
+          "frame_index": 14245,
+          "capture_timestamp_ns": 3124486937645,
+          "rgb": "frame_014245_rgb.jpg",
+          "mask": "frame_014245_mask.png",
+          "overlay": "frame_014245_overlay.jpg"
+        },
+        {
+          "frame_index": 14249,
+          "capture_timestamp_ns": 3124753608290,
+          "rgb": "frame_014249_rgb.jpg",
+          "mask": "frame_014249_mask.png",
+          "overlay": "frame_014249_overlay.jpg"
+        }
+      ]
+    },
+    {
+      "slug": "04_internal_flicker",
+      "problem": "Cockpit, mani, specchi o display con flicker",
+      "correction": "Persistenza lunga e isteresi per le classi interne recuperano i dropout; le mani restano nella classe control_and_ego_vehicle.",
+      "center_position": 170,
+      "start_position": 165,
+      "end_position": 175,
+      "score_pixels_at_qa_scale": 873,
+      "frame_range": [
+        14040,
+        14049
+      ],
+      "center_frame": 14045,
+      "capture_timestamp_ns": 3111154126560,
+      "source_timestamp_seconds": 936.332007343,
+      "contact_sheet": "04_internal_flicker/contact_sheet.jpg",
+      "individuals": [
+        {
+          "frame_index": 14040,
+          "capture_timestamp_ns": 3110821027873,
+          "rgb": "frame_014040_rgb.jpg",
+          "mask": "frame_014040_mask.png",
+          "overlay": "frame_014040_overlay.jpg"
+        },
+        {
+          "frame_index": 14045,
+          "capture_timestamp_ns": 3111154126560,
+          "rgb": "frame_014045_rgb.jpg",
+          "mask": "frame_014045_mask.png",
+          "overlay": "frame_014045_overlay.jpg"
+        },
+        {
+          "frame_index": 14049,
+          "capture_timestamp_ns": 3111421031071,
+          "rgb": "frame_014049_rgb.jpg",
+          "mask": "frame_014049_mask.png",
+          "overlay": "frame_014049_overlay.jpg"
+        }
+      ]
+    },
+    {
+      "slug": "05_internal_external_conflict",
+      "problem": "Conflitto tra interno ed esterno",
+      "correction": "La fusione conserva le regioni esterne forti e vieta ai collegamenti di attraversare cockpit, veicoli o pedoni.",
+      "center_position": 175,
+      "start_position": 170,
+      "end_position": 180,
+      "score_pixels_at_qa_scale": 8626,
+      "frame_range": [
+        14045,
+        14054
+      ],
+      "center_frame": 14050,
+      "capture_timestamp_ns": 3111487680103,
+      "source_timestamp_seconds": 936.665560886,
+      "contact_sheet": "05_internal_external_conflict/contact_sheet.jpg",
+      "individuals": [
+        {
+          "frame_index": 14045,
+          "capture_timestamp_ns": 3111154126560,
+          "rgb": "frame_014045_rgb.jpg",
+          "mask": "frame_014045_mask.png",
+          "overlay": "frame_014045_overlay.jpg"
+        },
+        {
+          "frame_index": 14050,
+          "capture_timestamp_ns": 3111487680103,
+          "rgb": "frame_014050_rgb.jpg",
+          "mask": "frame_014050_mask.png",
+          "overlay": "frame_014050_overlay.jpg"
+        },
+        {
+          "frame_index": 14054,
+          "capture_timestamp_ns": 3111754205644,
+          "rgb": "frame_014054_rgb.jpg",
+          "mask": "frame_014054_mask.png",
+          "overlay": "frame_014054_overlay.jpg"
+        }
+      ]
+    }
+  ],
+  "sequence_count": 5,
+  "output_dir": "reports/article1_motorcycle_fov_mirror_refinement/final_pass_qa"
+}

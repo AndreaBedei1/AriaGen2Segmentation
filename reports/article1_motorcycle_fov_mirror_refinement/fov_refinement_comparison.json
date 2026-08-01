@@ -1,0 +1,387 @@
+{
+  "schema": "article1_fov_refinement_comparison_v1",
+  "generated_utc": "2026-08-01T22:16:10.259570+00:00",
+  "status": "pre_ground_truth_diagnostics",
+  "is_accuracy": false,
+  "note": "the two runs live in different geometries, so no per-pixel difference is computed; the comparison is over distributions, per-frame statistics and the lateral band the baseline could not represent at all",
+  "baseline": {
+    "label": "frozen_baseline_rectified",
+    "run": "output/article1/motorcycle_baseline_30s",
+    "frames": 450,
+    "geometry": [
+      2016,
+      1512
+    ],
+    "measured_over": "whole frame",
+    "invalid_class_ids": 0,
+    "dense_coverage_mean": 1.0,
+    "mean_confidence": 0.9615083509021335,
+    "mean_entropy": 0.06713716144363086,
+    "provenance": {
+      "external": 0.9847273954163283,
+      "internal_model": 0.0011002485699355188,
+      "geometric_prior": 0.006996715138387318,
+      "dense_fill": 0.007175640875348767
+    },
+    "conflict_fraction": 0.3426854264939858,
+    "class_pixel_fraction": {
+      "unknown": 0.0,
+      "road_surface": 0.28588316032002653,
+      "lane_marking": 0.03520215480739621,
+      "regulatory_road_marking": 0.016453346770807085,
+      "vehicle": 0.0067115778067056734,
+      "two_wheeler": 0.00042784487766299933,
+      "pedestrian": 7.316541156929165e-05,
+      "traffic_light": 1.2376735673693345e-05,
+      "traffic_sign": 0.00233426313769678,
+      "road_boundary_or_obstacle": 0.07146423045384134,
+      "mirror": 0.00019537774815001446,
+      "instrument_display": 0.0002018354924274236,
+      "control_and_ego_vehicle": 0.007699750467745396,
+      "other_environment": 0.5733409159702976
+    },
+    "class_presence_fraction": {
+      "unknown": 0.0,
+      "road_surface": 0.9688888888888889,
+      "lane_marking": 0.9888888888888889,
+      "regulatory_road_marking": 0.4488888888888889,
+      "vehicle": 0.8355555555555556,
+      "two_wheeler": 0.2,
+      "pedestrian": 0.21555555555555556,
+      "traffic_light": 0.051111111111111114,
+      "traffic_sign": 0.7844444444444445,
+      "road_boundary_or_obstacle": 1.0,
+      "mirror": 0.2222222222222222,
+      "instrument_display": 0.4888888888888889,
+      "control_and_ego_vehicle": 0.9933333333333333,
+      "other_environment": 1.0
+    },
+    "class_components_when_present": {
+      "unknown": 0.0,
+      "road_surface": 11.403669724770642,
+      "lane_marking": 27.6,
+      "regulatory_road_marking": 2.3415841584158414,
+      "vehicle": 2.2632978723404253,
+      "two_wheeler": 1.5555555555555556,
+      "pedestrian": 1.288659793814433,
+      "traffic_light": 1.2608695652173914,
+      "traffic_sign": 3.0169971671388103,
+      "road_boundary_or_obstacle": 7.566666666666666,
+      "mirror": 12.01,
+      "instrument_display": 11.340909090909092,
+      "control_and_ego_vehicle": 165.8791946308725,
+      "other_environment": 961.4711111111111
+    },
+    "lateral_band_class_fraction": {
+      "unknown": 0.0,
+      "road_surface": 0.22714857215693005,
+      "lane_marking": 0.02441770587837451,
+      "regulatory_road_marking": 0.011536449147560258,
+      "vehicle": 0.009724056125236065,
+      "two_wheeler": 0.0005464536737889737,
+      "pedestrian": 8.09440568535947e-05,
+      "traffic_light": 6.659279028993877e-06,
+      "traffic_sign": 0.0027240769354830324,
+      "road_boundary_or_obstacle": 0.10424902842159478,
+      "mirror": 5.564399910515938e-05,
+      "instrument_display": 0.0002706580720346699,
+      "control_and_ego_vehicle": 0.011269947922356967,
+      "other_environment": 0.6079698043316529
+    },
+    "switch_rate_per_second": 1.1469144853316324,
+    "cockpit_fraction": 0.008096963708322835,
+    "external_fraction": 0.4185621203213795
+  },
+  "refined": {
+    "label": "full_fov_refined",
+    "run": "output/article1/motorcycle_fov_mirror_refinement_30s",
+    "frames": 450,
+    "geometry": [
+      2016,
+      1512
+    ],
+    "measured_over": "valid pixels only",
+    "invalid_class_ids": 0,
+    "dense_coverage_mean": 1.0,
+    "mean_confidence": 0.9502269560760922,
+    "mean_entropy": 0.08597941554254955,
+    "provenance": {
+      "external": 0.9866249603407894,
+      "internal_model": 0.0004763530497933055,
+      "geometric_prior": 0.0,
+      "dense_fill": 0.01289868660941743
+    },
+    "conflict_fraction": 0.01744890085663895,
+    "class_pixel_fraction": {
+      "unknown": 0.0,
+      "road_surface": 0.26338410487005254,
+      "lane_marking": 0.03185739403983279,
+      "regulatory_road_marking": 0.014237167194635053,
+      "vehicle": 0.0067463593509293,
+      "two_wheeler": 0.018208733134521985,
+      "pedestrian": 8.354409086108172e-05,
+      "traffic_light": 2.877837662037897e-05,
+      "traffic_sign": 0.001566589362081717,
+      "road_boundary_or_obstacle": 0.07297019681596605,
+      "mirror": 1.8900295035923174e-05,
+      "instrument_display": 0.00017677085270634404,
+      "control_and_ego_vehicle": 0.0002936650193477323,
+      "other_environment": 0.5904277965974091
+    },
+    "class_presence_fraction": {
+      "unknown": 0.0,
+      "road_surface": 0.9933333333333333,
+      "lane_marking": 0.9977777777777778,
+      "regulatory_road_marking": 0.49333333333333335,
+      "vehicle": 0.8733333333333333,
+      "two_wheeler": 0.7311111111111112,
+      "pedestrian": 0.21555555555555556,
+      "traffic_light": 0.09111111111111111,
+      "traffic_sign": 0.7644444444444445,
+      "road_boundary_or_obstacle": 1.0,
+      "mirror": 0.03777777777777778,
+      "instrument_display": 0.2577777777777778,
+      "control_and_ego_vehicle": 0.4866666666666667,
+      "other_environment": 1.0
+    },
+    "class_components_when_present": {
+      "unknown": 0.0,
+      "road_surface": 12.440715883668904,
+      "lane_marking": 21.888641425389753,
+      "regulatory_road_marking": 2.5585585585585586,
+      "vehicle": 2.6412213740458017,
+      "two_wheeler": 5.085106382978723,
+      "pedestrian": 1.4329896907216495,
+      "traffic_light": 1.0975609756097562,
+      "traffic_sign": 2.854651162790698,
+      "road_boundary_or_obstacle": 7.611111111111111,
+      "mirror": 12.058823529411764,
+      "instrument_display": 9.310344827586206,
+      "control_and_ego_vehicle": 66.47945205479452,
+      "other_environment": 921.0933333333334
+    },
+    "lateral_band_class_fraction": {
+      "unknown": 0.0,
+      "road_surface": 0.2225293267448653,
+      "lane_marking": 0.024782863857694855,
+      "regulatory_road_marking": 0.009908906367456175,
+      "vehicle": 0.009873324676623234,
+      "two_wheeler": 0.0034364316578560693,
+      "pedestrian": 0.00012988368090039392,
+      "traffic_light": 2.047523626918315e-05,
+      "traffic_sign": 0.0015517881000713283,
+      "road_boundary_or_obstacle": 0.11347617655665017,
+      "mirror": 0.0,
+      "instrument_display": 2.5943106227561577e-05,
+      "control_and_ego_vehicle": 0.00014836814408753155,
+      "other_environment": 0.6141165118712981
+    },
+    "switch_rate_per_second": 1.172772628921746,
+    "cockpit_fraction": 0.0004893361670899995,
+    "external_fraction": 0.40908286723550086
+  },
+  "per_class": {
+    "unknown": {
+      "baseline_pixel_fraction": 0.0,
+      "refined_pixel_fraction": 0.0,
+      "absolute_change": 0.0,
+      "relative_change": null,
+      "baseline_presence": 0.0,
+      "refined_presence": 0.0,
+      "baseline_components": 0.0,
+      "refined_components": 0.0,
+      "baseline_lateral_band": 0.0,
+      "refined_lateral_band": 0.0
+    },
+    "road_surface": {
+      "baseline_pixel_fraction": 0.28588316032002653,
+      "refined_pixel_fraction": 0.26338410487005254,
+      "absolute_change": -0.022499055449973993,
+      "relative_change": -0.07870017745986804,
+      "baseline_presence": 0.9688888888888889,
+      "refined_presence": 0.9933333333333333,
+      "baseline_components": 11.403669724770642,
+      "refined_components": 12.440715883668904,
+      "baseline_lateral_band": 0.22714857215693005,
+      "refined_lateral_band": 0.2225293267448653
+    },
+    "lane_marking": {
+      "baseline_pixel_fraction": 0.03520215480739621,
+      "refined_pixel_fraction": 0.03185739403983279,
+      "absolute_change": -0.0033447607675634247,
+      "relative_change": -0.09501579621656193,
+      "baseline_presence": 0.9888888888888889,
+      "refined_presence": 0.9977777777777778,
+      "baseline_components": 27.6,
+      "refined_components": 21.888641425389753,
+      "baseline_lateral_band": 0.02441770587837451,
+      "refined_lateral_band": 0.024782863857694855
+    },
+    "regulatory_road_marking": {
+      "baseline_pixel_fraction": 0.016453346770807085,
+      "refined_pixel_fraction": 0.014237167194635053,
+      "absolute_change": -0.0022161795761720324,
+      "relative_change": -0.13469475888663363,
+      "baseline_presence": 0.4488888888888889,
+      "refined_presence": 0.49333333333333335,
+      "baseline_components": 2.3415841584158414,
+      "refined_components": 2.5585585585585586,
+      "baseline_lateral_band": 0.011536449147560258,
+      "refined_lateral_band": 0.009908906367456175
+    },
+    "vehicle": {
+      "baseline_pixel_fraction": 0.0067115778067056734,
+      "refined_pixel_fraction": 0.0067463593509293,
+      "absolute_change": 3.4781544223626455e-05,
+      "relative_change": 0.005182320048331334,
+      "baseline_presence": 0.8355555555555556,
+      "refined_presence": 0.8733333333333333,
+      "baseline_components": 2.2632978723404253,
+      "refined_components": 2.6412213740458017,
+      "baseline_lateral_band": 0.009724056125236065,
+      "refined_lateral_band": 0.009873324676623234
+    },
+    "two_wheeler": {
+      "baseline_pixel_fraction": 0.00042784487766299933,
+      "refined_pixel_fraction": 0.018208733134521985,
+      "absolute_change": 0.017780888256858987,
+      "relative_change": 41.559193962968195,
+      "baseline_presence": 0.2,
+      "refined_presence": 0.7311111111111112,
+      "baseline_components": 1.5555555555555556,
+      "refined_components": 5.085106382978723,
+      "baseline_lateral_band": 0.0005464536737889737,
+      "refined_lateral_band": 0.0034364316578560693
+    },
+    "pedestrian": {
+      "baseline_pixel_fraction": 7.316541156929165e-05,
+      "refined_pixel_fraction": 8.354409086108172e-05,
+      "absolute_change": 1.0378679291790069e-05,
+      "relative_change": 0.14185226419400226,
+      "baseline_presence": 0.21555555555555556,
+      "refined_presence": 0.21555555555555556,
+      "baseline_components": 1.288659793814433,
+      "refined_components": 1.4329896907216495,
+      "baseline_lateral_band": 8.09440568535947e-05,
+      "refined_lateral_band": 0.00012988368090039392
+    },
+    "traffic_light": {
+      "baseline_pixel_fraction": 1.2376735673693345e-05,
+      "refined_pixel_fraction": 2.877837662037897e-05,
+      "absolute_change": 1.6401640946685623e-05,
+      "relative_change": 1.3251992592479116,
+      "baseline_presence": 0.051111111111111114,
+      "refined_presence": 0.09111111111111111,
+      "baseline_components": 1.2608695652173914,
+      "refined_components": 1.0975609756097562,
+      "baseline_lateral_band": 6.659279028993877e-06,
+      "refined_lateral_band": 2.047523626918315e-05
+    },
+    "traffic_sign": {
+      "baseline_pixel_fraction": 0.00233426313769678,
+      "refined_pixel_fraction": 0.001566589362081717,
+      "absolute_change": -0.0007676737756150628,
+      "relative_change": -0.3288719952852134,
+      "baseline_presence": 0.7844444444444445,
+      "refined_presence": 0.7644444444444445,
+      "baseline_components": 3.0169971671388103,
+      "refined_components": 2.854651162790698,
+      "baseline_lateral_band": 0.0027240769354830324,
+      "refined_lateral_band": 0.0015517881000713283
+    },
+    "road_boundary_or_obstacle": {
+      "baseline_pixel_fraction": 0.07146423045384134,
+      "refined_pixel_fraction": 0.07297019681596605,
+      "absolute_change": 0.0015059663621247027,
+      "relative_change": 0.021073008868365335,
+      "baseline_presence": 1.0,
+      "refined_presence": 1.0,
+      "baseline_components": 7.566666666666666,
+      "refined_components": 7.611111111111111,
+      "baseline_lateral_band": 0.10424902842159478,
+      "refined_lateral_band": 0.11347617655665017
+    },
+    "mirror": {
+      "baseline_pixel_fraction": 0.00019537774815001446,
+      "refined_pixel_fraction": 1.8900295035923174e-05,
+      "absolute_change": -0.00017647745311409128,
+      "relative_change": -0.9032628064614031,
+      "baseline_presence": 0.2222222222222222,
+      "refined_presence": 0.03777777777777778,
+      "baseline_components": 12.01,
+      "refined_components": 12.058823529411764,
+      "baseline_lateral_band": 5.564399910515938e-05,
+      "refined_lateral_band": 0.0
+    },
+    "instrument_display": {
+      "baseline_pixel_fraction": 0.0002018354924274236,
+      "refined_pixel_fraction": 0.00017677085270634404,
+      "absolute_change": -2.5064639721079565e-05,
+      "relative_change": -0.12418350915209998,
+      "baseline_presence": 0.4888888888888889,
+      "refined_presence": 0.2577777777777778,
+      "baseline_components": 11.340909090909092,
+      "refined_components": 9.310344827586206,
+      "baseline_lateral_band": 0.0002706580720346699,
+      "refined_lateral_band": 2.5943106227561577e-05
+    },
+    "control_and_ego_vehicle": {
+      "baseline_pixel_fraction": 0.007699750467745396,
+      "refined_pixel_fraction": 0.0002936650193477323,
+      "absolute_change": -0.007406085448397664,
+      "relative_change": -0.9618604498187431,
+      "baseline_presence": 0.9933333333333333,
+      "refined_presence": 0.4866666666666667,
+      "baseline_components": 165.8791946308725,
+      "refined_components": 66.47945205479452,
+      "baseline_lateral_band": 0.011269947922356967,
+      "refined_lateral_band": 0.00014836814408753155
+    },
+    "other_environment": {
+      "baseline_pixel_fraction": 0.5733409159702976,
+      "refined_pixel_fraction": 0.5904277965974091,
+      "absolute_change": 0.0170868806271115,
+      "relative_change": 0.029802304616956207,
+      "baseline_presence": 1.0,
+      "refined_presence": 1.0,
+      "baseline_components": 961.4711111111111,
+      "refined_components": 921.0933333333334,
+      "baseline_lateral_band": 0.6079698043316529,
+      "refined_lateral_band": 0.6141165118712981
+    }
+  },
+  "headline": {
+    "cockpit_fraction": [
+      0.008096963708322835,
+      0.0004893361670899995
+    ],
+    "mirror_fraction": [
+      0.00019537774815001446,
+      1.8900295035923174e-05
+    ],
+    "mirror_presence": [
+      0.2222222222222222,
+      0.03777777777777778
+    ],
+    "instrument_presence": [
+      0.4888888888888889,
+      0.2577777777777778
+    ],
+    "geometric_prior_share": [
+      0.006996715138387318,
+      0.0
+    ],
+    "external_fraction": [
+      0.4185621203213795,
+      0.40908286723550086
+    ],
+    "invalid_class_ids": [
+      0,
+      0
+    ],
+    "dense_coverage": [
+      1.0,
+      1.0
+    ]
+  }
+}
