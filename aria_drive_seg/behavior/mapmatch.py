@@ -48,6 +48,8 @@ class MatchResult:
     matched_y: np.ndarray
     matched_lat: np.ndarray
     matched_lon: np.ndarray
+    gps_speed_mps: np.ndarray
+    gps_accuracy_m: np.ndarray
     snap_distance_m: np.ndarray
     way_index: np.ndarray               # -1 when unmatched
     osm_way_id: np.ndarray
@@ -75,6 +77,8 @@ class MatchResult:
             "matched": self.matched, "match_reason": self.reason,
             "matched_lat": self.matched_lat, "matched_lon": self.matched_lon,
             "matched_x_m": self.matched_x, "matched_y_m": self.matched_y,
+            "gps_speed_mps": self.gps_speed_mps,
+            "gps_accuracy_m": self.gps_accuracy_m,
             "snap_distance_m": self.snap_distance_m,
             "osm_way_id": self.osm_way_id,
             "offset_along_way_m": self.offset_along_way_m,
@@ -285,7 +289,7 @@ def match_track(net: RoadNetwork,
             cur = prev_i
 
     # --- assemble ------------------------------------------------------------
-    out = _empty_result(n, ts, lat, lon)
+    out = _empty_result(n, ts, lat, lon, speed=spd, accuracy=acc)
     out.gps_heading_deg = gps_heading
     progress = 0.0
     prev_choice: Optional[Tuple[int, float, float, float]] = None
@@ -395,12 +399,14 @@ def _last_with_candidates(log_prob: List[np.ndarray]) -> Optional[int]:
     return None
 
 
-def _empty_result(n: int, ts, lat, lon) -> MatchResult:
+def _empty_result(n: int, ts, lat, lon, speed=None, accuracy=None) -> MatchResult:
     return MatchResult(
         timestamp_ns=ts, latitude=lat, longitude=lon,
         matched=np.zeros(n, bool), reason=["unprocessed"] * n,
         matched_x=np.full(n, np.nan), matched_y=np.full(n, np.nan),
         matched_lat=np.full(n, np.nan), matched_lon=np.full(n, np.nan),
+        gps_speed_mps=(np.full(n, np.nan) if speed is None else speed),
+        gps_accuracy_m=(np.full(n, np.nan) if accuracy is None else accuracy),
         snap_distance_m=np.full(n, np.nan),
         way_index=np.full(n, -1, np.int64), osm_way_id=np.full(n, -1, np.int64),
         offset_along_way_m=np.full(n, np.nan),
