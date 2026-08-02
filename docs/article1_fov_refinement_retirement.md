@@ -87,5 +87,11 @@ it.
 git push -u origin feature/article1-multimodal-behavior-analysis
 ```
 
-The branch is ready to push: the full test suite passes (480 passed, 15 skipped)
+The branch is ready to push: the full test suite passes (483 passed, 15 skipped)
 and the working tree is clean. It must **not** be merged into `main`.
+
+Both commands were re-attempted after the figure work and both still fail the
+same way — there is an SSH key on this machine but GitHub rejects it
+(`Permission denied (publickey)`), and the HTTPS remote has no credential helper,
+no `~/.netrc` and no token. Anonymous *read* against the remote works, so the
+branch state above is verified against the real `origin`.
