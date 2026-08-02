@@ -363,23 +363,33 @@ def _index(net: RoadNetwork, nodes: Dict[int, Tuple[float, float]]) -> None:
             if v in values:
                 features.setdefault(v, []).append(net.node_xy[nid])
 
+    # Roundabouts: every node of a roundabout way, so that "distance to
+    # roundabout" means distance to the circle rather than to a single node.
+    roundabout_nodes: set = set()
+    rb: List[Tuple[float, float]] = []
+    for way in net.ways:
+        if not way.is_roundabout:
+            continue
+        for n in way.node_ids:
+            roundabout_nodes.add(n)
+            if n in net.node_xy:
+                rb.append(net.node_xy[n])
+    features["roundabout"] = rb
+
     # Junctions: nodes shared by two or more distinct driveable ways. This is the
     # topological definition; an OSM node is not tagged "junction".
+    #
+    # Roundabout nodes are excluded. Every node of a roundabout is shared by the
+    # ring and an approach, so keeping them would make a roundabout register as a
+    # dense cluster of generic junctions — which then blankets the roundabout and
+    # leaves its own event with no uncontaminated baseline anywhere.
     use_count: Dict[int, set] = {}
     for wi, way in enumerate(net.ways):
         for nid in way.node_ids:
             use_count.setdefault(nid, set()).add(wi)
     features["junction"] = [net.node_xy[n] for n, ws in use_count.items()
-                            if len(ws) >= 2 and n in net.node_xy]
-
-    # Roundabouts: the centroid of each roundabout way, plus its nodes, so that
-    # "distance to roundabout" means distance to the circle, not to one node.
-    rb: List[Tuple[float, float]] = []
-    for way in net.ways:
-        if not way.is_roundabout:
-            continue
-        rb.extend(net.node_xy[n] for n in way.node_ids if n in net.node_xy)
-    features["roundabout"] = rb
+                            if len(ws) >= 2 and n in net.node_xy
+                            and n not in roundabout_nodes]
 
     net.feature_xy = {k: (np.asarray(v, dtype=float).reshape(-1, 2))
                       for k, v in features.items() if v}
