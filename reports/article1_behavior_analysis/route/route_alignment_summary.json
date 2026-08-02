@@ -1,0 +1,98 @@
+{
+  "schema": "article1_route_alignment_v1",
+  "result_status": "exploratory_pilot",
+  "alignment": "spatial_only_never_temporal",
+  "bin_definition": "map-defined: (osm_way_id, floor(offset_along_way / bin_size), travel_direction)",
+  "pairing_criteria": {
+    "max_lateral_distance_m": 25.0,
+    "max_heading_difference_deg": 45.0,
+    "min_samples_per_bin": 2,
+    "require_same_direction": true,
+    "require_map_match": true
+  },
+  "positional_resolution_m": 7.611000061035156,
+  "positional_resolution_per_domain_m": {
+    "car": 5.222002299644364,
+    "motorcycle": 7.611000061035156
+  },
+  "gps_rate_hz": {
+    "car": 0.9999995830001738,
+    "motorcycle": 1.0
+  },
+  "median_gps_speed_mps": {
+    "car": 10.444000244140625,
+    "motorcycle": 15.222000122070312
+  },
+  "analysis_bin_size_m": 50.0,
+  "analysis_bin_rationale": "smallest configured bin size the 1 Hz GPS cadence can fill with the 2 fixes pairing requires",
+  "bin_sizes": {
+    "10m": {
+      "bin_size_m": 10.0,
+      "shared_bins_considered": 122,
+      "paired_bins": 1,
+      "paired_length_m": 10.0,
+      "rejection_reasons": {
+        "only 1 samples in the sparser domain": 121
+      },
+      "positional_resolution_m": 7.611000061035156,
+      "expected_gps_fixes_per_bin": 0.656943891722944,
+      "bin_below_positional_resolution": false,
+      "gps_cadence_undersamples_this_bin": true,
+      "resolution_caveat": "a 10 m bin holds about 0.7 GPS fixes at this speed and cadence, below the 2 required for pairing; the low paired count is a sampling limit, not a finding about the routes",
+      "car_bins_occupied": 176,
+      "motorcycle_bins_occupied": 866
+    },
+    "20m": {
+      "bin_size_m": 20.0,
+      "shared_bins_considered": 109,
+      "paired_bins": 28,
+      "paired_length_m": 560.0,
+      "rejection_reasons": {
+        "only 1 samples in the sparser domain": 81
+      },
+      "positional_resolution_m": 7.611000061035156,
+      "expected_gps_fixes_per_bin": 1.313887783445888,
+      "bin_below_positional_resolution": false,
+      "gps_cadence_undersamples_this_bin": true,
+      "resolution_caveat": "a 20 m bin holds about 1.3 GPS fixes at this speed and cadence, below the 2 required for pairing; the low paired count is a sampling limit, not a finding about the routes",
+      "car_bins_occupied": 119,
+      "motorcycle_bins_occupied": 686
+    },
+    "50m": {
+      "bin_size_m": 50.0,
+      "shared_bins_considered": 52,
+      "paired_bins": 42,
+      "paired_length_m": 2100.0,
+      "rejection_reasons": {
+        "heading differs by 87 deg": 1,
+        "only 1 samples in the sparser domain": 9
+      },
+      "positional_resolution_m": 7.611000061035156,
+      "expected_gps_fixes_per_bin": 3.28471945861472,
+      "bin_below_positional_resolution": false,
+      "gps_cadence_undersamples_this_bin": false,
+      "resolution_caveat": null,
+      "car_bins_occupied": 58,
+      "motorcycle_bins_occupied": 332
+    }
+  },
+  "frame_bin_assignment": {
+    "car": {
+      "bin_size_m": 50.0,
+      "frames": 3762,
+      "frames_with_valid_bin": 2171,
+      "valid_fraction": 0.5770866560340244,
+      "median_gps_dt_s": 0.4499689375,
+      "median_position_uncertainty_m": 4.578401328925663
+    },
+    "motorcycle": {
+      "bin_size_m": 50.0,
+      "frames": 15069,
+      "frames_with_valid_bin": 14197,
+      "valid_fraction": 0.9421328555312231,
+      "median_gps_dt_s": 0.26565472,
+      "median_position_uncertainty_m": 3.3591800590000003
+    }
+  },
+  "privacy": "no absolute coordinates in any committed file"
+}

@@ -1,0 +1,2238 @@
+{
+  "schema": "article1_behavior_data_manifest_v1",
+  "result_status": "exploratory_pilot",
+  "policy": "committed tables are the analysis slice plus schema and a sample; full tables and every parquet stay under the local output tree, which is not committed",
+  "privacy": "no committed table carries a latitude or longitude; positions are relative metres and track endpoints are trimmed",
+  "local_output_root": "output/article1/behavior_analysis",
+  "tables": [
+    {
+      "committed": "route/shared_route_bins.csv",
+      "committed_rows": 390,
+      "committed_scope": "analysis bin size only (50 m)",
+      "full_table_local": "output/article1/behavior_analysis/full_tables/shared_route_bins_all_sizes.csv",
+      "full_rows": 2237,
+      "full_scope": "every configured bin size, both domains",
+      "schema": [
+        {
+          "column": "bin_key",
+          "dtype": "object"
+        },
+        {
+          "column": "bin_size_m",
+          "dtype": "float64"
+        },
+        {
+          "column": "domain",
+          "dtype": "object"
+        },
+        {
+          "column": "recording_id",
+          "dtype": "object"
+        },
+        {
+          "column": "osm_way_id",
+          "dtype": "int64"
+        },
+        {
+          "column": "bin_index",
+          "dtype": "int64"
+        },
+        {
+          "column": "direction",
+          "dtype": "object"
+        },
+        {
+          "column": "n_samples",
+          "dtype": "int64"
+        },
+        {
+          "column": "mean_heading_deg",
+          "dtype": "float64"
+        },
+        {
+          "column": "mean_match_quality",
+          "dtype": "float64"
+        },
+        {
+          "column": "mean_snap_distance_m",
+          "dtype": "float64"
+        },
+        {
+          "column": "first_timestamp_ns",
+          "dtype": "int64"
+        },
+        {
+          "column": "last_timestamp_ns",
+          "dtype": "int64"
+        },
+        {
+          "column": "road_lanes",
+          "dtype": "float64"
+        },
+        {
+          "column": "road_maxspeed_kph",
+          "dtype": "float64"
+        },
+        {
+          "column": "curvature_1_per_m",
+          "dtype": "float64"
+        },
+        {
+          "column": "distance_to_junction_m",
+          "dtype": "float64"
+        },
+        {
+          "column": "distance_to_roundabout_m",
+          "dtype": "float64"
+        },
+        {
+          "column": "distance_to_traffic_signals_m",
+          "dtype": "float64"
+        },
+        {
+          "column": "distance_to_crossing_m",
+          "dtype": "float64"
+        },
+        {
+          "column": "distance_to_stop_m",
+          "dtype": "float64"
+        },
+        {
+          "column": "distance_to_give_way_m",
+          "dtype": "float64"
+        },
+        {
+          "column": "road_class",
+          "dtype": "object"
+        },
+        {
+          "column": "road_oneway",
+          "dtype": "object"
+        },
+        {
+          "column": "road_surface",
+          "dtype": "object"
+        },
+        {
+          "column": "road_is_roundabout",
+          "dtype": "bool"
+        },
+        {
+          "column": "road_bridge",
+          "dtype": "bool"
+        },
+        {
+          "column": "road_tunnel",
+          "dtype": "bool"
+        },
+        {
+          "column": "road_is_service",
+          "dtype": "bool"
+        },
+        {
+          "column": "against_oneway",
+          "dtype": "bool"
+        }
+      ]
+    },
+    {
+      "committed": "events/event_response_metrics.csv",
+      "committed_rows": 50,
+      "committed_scope": "first 50 events, identifying columns and deltas only",
+      "full_table_local": "output/article1/behavior_analysis/full_tables/event_response_metrics_full.csv",
+      "full_rows": 291,
+      "full_columns": 337,
+      "full_scope": "every event, every window, every signal family",
+      "parquet": "output/article1/behavior_analysis/event_response_metrics.parquet",
+      "schema": [
+        {
+          "column": "event_id",
+          "dtype": "object"
+        },
+        {
+          "column": "kind",
+          "dtype": "object"
+        },
+        {
+          "column": "domain",
+          "dtype": "object"
+        },
+        {
+          "column": "recording_id",
+          "dtype": "object"
+        },
+        {
+          "column": "start_ns",
+          "dtype": "int64"
+        },
+        {
+          "column": "end_ns",
+          "dtype": "int64"
+        },
+        {
+          "column": "peak_ns",
+          "dtype": "int64"
+        },
+        {
+          "column": "duration_s",
+          "dtype": "float64"
+        },
+        {
+          "column": "route_progress_m",
+          "dtype": "float64"
+        },
+        {
+          "column": "osm_way_id",
+          "dtype": "int64"
+        },
+        {
+          "column": "road_class",
+          "dtype": "object"
+        },
+        {
+          "column": "detail_approach_distance_m",
+          "dtype": "float64"
+        },
+        {
+          "column": "pre_event_duration_s",
+          "dtype": "float64"
+        },
+        {
+          "column": "pre_event_samples",
+          "dtype": "int64"
+        },
+        {
+          "column": "pre_event_clipped",
+          "dtype": "bool"
+        },
+        {
+          "column": "pre_event_clip_reason",
+          "dtype": "object"
+        },
+        {
+          "column": "pre_event_vehicle_speed_mps",
+          "dtype": "float64"
+        },
+        {
+          "column": "pre_event_vehicle_acceleration_mps2",
+          "dtype": "float64"
+        },
+        {
+          "column": "pre_event_vehicle_lateral_acceleration_mps2",
+          "dtype": "float64"
+        },
+        {
+          "column": "pre_event_vehicle_jerk_mps3",
+          "dtype": "float64"
+        },
+        {
+          "column": "approach_duration_s",
+          "dtype": "float64"
+        },
+        {
+          "column": "approach_samples",
+          "dtype": "int64"
+        },
+        {
+          "column": "approach_clipped",
+          "dtype": "bool"
+        },
+        {
+          "column": "approach_clip_reason",
+          "dtype": "object"
+        },
+        {
+          "column": "approach_vehicle_speed_mps",
+          "dtype": "float64"
+        },
+        {
+          "column": "approach_vehicle_acceleration_mps2",
+          "dtype": "float64"
+        },
+        {
+          "column": "approach_vehicle_lateral_acceleration_mps2",
+          "dtype": "float64"
+        },
+        {
+          "column": "approach_vehicle_jerk_mps3",
+          "dtype": "float64"
+        },
+        {
+          "column": "post_event_duration_s",
+          "dtype": "float64"
+        },
+        {
+          "column": "post_event_samples",
+          "dtype": "int64"
+        },
+        {
+          "column": "post_event_clipped",
+          "dtype": "bool"
+        },
+        {
+          "column": "post_event_clip_reason",
+          "dtype": "object"
+        },
+        {
+          "column": "post_event_vehicle_speed_mps",
+          "dtype": "float64"
+        },
+        {
+          "column": "post_event_vehicle_acceleration_mps2",
+          "dtype": "float64"
+        },
+        {
+          "column": "post_event_vehicle_lateral_acceleration_mps2",
+          "dtype": "float64"
+        },
+        {
+          "column": "post_event_vehicle_jerk_mps3",
+          "dtype": "float64"
+        },
+        {
+          "column": "phys_baseline_duration_s",
+          "dtype": "float64"
+        },
+        {
+          "column": "phys_baseline_samples",
+          "dtype": "int64"
+        },
+        {
+          "column": "phys_baseline_clipped",
+          "dtype": "bool"
+        },
+        {
+          "column": "phys_baseline_clip_reason",
+          "dtype": "object"
+        },
+        {
+          "column": "phys_baseline_vehicle_speed_mps",
+          "dtype": "float64"
+        },
+        {
+          "column": "phys_baseline_vehicle_acceleration_mps2",
+          "dtype": "float64"
+        },
+        {
+          "column": "phys_baseline_vehicle_lateral_acceleration_mps2",
+          "dtype": "float64"
+        },
+        {
+          "column": "phys_baseline_vehicle_jerk_mps3",
+          "dtype": "float64"
+        },
+        {
+          "column": "phys_anticipation_duration_s",
+          "dtype": "float64"
+        },
+        {
+          "column": "phys_anticipation_samples",
+          "dtype": "int64"
+        },
+        {
+          "column": "phys_anticipation_clipped",
+          "dtype": "bool"
+        },
+        {
+          "column": "phys_anticipation_clip_reason",
+          "dtype": "object"
+        },
+        {
+          "column": "phys_anticipation_vehicle_speed_mps",
+          "dtype": "float64"
+        },
+        {
+          "column": "phys_anticipation_vehicle_acceleration_mps2",
+          "dtype": "float64"
+        },
+        {
+          "column": "phys_anticipation_vehicle_lateral_acceleration_mps2",
+          "dtype": "float64"
+        },
+        {
+          "column": "phys_anticipation_vehicle_jerk_mps3",
+          "dtype": "float64"
+        },
+        {
+          "column": "phys_immediate_duration_s",
+          "dtype": "float64"
+        },
+        {
+          "column": "phys_immediate_samples",
+          "dtype": "int64"
+        },
+        {
+          "column": "phys_immediate_clipped",
+          "dtype": "bool"
+        },
+        {
+          "column": "phys_immediate_clip_reason",
+          "dtype": "object"
+        },
+        {
+          "column": "phys_immediate_vehicle_speed_mps",
+          "dtype": "float64"
+        },
+        {
+          "column": "phys_immediate_vehicle_acceleration_mps2",
+          "dtype": "float64"
+        },
+        {
+          "column": "phys_immediate_vehicle_lateral_acceleration_mps2",
+          "dtype": "float64"
+        },
+        {
+          "column": "phys_immediate_vehicle_jerk_mps3",
+          "dtype": "float64"
+        },
+        {
+          "column": "phys_delayed_duration_s",
+          "dtype": "float64"
+        },
+        {
+          "column": "phys_delayed_samples",
+          "dtype": "int64"
+        },
+        {
+          "column": "phys_delayed_clipped",
+          "dtype": "bool"
+        },
+        {
+          "column": "phys_delayed_clip_reason",
+          "dtype": "object"
+        },
+        {
+          "column": "phys_delayed_vehicle_speed_mps",
+          "dtype": "float64"
+        },
+        {
+          "column": "phys_delayed_vehicle_acceleration_mps2",
+          "dtype": "float64"
+        },
+        {
+          "column": "phys_delayed_vehicle_lateral_acceleration_mps2",
+          "dtype": "float64"
+        },
+        {
+          "column": "phys_delayed_vehicle_jerk_mps3",
+          "dtype": "float64"
+        },
+        {
+          "column": "event_duration_s",
+          "dtype": "float64"
+        },
+        {
+          "column": "event_samples",
+          "dtype": "int64"
+        },
+        {
+          "column": "event_clipped",
+          "dtype": "bool"
+        },
+        {
+          "column": "event_clip_reason",
+          "dtype": "float64"
+        },
+        {
+          "column": "event_vehicle_speed_mps",
+          "dtype": "float64"
+        },
+        {
+          "column": "event_vehicle_acceleration_mps2",
+          "dtype": "float64"
+        },
+        {
+          "column": "event_vehicle_lateral_acceleration_mps2",
+          "dtype": "float64"
+        },
+        {
+          "column": "event_vehicle_jerk_mps3",
+          "dtype": "float64"
+        },
+        {
+          "column": "pre_event_head_angular_speed_rad_s",
+          "dtype": "float64"
+        },
+        {
+          "column": "pre_event_head_abs_yaw_rate_rad_s",
+          "dtype": "float64"
+        },
+        {
+          "column": "pre_event_head_vibration_rms_msec2",
+          "dtype": "float64"
+        },
+        {
+          "column": "approach_head_angular_speed_rad_s",
+          "dtype": "float64"
+        },
+        {
+          "column": "approach_head_abs_yaw_rate_rad_s",
+          "dtype": "float64"
+        },
+        {
+          "column": "approach_head_vibration_rms_msec2",
+          "dtype": "float64"
+        },
+        {
+          "column": "post_event_head_angular_speed_rad_s",
+          "dtype": "float64"
+        },
+        {
+          "column": "post_event_head_abs_yaw_rate_rad_s",
+          "dtype": "float64"
+        },
+        {
+          "column": "post_event_head_vibration_rms_msec2",
+          "dtype": "float64"
+        },
+        {
+          "column": "phys_baseline_head_angular_speed_rad_s",
+          "dtype": "float64"
+        },
+        {
+          "column": "phys_baseline_head_abs_yaw_rate_rad_s",
+          "dtype": "float64"
+        },
+        {
+          "column": "phys_baseline_head_vibration_rms_msec2",
+          "dtype": "float64"
+        },
+        {
+          "column": "phys_anticipation_head_angular_speed_rad_s",
+          "dtype": "float64"
+        },
+        {
+          "column": "phys_anticipation_head_abs_yaw_rate_rad_s",
+          "dtype": "float64"
+        },
+        {
+          "column": "phys_anticipation_head_vibration_rms_msec2",
+          "dtype": "float64"
+        },
+        {
+          "column": "phys_immediate_head_angular_speed_rad_s",
+          "dtype": "float64"
+        },
+        {
+          "column": "phys_immediate_head_abs_yaw_rate_rad_s",
+          "dtype": "float64"
+        },
+        {
+          "column": "phys_immediate_head_vibration_rms_msec2",
+          "dtype": "float64"
+        },
+        {
+          "column": "phys_delayed_head_angular_speed_rad_s",
+          "dtype": "float64"
+        },
+        {
+          "column": "phys_delayed_head_abs_yaw_rate_rad_s",
+          "dtype": "float64"
+        },
+        {
+          "column": "phys_delayed_head_vibration_rms_msec2",
+          "dtype": "float64"
+        },
+        {
+          "column": "event_head_angular_speed_rad_s",
+          "dtype": "float64"
+        },
+        {
+          "column": "event_head_abs_yaw_rate_rad_s",
+          "dtype": "float64"
+        },
+        {
+          "column": "event_head_vibration_rms_msec2",
+          "dtype": "float64"
+        },
+        {
+          "column": "pre_event_ppg_heart_rate_bpm",
+          "dtype": "float64"
+        },
+        {
+          "column": "pre_event_ppg_ibi_ms",
+          "dtype": "float64"
+        },
+        {
+          "column": "pre_event_ppg_pulse_amplitude",
+          "dtype": "float64"
+        },
+        {
+          "column": "pre_event_ppg_sqi",
+          "dtype": "float64"
+        },
+        {
+          "column": "approach_ppg_heart_rate_bpm",
+          "dtype": "float64"
+        },
+        {
+          "column": "approach_ppg_ibi_ms",
+          "dtype": "float64"
+        },
+        {
+          "column": "approach_ppg_pulse_amplitude",
+          "dtype": "float64"
+        },
+        {
+          "column": "approach_ppg_sqi",
+          "dtype": "float64"
+        },
+        {
+          "column": "post_event_ppg_heart_rate_bpm",
+          "dtype": "float64"
+        },
+        {
+          "column": "post_event_ppg_ibi_ms",
+          "dtype": "float64"
+        },
+        {
+          "column": "post_event_ppg_pulse_amplitude",
+          "dtype": "float64"
+        },
+        {
+          "column": "post_event_ppg_sqi",
+          "dtype": "float64"
+        },
+        {
+          "column": "phys_baseline_ppg_heart_rate_bpm",
+          "dtype": "float64"
+        },
+        {
+          "column": "phys_baseline_ppg_ibi_ms",
+          "dtype": "float64"
+        },
+        {
+          "column": "phys_baseline_ppg_pulse_amplitude",
+          "dtype": "float64"
+        },
+        {
+          "column": "phys_baseline_ppg_sqi",
+          "dtype": "float64"
+        },
+        {
+          "column": "phys_anticipation_ppg_heart_rate_bpm",
+          "dtype": "float64"
+        },
+        {
+          "column": "phys_anticipation_ppg_ibi_ms",
+          "dtype": "float64"
+        },
+        {
+          "column": "phys_anticipation_ppg_pulse_amplitude",
+          "dtype": "float64"
+        },
+        {
+          "column": "phys_anticipation_ppg_sqi",
+          "dtype": "float64"
+        },
+        {
+          "column": "phys_immediate_ppg_heart_rate_bpm",
+          "dtype": "float64"
+        },
+        {
+          "column": "phys_immediate_ppg_ibi_ms",
+          "dtype": "float64"
+        },
+        {
+          "column": "phys_immediate_ppg_pulse_amplitude",
+          "dtype": "float64"
+        },
+        {
+          "column": "phys_immediate_ppg_sqi",
+          "dtype": "float64"
+        },
+        {
+          "column": "phys_delayed_ppg_heart_rate_bpm",
+          "dtype": "float64"
+        },
+        {
+          "column": "phys_delayed_ppg_ibi_ms",
+          "dtype": "float64"
+        },
+        {
+          "column": "phys_delayed_ppg_pulse_amplitude",
+          "dtype": "float64"
+        },
+        {
+          "column": "phys_delayed_ppg_sqi",
+          "dtype": "float64"
+        },
+        {
+          "column": "event_ppg_heart_rate_bpm",
+          "dtype": "float64"
+        },
+        {
+          "column": "event_ppg_ibi_ms",
+          "dtype": "float64"
+        },
+        {
+          "column": "event_ppg_pulse_amplitude",
+          "dtype": "float64"
+        },
+        {
+          "column": "event_ppg_sqi",
+          "dtype": "float64"
+        },
+        {
+          "column": "pre_event_light_lux",
+          "dtype": "float64"
+        },
+        {
+          "column": "pre_event_light_cct",
+          "dtype": "float64"
+        },
+        {
+          "column": "approach_light_lux",
+          "dtype": "float64"
+        },
+        {
+          "column": "approach_light_cct",
+          "dtype": "float64"
+        },
+        {
+          "column": "post_event_light_lux",
+          "dtype": "float64"
+        },
+        {
+          "column": "post_event_light_cct",
+          "dtype": "float64"
+        },
+        {
+          "column": "phys_baseline_light_lux",
+          "dtype": "float64"
+        },
+        {
+          "column": "phys_baseline_light_cct",
+          "dtype": "float64"
+        },
+        {
+          "column": "phys_anticipation_light_lux",
+          "dtype": "float64"
+        },
+        {
+          "column": "phys_anticipation_light_cct",
+          "dtype": "float64"
+        },
+        {
+          "column": "phys_immediate_light_lux",
+          "dtype": "float64"
+        },
+        {
+          "column": "phys_immediate_light_cct",
+          "dtype": "float64"
+        },
+        {
+          "column": "phys_delayed_light_lux",
+          "dtype": "float64"
+        },
+        {
+          "column": "phys_delayed_light_cct",
+          "dtype": "float64"
+        },
+        {
+          "column": "event_light_lux",
+          "dtype": "float64"
+        },
+        {
+          "column": "event_light_cct",
+          "dtype": "float64"
+        },
+        {
+          "column": "pre_event_gaze_foveal_entropy",
+          "dtype": "float64"
+        },
+        {
+          "column": "pre_event_gaze_top1_probability",
+          "dtype": "float64"
+        },
+        {
+          "column": "pre_event_gaze_confidence",
+          "dtype": "float64"
+        },
+        {
+          "column": "pre_event_gaze_is_fixation",
+          "dtype": "float64"
+        },
+        {
+          "column": "pre_event_gaze_p_road_surface",
+          "dtype": "float64"
+        },
+        {
+          "column": "pre_event_gaze_p_vehicle",
+          "dtype": "float64"
+        },
+        {
+          "column": "approach_gaze_foveal_entropy",
+          "dtype": "float64"
+        },
+        {
+          "column": "approach_gaze_top1_probability",
+          "dtype": "float64"
+        },
+        {
+          "column": "approach_gaze_confidence",
+          "dtype": "float64"
+        },
+        {
+          "column": "approach_gaze_is_fixation",
+          "dtype": "float64"
+        },
+        {
+          "column": "approach_gaze_p_road_surface",
+          "dtype": "float64"
+        },
+        {
+          "column": "approach_gaze_p_vehicle",
+          "dtype": "float64"
+        },
+        {
+          "column": "post_event_gaze_foveal_entropy",
+          "dtype": "float64"
+        },
+        {
+          "column": "post_event_gaze_top1_probability",
+          "dtype": "float64"
+        },
+        {
+          "column": "post_event_gaze_confidence",
+          "dtype": "float64"
+        },
+        {
+          "column": "post_event_gaze_is_fixation",
+          "dtype": "float64"
+        },
+        {
+          "column": "post_event_gaze_p_road_surface",
+          "dtype": "float64"
+        },
+        {
+          "column": "post_event_gaze_p_vehicle",
+          "dtype": "float64"
+        },
+        {
+          "column": "phys_baseline_gaze_foveal_entropy",
+          "dtype": "float64"
+        },
+        {
+          "column": "phys_baseline_gaze_top1_probability",
+          "dtype": "float64"
+        },
+        {
+          "column": "phys_baseline_gaze_confidence",
+          "dtype": "float64"
+        },
+        {
+          "column": "phys_baseline_gaze_is_fixation",
+          "dtype": "float64"
+        },
+        {
+          "column": "phys_baseline_gaze_p_road_surface",
+          "dtype": "float64"
+        },
+        {
+          "column": "phys_baseline_gaze_p_vehicle",
+          "dtype": "float64"
+        },
+        {
+          "column": "phys_anticipation_gaze_foveal_entropy",
+          "dtype": "float64"
+        },
+        {
+          "column": "phys_anticipation_gaze_top1_probability",
+          "dtype": "float64"
+        },
+        {
+          "column": "phys_anticipation_gaze_confidence",
+          "dtype": "float64"
+        },
+        {
+          "column": "phys_anticipation_gaze_is_fixation",
+          "dtype": "float64"
+        },
+        {
+          "column": "phys_anticipation_gaze_p_road_surface",
+          "dtype": "float64"
+        },
+        {
+          "column": "phys_anticipation_gaze_p_vehicle",
+          "dtype": "float64"
+        },
+        {
+          "column": "phys_immediate_gaze_foveal_entropy",
+          "dtype": "float64"
+        },
+        {
+          "column": "phys_immediate_gaze_top1_probability",
+          "dtype": "float64"
+        },
+        {
+          "column": "phys_immediate_gaze_confidence",
+          "dtype": "float64"
+        },
+        {
+          "column": "phys_immediate_gaze_is_fixation",
+          "dtype": "float64"
+        },
+        {
+          "column": "phys_immediate_gaze_p_road_surface",
+          "dtype": "float64"
+        },
+        {
+          "column": "phys_immediate_gaze_p_vehicle",
+          "dtype": "float64"
+        },
+        {
+          "column": "phys_delayed_gaze_foveal_entropy",
+          "dtype": "float64"
+        },
+        {
+          "column": "phys_delayed_gaze_top1_probability",
+          "dtype": "float64"
+        },
+        {
+          "column": "phys_delayed_gaze_confidence",
+          "dtype": "float64"
+        },
+        {
+          "column": "phys_delayed_gaze_is_fixation",
+          "dtype": "float64"
+        },
+        {
+          "column": "phys_delayed_gaze_p_road_surface",
+          "dtype": "float64"
+        },
+        {
+          "column": "phys_delayed_gaze_p_vehicle",
+          "dtype": "float64"
+        },
+        {
+          "column": "event_gaze_foveal_entropy",
+          "dtype": "float64"
+        },
+        {
+          "column": "event_gaze_top1_probability",
+          "dtype": "float64"
+        },
+        {
+          "column": "event_gaze_confidence",
+          "dtype": "float64"
+        },
+        {
+          "column": "event_gaze_is_fixation",
+          "dtype": "float64"
+        },
+        {
+          "column": "event_gaze_p_road_surface",
+          "dtype": "float64"
+        },
+        {
+          "column": "event_gaze_p_vehicle",
+          "dtype": "float64"
+        },
+        {
+          "column": "recording_duration_s",
+          "dtype": "float64"
+        },
+        {
+          "column": "detail_closest_distance_m",
+          "dtype": "float64"
+        },
+        {
+          "column": "delta_pre_event_vehicle_speed_mps",
+          "dtype": "float64"
+        },
+        {
+          "column": "delta_approach_vehicle_speed_mps",
+          "dtype": "float64"
+        },
+        {
+          "column": "delta_post_event_vehicle_speed_mps",
+          "dtype": "float64"
+        },
+        {
+          "column": "delta_phys_anticipation_vehicle_speed_mps",
+          "dtype": "float64"
+        },
+        {
+          "column": "delta_phys_immediate_vehicle_speed_mps",
+          "dtype": "float64"
+        },
+        {
+          "column": "delta_phys_delayed_vehicle_speed_mps",
+          "dtype": "float64"
+        },
+        {
+          "column": "delta_event_vehicle_speed_mps",
+          "dtype": "float64"
+        },
+        {
+          "column": "delta_pre_event_vehicle_acceleration_mps2",
+          "dtype": "float64"
+        },
+        {
+          "column": "delta_approach_vehicle_acceleration_mps2",
+          "dtype": "float64"
+        },
+        {
+          "column": "delta_post_event_vehicle_acceleration_mps2",
+          "dtype": "float64"
+        },
+        {
+          "column": "delta_phys_anticipation_vehicle_acceleration_mps2",
+          "dtype": "float64"
+        },
+        {
+          "column": "delta_phys_immediate_vehicle_acceleration_mps2",
+          "dtype": "float64"
+        },
+        {
+          "column": "delta_phys_delayed_vehicle_acceleration_mps2",
+          "dtype": "float64"
+        },
+        {
+          "column": "delta_event_vehicle_acceleration_mps2",
+          "dtype": "float64"
+        },
+        {
+          "column": "delta_pre_event_vehicle_lateral_acceleration_mps2",
+          "dtype": "float64"
+        },
+        {
+          "column": "delta_approach_vehicle_lateral_acceleration_mps2",
+          "dtype": "float64"
+        },
+        {
+          "column": "delta_post_event_vehicle_lateral_acceleration_mps2",
+          "dtype": "float64"
+        },
+        {
+          "column": "delta_phys_anticipation_vehicle_lateral_acceleration_mps2",
+          "dtype": "float64"
+        },
+        {
+          "column": "delta_phys_immediate_vehicle_lateral_acceleration_mps2",
+          "dtype": "float64"
+        },
+        {
+          "column": "delta_phys_delayed_vehicle_lateral_acceleration_mps2",
+          "dtype": "float64"
+        },
+        {
+          "column": "delta_event_vehicle_lateral_acceleration_mps2",
+          "dtype": "float64"
+        },
+        {
+          "column": "delta_pre_event_vehicle_jerk_mps3",
+          "dtype": "float64"
+        },
+        {
+          "column": "delta_approach_vehicle_jerk_mps3",
+          "dtype": "float64"
+        },
+        {
+          "column": "delta_post_event_vehicle_jerk_mps3",
+          "dtype": "float64"
+        },
+        {
+          "column": "delta_phys_anticipation_vehicle_jerk_mps3",
+          "dtype": "float64"
+        },
+        {
+          "column": "delta_phys_immediate_vehicle_jerk_mps3",
+          "dtype": "float64"
+        },
+        {
+          "column": "delta_phys_delayed_vehicle_jerk_mps3",
+          "dtype": "float64"
+        },
+        {
+          "column": "delta_event_vehicle_jerk_mps3",
+          "dtype": "float64"
+        },
+        {
+          "column": "delta_pre_event_head_angular_speed_rad_s",
+          "dtype": "float64"
+        },
+        {
+          "column": "delta_approach_head_angular_speed_rad_s",
+          "dtype": "float64"
+        },
+        {
+          "column": "delta_post_event_head_angular_speed_rad_s",
+          "dtype": "float64"
+        },
+        {
+          "column": "delta_phys_anticipation_head_angular_speed_rad_s",
+          "dtype": "float64"
+        },
+        {
+          "column": "delta_phys_immediate_head_angular_speed_rad_s",
+          "dtype": "float64"
+        },
+        {
+          "column": "delta_phys_delayed_head_angular_speed_rad_s",
+          "dtype": "float64"
+        },
+        {
+          "column": "delta_event_head_angular_speed_rad_s",
+          "dtype": "float64"
+        },
+        {
+          "column": "delta_pre_event_head_abs_yaw_rate_rad_s",
+          "dtype": "float64"
+        },
+        {
+          "column": "delta_approach_head_abs_yaw_rate_rad_s",
+          "dtype": "float64"
+        },
+        {
+          "column": "delta_post_event_head_abs_yaw_rate_rad_s",
+          "dtype": "float64"
+        },
+        {
+          "column": "delta_phys_anticipation_head_abs_yaw_rate_rad_s",
+          "dtype": "float64"
+        },
+        {
+          "column": "delta_phys_immediate_head_abs_yaw_rate_rad_s",
+          "dtype": "float64"
+        },
+        {
+          "column": "delta_phys_delayed_head_abs_yaw_rate_rad_s",
+          "dtype": "float64"
+        },
+        {
+          "column": "delta_event_head_abs_yaw_rate_rad_s",
+          "dtype": "float64"
+        },
+        {
+          "column": "delta_pre_event_head_vibration_rms_msec2",
+          "dtype": "float64"
+        },
+        {
+          "column": "delta_approach_head_vibration_rms_msec2",
+          "dtype": "float64"
+        },
+        {
+          "column": "delta_post_event_head_vibration_rms_msec2",
+          "dtype": "float64"
+        },
+        {
+          "column": "delta_phys_anticipation_head_vibration_rms_msec2",
+          "dtype": "float64"
+        },
+        {
+          "column": "delta_phys_immediate_head_vibration_rms_msec2",
+          "dtype": "float64"
+        },
+        {
+          "column": "delta_phys_delayed_head_vibration_rms_msec2",
+          "dtype": "float64"
+        },
+        {
+          "column": "delta_event_head_vibration_rms_msec2",
+          "dtype": "float64"
+        },
+        {
+          "column": "delta_pre_event_ppg_heart_rate_bpm",
+          "dtype": "float64"
+        },
+        {
+          "column": "delta_approach_ppg_heart_rate_bpm",
+          "dtype": "float64"
+        },
+        {
+          "column": "delta_post_event_ppg_heart_rate_bpm",
+          "dtype": "float64"
+        },
+        {
+          "column": "delta_phys_anticipation_ppg_heart_rate_bpm",
+          "dtype": "float64"
+        },
+        {
+          "column": "delta_phys_immediate_ppg_heart_rate_bpm",
+          "dtype": "float64"
+        },
+        {
+          "column": "delta_phys_delayed_ppg_heart_rate_bpm",
+          "dtype": "float64"
+        },
+        {
+          "column": "delta_event_ppg_heart_rate_bpm",
+          "dtype": "float64"
+        },
+        {
+          "column": "delta_pre_event_ppg_ibi_ms",
+          "dtype": "float64"
+        },
+        {
+          "column": "delta_approach_ppg_ibi_ms",
+          "dtype": "float64"
+        },
+        {
+          "column": "delta_post_event_ppg_ibi_ms",
+          "dtype": "float64"
+        },
+        {
+          "column": "delta_phys_anticipation_ppg_ibi_ms",
+          "dtype": "float64"
+        },
+        {
+          "column": "delta_phys_immediate_ppg_ibi_ms",
+          "dtype": "float64"
+        },
+        {
+          "column": "delta_phys_delayed_ppg_ibi_ms",
+          "dtype": "float64"
+        },
+        {
+          "column": "delta_event_ppg_ibi_ms",
+          "dtype": "float64"
+        },
+        {
+          "column": "delta_pre_event_ppg_pulse_amplitude",
+          "dtype": "float64"
+        },
+        {
+          "column": "delta_approach_ppg_pulse_amplitude",
+          "dtype": "float64"
+        },
+        {
+          "column": "delta_post_event_ppg_pulse_amplitude",
+          "dtype": "float64"
+        },
+        {
+          "column": "delta_phys_anticipation_ppg_pulse_amplitude",
+          "dtype": "float64"
+        },
+        {
+          "column": "delta_phys_immediate_ppg_pulse_amplitude",
+          "dtype": "float64"
+        },
+        {
+          "column": "delta_phys_delayed_ppg_pulse_amplitude",
+          "dtype": "float64"
+        },
+        {
+          "column": "delta_event_ppg_pulse_amplitude",
+          "dtype": "float64"
+        },
+        {
+          "column": "delta_pre_event_ppg_sqi",
+          "dtype": "float64"
+        },
+        {
+          "column": "delta_approach_ppg_sqi",
+          "dtype": "float64"
+        },
+        {
+          "column": "delta_post_event_ppg_sqi",
+          "dtype": "float64"
+        },
+        {
+          "column": "delta_phys_anticipation_ppg_sqi",
+          "dtype": "float64"
+        },
+        {
+          "column": "delta_phys_immediate_ppg_sqi",
+          "dtype": "float64"
+        },
+        {
+          "column": "delta_phys_delayed_ppg_sqi",
+          "dtype": "float64"
+        },
+        {
+          "column": "delta_event_ppg_sqi",
+          "dtype": "float64"
+        },
+        {
+          "column": "delta_pre_event_light_lux",
+          "dtype": "float64"
+        },
+        {
+          "column": "delta_approach_light_lux",
+          "dtype": "float64"
+        },
+        {
+          "column": "delta_post_event_light_lux",
+          "dtype": "float64"
+        },
+        {
+          "column": "delta_phys_anticipation_light_lux",
+          "dtype": "float64"
+        },
+        {
+          "column": "delta_phys_immediate_light_lux",
+          "dtype": "float64"
+        },
+        {
+          "column": "delta_phys_delayed_light_lux",
+          "dtype": "float64"
+        },
+        {
+          "column": "delta_event_light_lux",
+          "dtype": "float64"
+        },
+        {
+          "column": "delta_pre_event_light_cct",
+          "dtype": "float64"
+        },
+        {
+          "column": "delta_approach_light_cct",
+          "dtype": "float64"
+        },
+        {
+          "column": "delta_post_event_light_cct",
+          "dtype": "float64"
+        },
+        {
+          "column": "delta_phys_anticipation_light_cct",
+          "dtype": "float64"
+        },
+        {
+          "column": "delta_phys_immediate_light_cct",
+          "dtype": "float64"
+        },
+        {
+          "column": "delta_phys_delayed_light_cct",
+          "dtype": "float64"
+        },
+        {
+          "column": "delta_event_light_cct",
+          "dtype": "float64"
+        },
+        {
+          "column": "detail_mean_curvature_1_per_m",
+          "dtype": "float64"
+        },
+        {
+          "column": "detail_max_curvature_1_per_m",
+          "dtype": "float64"
+        },
+        {
+          "column": "detail_length_m",
+          "dtype": "float64"
+        },
+        {
+          "column": "detail_previous_class",
+          "dtype": "object"
+        },
+        {
+          "column": "detail_new_class",
+          "dtype": "object"
+        },
+        {
+          "column": "detail_duration_s",
+          "dtype": "float64"
+        },
+        {
+          "column": "delta_pre_event_gaze_foveal_entropy",
+          "dtype": "float64"
+        },
+        {
+          "column": "delta_approach_gaze_foveal_entropy",
+          "dtype": "float64"
+        },
+        {
+          "column": "delta_post_event_gaze_foveal_entropy",
+          "dtype": "float64"
+        },
+        {
+          "column": "delta_phys_anticipation_gaze_foveal_entropy",
+          "dtype": "float64"
+        },
+        {
+          "column": "delta_phys_immediate_gaze_foveal_entropy",
+          "dtype": "float64"
+        },
+        {
+          "column": "delta_phys_delayed_gaze_foveal_entropy",
+          "dtype": "float64"
+        },
+        {
+          "column": "delta_event_gaze_foveal_entropy",
+          "dtype": "float64"
+        },
+        {
+          "column": "delta_pre_event_gaze_top1_probability",
+          "dtype": "float64"
+        },
+        {
+          "column": "delta_approach_gaze_top1_probability",
+          "dtype": "float64"
+        },
+        {
+          "column": "delta_post_event_gaze_top1_probability",
+          "dtype": "float64"
+        },
+        {
+          "column": "delta_phys_anticipation_gaze_top1_probability",
+          "dtype": "float64"
+        },
+        {
+          "column": "delta_phys_immediate_gaze_top1_probability",
+          "dtype": "float64"
+        },
+        {
+          "column": "delta_phys_delayed_gaze_top1_probability",
+          "dtype": "float64"
+        },
+        {
+          "column": "delta_event_gaze_top1_probability",
+          "dtype": "float64"
+        },
+        {
+          "column": "delta_pre_event_gaze_confidence",
+          "dtype": "float64"
+        },
+        {
+          "column": "delta_approach_gaze_confidence",
+          "dtype": "float64"
+        },
+        {
+          "column": "delta_post_event_gaze_confidence",
+          "dtype": "float64"
+        },
+        {
+          "column": "delta_phys_anticipation_gaze_confidence",
+          "dtype": "float64"
+        },
+        {
+          "column": "delta_phys_immediate_gaze_confidence",
+          "dtype": "float64"
+        },
+        {
+          "column": "delta_phys_delayed_gaze_confidence",
+          "dtype": "float64"
+        },
+        {
+          "column": "delta_event_gaze_confidence",
+          "dtype": "float64"
+        },
+        {
+          "column": "delta_pre_event_gaze_is_fixation",
+          "dtype": "float64"
+        },
+        {
+          "column": "delta_approach_gaze_is_fixation",
+          "dtype": "float64"
+        },
+        {
+          "column": "delta_post_event_gaze_is_fixation",
+          "dtype": "float64"
+        },
+        {
+          "column": "delta_phys_anticipation_gaze_is_fixation",
+          "dtype": "float64"
+        },
+        {
+          "column": "delta_phys_immediate_gaze_is_fixation",
+          "dtype": "float64"
+        },
+        {
+          "column": "delta_phys_delayed_gaze_is_fixation",
+          "dtype": "float64"
+        },
+        {
+          "column": "delta_event_gaze_is_fixation",
+          "dtype": "float64"
+        },
+        {
+          "column": "delta_pre_event_gaze_p_road_surface",
+          "dtype": "float64"
+        },
+        {
+          "column": "delta_approach_gaze_p_road_surface",
+          "dtype": "float64"
+        },
+        {
+          "column": "delta_post_event_gaze_p_road_surface",
+          "dtype": "float64"
+        },
+        {
+          "column": "delta_phys_anticipation_gaze_p_road_surface",
+          "dtype": "float64"
+        },
+        {
+          "column": "delta_phys_immediate_gaze_p_road_surface",
+          "dtype": "float64"
+        },
+        {
+          "column": "delta_phys_delayed_gaze_p_road_surface",
+          "dtype": "float64"
+        },
+        {
+          "column": "delta_event_gaze_p_road_surface",
+          "dtype": "float64"
+        },
+        {
+          "column": "delta_pre_event_gaze_p_vehicle",
+          "dtype": "float64"
+        },
+        {
+          "column": "delta_approach_gaze_p_vehicle",
+          "dtype": "float64"
+        },
+        {
+          "column": "delta_post_event_gaze_p_vehicle",
+          "dtype": "float64"
+        },
+        {
+          "column": "delta_phys_anticipation_gaze_p_vehicle",
+          "dtype": "float64"
+        },
+        {
+          "column": "delta_phys_immediate_gaze_p_vehicle",
+          "dtype": "float64"
+        },
+        {
+          "column": "delta_phys_delayed_gaze_p_vehicle",
+          "dtype": "float64"
+        },
+        {
+          "column": "delta_event_gaze_p_vehicle",
+          "dtype": "float64"
+        }
+      ]
+    },
+    {
+      "committed": "events/route_events.csv",
+      "committed_rows": 291,
+      "committed_scope": "complete",
+      "size_bytes": 56778,
+      "sha256": "f677d013e36ab9356626cd70e84933f408278be76ac6a559102172950117f4a5",
+      "schema": [
+        {
+          "column": "event_id",
+          "dtype": "object"
+        },
+        {
+          "column": "kind",
+          "dtype": "object"
+        },
+        {
+          "column": "domain",
+          "dtype": "object"
+        },
+        {
+          "column": "recording_id",
+          "dtype": "object"
+        },
+        {
+          "column": "start_ns",
+          "dtype": "int64"
+        },
+        {
+          "column": "end_ns",
+          "dtype": "int64"
+        },
+        {
+          "column": "peak_ns",
+          "dtype": "int64"
+        },
+        {
+          "column": "duration_s",
+          "dtype": "float64"
+        },
+        {
+          "column": "route_progress_m",
+          "dtype": "float64"
+        },
+        {
+          "column": "osm_way_id",
+          "dtype": "int64"
+        },
+        {
+          "column": "road_class",
+          "dtype": "object"
+        },
+        {
+          "column": "detail_approach_distance_m",
+          "dtype": "float64"
+        },
+        {
+          "column": "detail_closest_distance_m",
+          "dtype": "float64"
+        },
+        {
+          "column": "detail_mean_curvature_1_per_m",
+          "dtype": "float64"
+        },
+        {
+          "column": "detail_max_curvature_1_per_m",
+          "dtype": "float64"
+        },
+        {
+          "column": "detail_length_m",
+          "dtype": "float64"
+        },
+        {
+          "column": "detail_previous_class",
+          "dtype": "object"
+        },
+        {
+          "column": "detail_new_class",
+          "dtype": "object"
+        },
+        {
+          "column": "detail_duration_s",
+          "dtype": "float64"
+        }
+      ]
+    },
+    {
+      "committed": "paired/paired_route_comparison.csv",
+      "committed_rows": 42,
+      "committed_scope": "complete",
+      "size_bytes": 33324,
+      "sha256": "df6015b6a6dc20755bcf8be37e951bc10570ade909c5aa4d31dc9bd3a7a98a3a",
+      "schema": [
+        {
+          "column": "bin_key",
+          "dtype": "object"
+        },
+        {
+          "column": "osm_way_id",
+          "dtype": "int64"
+        },
+        {
+          "column": "road_class",
+          "dtype": "object"
+        },
+        {
+          "column": "road_is_roundabout",
+          "dtype": "bool"
+        },
+        {
+          "column": "curvature_1_per_m",
+          "dtype": "float64"
+        },
+        {
+          "column": "distance_to_junction_m",
+          "dtype": "float64"
+        },
+        {
+          "column": "distance_to_roundabout_m",
+          "dtype": "float64"
+        },
+        {
+          "column": "road_lanes",
+          "dtype": "float64"
+        },
+        {
+          "column": "road_maxspeed_kph",
+          "dtype": "float64"
+        },
+        {
+          "column": "pair_quality",
+          "dtype": "float64"
+        },
+        {
+          "column": "centroid_distance_m",
+          "dtype": "float64"
+        },
+        {
+          "column": "heading_difference_deg",
+          "dtype": "float64"
+        },
+        {
+          "column": "bin_key_car",
+          "dtype": "object"
+        },
+        {
+          "column": "position_uncertainty_m_car",
+          "dtype": "float64"
+        },
+        {
+          "column": "speed_mps_car",
+          "dtype": "float64"
+        },
+        {
+          "column": "acceleration_mps2_car",
+          "dtype": "float64"
+        },
+        {
+          "column": "lateral_acceleration_mps2_car",
+          "dtype": "float64"
+        },
+        {
+          "column": "curvature_1_per_m_car",
+          "dtype": "float64"
+        },
+        {
+          "column": "head_angular_speed_rad_s_car",
+          "dtype": "float64"
+        },
+        {
+          "column": "head_vibration_rms_msec2_car",
+          "dtype": "float64"
+        },
+        {
+          "column": "head_yaw_rate_rad_s_car",
+          "dtype": "float64"
+        },
+        {
+          "column": "head_abs_yaw_rate_rad_s_car",
+          "dtype": "float64"
+        },
+        {
+          "column": "heart_rate_bpm_car",
+          "dtype": "float64"
+        },
+        {
+          "column": "ppg_sqi_car",
+          "dtype": "float64"
+        },
+        {
+          "column": "lux_car",
+          "dtype": "float64"
+        },
+        {
+          "column": "gaze_foveal_entropy_car",
+          "dtype": "float64"
+        },
+        {
+          "column": "gaze_road_relevant_mass_car",
+          "dtype": "float64"
+        },
+        {
+          "column": "frames_in_bin_car",
+          "dtype": "int64"
+        },
+        {
+          "column": "bin_key_moto",
+          "dtype": "object"
+        },
+        {
+          "column": "position_uncertainty_m_moto",
+          "dtype": "float64"
+        },
+        {
+          "column": "speed_mps_moto",
+          "dtype": "float64"
+        },
+        {
+          "column": "acceleration_mps2_moto",
+          "dtype": "float64"
+        },
+        {
+          "column": "lateral_acceleration_mps2_moto",
+          "dtype": "float64"
+        },
+        {
+          "column": "curvature_1_per_m_moto",
+          "dtype": "float64"
+        },
+        {
+          "column": "head_angular_speed_rad_s_moto",
+          "dtype": "float64"
+        },
+        {
+          "column": "head_vibration_rms_msec2_moto",
+          "dtype": "float64"
+        },
+        {
+          "column": "head_yaw_rate_rad_s_moto",
+          "dtype": "float64"
+        },
+        {
+          "column": "head_abs_yaw_rate_rad_s_moto",
+          "dtype": "float64"
+        },
+        {
+          "column": "heart_rate_bpm_moto",
+          "dtype": "float64"
+        },
+        {
+          "column": "ppg_sqi_moto",
+          "dtype": "float64"
+        },
+        {
+          "column": "lux_moto",
+          "dtype": "float64"
+        },
+        {
+          "column": "gaze_foveal_entropy_moto",
+          "dtype": "float64"
+        },
+        {
+          "column": "gaze_road_relevant_mass_moto",
+          "dtype": "float64"
+        },
+        {
+          "column": "frames_in_bin_moto",
+          "dtype": "int64"
+        },
+        {
+          "column": "road_complexity_index_car",
+          "dtype": "float64"
+        },
+        {
+          "column": "visual_demand_index_car",
+          "dtype": "float64"
+        },
+        {
+          "column": "traffic_interaction_index_car",
+          "dtype": "float64"
+        },
+        {
+          "column": "road_complexity_index_moto",
+          "dtype": "float64"
+        },
+        {
+          "column": "visual_demand_index_moto",
+          "dtype": "float64"
+        },
+        {
+          "column": "traffic_interaction_index_moto",
+          "dtype": "float64"
+        }
+      ]
+    },
+    {
+      "committed": "paired/paired_statistics.csv",
+      "committed_rows": 14,
+      "committed_scope": "complete",
+      "size_bytes": 4021,
+      "sha256": "c4ff165dbc917c862d029c3132aeff1bddebe6094a01d0b82e0616685cc8f5d7",
+      "schema": [
+        {
+          "column": "metric",
+          "dtype": "object"
+        },
+        {
+          "column": "skipped",
+          "dtype": "bool"
+        },
+        {
+          "column": "n_paired_bins",
+          "dtype": "int64"
+        },
+        {
+          "column": "effective_independent_blocks",
+          "dtype": "float64"
+        },
+        {
+          "column": "is_place_property",
+          "dtype": "object"
+        },
+        {
+          "column": "place_property_note",
+          "dtype": "object"
+        },
+        {
+          "column": "unit_of_analysis",
+          "dtype": "object"
+        },
+        {
+          "column": "motorcycle_median",
+          "dtype": "float64"
+        },
+        {
+          "column": "car_median",
+          "dtype": "float64"
+        },
+        {
+          "column": "paired_median_difference_moto_minus_car",
+          "dtype": "float64"
+        },
+        {
+          "column": "ci_low",
+          "dtype": "float64"
+        },
+        {
+          "column": "ci_high",
+          "dtype": "float64"
+        },
+        {
+          "column": "ci_method",
+          "dtype": "object"
+        },
+        {
+          "column": "ci_caveat",
+          "dtype": "float64"
+        },
+        {
+          "column": "median_ratio_moto_over_car",
+          "dtype": "float64"
+        },
+        {
+          "column": "cliffs_delta",
+          "dtype": "float64"
+        },
+        {
+          "column": "permutation_p",
+          "dtype": "float64"
+        },
+        {
+          "column": "permutation_iterations",
+          "dtype": "float64"
+        },
+        {
+          "column": "permutation_reason",
+          "dtype": "float64"
+        },
+        {
+          "column": "permutation_p_fdr",
+          "dtype": "float64"
+        },
+        {
+          "column": "significant_after_fdr",
+          "dtype": "bool"
+        },
+        {
+          "column": "reason",
+          "dtype": "object"
+        }
+      ]
+    },
+    {
+      "committed": "route/paired_route_segments.csv",
+      "committed_rows": 283,
+      "committed_scope": "complete",
+      "size_bytes": 118428,
+      "sha256": "0c29c97288fce9d7fe49dc4af21f375d08becd3f1618a7f0b86d9164387e4818",
+      "schema": [
+        {
+          "column": "bin_key",
+          "dtype": "object"
+        },
+        {
+          "column": "bin_size_m",
+          "dtype": "float64"
+        },
+        {
+          "column": "domain_a",
+          "dtype": "object"
+        },
+        {
+          "column": "domain_b",
+          "dtype": "object"
+        },
+        {
+          "column": "osm_way_id",
+          "dtype": "int64"
+        },
+        {
+          "column": "bin_index",
+          "dtype": "int64"
+        },
+        {
+          "column": "paired",
+          "dtype": "bool"
+        },
+        {
+          "column": "rejection_reason",
+          "dtype": "object"
+        },
+        {
+          "column": "centroid_distance_m",
+          "dtype": "float64"
+        },
+        {
+          "column": "heading_difference_deg",
+          "dtype": "float64"
+        },
+        {
+          "column": "direction_a",
+          "dtype": "object"
+        },
+        {
+          "column": "direction_b",
+          "dtype": "object"
+        },
+        {
+          "column": "n_samples_a",
+          "dtype": "int64"
+        },
+        {
+          "column": "n_samples_b",
+          "dtype": "int64"
+        },
+        {
+          "column": "match_quality_a",
+          "dtype": "float64"
+        },
+        {
+          "column": "match_quality_b",
+          "dtype": "float64"
+        },
+        {
+          "column": "pair_quality",
+          "dtype": "float64"
+        },
+        {
+          "column": "first_timestamp_ns_a",
+          "dtype": "int64"
+        },
+        {
+          "column": "first_timestamp_ns_b",
+          "dtype": "int64"
+        },
+        {
+          "column": "last_timestamp_ns_a",
+          "dtype": "int64"
+        },
+        {
+          "column": "last_timestamp_ns_b",
+          "dtype": "int64"
+        },
+        {
+          "column": "road_lanes",
+          "dtype": "float64"
+        },
+        {
+          "column": "road_maxspeed_kph",
+          "dtype": "float64"
+        },
+        {
+          "column": "curvature_1_per_m",
+          "dtype": "float64"
+        },
+        {
+          "column": "distance_to_junction_m",
+          "dtype": "float64"
+        },
+        {
+          "column": "distance_to_roundabout_m",
+          "dtype": "float64"
+        },
+        {
+          "column": "distance_to_traffic_signals_m",
+          "dtype": "float64"
+        },
+        {
+          "column": "distance_to_crossing_m",
+          "dtype": "float64"
+        },
+        {
+          "column": "distance_to_stop_m",
+          "dtype": "float64"
+        },
+        {
+          "column": "distance_to_give_way_m",
+          "dtype": "float64"
+        },
+        {
+          "column": "road_class",
+          "dtype": "object"
+        },
+        {
+          "column": "road_oneway",
+          "dtype": "object"
+        },
+        {
+          "column": "road_surface",
+          "dtype": "object"
+        },
+        {
+          "column": "road_is_roundabout",
+          "dtype": "bool"
+        },
+        {
+          "column": "road_bridge",
+          "dtype": "bool"
+        },
+        {
+          "column": "road_tunnel",
+          "dtype": "bool"
+        },
+        {
+          "column": "road_is_service",
+          "dtype": "bool"
+        },
+        {
+          "column": "against_oneway",
+          "dtype": "bool"
+        }
+      ]
+    },
+    {
+      "committed": "solid_line/solid_line_candidates.csv",
+      "committed_rows": 61,
+      "committed_scope": "complete",
+      "size_bytes": 30384,
+      "sha256": "7b10d62f7557f6043b64c1694afc3220cc4aef3c1c297d6a53ae05614530f6c1",
+      "schema": [
+        {
+          "column": "candidate_id",
+          "dtype": "object"
+        },
+        {
+          "column": "domain",
+          "dtype": "object"
+        },
+        {
+          "column": "recording_id",
+          "dtype": "object"
+        },
+        {
+          "column": "start_ns",
+          "dtype": "int64"
+        },
+        {
+          "column": "end_ns",
+          "dtype": "int64"
+        },
+        {
+          "column": "duration_s",
+          "dtype": "float64"
+        },
+        {
+          "column": "state",
+          "dtype": "object"
+        },
+        {
+          "column": "manoeuvre",
+          "dtype": "object"
+        },
+        {
+          "column": "evidence_source_count",
+          "dtype": "int64"
+        },
+        {
+          "column": "evidence_sources",
+          "dtype": "object"
+        },
+        {
+          "column": "review_status",
+          "dtype": "object"
+        },
+        {
+          "column": "automatic_label_is_not_final",
+          "dtype": "bool"
+        },
+        {
+          "column": "evidence_peak_lateral_offset_m",
+          "dtype": "float64"
+        },
+        {
+          "column": "evidence_mean_lateral_offset_m",
+          "dtype": "float64"
+        },
+        {
+          "column": "evidence_crossed_to_left",
+          "dtype": "bool"
+        },
+        {
+          "column": "evidence_duration_beyond_s",
+          "dtype": "float64"
+        },
+        {
+          "column": "evidence_distance_beyond_m",
+          "dtype": "float64"
+        },
+        {
+          "column": "evidence_mean_speed_mps",
+          "dtype": "float64"
+        },
+        {
+          "column": "evidence_mean_heading_error_deg",
+          "dtype": "float64"
+        },
+        {
+          "column": "evidence_median_gps_accuracy_m",
+          "dtype": "float64"
+        },
+        {
+          "column": "evidence_road_class",
+          "dtype": "object"
+        },
+        {
+          "column": "evidence_road_oneway",
+          "dtype": "object"
+        },
+        {
+          "column": "evidence_against_oneway",
+          "dtype": "bool"
+        },
+        {
+          "column": "evidence_min_distance_to_junction_m",
+          "dtype": "float64"
+        },
+        {
+          "column": "evidence_min_distance_to_roundabout_m",
+          "dtype": "float64"
+        },
+        {
+          "column": "evidence_marking_continuity",
+          "dtype": "object"
+        },
+        {
+          "column": "evidence_marking_reason",
+          "dtype": "object"
+        },
+        {
+          "column": "evidence_marking_start_ns",
+          "dtype": "float64"
+        },
+        {
+          "column": "evidence_marking_end_ns",
+          "dtype": "float64"
+        },
+        {
+          "column": "evidence_marking_observed_frames",
+          "dtype": "float64"
+        },
+        {
+          "column": "evidence_marking_frame_interval_s",
+          "dtype": "float64"
+        },
+        {
+          "column": "evidence_marking_continuity_side",
+          "dtype": "object"
+        },
+        {
+          "column": "evidence_marking_continuity_confidence",
+          "dtype": "float64"
+        },
+        {
+          "column": "evidence_marking_continuity_reason",
+          "dtype": "float64"
+        },
+        {
+          "column": "evidence_marking_duty_cycle_left",
+          "dtype": "float64"
+        },
+        {
+          "column": "evidence_marking_duty_cycle_right",
+          "dtype": "float64"
+        },
+        {
+          "column": "evidence_marking_mean_marking_pixels",
+          "dtype": "float64"
+        },
+        {
+          "column": "evidence_marking_vision_lateral_offset",
+          "dtype": "object"
+        }
+      ]
+    }
+  ],
+  "parquet_tables_local_only": [
+    "multimodal_timeline.parquet",
+    "sensors/*.parquet",
+    "gps_raw.parquet",
+    "gps_valid.parquet",
+    "map_matched.parquet",
+    "frame_route_bins.parquet",
+    "route_bins_full.parquet",
+    "vehicle_dynamics.parquet",
+    "head_dynamics_native.parquet",
+    "head_dynamics_per_frame.parquet",
+    "semantic_gaze.parquet",
+    "gaze_fixations.parquet",
+    "ppg_beats.parquet",
+    "ppg_quality.parquet",
+    "ppg_windows.parquet",
+    "event_response_metrics.parquet"
+  ],
+  "media_local_only": [
+    "car_multimodal_analysis.mp4",
+    "motorcycle_multimodal_analysis.mp4",
+    "paired_route_comparison.mp4",
+    "figures/*.png",
+    "dashboard/index.html",
+    "osm_cache/*.json"
+  ]
+}

@@ -1,0 +1,138 @@
+{
+  "schema": "article1_route_matching_v1",
+  "result_status": "exploratory_pilot",
+  "network": {
+    "ways": 2713,
+    "segments": 13604,
+    "total_length_km": 486.25713190682546,
+    "roundabout_ways": 76,
+    "ways_with_lanes_tag": 393,
+    "ways_with_maxspeed_tag": 340,
+    "ways_with_oneway_tag": 1055,
+    "highway_classes": {
+      "service": 767,
+      "residential": 632,
+      "unclassified": 629,
+      "secondary": 255,
+      "tertiary": 200,
+      "trunk": 69,
+      "primary": 63,
+      "trunk_link": 62,
+      "motorway": 14,
+      "motorway_link": 10,
+      "secondary_link": 6,
+      "living_street": 5,
+      "tertiary_link": 1
+    },
+    "point_features": {
+      "traffic_signals": 10,
+      "crossing": 171,
+      "turning_circle": 8,
+      "mini_roundabout": 3,
+      "give_way": 20,
+      "level_crossing": 3,
+      "stop": 7,
+      "roundabout": 1375,
+      "junction": 2489
+    },
+    "unmapped_tags_are_none": true
+  },
+  "network_origin_note": "projection origin and the OSM cache hold absolute coordinates and stay in the local output tree",
+  "matching_parameters": {
+    "max_snap_distance_m": 30.0,
+    "max_heading_error_deg": 60.0,
+    "heading_valid_min_speed_mps": 2.0
+  },
+  "domains": {
+    "car": {
+      "samples": 246,
+      "matched": 209,
+      "matched_fraction": 0.8495934959349594,
+      "unmatched_reasons": {
+        "heading error 75 deg exceeds 60 deg": 1,
+        "heading error 83 deg exceeds 60 deg": 2,
+        "heading error 80 deg exceeds 60 deg": 1,
+        "heading error 79 deg exceeds 60 deg": 1,
+        "snap distance 30.2 m exceeds 30 m": 1,
+        "snap distance 35.2 m exceeds 30 m": 1,
+        "snap distance 35.4 m exceeds 30 m": 1,
+        "snap distance 34.2 m exceeds 30 m": 1,
+        "snap distance 32.7 m exceeds 30 m": 1,
+        "snap distance 30.1 m exceeds 30 m": 1,
+        "heading error 74 deg exceeds 60 deg": 1,
+        "heading error 82 deg exceeds 60 deg": 1,
+        "snap distance 30.9 m exceeds 30 m": 1,
+        "snap distance 37.1 m exceeds 30 m": 1,
+        "snap distance 40.3 m exceeds 30 m": 1,
+        "snap distance 43.2 m exceeds 30 m": 1,
+        "snap distance 45.1 m exceeds 30 m": 1,
+        "snap distance 46.9 m exceeds 30 m": 1,
+        "snap distance 47.8 m exceeds 30 m": 1,
+        "snap distance 49.1 m exceeds 30 m": 1,
+        "snap distance 51.1 m exceeds 30 m": 1,
+        "snap distance 52.7 m exceeds 30 m": 1,
+        "snap distance 54.6 m exceeds 30 m": 1,
+        "snap distance 55.4 m exceeds 30 m": 1,
+        "snap distance 55.9 m exceeds 30 m": 2,
+        "snap distance 53.5 m exceeds 30 m": 1,
+        "snap distance 50.4 m exceeds 30 m": 1,
+        "snap distance 47.4 m exceeds 30 m": 1,
+        "snap distance 45.4 m exceeds 30 m": 1,
+        "snap distance 46.2 m exceeds 30 m": 1,
+        "snap distance 46.3 m exceeds 30 m": 1,
+        "snap distance 47.0 m exceeds 30 m": 1,
+        "snap distance 47.3 m exceeds 30 m": 1,
+        "snap distance 48.2 m exceeds 30 m": 1,
+        "snap distance 48.4 m exceeds 30 m": 1
+      },
+      "snap_distance_m": {
+        "count": 209,
+        "median": 13.493421433639366,
+        "p90": 23.894067383103792,
+        "max": 28.259208648883458
+      },
+      "heading_error_deg": {
+        "count": 209,
+        "median": 3.5702373442504864,
+        "p90": 26.077604251959787,
+        "max": 61.421564036740506
+      },
+      "median_match_quality": 0.5194770307241198,
+      "against_oneway_samples": 4,
+      "route_length_m": 2565.379122468964,
+      "recording_id": "car_2e84f0c3e245",
+      "domain": "car"
+    },
+    "motorcycle": {
+      "samples": 953,
+      "matched": 945,
+      "matched_fraction": 0.9916054564533053,
+      "unmatched_reasons": {
+        "heading error 71 deg exceeds 60 deg": 1,
+        "heading error 66 deg exceeds 60 deg": 1,
+        "heading error 63 deg exceeds 60 deg": 1,
+        "heading error 73 deg exceeds 60 deg": 1,
+        "heading error 81 deg exceeds 60 deg": 1,
+        "heading error 75 deg exceeds 60 deg": 1,
+        "heading error 62 deg exceeds 60 deg": 2
+      },
+      "snap_distance_m": {
+        "count": 945,
+        "median": 1.5441989412287926,
+        "p90": 4.918450856388175,
+        "max": 12.452804556501563
+      },
+      "heading_error_deg": {
+        "count": 945,
+        "median": 1.3410465108453309,
+        "p90": 9.818223049609202,
+        "max": 53.948351749226816
+      },
+      "median_match_quality": 0.9724549089174841,
+      "against_oneway_samples": 0,
+      "route_length_m": 15031.003452822973,
+      "recording_id": "motorcycle_5ab8604a14df",
+      "domain": "motorcycle"
+    }
+  }
+}

@@ -1,0 +1,486 @@
+{
+  "schema": "article1_dynamics_v1",
+  "result_status": "exploratory_pilot",
+  "separation": "vehicle dynamics and head dynamics are computed by different functions from different sensors and stored in different tables; neither is derived from the other",
+  "vehicle_source_priority": [
+    "vio_pose",
+    "gps_speed_field",
+    "gps_position_derivative"
+  ],
+  "domains": {
+    "car": {
+      "recording_id": "car_2e84f0c3e245",
+      "vehicle": {
+        "detectability": {
+          "speed_sampling_interval_s": 1.000000417,
+          "smoothing_window_s": 1.0,
+          "hard_braking_threshold_mps2": -2.5,
+          "minimum_episode_duration_s": 0.5,
+          "most_negative_observed_acceleration_mps2": -1.319499431044982,
+          "threshold_reached_at_all": false,
+          "episodes_detected": 0,
+          "caveat": "the most negative acceleration this 1.0 Hz speed series resolves is -1.32 m/s^2, above the -2.5 m/s^2 threshold. A count of zero hard-braking episodes is a limit of the sampling rate, not evidence that no hard braking occurred."
+        },
+        "speed_source": "gps_speed_field",
+        "derived_from_head_imu": false,
+        "duration_s": 239.000096822,
+        "valid_samples": 209,
+        "speed_mps": {
+          "count": 209,
+          "mean": 9.787033584129297,
+          "p05": 3.0,
+          "p25": 6.7220001220703125,
+          "median": 10.444000244140625,
+          "p75": 12.387999534606934,
+          "p95": 15.361000061035156,
+          "min": 1.3329999446868896,
+          "max": 15.5
+        },
+        "acceleration_mps2": {
+          "count": 209,
+          "mean": -0.05263738428269721,
+          "p05": -0.919499813479554,
+          "p25": -0.3749998634935445,
+          "median": -0.01399993349086781,
+          "p75": 0.22249973727471506,
+          "p95": 0.933099434572499,
+          "min": -1.319499431044982,
+          "max": 1.6569991264099722
+        },
+        "jerk_mps3": {
+          "count": 209,
+          "mean": 0.0014647037898032605,
+          "p05": -0.28334991476012034,
+          "p25": -0.11800014731901853,
+          "median": -0.006750099951184989,
+          "p75": 0.09725015226441386,
+          "p95": 0.3186164256959591,
+          "min": -0.5899992011747007,
+          "max": 0.6549994718185602
+        },
+        "lateral_acceleration_mps2": {
+          "count": 180,
+          "mean": 0.5944196790806965,
+          "p05": 0.0007354551705718161,
+          "p25": 0.0381450532885647,
+          "median": 0.16212768376941622,
+          "p75": 0.7723692578613011,
+          "p95": 2.0725291905261725,
+          "min": 0.0002802827062277291,
+          "max": 5.783442565148374
+        },
+        "hard_braking_episodes": 0,
+        "hard_braking_per_minute": 0.0,
+        "hard_braking_total_s": 0.0,
+        "strong_acceleration_episodes": 0,
+        "strong_acceleration_per_minute": 0.0,
+        "strong_acceleration_total_s": 0.0,
+        "stopped_time_s": 0.0,
+        "stopped_fraction": 0.0,
+        "stop_and_go_events": 0,
+        "speed_field_vs_position_derivative_r": 0.8502346979615177,
+        "notes": [
+          "no VIO/SLAM pose stream in this recording; vehicle speed falls back to gps_speed_field"
+        ]
+      },
+      "head": {
+        "measures": "head_motion",
+        "is_vehicle_acceleration": false,
+        "sampling_rate_hz": 805.4026408982086,
+        "duration_s": 376.098538281,
+        "yaw_rate_rad_s": {
+          "count": 302908,
+          "mean": 0.13600584065819699,
+          "p05": 0.005727803008160176,
+          "p25": 0.030472665067499106,
+          "median": 0.0696680254617971,
+          "p75": 0.14356555639331892,
+          "p95": 0.4943367416158755,
+          "min": 3.9955929661314015e-07,
+          "max": 2.3871650569398395
+        },
+        "pitch_rate_rad_s": {
+          "count": 302908,
+          "mean": 0.08594191143574097,
+          "p05": 0.004565916623645479,
+          "p25": 0.02489921198244383,
+          "median": 0.055135026796313574,
+          "p75": 0.10778361447773151,
+          "p95": 0.2794240302360032,
+          "min": 6.857831749695897e-08,
+          "max": 1.0772618258028288
+        },
+        "roll_rate_rad_s": {
+          "count": 302908,
+          "mean": 0.09221830270405733,
+          "p05": 0.005543187008871292,
+          "p25": 0.0286810472757122,
+          "median": 0.06391217696327667,
+          "p75": 0.12183653840629509,
+          "p95": 0.27570002356078943,
+          "min": 3.3578792055233286e-07,
+          "max": 1.3302968697819075
+        },
+        "angular_speed_rad_s": {
+          "count": 302908,
+          "mean": 0.21632638789944456,
+          "p05": 0.03961371191088233,
+          "p25": 0.08785871693540798,
+          "median": 0.14419852193548655,
+          "p75": 0.253391788905379,
+          "p95": 0.6308113237004591,
+          "min": 0.0024306939481263637,
+          "max": 2.405126177658985
+        },
+        "angular_acceleration_rad_s2": {
+          "count": 302908,
+          "mean": 1.5722581156074986,
+          "p05": 0.09739481748406079,
+          "p25": 0.5034475821841684,
+          "median": 1.093236465318352,
+          "p75": 2.031018909411717,
+          "p95": 4.651676152158114,
+          "min": 2.5352021921776213e-06,
+          "max": 20.321829279867245
+        },
+        "linear_accel_magnitude_msec2": {
+          "count": 302908,
+          "mean": 0.6101108632475694,
+          "p05": 0.15577956948484256,
+          "p25": 0.30972937232572817,
+          "median": 0.4870405100424948,
+          "p75": 0.7605929157999,
+          "p95": 1.4858924966079126,
+          "min": 0.007165221770359212,
+          "max": 8.938624762667516
+        },
+        "head_jerk_m_s3": {
+          "count": 302908,
+          "mean": 10.535858837475821,
+          "p05": 0.6086411671811369,
+          "p25": 3.153552874509792,
+          "median": 7.037637027935332,
+          "p75": 13.630540033517157,
+          "p95": 32.14431779265756,
+          "min": 1.6344520076927438e-05,
+          "max": 294.03584019457475
+        },
+        "vibration_rms_msec2": {
+          "count": 302908,
+          "mean": 0.1644289577112786,
+          "p05": 0.060867473958450186,
+          "p25": 0.10044837541822327,
+          "median": 0.14055300437645446,
+          "p75": 0.2067131364263432,
+          "p95": 0.33123261563880074,
+          "min": 0.025236775887182792,
+          "max": 1.3496467432583654
+        },
+        "control_band_rms_rad_s": {
+          "count": 302908,
+          "mean": 0.12220338085227883,
+          "p05": 0.022594349718489646,
+          "p25": 0.04070751570028684,
+          "median": 0.06463806412905843,
+          "p75": 0.11287040836011696,
+          "p95": 0.46963580826247997,
+          "min": 0.005792712488868396,
+          "max": 1.5525137435494214
+        },
+        "head_pitch_deg_absolute_with_mounting_offset": {
+          "count": 302908,
+          "mean": 15.665720461897997,
+          "p05": 11.561322439063742,
+          "p25": 14.333374025428983,
+          "median": 15.76108438248766,
+          "p75": 17.078643726163797,
+          "p95": 19.362647014215113,
+          "min": 5.443670747411646,
+          "max": 24.813598142178613
+        },
+        "head_roll_deg_absolute_with_mounting_offset": {
+          "count": 302908,
+          "mean": 69.31090927990648,
+          "p05": 65.25650742396525,
+          "p25": 67.3856734784593,
+          "median": 68.96873313090177,
+          "p75": 70.8089778958558,
+          "p95": 74.33642186751784,
+          "min": 60.741905304278056,
+          "max": 83.27657618834756
+        },
+        "head_pitch_rel_deg": {
+          "count": 302908,
+          "mean": -0.09536392058966366,
+          "p05": -4.199761943423916,
+          "p25": -1.4277103570586767,
+          "median": -8.881784197001252e-16,
+          "p75": 1.3175593436761384,
+          "p95": 3.601562631727454,
+          "min": -10.317413635076013,
+          "max": 9.052513759690953
+        },
+        "head_roll_rel_deg": {
+          "count": 302908,
+          "mean": 0.3421761490047354,
+          "p05": -3.7122257069365245,
+          "p25": -1.583059652442472,
+          "median": -7.105427357601002e-15,
+          "p75": 1.8402447649540434,
+          "p95": 5.367688736616079,
+          "min": -8.226827826623712,
+          "max": 14.307843057445794
+        },
+        "attitude_note": "head_pitch_deg / head_roll_deg are absolute angles from horizontal and include a fixed offset from how the rotated RGB sensor is mounted and how the glasses sit on the face. Only head_pitch_rel_deg / head_roll_rel_deg, taken against this recording's median posture, are comparable across recordings.",
+        "lateral_check_events": 67,
+        "lateral_checks_per_minute": 10.688688178299907,
+        "mean_lateral_check_duration_s": 0.41809699171641795,
+        "head_angular_speed_std_rad_s": 0.23216787441381492,
+        "gravity": {
+          "removed": true,
+          "median_magnitude_msec2": 9.851705654650676,
+          "expected_msec2": 9.80665
+        },
+        "caveat": "head IMU only: this describes how the rider's head moved, including whatever vibration the vehicle transmitted through the body. It is not vehicle acceleration."
+      },
+      "head_imu": "imu-left"
+    },
+    "motorcycle": {
+      "recording_id": "motorcycle_5ab8604a14df",
+      "vehicle": {
+        "detectability": {
+          "speed_sampling_interval_s": 1.0,
+          "smoothing_window_s": 1.0,
+          "hard_braking_threshold_mps2": -2.5,
+          "minimum_episode_duration_s": 0.5,
+          "most_negative_observed_acceleration_mps2": -2.6389999389648438,
+          "threshold_reached_at_all": true,
+          "episodes_detected": 0,
+          "caveat": "the threshold was touched (most negative -2.64 m/s^2) but never for the 0.5 s an episode requires. At a 1.0 s sampling interval that needs two consecutive samples below the threshold, so brief hard braking registers as a single sample and is not counted. Zero episodes is a detection limit, not an absence of hard braking."
+        },
+        "speed_source": "gps_speed_field",
+        "derived_from_head_imu": false,
+        "duration_s": 946.999947917,
+        "valid_samples": 945,
+        "speed_mps": {
+          "count": 945,
+          "mean": 15.071328180366093,
+          "p05": 4.199599838256836,
+          "p25": 10.111000061035156,
+          "median": 15.222000122070312,
+          "p75": 19.38800048828125,
+          "p95": 26.83880004882812,
+          "min": 0.0,
+          "max": 33.13800048828125
+        },
+        "acceleration_mps2": {
+          "count": 945,
+          "mean": 0.00018325511879735377,
+          "p05": -1.4833007832709024,
+          "p25": -0.5560001691003631,
+          "median": -0.05550002732533521,
+          "p75": 0.388999915850885,
+          "p95": 1.6890008286564062,
+          "min": -2.6389999389648438,
+          "max": 6.9720001220703125
+        },
+        "jerk_mps3": {
+          "count": 945,
+          "mean": -0.0038454150748657816,
+          "p05": -0.8043512042026947,
+          "p25": -0.2084998976052781,
+          "median": 0.013750063677457292,
+          "p75": 0.22924995830099826,
+          "p95": 0.7055498491020876,
+          "min": -2.694250149782947,
+          "max": 2.131750098818003
+        },
+        "lateral_acceleration_mps2": {
+          "count": 818,
+          "mean": 0.6155474129578666,
+          "p05": 1.3059307202164363e-05,
+          "p25": 0.0012610557727047436,
+          "median": 0.07182832414771567,
+          "p75": 0.787061848154066,
+          "p95": 3.1689012042116333,
+          "min": 0.0,
+          "max": 7.588251238640075
+        },
+        "hard_braking_episodes": 0,
+        "hard_braking_per_minute": 0.0,
+        "hard_braking_total_s": 0.0,
+        "strong_acceleration_episodes": 10,
+        "strong_acceleration_per_minute": 0.6335797602943344,
+        "strong_acceleration_total_s": 23.999998387000005,
+        "stopped_time_s": 11.999996667000001,
+        "stopped_fraction": 0.012671591686351121,
+        "stop_and_go_events": 2,
+        "speed_field_vs_position_derivative_r": 0.9779504105754121,
+        "notes": [
+          "no VIO/SLAM pose stream in this recording; vehicle speed falls back to gps_speed_field"
+        ]
+      },
+      "head": {
+        "measures": "head_motion",
+        "is_vehicle_acceleration": false,
+        "sampling_rate_hz": 805.3008120928591,
+        "duration_s": 1004.599339376,
+        "yaw_rate_rad_s": {
+          "count": 809000,
+          "mean": 0.12234983776013489,
+          "p05": 0.005006531390359897,
+          "p25": 0.026393376503439467,
+          "median": 0.06079785761488943,
+          "p75": 0.13074109345261578,
+          "p95": 0.43017716414431556,
+          "min": 1.4471642922984224e-07,
+          "max": 4.342705177764554
+        },
+        "pitch_rate_rad_s": {
+          "count": 809000,
+          "mean": 0.0975140206862591,
+          "p05": 0.005984955870780994,
+          "p25": 0.03061279552594006,
+          "median": 0.06810248251931106,
+          "p75": 0.128101555972364,
+          "p95": 0.2920189741760976,
+          "min": 2.9853641188813673e-07,
+          "max": 1.5339589968520826
+        },
+        "roll_rate_rad_s": {
+          "count": 809000,
+          "mean": 0.13980542144214617,
+          "p05": 0.009275605229259576,
+          "p25": 0.04877035957792533,
+          "median": 0.10573985107075884,
+          "p75": 0.18928747026785478,
+          "p95": 0.38497533264413125,
+          "min": 1.22311861193089e-07,
+          "max": 2.1785854232730255
+        },
+        "angular_speed_rad_s": {
+          "count": 809000,
+          "mean": 0.24864292752757258,
+          "p05": 0.0542113663582425,
+          "p25": 0.1176377837107192,
+          "median": 0.18749561655338912,
+          "p75": 0.3023740369112987,
+          "p95": 0.6256017118415934,
+          "min": 0.0014711155980592203,
+          "max": 4.438488569745802
+        },
+        "angular_acceleration_rad_s2": {
+          "count": 809000,
+          "mean": 4.735468733825415,
+          "p05": 0.28261216731363353,
+          "p25": 1.4769927653488821,
+          "median": 3.3262546830932926,
+          "p75": 6.3145900021160335,
+          "p95": 13.69427272653445,
+          "min": 1.1557461903066724e-06,
+          "max": 326.8996405076857
+        },
+        "linear_accel_magnitude_msec2": {
+          "count": 809000,
+          "mean": 1.3441208651338121,
+          "p05": 0.3303955383635442,
+          "p25": 0.7092030459524465,
+          "median": 1.1140378621761073,
+          "p75": 1.6872289831896663,
+          "p95": 3.0925948145035016,
+          "min": 0.005535259919743677,
+          "max": 27.299614907558812
+        },
+        "head_jerk_m_s3": {
+          "count": 809000,
+          "mean": 100.77035938607011,
+          "p05": 4.1253104733967065,
+          "p25": 23.16722195203711,
+          "median": 59.079060760592,
+          "p75": 128.78849956468153,
+          "p95": 336.5610422984311,
+          "min": 2.2432891274348776e-05,
+          "max": 6236.740878837676
+        },
+        "vibration_rms_msec2": {
+          "count": 809000,
+          "mean": 0.4140002597968388,
+          "p05": 0.17834450701288102,
+          "p25": 0.26884515101804013,
+          "median": 0.3572636219899358,
+          "p75": 0.4960477538126465,
+          "p95": 0.8270145055616048,
+          "min": 0.029166601205031558,
+          "max": 2.502180119812072
+        },
+        "control_band_rms_rad_s": {
+          "count": 809000,
+          "mean": 0.10371824536729668,
+          "p05": 0.015164641659237971,
+          "p25": 0.027628067907694127,
+          "median": 0.04483946316757466,
+          "p75": 0.09835470864823394,
+          "p95": 0.3956309635134351,
+          "min": 0.005130475823107269,
+          "max": 2.204066987472306
+        },
+        "head_pitch_deg_absolute_with_mounting_offset": {
+          "count": 809000,
+          "mean": 16.80193731844594,
+          "p05": 12.152948044298526,
+          "p25": 15.086752066779505,
+          "median": 16.714394038373307,
+          "p75": 18.026620778564116,
+          "p95": 21.532997381046798,
+          "min": -4.22023270304722,
+          "max": 41.35687190672723
+        },
+        "head_roll_deg_absolute_with_mounting_offset": {
+          "count": 809000,
+          "mean": 71.25857627097305,
+          "p05": 65.3951295528931,
+          "p25": 70.50602751267863,
+          "median": 71.81748907516959,
+          "p75": 72.90791972316123,
+          "p95": 75.21251226424948,
+          "min": 48.36247680303008,
+          "max": 80.04251502477369
+        },
+        "head_pitch_rel_deg": {
+          "count": 809000,
+          "mean": 0.08754328007263035,
+          "p05": -4.561445994074781,
+          "p25": -1.627641971593802,
+          "median": -1.7763568394002505e-15,
+          "p75": 1.3122267401908072,
+          "p95": 4.81860334267349,
+          "min": -20.934626741420526,
+          "max": 24.64247786835392
+        },
+        "head_roll_rel_deg": {
+          "count": 809000,
+          "mean": -0.55891280419653,
+          "p05": -6.4223595222764915,
+          "p25": -1.3114615624909618,
+          "median": 0.0,
+          "p75": 1.0904306479916457,
+          "p95": 3.3950231890798923,
+          "min": -23.455012272139513,
+          "max": 8.225025949604102
+        },
+        "attitude_note": "head_pitch_deg / head_roll_deg are absolute angles from horizontal and include a fixed offset from how the rotated RGB sensor is mounted and how the glasses sit on the face. Only head_pitch_rel_deg / head_roll_rel_deg, taken against this recording's median posture, are comparable across recordings.",
+        "lateral_check_events": 152,
+        "lateral_checks_per_minute": 9.07824606540636,
+        "mean_lateral_check_duration_s": 0.37528596181578944,
+        "head_angular_speed_std_rad_s": 0.23763737328741386,
+        "gravity": {
+          "removed": true,
+          "median_magnitude_msec2": 9.863221684245211,
+          "expected_msec2": 9.80665
+        },
+        "caveat": "head IMU only: this describes how the rider's head moved, including whatever vibration the vehicle transmitted through the body. It is not vehicle acceleration."
+      },
+      "head_imu": "imu-left"
+    }
+  }
+}

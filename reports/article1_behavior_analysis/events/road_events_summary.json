@@ -1,0 +1,183 @@
+{
+  "schema": "article1_road_events_v1",
+  "result_status": "exploratory_pilot",
+  "event_source": "OpenStreetMap geometry and tags, not the analysed signals",
+  "windows_s": {
+    "pre_event": [
+      -10.0,
+      -3.0
+    ],
+    "approach": [
+      -3.0,
+      0.0
+    ],
+    "post_event": [
+      0.0,
+      10.0
+    ],
+    "phys_baseline": [
+      -30.0,
+      -10.0
+    ],
+    "phys_anticipation": [
+      -10.0,
+      0.0
+    ],
+    "phys_immediate": [
+      0.0,
+      10.0
+    ],
+    "phys_delayed": [
+      10.0,
+      40.0
+    ],
+    "event": [
+      0.0,
+      0.0
+    ]
+  },
+  "window_policy": "windows are clipped to the recording and trimmed away from neighbouring events of a different kind; every clip is recorded on the row",
+  "domains": {
+    "car": {
+      "recording_id": "car_2e84f0c3e245",
+      "total": 61,
+      "span_s": 239.000096822,
+      "kinds": {
+        "curve": {
+          "count": 3,
+          "per_minute": 0.7531377702079282,
+          "median_duration_s": 5.000001719,
+          "total_duration_s": 30.000013073999998
+        },
+        "junction_approach": {
+          "count": 10,
+          "per_minute": 2.510459234026427,
+          "median_duration_s": 3.000001146,
+          "total_duration_s": 89.000036146
+        },
+        "junction_crossing": {
+          "count": 10,
+          "per_minute": 2.510459234026427,
+          "median_duration_s": 12.0000048955,
+          "total_duration_s": 159.000063022
+        },
+        "pedestrian_crossing": {
+          "count": 7,
+          "per_minute": 1.7573214638184989,
+          "median_duration_s": 7.000002343,
+          "total_duration_s": 69.00002734399999
+        },
+        "road_class_change": {
+          "count": 4,
+          "per_minute": 1.0041836936105708,
+          "median_duration_s": 1.500000521,
+          "total_duration_s": 12.000004741000001
+        },
+        "roundabout_entry": {
+          "count": 6,
+          "per_minute": 1.5062755404158563,
+          "median_duration_s": 0.0,
+          "total_duration_s": 0.0
+        },
+        "roundabout_exit": {
+          "count": 6,
+          "per_minute": 1.5062755404158563,
+          "median_duration_s": 0.0,
+          "total_duration_s": 0.0
+        },
+        "roundabout_traverse": {
+          "count": 6,
+          "per_minute": 1.5062755404158563,
+          "median_duration_s": 2.0000007815,
+          "total_duration_s": 26.000011199000003
+        },
+        "straight": {
+          "count": 9,
+          "per_minute": 2.2594133106237844,
+          "median_duration_s": 14.000005573,
+          "total_duration_s": 142.00005817599998
+        }
+      }
+    },
+    "motorcycle": {
+      "recording_id": "motorcycle_5ab8604a14df",
+      "total": 230,
+      "span_s": 946.999947917,
+      "kinds": {
+        "curve": {
+          "count": 14,
+          "per_minute": 0.8870116644120681,
+          "median_duration_s": 3.000000235,
+          "total_duration_s": 48.999997761
+        },
+        "junction_approach": {
+          "count": 62,
+          "per_minute": 3.9281945138248733,
+          "median_duration_s": 0.4999996615,
+          "total_duration_s": 138.99998989600002
+        },
+        "junction_crossing": {
+          "count": 62,
+          "per_minute": 3.9281945138248733,
+          "median_duration_s": 3.000000312,
+          "total_duration_s": 389.99998734400003
+        },
+        "pedestrian_crossing": {
+          "count": 13,
+          "per_minute": 0.8236536883826348,
+          "median_duration_s": 2.999999948,
+          "total_duration_s": 54.000004792
+        },
+        "restart": {
+          "count": 2,
+          "per_minute": 0.12671595205886688,
+          "median_duration_s": 0.9999996875,
+          "total_duration_s": 1.999999375
+        },
+        "road_class_change": {
+          "count": 10,
+          "per_minute": 0.6335797602943344,
+          "median_duration_s": 1.000000026,
+          "total_duration_s": 11.999998229000001
+        },
+        "roundabout_entry": {
+          "count": 13,
+          "per_minute": 0.8236536883826348,
+          "median_duration_s": 0.0,
+          "total_duration_s": 0.0
+        },
+        "roundabout_exit": {
+          "count": 13,
+          "per_minute": 0.8236536883826348,
+          "median_duration_s": 0.0,
+          "total_duration_s": 0.0
+        },
+        "roundabout_traverse": {
+          "count": 13,
+          "per_minute": 0.8236536883826348,
+          "median_duration_s": 3.000000157,
+          "total_duration_s": 39.99999666600001
+        },
+        "stop": {
+          "count": 2,
+          "per_minute": 0.12671595205886688,
+          "median_duration_s": 5.999998333500001,
+          "total_duration_s": 11.999996667000001
+        },
+        "straight": {
+          "count": 25,
+          "per_minute": 1.583949400735836,
+          "median_duration_s": 12.000001146,
+          "total_duration_s": 718.9999644760001
+        },
+        "traffic_signals": {
+          "count": 1,
+          "per_minute": 0.06335797602943344,
+          "median_duration_s": 17.999999636,
+          "total_duration_s": 17.999999636
+        }
+      }
+    }
+  },
+  "rows": 291
+}

@@ -1,0 +1,113 @@
+{
+  "schema": "article1_ppg_v1",
+  "result_status": "exploratory_pilot",
+  "interpretation": "physiological_proxy_not_medical",
+  "gate": {
+    "order": [
+      "window quality",
+      "beat plausibility",
+      "window length"
+    ],
+    "motion_artefact_source": "head IMU accelerometer magnitude",
+    "bandpass_hz": [
+      0.5,
+      8.0
+    ],
+    "min_sqi": 0.5,
+    "min_heart_rate_bpm": 40.0,
+    "max_heart_rate_bpm": 180.0,
+    "saturation_fraction_limit": 0.02,
+    "hrv": {
+      "min_window_s": 30.0,
+      "sdnn_min_window_s": 60.0,
+      "min_valid_beat_fraction": 0.8,
+      "pnn50_min_beats": 50
+    }
+  },
+  "domains": {
+    "car": {
+      "recording_id": "car_2e84f0c3e245",
+      "sampling_rate_hz": 257.4381607793992,
+      "interpretation": "physiological_proxy_not_medical",
+      "duration_s": 376.086721978,
+      "beats_detected": 515,
+      "beats_passing_gate": 505,
+      "beat_pass_fraction": 0.9805825242718447,
+      "quality_windows": 38,
+      "usable_windows": 37,
+      "usable_fraction": 0.9736842105263158,
+      "rejection_reasons": {
+        "39% of samples missing": 1
+      },
+      "beat_detection_diagnostics": {
+        "valid_intervals": 505,
+        "ibi_lag1_autocorrelation": 0.5344347222375742,
+        "amplitude_coefficient_of_variation": 0.3274315066552419,
+        "small_amplitude_beat_fraction": 0.053465346534653464,
+        "alternation_suggests_double_detection": false,
+        "note": "a strongly negative lag-1 interval autocorrelation is the signature of counting the dicrotic notch as a beat"
+      },
+      "median_sqi": 0.9219332285901436,
+      "motion_artefact_window_fraction": 0.0,
+      "heart_rate_bpm": {
+        "count": 505,
+        "mean": 86.98698372581215,
+        "median": 80.0317794458185,
+        "p05": 61.836776442091434,
+        "p95": 155.6936198363896
+      },
+      "caveat": "PPG is an optical perfusion proxy from a consumer sensor on moving glasses. It carries no diagnostic meaning and an increase in heart rate is not evidence of stress.",
+      "hrv_windows": {
+        "count": 11,
+        "with_heart_rate": 11,
+        "with_rmssd": 11,
+        "with_sdnn": 11,
+        "with_pnn50": 11,
+        "window_s": 60.0
+      }
+    },
+    "motorcycle": {
+      "recording_id": "motorcycle_5ab8604a14df",
+      "sampling_rate_hz": 257.255373292982,
+      "interpretation": "physiological_proxy_not_medical",
+      "duration_s": 1004.600614479,
+      "beats_detected": 1965,
+      "beats_passing_gate": 1882,
+      "beat_pass_fraction": 0.9577608142493639,
+      "quality_windows": 101,
+      "usable_windows": 96,
+      "usable_fraction": 0.9504950495049505,
+      "rejection_reasons": {
+        "head motion artefact: accel std 2.1 m/s^2": 3,
+        "head motion artefact: accel std 2.2 m/s^2": 1,
+        "54% of samples missing": 1
+      },
+      "beat_detection_diagnostics": {
+        "valid_intervals": 1882,
+        "ibi_lag1_autocorrelation": 0.09739512671544963,
+        "amplitude_coefficient_of_variation": 0.8854881371984522,
+        "small_amplitude_beat_fraction": 0.07917109458023379,
+        "alternation_suggests_double_detection": false,
+        "note": "a strongly negative lag-1 interval autocorrelation is the signature of counting the dicrotic notch as a beat"
+      },
+      "median_sqi": 0.798970877125021,
+      "motion_artefact_window_fraction": 0.039603960396039604,
+      "heart_rate_bpm": {
+        "count": 1882,
+        "mean": 123.27967210932114,
+        "median": 122.9926875203904,
+        "p05": 81.66137387904422,
+        "p95": 165.9449254218994
+      },
+      "caveat": "PPG is an optical perfusion proxy from a consumer sensor on moving glasses. It carries no diagnostic meaning and an increase in heart rate is not evidence of stress.",
+      "hrv_windows": {
+        "count": 32,
+        "with_heart_rate": 30,
+        "with_rmssd": 30,
+        "with_sdnn": 30,
+        "with_pnn50": 30,
+        "window_s": 60.0
+      }
+    }
+  }
+}

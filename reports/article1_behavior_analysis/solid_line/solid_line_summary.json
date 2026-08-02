@@ -1,0 +1,147 @@
+{
+  "schema": "article1_solid_line_candidates_v1",
+  "result_status": "exploratory_pilot",
+  "permitted_states": [
+    "candidate_compliant",
+    "candidate_noncompliant",
+    "uncertain",
+    "not_evaluable"
+  ],
+  "definitive_label_requires_human_review": true,
+  "classifier_training": {
+    "attempted": false,
+    "reason": "no reviewed labels exist yet; training is gated on at least 20 confirmed events per class and the pipeline refuses to train below that"
+  },
+  "detection_parameters": {
+    "min_evidence_sources": 3,
+    "min_lane_marking_persistence_s": 0.5,
+    "min_lateral_displacement_m": 1.2,
+    "min_time_beyond_line_s": 0.5,
+    "junction_exclusion_radius_m": 25.0
+  },
+  "domains": {
+    "car": {
+      "candidates": 5,
+      "states": {
+        "not_evaluable": 5
+      },
+      "manoeuvres": {
+        "junction_manoeuvre": 1,
+        "roundabout_manoeuvre": 4
+      },
+      "permitted_states": [
+        "candidate_compliant",
+        "candidate_noncompliant",
+        "uncertain",
+        "not_evaluable"
+      ],
+      "review_required": true,
+      "note": "every state here is a candidate awaiting human review. No row asserts that a traffic rule was broken, and the pipeline has no code path that can produce such an assertion.",
+      "domain": "car",
+      "samples_considered": 209,
+      "not_evaluable_reasons": {},
+      "lateral_resolution_m": 24.0,
+      "min_lateral_displacement_m": 1.2,
+      "displacement_is_resolvable": false,
+      "resolution_caveat": "the median positioning error is 24.0 m, larger than the 1.2 m displacement a lane crossing produces. A lateral crossing cannot be resolved from this track, so every candidate here is at best 'uncertain' and most are 'not_evaluable'.",
+      "marking_runs": [
+        {
+          "start_ns": 1235364468985,
+          "end_ns": 1265262269475,
+          "observed_frames": 300,
+          "frame_interval_s": 0.099992397,
+          "continuity": "solid",
+          "continuity_side": "left",
+          "continuity_confidence": 0.9733333333333334,
+          "continuity_reason": null,
+          "duty_cycle_left": 0.9733333333333334,
+          "duty_cycle_right": 0.8433333333333334,
+          "mean_marking_pixels": 16631.876666666667,
+          "vision_lateral_offset": {
+            "frames": 300,
+            "frames_with_offset": 47,
+            "coverage_fraction": 0.15666666666666668,
+            "offset_m": {
+              "median": -0.2987804878048781,
+              "p05": -0.6071454172977114,
+              "p95": 0.46053382565345,
+              "range_m": 1.0676792429511615
+            },
+            "unavailable_reasons": {
+              "no lane marking in the measurement band": 149,
+              "only one lane boundary visible": 104
+            },
+            "assumed_lane_width_m": 3.5,
+            "caveat": "the pixel-to-metre scale assumes a 3.5 m lane. The measured offset scales linearly with that assumption, so its absolute value is only as good as the lane width; changes over time within one block do not depend on it."
+          }
+        }
+      ]
+    },
+    "motorcycle": {
+      "candidates": 56,
+      "states": {
+        "not_evaluable": 56
+      },
+      "manoeuvres": {
+        "junction_manoeuvre": 25,
+        "lane_keeping_or_drift": 12,
+        "roundabout_manoeuvre": 19
+      },
+      "permitted_states": [
+        "candidate_compliant",
+        "candidate_noncompliant",
+        "uncertain",
+        "not_evaluable"
+      ],
+      "review_required": true,
+      "note": "every state here is a candidate awaiting human review. No row asserts that a traffic rule was broken, and the pipeline has no code path that can produce such an assertion.",
+      "domain": "motorcycle",
+      "samples_considered": 945,
+      "not_evaluable_reasons": {},
+      "lateral_resolution_m": 3.0,
+      "min_lateral_displacement_m": 1.2,
+      "displacement_is_resolvable": false,
+      "resolution_caveat": "the median positioning error is 3.0 m, larger than the 1.2 m displacement a lane crossing produces. A lateral crossing cannot be resolved from this track, so every candidate here is at best 'uncertain' and most are 'not_evaluable'.",
+      "marking_runs": [
+        {
+          "start_ns": 3099822119217,
+          "end_ns": 3129751762010,
+          "observed_frames": 450,
+          "frame_interval_s": 0.066661407,
+          "continuity": "solid",
+          "continuity_side": "right",
+          "continuity_confidence": 0.9866666666666667,
+          "continuity_reason": null,
+          "duty_cycle_left": 0.9533333333333334,
+          "duty_cycle_right": 0.9866666666666667,
+          "mean_marking_pixels": 104267.21555555555,
+          "vision_lateral_offset": {
+            "frames": 450,
+            "frames_with_offset": 254,
+            "coverage_fraction": 0.5644444444444444,
+            "offset_m": {
+              "median": -0.021478891751222334,
+              "p05": -1.1978186862691511,
+              "p95": 1.262228406311054,
+              "range_m": 2.460047092580205
+            },
+            "unavailable_reasons": {
+              "only one lane boundary visible": 98,
+              "apparent lane width 1 px is implausibly narrow": 74,
+              "apparent lane width 96 px is implausibly narrow": 1,
+              "apparent lane width 57 px is implausibly narrow": 1,
+              "no lane marking in the measurement band": 21,
+              "apparent lane width 25 px is implausibly narrow": 1
+            },
+            "assumed_lane_width_m": 3.5,
+            "caveat": "the pixel-to-metre scale assumes a 3.5 m lane. The measured offset scales linearly with that assumption, so its absolute value is only as good as the lane width; changes over time within one block do not depend on it."
+          }
+        }
+      ]
+    }
+  },
+  "review_package": {
+    "rows": 61,
+    "path": "datasets/article1_action_review"
+  }
+}
