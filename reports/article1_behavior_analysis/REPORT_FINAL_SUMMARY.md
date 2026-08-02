@@ -101,7 +101,7 @@ Scale: **A** usable for exploratory analysis · **B** usable with exclusions ·
 |---|---|:--:|---|
 | 1 | car recording quality | **B** | every sensor clean except GPS, which loses 34% of its records and reports 27.5 m median accuracy |
 | 2 | motorcycle recording quality | **A** | all 17 streams complete, GPS at 3 m, 94.9% valid fixes |
-| 3 | semantic gaze quality | **C** | method and projection are sound (95% / 94% valid readings), but coverage is 8% / 3% and not on the shared route → the *coverage* alone is **D** |
+| 3 | semantic gaze quality | **C** | method and projection are sound (95% / 94% valid readings), but coverage is 8% / 3% and the two blocks never overlap on the shared route → the *coverage* alone is **D** |
 | 4 | map matching quality | **B** | motorcycle **A** (99.2%, 1.5 m); car **B** (85%, 13.5 m) — adequate for 50 m bins, not finer |
 | 5 | PPG quality | **A** | 97.4% / 95.0% usable, SQI 0.92 / 0.80, artefact check passed; HRV **B** |
 | 6 | speed metric reliability | **C** | 1 Hz GPS speed field, no pose; cross-check r = 0.98 (moto) / 0.85 (car) |
