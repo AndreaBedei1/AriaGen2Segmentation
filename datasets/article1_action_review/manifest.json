@@ -1,0 +1,19 @@
+{
+  "schema": "article1_action_review_v1",
+  "result_status": "exploratory_pilot",
+  "candidates": 61,
+  "permitted_human_labels": [
+    "compliant",
+    "noncompliant",
+    "uncertain",
+    "not_evaluable"
+  ],
+  "automatic_states": [
+    "candidate_compliant",
+    "candidate_noncompliant",
+    "uncertain",
+    "not_evaluable"
+  ],
+  "clips_present": false,
+  "clip_note": "clips and overlay frames are rendered into this directory only for candidates whose window is covered by a dense frozen semantic block; the media are local artefacts and are not committed"
+}
