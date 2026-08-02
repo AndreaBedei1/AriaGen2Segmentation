@@ -27,7 +27,9 @@ frozen Article 1 semantic-camera baseline, which it reads and never modifies.
 | indices and statistics | `behavior/indices.py`, `stats.py` | `compare_article1_paired_route.py` |
 | privacy, figures, video | `behavior/privacy.py`, `video.py` | `visualise_...`, `render_..._videos.py` |
 
-Outputs: 9 reports, 21 figures, a local HTML dashboard, 3 analysis videos, a
+Outputs: 9 reports, 25 figure files — the plan's 20 figures (21 files: the gaze
+transition matrix is one per domain) plus 4 supplementary — a local HTML
+dashboard, 3 analysis videos, a
 human-review package, and per-recording parquet tables. **479 tests pass, 15
 skipped, no regressions.**
 
@@ -64,9 +66,11 @@ These are the most useful results in the pilot, because they define the protocol
 4. **The GPS cadence sets the usable route bin size.** At 1 Hz a fix lands every
    10–15 m, so a 10 m bin holds 0.7 fixes and cannot satisfy a two-fix pairing
    rule. 50 m is the smallest size the cadence can fill.
-5. **Semantic gaze covers 8% and 3% of the recordings, and none of the shared
-   route.** The frozen pipeline costs ~27 s/frame; full coverage would be ~140
-   GPU-hours. Gaze consequently drops out of the paired comparison entirely.
+5. **Semantic gaze covers 8% and 3% of the recordings, and the two blocks never
+   overlap.** The car block reaches 8 of the 42 paired bins; the motorcycle block
+   reaches none of them, so no bin carries gaze for both vehicles. The frozen
+   pipeline costs ~27 s/frame; full coverage would be ~140 GPU-hours. Gaze
+   consequently drops out of the paired comparison entirely.
 
 ## Methodological points worth carrying forward
 
@@ -126,10 +130,10 @@ Scale: **A** usable for exploratory analysis · **B** usable with exclusions ·
 
 **Computation, achievable on the data already held**
 
-6. **Run the frozen pipeline on a block inside the shared route.** This is the
-   single highest-value next step: ~2–3.5 GPU-hours per domain buys the entire
-   paired semantic-gaze comparison, which is currently absent. Target bins are
-   listed in `route/paired_route_segments.csv`.
+6. **Run the frozen pipeline on a motorcycle block inside the 8 paired bins the
+   car block already covers.** This is the single highest-value next step:
+   ~2–3.5 GPU-hours buys the entire paired semantic-gaze comparison, which is
+   currently absent. Target bins are listed in `route/paired_route_segments.csv`.
 7. **Extend semantic coverage generally** — even 4 × 30 s blocks per domain would
    take gaze coverage from 3% to 12% on the motorcycle.
 8. **Human review of the 61 line-crossing candidates** using

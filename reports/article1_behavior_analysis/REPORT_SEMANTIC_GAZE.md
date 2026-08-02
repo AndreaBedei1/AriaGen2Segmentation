@@ -120,18 +120,22 @@ Neither block produced meaningful mirror gaze, so no mirror statistic is offered
 
 ## The gap that matters most
 
-**Neither block sits on the shared route.** Semantic gaze therefore drops out of
-the paired car–motorcycle comparison entirely (see `REPORT_PAIRED_AUTO_MOTO.md`).
+**The two blocks do not overlap on the shared route.** The car block does reach
+it — 8 of the 42 paired 50 m bins carry car gaze — but the motorcycle block
+covers none of them, so no bin carries gaze for *both* vehicles and semantic
+gaze drops out of the paired car–motorcycle comparison entirely (see
+`REPORT_PAIRED_AUTO_MOTO.md`). Figure `04_route_dominant_gaze.png` shows the two
+blocks sitting about a kilometre apart on the same road.
+
 The fix is mechanical and is the single highest-value next run: execute the
-frozen pipeline on a block inside one of the 42 paired bins listed in
-`route/paired_route_segments.csv`. At 27 s/frame a 30 s block costs about
-2–3.5 GPU-hours per domain.
+frozen pipeline on a **motorcycle** block inside one of the 8 paired bins the car
+block already covers. At 27 s/frame a 30 s block costs about 2–3.5 GPU-hours.
 
 ## Verdict
 
 | item | grade | reasoning |
 |---|---|---|
 | semantic-gaze method | **A** | foveal distribution, confidence-weighted, geometry bias identified and corrected with a second metric |
-| semantic-gaze coverage | **D — must be repeated** | 8% and 3% of the recordings, and not on the shared route |
+| semantic-gaze coverage | **D — must be repeated** | 8% and 3% of the recordings; the two blocks never overlap on the shared route |
 | gaze projection accuracy | **A** | QA render confirms the vanishing-point landing is correct |
 | per-class gaze results | **C — descriptive only** | 30 s per domain, dominated by a catch-all class, two non-comparable scenes |

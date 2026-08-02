@@ -68,6 +68,7 @@ map.
 | bins are the unit of analysis, not frames | `compare_article1_paired_route.py` |
 | block bootstrap and block permutation | `stats.py` |
 | no coordinate in a committed file | `privacy.assert_no_absolute_coordinates` |
+| all twenty planned figures produced | `visualise_....REQUIRED_FIGURES`, checked before the run exits 0 |
 
 `tests/test_behavior_guards.py` and `tests/test_behavior_analysis.py` fail the
 build if any of these stops being true.
@@ -82,11 +83,18 @@ slice, and where the full versions live locally.
 
 The local dashboard is `output/article1/behavior_analysis/dashboard/index.html`.
 
+Figures are numbered after the analysis plan: `01`–`20` are the twenty it asks
+for, `21`–`24` are supplementary. `visualise_article1_behavior.py` exits non-zero
+if any of the twenty is missing, so a partial gallery cannot pass unnoticed.
+
 ## Adding semantic coverage
 
 This is the highest-value follow-up. The frozen pipeline costs ~27 s/frame, and
-gaze currently covers 8% (car) and 3% (motorcycle) of the recordings — none of it
-on the shared route, which is why gaze is absent from the paired comparison.
+gaze currently covers 8% (car) and 3% (motorcycle) of the recordings. The car
+block reaches 8 of the 42 paired bins and the motorcycle block reaches none of
+them, so no bin carries gaze for both vehicles and gaze is absent from the paired
+comparison. A motorcycle block inside those 8 bins is the cheapest thing that
+unblocks it.
 
 To fix it, pick a bin from `reports/article1_behavior_analysis/route/paired_route_segments.csv`,
 find the frame range that covers it in `frame_route_bins.parquet`, and run the
