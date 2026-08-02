@@ -54,16 +54,18 @@ modules) disappeared with the branch checkout, because they existed only on it.
   baseline motorcycle video** `semantic_camera_moto_final.mp4`;
 * every annotation package, validation set and ingestion export.
 
-## Remote deletion — manual step still required
+## Manual git steps still required
 
-The remote branch could not be deleted from this environment: `git push` has no
+Neither of these could be done from this environment: `git push` has no
 credential helper here and the GitHub CLI is not installed.
 
 ```
 fatal: could not read Username for 'https://github.com': Device o indirizzo non esistente
 ```
 
-Run this once, from an authenticated checkout:
+Run both from an authenticated checkout.
+
+**1. Delete the retired remote branch.**
 
 ```bash
 git push origin --delete feature/article1-motorcycle-fov-mirror-refinement
@@ -76,4 +78,14 @@ gh api -X DELETE repos/AndreaBedei1/AriaGen2Segmentation/git/refs/heads/feature/
 ```
 
 Until that runs, `origin/feature/article1-motorcycle-fov-mirror-refinement` still
-exists on GitHub. It is inert — no branch here tracks it and nothing builds on it.
+exists on GitHub. It is inert — no local branch tracks it and nothing builds on
+it.
+
+**2. Push the behaviour-analysis branch.**
+
+```bash
+git push -u origin feature/article1-multimodal-behavior-analysis
+```
+
+The branch is ready to push: the full test suite passes (480 passed, 15 skipped)
+and the working tree is clean. It must **not** be merged into `main`.
