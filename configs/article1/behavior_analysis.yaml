@@ -1,0 +1,162 @@
+# Article 1 multimodal behaviour analysis — exploratory pilot configuration.
+#
+# Every temporal parameter is a DURATION IN SECONDS. Nothing in this file is a
+# frame count, and no stage may convert one to a frame count except through
+# ingestion.timeline.frames_for_seconds against the recording's own measured rate.
+schema: article1_behavior_analysis_v1
+result_status: exploratory_pilot
+
+baseline:
+  branch: feature/article1-motorcycle-ingestion
+  commit: a9ee61bc77cdf61f364eb0eec98c2975fd933829
+  # The semantic camera is consumed as-is. No stage in this analysis re-tunes it,
+  # and gaze is never fed back into segmentation.
+  semantic_camera_is_frozen: true
+
+recordings:
+  car:
+    recording_id: car_2e84f0c3e245
+    vrs: unknown_20260528_090955.vrs
+    # Dense frozen-baseline semantic block already computed for this recording.
+    semantic_blocks:
+      - root: outputs/article1/auto_temporal_180_210
+        frame_range: [1801, 2100]
+  motorcycle:
+    recording_id: motorcycle_5ab8604a14df
+    vrs: unknown_20260731_162521.vrs
+    semantic_blocks:
+      - root: output/article1/motorcycle_baseline_30s
+        frame_range: [13875, 14324]
+
+synchronisation:
+  # Absolute ceiling on any cross-stream association, whatever the cadences imply.
+  absolute_tolerance_s: 2.0
+  minimum_tolerance_s: 0.020
+  derived_views:
+    - {hz: 1.0, purpose: route statistics and scouting}
+    - {hz: 5.0, purpose: slow events}
+
+gps:
+  max_accuracy_m: 50.0
+  # A fix that jumps faster than this is a fix artefact, not a vehicle motion.
+  max_plausible_speed_mps: 60.0
+
+map:
+  # OpenStreetMap via the Overpass API, cached locally and reused. The cache is a
+  # local artefact: it is derived from the GPS track and is never committed.
+  source: overpass
+  endpoint: https://overpass-api.de/api/interpreter
+  cache_dir: output/article1/behavior_analysis/osm_cache
+  bbox_margin_m: 300.0
+  timeout_s: 180
+  matching:
+    max_snap_distance_m: 30.0
+    max_heading_error_deg: 60.0
+    # Below this speed the GPS heading is noise, so heading gating is suspended.
+    heading_valid_min_speed_mps: 2.0
+
+route:
+  bin_sizes_m: [10.0, 20.0, 50.0]
+  pairing:
+    max_lateral_distance_m: 25.0
+    max_heading_difference_deg: 45.0
+    min_samples_per_bin: 2
+    require_same_direction: true
+    require_map_match: true
+
+dynamics:
+  # Vehicle dynamics preference order. VIO/SLAM pose is preferred when present;
+  # this device recorded no usable pose stream, which is reported, not hidden.
+  vehicle_speed_priority: [vio_pose, gps_speed_field, gps_position_derivative]
+  smoothing_window_s: 1.0
+  hard_braking_threshold_mps2: -2.5
+  strong_acceleration_threshold_mps2: 2.0
+  stopped_speed_mps: 0.5
+  head:
+    # Gravity is removed with a low-pass estimate of the gravity direction.
+    gravity_cutoff_hz: 0.3
+    vibration_band_hz: [5.0, 20.0]
+    control_band_hz: [0.2, 2.0]
+    lateral_check_yaw_rate_threshold_radsec: 0.35
+    lateral_check_min_duration_s: 0.15
+
+gaze:
+  # A gaze point is a distribution, not a pixel: semantic class is read through a
+  # Gaussian foveal window over the class-probability field.
+  foveal_sigma_deg: 1.5
+  foveal_radius_sigmas: 2.5
+  # I-VT fixation identification. Thresholds in degrees per second.
+  ivt_velocity_threshold_deg_s: 30.0
+  min_fixation_duration_s: 0.100
+  max_gap_within_fixation_s: 0.075
+  off_road_classes_are_everything_except:
+    - road_surface
+    - lane_marking
+    - regulatory_road_marking
+    - vehicle
+    - pedestrian
+    - traffic_sign
+    - traffic_light
+    - road_boundary_or_obstacle
+
+events:
+  approach_radius_m:
+    roundabout: 40.0
+    junction: 30.0
+    traffic_signals: 40.0
+    crossing: 25.0
+  curve_curvature_threshold_1_per_m: 0.02
+  windows_s:
+    pre_event: [-10.0, -3.0]
+    approach: [-3.0, 0.0]
+    post_event: [0.0, 10.0]
+  physiology_windows_s:
+    baseline: [-30.0, -10.0]
+    anticipation: [-10.0, 0.0]
+    immediate: [0.0, 10.0]
+    delayed: [10.0, 40.0]
+
+solid_line:
+  # A candidate needs several independent kinds of evidence. No single signal,
+  # and in particular no single segmentation frame, may raise a candidate.
+  min_evidence_sources: 3
+  min_lane_marking_persistence_s: 0.5
+  min_lateral_displacement_m: 1.2
+  min_time_beyond_line_s: 0.5
+  # Manoeuvres this close to a junction are excluded from the non-compliant
+  # bucket: turning across a line at a junction is normal.
+  junction_exclusion_radius_m: 25.0
+
+ppg:
+  # Quality gate. Nothing downstream sees a beat that did not pass it.
+  bandpass_hz: [0.5, 8.0]
+  min_heart_rate_bpm: 40.0
+  max_heart_rate_bpm: 180.0
+  # Signal quality index below this marks the window unusable.
+  min_sqi: 0.5
+  saturation_fraction_limit: 0.02
+  # Motion artefact is judged from the head IMU, not from the PPG alone.
+  motion_artefact_accel_std_threshold_msec2: 2.0
+  hrv:
+    min_window_s: 30.0
+    sdnn_min_window_s: 60.0
+    min_valid_beat_fraction: 0.8
+    pnn50_min_beats: 50
+
+statistics:
+  block_bootstrap:
+    iterations: 2000
+    block_length_s: 30.0
+  permutation:
+    iterations: 5000
+  fdr_alpha: 0.05
+  random_seed: 20260802
+
+privacy:
+  # Precise coordinates stay in the local output tree. Anything under reports/ is
+  # relative: route progress in metres, or coordinates offset to the track origin.
+  commit_absolute_coordinates: false
+  # Trim this much from each end of the track before publishing any map, because
+  # the endpoints of a commute are home and destination.
+  endpoint_redaction_m: 250.0
+  coordinate_decimals_in_reports: 0
