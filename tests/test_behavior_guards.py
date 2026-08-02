@@ -304,3 +304,45 @@ def test_frozen_baseline_outputs_are_only_read():
             continue
         assert "imwrite" not in text and "write_mask" not in text, (
             f"{path.name} writes into the frozen semantic-camera output")
+
+
+# --------------------------------------------------------------------------- #
+# Visual output completeness
+# --------------------------------------------------------------------------- #
+def _visualiser():
+    """The visualisation script, imported without running it."""
+    import importlib.util
+    spec = importlib.util.spec_from_file_location(
+        "_vis_behavior", SCRIPTS / "visualise_article1_behavior.py")
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    return module
+
+
+def test_the_analysis_plan_s_twenty_figures_are_all_declared():
+    """The plan asks for twenty figures; the script must claim all twenty."""
+    module = _visualiser()
+    assert len(module.REQUIRED_FIGURES) == 20, (
+        f"expected 20 required figures, found {len(module.REQUIRED_FIGURES)}")
+    numbers = sorted(int(stem.split("_")[0]) for stem in module.REQUIRED_FIGURES)
+    assert numbers == list(range(1, 21)), (
+        f"required figures are not numbered 1..20: {numbers}")
+
+
+def test_a_run_that_drops_a_required_figure_is_rejected():
+    """The completeness check must actually fail on a short gallery."""
+    module = _visualiser()
+    complete = [f"/figures/{stem}_x.png" for stem in module.REQUIRED_FIGURES]
+    assert module.missing_required(complete) == []
+    assert module.missing_required(complete[:-1]) == [module.REQUIRED_FIGURES[-1]]
+
+
+def test_the_generated_gallery_contains_every_required_figure():
+    manifest = (ROOT / "output" / "article1" / "behavior_analysis" / "figures"
+                / "figure_manifest.json")
+    if not manifest.exists():
+        pytest.skip("figures have not been generated in this checkout")
+    module = _visualiser()
+    payload = json.loads(manifest.read_text())
+    absent = module.missing_required(payload["figures"])
+    assert absent == [], f"generated gallery is missing required figures: {absent}"

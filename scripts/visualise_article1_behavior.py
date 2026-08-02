@@ -18,6 +18,7 @@ import numpy as np
 import pandas as pd
 
 from aria_drive_seg.behavior import EXPLORATORY_MARKER
+from aria_drive_seg.behavior.indices import road_complexity_index
 from aria_drive_seg.behavior.privacy import redact_track
 from aria_drive_seg.config import Config
 from aria_drive_seg.io_utils import atomic_write_json, atomic_write_text
@@ -28,6 +29,39 @@ log = get_logger("behavior.visualise")
 DOMAIN_COLOUR = {"car": "#1f77b4", "motorcycle": "#d62728"}
 FOOTER = f"exploratory pilot - one participant, one session per vehicle"
 
+#: The twenty figures the analysis plan asks for, in its own order. Numbers 21
+#: and up are supplementary. A run that cannot produce one of these fails rather
+#: than quietly shipping a short gallery: a missing figure is a missing result.
+REQUIRED_FIGURES = (
+    "01_route_map",
+    "02_shared_route_map",
+    "03_junction_roundabout_map",
+    "04_route_dominant_gaze",
+    "05_route_heart_rate",
+    "06_route_gps_speed_mps",
+    "07_route_acceleration",
+    "08_solid_line_candidates",
+    "09_gaze_heatmap_car",
+    "10_gaze_heatmap_motorcycle",
+    "11_gaze_transitions",
+    "12_gaze_class_distribution",
+    "13_event_heart_rate",
+    "14_event_gaze",
+    "15_scatter_heart_rate_bpm_complexity",
+    "16_scatter_gaze_entropy_complexity",
+    "17_ppg_quality_timeline",
+    "18_speed_acceleration_timeline",
+    "19_head_motion_timeline",
+    "20_paired_comparison",
+)
+
+
+def missing_required(produced: List[str]) -> List[str]:
+    """Required figures that a run did not write."""
+    names = {Path(p).name for p in produced}
+    return [stem for stem in REQUIRED_FIGURES
+            if not any(n.startswith(stem) for n in names)]
+
 
 def _save(fig, path: Path, produced: List[str]) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
@@ -36,6 +70,42 @@ def _save(fig, path: Path, produced: List[str]) -> None:
     fig.savefig(path, dpi=130, bbox_inches="tight")
     plt.close(fig)
     produced.append(str(path))
+
+
+def _nearest_index(source_ns, target_ns, tolerance_s: float):
+    """For each target timestamp, the nearest source row and whether it is close
+    enough to be used. No interpolation and no fabricated sample: a target with
+    no source inside the tolerance is dropped, never filled."""
+    src = np.asarray(source_ns, dtype=np.int64)
+    tgt = np.asarray(target_ns, dtype=np.int64)
+    if src.size == 0 or tgt.size == 0:
+        return np.zeros(tgt.size, int), np.zeros(tgt.size, bool)
+    order = np.argsort(src)
+    ssrc = src[order]
+    if ssrc.size == 1:
+        pick = np.zeros(tgt.size, int)
+    else:
+        idx = np.clip(np.searchsorted(ssrc, tgt), 1, ssrc.size - 1)
+        pick = np.where(tgt - ssrc[idx - 1] <= ssrc[idx] - tgt, idx - 1, idx)
+    ok = np.abs(ssrc[pick] - tgt) <= tolerance_s * 1e9
+    return order[pick], ok
+
+
+def _gaze_on_track(entry: Dict[str, Any], tolerance_s: float = 1.0):
+    """Semantically valid gaze samples placed on the redacted track."""
+    g = entry.get("gaze")
+    if g is None or g.empty:
+        return None
+    v = g[g["semantic_valid"].astype(bool)]
+    if v.empty:
+        return None
+    track = entry["track"]
+    pick, ok = _nearest_index(track["rows"]["timestamp_ns"].values,
+                              v["timestamp_ns"].values, tolerance_s)
+    if not ok.any():
+        return None
+    return {"x": track["x"][pick[ok]], "y": track["y"][pick[ok]],
+            "rows": v[ok].reset_index(drop=True)}
 
 
 def load_all(cfg: Config, out_root: Path) -> Dict[str, Dict[str, Any]]:
@@ -169,10 +239,49 @@ def main() -> int:
     fig.suptitle("Mapped junctions and roundabouts encountered")
     _save(fig, figs / "03_junction_roundabout_map.png", produced)
 
-    # 4-7. Value-along-route maps --------------------------------------------
-    for idx, (col, label, cmap) in enumerate([
-            ("gps_speed_mps", "speed (m/s)", "viridis"),
-            ("curvature_1_per_m", "|curvature| (1/m)", "magma")], start=6):
+    # 4. Dominant semantic-gaze class along the route -------------------------
+    # The frozen semantic block is ~30 s of a much longer drive, so this map is
+    # two things at once: where gaze fell, and how little of the route that is.
+    gaze_tracks = {d: _gaze_on_track(e) for d, e in data.items()}
+    present = sorted({c for gt in gaze_tracks.values() if gt is not None
+                      for c in gt["rows"]["top1_class"].unique()})
+    palette = dict(zip(present, plt.get_cmap("tab20").colors))
+    fig, axes = plt.subplots(len(data), 2, figsize=(14, 6 * len(data)),
+                             squeeze=False)
+    for (ctx, zoom), (domain, e) in zip(axes, data.items()):
+        gt = gaze_tracks[domain]
+        for a in (ctx, zoom):
+            a.plot(e["track"]["x"], e["track"]["y"], lw=1.2, color="#cccccc",
+                   zorder=1)
+            a.set_aspect("equal"); a.grid(alpha=.3)
+            a.set_xlabel("east (m)"); a.set_ylabel("north (m)")
+        if gt is None:
+            ctx.set_title(f"{domain}: no semantically valid gaze on the track")
+            zoom.set_axis_off()
+            continue
+        ctx.scatter(gt["x"], gt["y"], s=30, color="#111111", zorder=3,
+                    label="frozen semantic block")
+        ctx.legend(fontsize=8)
+        ctx.set_title(f"{domain}: where the block sits on the whole route")
+        for cls in present:
+            m = (gt["rows"]["top1_class"] == cls).values
+            if m.any():
+                zoom.scatter(gt["x"][m], gt["y"][m], s=34, alpha=.85,
+                             color=palette[cls], label=f"{cls} ({int(m.sum())})",
+                             zorder=3)
+        pad = 60
+        zoom.set_xlim(gt["x"].min() - pad, gt["x"].max() + pad)
+        zoom.set_ylim(gt["y"].min() - pad, gt["y"].max() + pad)
+        zoom.legend(fontsize=7, loc="best")
+        zoom.set_title(f"{domain}: dominant gaze class ({len(gt['x'])} samples)")
+    fig.suptitle("Dominant semantic-gaze class along the route\n"
+                 "coloured only where the frozen semantic block exists")
+    _save(fig, figs / "04_route_dominant_gaze.png", produced)
+
+    # 6, 22. Value-along-route maps -------------------------------------------
+    for idx, (col, label, cmap) in [
+            (6, ("gps_speed_mps", "speed (m/s)", "viridis")),
+            (22, ("curvature_1_per_m", "|curvature| (1/m)", "magma"))]:
         fig, axes = plt.subplots(1, 2, figsize=(14, 6))
         for ax, (domain, e) in zip(axes, data.items()):
             rows = e["track"]["rows"]
@@ -183,6 +292,27 @@ def main() -> int:
             ax.set_xlabel("east (m)"); ax.set_ylabel("north (m)")
         fig.suptitle(f"{label} along the route")
         _save(fig, figs / f"{idx:02d}_route_{col}.png", produced)
+
+    # 7. Acceleration map -----------------------------------------------------
+    # Vehicle acceleration only — the head IMU never feeds this figure.
+    fig, axes = plt.subplots(1, 2, figsize=(14, 6))
+    for ax, (domain, e) in zip(axes, data.items()):
+        rows = e["track"]["rows"]
+        v = e["vehicle"]
+        pick, ok = _nearest_index(v["timestamp_ns"].values,
+                                  rows["timestamp_ns"].values, 1.0)
+        acc = np.full(len(rows), np.nan)
+        acc[ok] = v["acceleration_mps2"].values[pick[ok]]
+        lim = float(np.nanmax(np.abs(acc))) if np.isfinite(acc).any() else 1.0
+        s = ax.scatter(e["track"]["x"], e["track"]["y"], c=acc, s=10,
+                       cmap="coolwarm", vmin=-lim, vmax=lim)
+        fig.colorbar(s, ax=ax, label="longitudinal acceleration (m/s^2)")
+        ax.set_aspect("equal"); ax.grid(alpha=.3)
+        ax.set_title(f"{domain} ({int(np.isfinite(acc).sum())} located samples)")
+        ax.set_xlabel("east (m)"); ax.set_ylabel("north (m)")
+    fig.suptitle("Vehicle acceleration and deceleration along the route\n"
+                 "GPS-derived; the head IMU is not used as vehicle acceleration")
+    _save(fig, figs / "07_route_acceleration.png", produced)
 
     # 5. Heart-rate map -------------------------------------------------------
     fig, axes = plt.subplots(1, 2, figsize=(14, 6))
@@ -300,6 +430,35 @@ def main() -> int:
     fig.suptitle("Event-associated heart-rate change (proxy; not a stress measure)")
     _save(fig, figs / "13_event_heart_rate.png", produced)
 
+    # 14. Event-related gaze. The frozen semantic block covers 30 s of each
+    # recording, so almost no mapped event has gaze under it. The figure reports
+    # that coverage honestly instead of implying a curve that does not exist.
+    phases = [("phys_anticipation", "anticipation\n-10..0 s"),
+              ("phys_immediate", "immediate\n0..+10 s")]
+    fig, axes = plt.subplots(1, 2, figsize=(13, 5), sharey=True)
+    for ax, domain in zip(axes, data):
+        s = ev[ev.domain == domain]
+        vals, labels = [], []
+        for prefix, label in phases:
+            q = s[f"{prefix}_gaze_foveal_entropy"].dropna()
+            if len(q):
+                vals.append(q.values); labels.append(f"{label}\nn={len(q)}")
+        if vals:
+            ax.boxplot(vals, tick_labels=labels)
+        else:
+            ax.text(.5, .5, "no mapped event overlaps\nthe frozen semantic block",
+                    ha="center", va="center", fontsize=9, color="#a33",
+                    transform=ax.transAxes)
+            ax.set_xticks([])
+        ax.set_title(f"{domain} ({len(s)} mapped events)")
+        ax.grid(alpha=.3, axis="y"); ax.tick_params(labelsize=7)
+    axes[0].set_ylabel("foveal gaze entropy (bits)")
+    fig.suptitle("Event-related semantic gaze\n"
+                 "coverage-limited: no baseline window has gaze, so no delta is "
+                 "computable", y=1.06)
+    _save(fig, figs / "14_event_gaze.png", produced)
+
+    # 23. Head motion around the same events (supplementary).
     fig, axes = plt.subplots(1, 2, figsize=(13, 5), sharey=True)
     for ax, domain in zip(axes, data):
         s = ev[ev.domain == domain]
@@ -313,13 +472,66 @@ def main() -> int:
         ax.set_title(domain); ax.grid(alpha=.3, axis="y"); ax.tick_params(labelsize=7)
     axes[0].set_ylabel("|head yaw rate| (rad/s)")
     fig.suptitle("Head motion around mapped events")
-    _save(fig, figs / "14_event_head_motion.png", produced)
+    _save(fig, figs / "23_event_head_motion.png", produced)
 
-    # 15-16. Scatter against road complexity ---------------------------------
+    # 16. Gaze entropy vs road complexity ------------------------------------
+    # The paired table carries gaze for the car only, so this is built per domain
+    # over each block's own bins, with ONE normalisation shared by both domains
+    # so that the x axis means the same thing in each.
+    bins_meta = pd.read_csv(Path(args.reports) / "route" / "shared_route_bins.csv")
+    bins_meta = bins_meta[bins_meta.bin_size_m == bin_size]
+    frames = []
+    for domain, e in data.items():
+        g, fb = e["gaze"], e["bins"]
+        if g is None or fb is None or g.empty:
+            continue
+        v = g[g["semantic_valid"].astype(bool)]
+        j = v.merge(fb[["frame_index", "bin_key"]], on="frame_index", how="left")
+        j = j.dropna(subset=["bin_key"])
+        if j.empty:
+            continue
+        agg = (j.groupby("bin_key")["foveal_entropy"]
+                .agg(mean_entropy="mean", n_samples="size").reset_index())
+        agg = agg.merge(
+            bins_meta[bins_meta.domain == domain][
+                ["bin_key", "curvature_1_per_m", "distance_to_junction_m",
+                 "road_lanes"]], on="bin_key", how="left")
+        agg["domain"] = domain
+        frames.append(agg)
+    fig, ax = plt.subplots(figsize=(7, 5))
+    if frames:
+        allb = pd.concat(frames, ignore_index=True)
+        rci = road_complexity_index(
+            curvature=allb["curvature_1_per_m"].values,
+            junction_density=-allb["distance_to_junction_m"].values,
+            lanes=allb["road_lanes"].values)
+        allb["road_complexity_index"] = rci.values
+        for domain in data:
+            sub = allb[allb.domain == domain]
+            if sub.empty:
+                continue
+            ax.scatter(sub["road_complexity_index"], sub["mean_entropy"],
+                       s=26 + 2 * sub["n_samples"], alpha=.75,
+                       color=DOMAIN_COLOUR[domain],
+                       label=f"{domain} (n={len(sub)} bins)")
+        ax.legend()
+        note = f"components used: {', '.join(rci.components_used)}"
+    else:
+        ax.text(.5, .5, "no bin carries both gaze and map complexity",
+                ha="center", va="center", transform=ax.transAxes, color="#a33")
+        note = "no data"
+    ax.set_xlabel("road complexity index (normalised within this figure's bins)")
+    ax.set_ylabel("mean foveal gaze entropy (bits)")
+    ax.grid(alpha=.3)
+    ax.set_title(f"Gaze entropy vs road complexity, per {bin_size:.0f} m bin\n"
+                 f"frozen semantic blocks only - {note}")
+    _save(fig, figs / "16_scatter_gaze_entropy_complexity.png", produced)
+
+    # 15, 24. Scatter against road complexity over the paired bins ------------
     paired = pd.read_csv(Path(args.reports) / "paired" / "paired_route_comparison.csv")
-    for n, (ycol, ylabel) in enumerate([("heart_rate_bpm", "heart rate (bpm)"),
-                                        ("head_angular_speed_rad_s",
-                                         "head angular speed (rad/s)")], start=15):
+    for n, (ycol, ylabel) in [(15, ("heart_rate_bpm", "heart rate (bpm)")),
+                              (24, ("head_angular_speed_rad_s",
+                                    "head angular speed (rad/s)"))]:
         fig, ax = plt.subplots(figsize=(7, 5))
         for domain, suffix in (("car", "_car"), ("motorcycle", "_moto")):
             x = paired.get(f"road_complexity_index{suffix}")
@@ -409,6 +621,10 @@ def main() -> int:
     _save(fig, figs / "21_sensor_quality_map.png", produced)
 
     log.info("wrote %d figures", len(produced))
+    absent = missing_required(produced)
+    if absent:
+        log.error("required figures not produced: %s", ", ".join(absent))
+        return 1
 
     dash = build_dashboard(figs, data, sg, stats, bin_size, args)
     atomic_write_json(figs / "figure_manifest.json", {
@@ -427,6 +643,15 @@ def build_dashboard(figs: Path, data, sg, stats, bin_size, args) -> Path:
     dest.mkdir(parents=True, exist_ok=True)
     images = sorted(figs.glob("*.png"))
     rel = Path("..") / "figures"
+
+    # How much of each frozen semantic block actually landed on the shared route.
+    paired = pd.read_csv(Path(args.reports) / "paired" / "paired_route_comparison.csv")
+    counts = {d: int(paired[f"gaze_foveal_entropy{s}"].notna().sum())
+              if f"gaze_foveal_entropy{s}" in paired else 0
+              for d, s in (("car", "_car"), ("motorcycle", "_moto"))}
+    gaze_on_shared = "; ".join(
+        f"the {d} block covers {n} of the {len(paired)} paired bins"
+        for d, n in counts.items()) + ","
 
     rows = []
     for c in stats["comparisons"]:
@@ -493,8 +718,8 @@ def build_dashboard(figs: Path, data, sg, stats, bin_size, args) -> Path:
  <li>Semantic gaze coverage:
      {" ".join(f"{d} {100 * sg['domains'][d]['semantic_coverage']['coverage_fraction']:.1f}%"
                for d in sg['domains'])} of each recording.</li>
- <li>Semantic gaze is <b>absent from the paired comparison</b>: neither frozen
-     block sits on the shared route.</li>
+ <li>Semantic gaze is <b>absent from the paired comparison</b>: {gaze_on_shared}
+     so no bin carries gaze for both vehicles.</li>
 </ul>
 
 <h2>Paired comparison (motorcycle minus car)</h2>
