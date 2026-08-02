@@ -45,7 +45,11 @@ map:
   # OpenStreetMap via the Overpass API, cached locally and reused. The cache is a
   # local artefact: it is derived from the GPS track and is never committed.
   source: overpass
-  endpoint: https://overpass-api.de/api/interpreter
+  # Tried in order: the public instances rate-limit and answer 504 under load.
+  endpoint:
+    - https://overpass.kumi.systems/api/interpreter
+    - https://overpass-api.de/api/interpreter
+    - https://overpass.private.coffee/api/interpreter
   cache_dir: output/article1/behavior_analysis/osm_cache
   bbox_margin_m: 300.0
   timeout_s: 180
