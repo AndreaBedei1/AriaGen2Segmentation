@@ -290,20 +290,36 @@ def vehicle_dynamics_summary(dyn: VehicleDynamics,
     detectable = bool(np.isfinite(observed_extreme)
                       and observed_extreme <= hard_braking_mps2)
 
+    # A zero count needs an explanation whichever way it arose, or a reader will
+    # take it as a statement about the driver.
+    if not detectable:
+        caveat = (
+            f"the most negative acceleration this {1 / median_dt:.1f} Hz speed "
+            f"series resolves is {observed_extreme:.2f} m/s^2, above the "
+            f"{hard_braking_mps2} m/s^2 threshold. A count of zero hard-braking "
+            "episodes is a limit of the sampling rate, not evidence that no hard "
+            "braking occurred.")
+    elif not braking:
+        caveat = (
+            f"the threshold was touched (most negative {observed_extreme:.2f} "
+            f"m/s^2) but never for the {min_episode_s:.1f} s an episode requires. "
+            f"At a {median_dt:.1f} s sampling interval that needs two consecutive "
+            "samples below the threshold, so brief hard braking registers as a "
+            "single sample and is not counted. Zero episodes is a detection "
+            "limit, not an absence of hard braking.")
+    else:
+        caveat = None
+
     return {
         "detectability": {
             "speed_sampling_interval_s": median_dt,
             "smoothing_window_s": dyn.smoothing_window_s,
             "hard_braking_threshold_mps2": hard_braking_mps2,
+            "minimum_episode_duration_s": min_episode_s,
             "most_negative_observed_acceleration_mps2": observed_extreme,
             "threshold_reached_at_all": detectable,
-            "caveat": (
-                None if detectable else
-                f"the most negative acceleration this {1 / median_dt:.1f} Hz speed "
-                f"series resolves is {observed_extreme:.2f} m/s^2, above the "
-                f"{hard_braking_mps2} m/s^2 threshold. A count of zero hard-braking "
-                "episodes is therefore a limit of the sampling rate, not evidence "
-                "that no hard braking occurred."),
+            "episodes_detected": len(braking),
+            "caveat": caveat,
         },
         "speed_source": dyn.speed_source,
         "derived_from_head_imu": False,
