@@ -11,6 +11,8 @@ import yaml
 
 from aria_drive_seg.article1.fast_benchmark import temporal_reuse_agreement
 from aria_drive_seg.article1.fast_io import nearest_indices, timestamp_grid_indices
+from aria_drive_seg.article1.fast_native_comparison import (_block_rows,
+                                                             _difference)
 from aria_drive_seg.article1.fast_plots import apply_shared_limits, shared_limits
 from aria_drive_seg.article1.fast_render import measured_fps_from_timestamps
 from aria_drive_seg.article1.fast_semantic_gaze import (
@@ -86,6 +88,7 @@ def test_nearest_mask_association_keeps_signed_real_time_error():
     index, delta = nearest_indices(source, target)
     assert index.tolist() == [0, 1, 2]
     assert delta.tolist() == [-20, 30, 10]
+    assert np.abs(delta).tolist() == [20, 30, 10]
 
 
 def test_temporal_ablation_reuses_only_selected_real_masks():
@@ -148,6 +151,38 @@ def test_native_config_is_separate_raw_and_timestamp_measured():
         "output/article1/fast_semantic_gaze_native/")
     assert cfg.get("native_comparison.baseline_5hz_root") == \
         "output/article1/fast_semantic_gaze"
+    renderer = (ROOT / "scripts/render_article1_fast_semantic_camera_native.py").read_text()
+    for name in ("car_semantic_camera_full_native.mp4",
+                 "motorcycle_semantic_camera_full_native.mp4",
+                 "paired_shared_route_comparison_native.mp4",
+                 "car_preview_native_30s.mp4",
+                 "motorcycle_preview_native_30s.mp4"):
+        assert name in renderer
+
+
+def test_native_comparison_reports_absolute_percent_and_per_second_metrics():
+    absolute, percent = _difference(20.0, 25.0)
+    assert absolute == 5.0 and percent == 25.0
+    gaze = pd.DataFrame({
+        "timestamp_ns": [0, 1_000_000_000, 2_000_000_000],
+        "semantic_valid": [True, True, True],
+        "segmentation_dt_ms": [10.0, -20.0, 15.0],
+        "foveal_entropy": [.1, .2, .3],
+        "top1_class_id": [1, 4, 4],
+        "top1_class": ["road_surface", "vehicle", "vehicle"],
+        "rect_u": [10.0, 20.0, 25.0], "rect_v": [10.0, 10.0, 10.0],
+        "p_road_surface": [.8, .1, .1], "p_vehicle": [.2, .9, .9],
+    })
+    rows = _block_rows(
+        "car", "native", {"gaze": gaze, "sample_interval_s": 1.0,
+                            "ppd": 10.0},
+        ["road_surface", "vehicle"], block_duration_s=10.0)
+    transitions = [row for row in rows
+                   if row["metric"] == "semantic_transitions_per_s"]
+    assert len(transitions) == 1 and transitions[0]["value"] == .5
+    dwell = [row for row in rows if row["metric"] == "dwell_time_s" and
+             row["stratum"] == "vehicle"]
+    assert dwell[0]["value"] == 2.0
 
 
 def test_fast_sources_do_not_import_slow_full_frame_models_or_use_rate_feature():
