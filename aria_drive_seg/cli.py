@@ -156,6 +156,13 @@ def build_parser() -> argparse.ArgumentParser:
     pvideo.add_argument("--session-id", required=True)
     pvideo.add_argument("--participant-id", required=True)
     _add_common(pvideo)
+    pfast = a1.add_parser(
+        "semantic-gaze-fast-external",
+        help="batched Mask2Former full-run segmentation and semantic gaze")
+    pfast.add_argument(
+        "--input", required=True,
+        help="compact extracted run containing frames/ and projected gaze")
+    _add_common(pfast)
     return ap
 
 
@@ -172,6 +179,8 @@ def _load_cfg(args):
             path = "configs/article1/semantic_camera_video.yaml"
         elif article_command == "reprocess-external":
             path = "configs/article1/external_segmentation.yaml"
+        elif article_command == "semantic-gaze-fast-external":
+            path = "configs/article1/fast_semantic_gaze.yaml"
         else:
             path = "configs/article1/external.yaml"
     cfg = Config.load(path=path)
@@ -213,6 +222,12 @@ def main(argv: Optional[list] = None) -> int:
     if cmd == "segment":
         from .segmentation.run import run_segment
         return run_segment(args.method, args.input, cfg, resume=args.resume, force=args.force)
+
+    if cmd == "article1" and args.article1_command == "semantic-gaze-fast-external":
+        from .article1.fast_semantic_gaze import run_semantic_gaze_fast_external
+        result = run_semantic_gaze_fast_external(args.input, cfg, resume=args.resume)
+        print(result)
+        return 0
 
     if cmd == "align-gaze":
         from .gaze.align import run_align_gaze

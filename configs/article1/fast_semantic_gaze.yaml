@@ -1,0 +1,65 @@
+schema: article1_fast_semantic_gaze_v1
+result_status: exploratory_pilot
+
+semantic_gaze_fast_external:
+  classes: configs/article1/classes_fast_semantic_gaze.yaml
+  mapillary_mapping: configs/article1/mapillary_to_fast_semantic_gaze.yaml
+  segmentation_frequency_hz: 5.0
+  ablation_frequencies_hz: [native, 5.0, 2.5]
+  output_width: 1008
+  output_height: 756
+  jpeg_quality: 90
+  batch_size: 4
+  cpu_write_workers: 8
+  max_pending_writes: 32
+  save_confidence: true
+  save_normalized_entropy: true
+  save_macro_probabilities: false
+  temporal_stabilization:
+    enabled: false
+    rationale: "pixel EMA without motion compensation smears moving boundaries"
+  interior_cockpit:
+    source: mapillary_native_ego_classes_plus_conservative_border_contact
+    native_only: true
+    bottom_contact_proxy:
+      enabled: true
+      lower_start_fraction: 0.72
+      contact_rows: 4
+      eligible_classes: [vehicle, two_wheeler]
+    upper_border_proxy:
+      enabled_domains: [car]
+      upper_end_fraction: 0.42
+      minimum_upper_fraction: 0.55
+      contact_rows: 4
+      eligible_classes: [built_environment]
+  mirror:
+    include_in_primary_mask: false
+    detector: disabled
+    possible_gaze_candidate_is_review_only: true
+    # Weak spatial review zones, never used as a semantic class or primary metric.
+    normalized_review_zones:
+      car: [[0.32, 0.03, 0.68, 0.25], [0.00, 0.22, 0.22, 0.55], [0.78, 0.22, 1.00, 0.55]]
+      motorcycle: [[0.00, 0.18, 0.25, 0.52], [0.75, 0.18, 1.00, 0.52]]
+  gaze:
+    max_segmentation_dt_s: 0.12
+    foveal_sigma_deg: 1.5
+    foveal_radius_sigmas: 2.5
+    ivt_velocity_threshold_deg_s: 30.0
+    min_fixation_duration_s: 0.100
+    max_gap_within_fixation_s: 0.075
+  render:
+    overlay_alpha: 0.62
+    video_fps: 5.0
+    gaze_radius_px: 7
+    show_gaze_class: false
+    preview_duration_s: 30.0
+
+recordings:
+  car:
+    recording_id: car_2e84f0c3e245
+    vrs: unknown_20260528_090955.vrs
+    output: output/article1/fast_semantic_gaze/car
+  motorcycle:
+    recording_id: motorcycle_5ab8604a14df
+    vrs: unknown_20260731_162521.vrs
+    output: output/article1/fast_semantic_gaze/motorcycle

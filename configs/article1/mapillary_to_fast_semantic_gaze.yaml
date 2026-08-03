@@ -1,0 +1,68 @@
+version: 1
+dataset: "Mapillary Vistas v1.2 (65 eval classes)"
+mapping:
+  "Bird": {fast_class: other_environment, residual: true}
+  "Ground Animal": {fast_class: other_environment, residual: true}
+  "Curb": {fast_class: road_boundary_or_sidewalk}
+  "Fence": {fast_class: built_environment}
+  "Guard Rail": {fast_class: road_boundary_or_sidewalk}
+  "Barrier": {fast_class: road_boundary_or_sidewalk}
+  "Wall": {fast_class: built_environment}
+  "Bike Lane": {fast_class: road_surface}
+  "Crosswalk - Plain": {fast_class: regulatory_road_marking}
+  "Curb Cut": {fast_class: road_boundary_or_sidewalk}
+  "Parking": {fast_class: road_surface}
+  "Pedestrian Area": {fast_class: road_boundary_or_sidewalk}
+  "Rail Track": {fast_class: road_boundary_or_sidewalk}
+  "Road": {fast_class: road_surface}
+  "Service Lane": {fast_class: road_surface}
+  "Sidewalk": {fast_class: road_boundary_or_sidewalk}
+  "Bridge": {fast_class: built_environment}
+  "Building": {fast_class: built_environment}
+  "Tunnel": {fast_class: built_environment}
+  "Person": {fast_class: pedestrian}
+  "Bicyclist": {fast_class: two_wheeler}
+  "Motorcyclist": {fast_class: two_wheeler}
+  "Other Rider": {fast_class: two_wheeler}
+  "Lane Marking - Crosswalk": {fast_class: regulatory_road_marking}
+  "Lane Marking - General": {fast_class: lane_marking}
+  "Mountain": {fast_class: vegetation}
+  "Sand": {fast_class: other_environment, residual: true}
+  "Sky": {fast_class: sky}
+  "Snow": {fast_class: other_environment, residual: true}
+  "Terrain": {fast_class: vegetation}
+  "Vegetation": {fast_class: vegetation}
+  "Water": {fast_class: other_environment, residual: true}
+  "Banner": {fast_class: built_environment}
+  "Bench": {fast_class: built_environment}
+  "Bike Rack": {fast_class: road_boundary_or_sidewalk}
+  "Billboard": {fast_class: built_environment}
+  "Catch Basin": {fast_class: road_boundary_or_sidewalk}
+  "CCTV Camera": {fast_class: built_environment}
+  "Fire Hydrant": {fast_class: road_boundary_or_sidewalk}
+  "Junction Box": {fast_class: road_boundary_or_sidewalk}
+  "Mailbox": {fast_class: road_boundary_or_sidewalk}
+  "Manhole": {fast_class: regulatory_road_marking}
+  "Phone Booth": {fast_class: built_environment}
+  "Pothole": {fast_class: road_surface}
+  "Street Light": {fast_class: built_environment}
+  "Pole": {fast_class: built_environment}
+  "Traffic Sign Frame": {fast_class: traffic_sign}
+  "Utility Pole": {fast_class: built_environment}
+  "Traffic Light": {fast_class: traffic_light}
+  "Traffic Sign (Back)": {fast_class: traffic_sign}
+  "Traffic Sign (Front)": {fast_class: traffic_sign}
+  "Trash Can": {fast_class: road_boundary_or_sidewalk}
+  "Bicycle": {fast_class: two_wheeler}
+  "Boat": {fast_class: other_environment, residual: true}
+  "Bus": {fast_class: vehicle}
+  "Car": {fast_class: vehicle}
+  "Caravan": {fast_class: vehicle}
+  "Motorcycle": {fast_class: two_wheeler}
+  "On Rails": {fast_class: vehicle}
+  "Other Vehicle": {fast_class: vehicle}
+  "Trailer": {fast_class: vehicle}
+  "Truck": {fast_class: vehicle}
+  "Wheeled Slow": {fast_class: two_wheeler}
+  "Car Mount": {fast_class: interior_cockpit, native_ego_region: true}
+  "Ego Vehicle": {fast_class: interior_cockpit, native_ego_region: true}

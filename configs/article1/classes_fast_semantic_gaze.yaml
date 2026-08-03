@@ -1,0 +1,22 @@
+version: 1
+scope: "Article 1 — fast full-recording semantic gaze"
+# Stable order used by masks, tables, legends and every car/motorcycle figure.
+classes:
+  - {id: 0,  name: unknown,                     group: special,     color: [0, 0, 0],       eval: false}
+  - {id: 1,  name: road_surface,                group: road,        color: [128, 64, 128],  eval: true}
+  - {id: 2,  name: lane_marking,                group: road,        color: [255, 255, 255], eval: true}
+  - {id: 3,  name: regulatory_road_marking,     group: road,        color: [220, 170, 255], eval: true}
+  - {id: 4,  name: vehicle,                     group: traffic,     color: [0, 0, 142],     eval: true}
+  - {id: 5,  name: two_wheeler,                 group: traffic,     color: [119, 11, 32],   eval: true}
+  - {id: 6,  name: pedestrian,                  group: traffic,     color: [220, 20, 60],   eval: true}
+  - {id: 7,  name: traffic_sign,                group: traffic,     color: [220, 220, 0],   eval: true}
+  - {id: 8,  name: traffic_light,               group: traffic,     color: [250, 170, 30],  eval: true}
+  - {id: 9,  name: road_boundary_or_sidewalk,   group: road,        color: [244, 35, 232],  eval: true}
+  - {id: 10, name: vegetation,                  group: environment, color: [107, 142, 35],  eval: true}
+  - {id: 11, name: built_environment,           group: environment, color: [70, 70, 70],   eval: true}
+  - {id: 12, name: sky,                         group: environment, color: [70, 130, 180],  eval: true}
+  - {id: 13, name: interior_cockpit,            group: cockpit,     color: [110, 80, 60],   eval: true}
+  # Review-only. The default full run never writes this id into a primary mask.
+  - {id: 14, name: mirror,                      group: proxy,       color: [255, 0, 255],   eval: false}
+  # Small, explicit residual for native classes that cannot be assigned honestly.
+  - {id: 15, name: other_environment,           group: environment, color: [100, 100, 110], eval: true}
