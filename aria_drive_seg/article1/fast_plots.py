@@ -56,6 +56,9 @@ def _style() -> None:
 
 def _save(fig, root: Path, stem: str, manifest: list[dict]) -> None:
     root.mkdir(parents=True, exist_ok=True)
+    # Reserve a dedicated footer strip.  With ``bbox_inches='tight'`` a long
+    # x-axis label can otherwise reach the pilot-status note on wide figures.
+    fig.subplots_adjust(bottom=max(float(fig.subplotpars.bottom), .16))
     fig.text(.99, .006, FOOTER, ha="right", va="bottom", fontsize=6, color="#666")
     png = root / f"{stem}.png"; pdf = root / f"{stem}.pdf"
     fig.savefig(png, dpi=300, bbox_inches="tight")

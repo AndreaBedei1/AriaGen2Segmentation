@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import json
+import subprocess
 from pathlib import Path
 
 import numpy as np
@@ -127,6 +128,28 @@ def test_fast_sources_do_not_import_slow_full_frame_models_or_use_rate_feature()
                    "segmentation.grounded_sam2", "from sam2", "import sam2"):
         assert banned not in text
     assert "features =" not in text and "features=" not in text
+
+
+def test_requested_branch_descends_from_stable_baseline_without_full_fov_path():
+    """Guard the stable lineage and keep retired full-FOV code out of fast mode."""
+    baseline = "feature/article1-multimodal-behavior-analysis"
+    has_baseline = subprocess.run(
+        ["git", "show-ref", "--verify", "--quiet", f"refs/heads/{baseline}"],
+        cwd=ROOT, check=False).returncode == 0
+    if has_baseline:
+        assert subprocess.run(
+            ["git", "merge-base", "--is-ancestor", baseline, "HEAD"],
+            cwd=ROOT, check=False).returncode == 0
+    branch = subprocess.run(
+        ["git", "branch", "--show-current"], cwd=ROOT, check=True,
+        capture_output=True, text=True).stdout.strip().lower()
+    if branch:  # CI may use a detached HEAD.
+        assert "full-fov" not in branch and "full_fov" not in branch
+    tracked = subprocess.run(
+        ["git", "ls-files", "aria_drive_seg/article1/fast_*",
+         "configs/article1/*fast*", "scripts/*fast*"],
+        cwd=ROOT, check=True, capture_output=True, text=True).stdout.lower()
+    assert "full_fov" not in tracked and "full-fov" not in tracked
 
 
 def test_shared_plot_limits_are_identical_for_comparison_panels():
