@@ -123,7 +123,9 @@ class VideoWriter:
             import imageio_ffmpeg
             self._w = imageio_ffmpeg.write_frames(
                 self.path, self.size, fps=self.fps, quality=6,
-                macro_block_size=None)
+                # H.264/yuv420p only requires even dimensions.  Using 2 keeps
+                # the calibrated 1008x756 semantic-camera geometry unchanged.
+                macro_block_size=2)
             self._w.send(None)
             self._backend = "imageio_ffmpeg"
         except Exception:
