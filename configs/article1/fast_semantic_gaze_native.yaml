@@ -1,0 +1,80 @@
+schema: article1_fast_semantic_gaze_native_v1
+result_status: exploratory_pilot
+
+# Native-frequency replication of the frozen 5 Hz fast run.  Every source RGB
+# record is selected from its observed timestamp; no nominal 10/15 Hz value is
+# used for selection, inference, gaze association, or scientific statistics.
+semantic_gaze_fast_external:
+  classes: configs/article1/classes_fast_semantic_gaze.yaml
+  mapillary_mapping: configs/article1/mapillary_to_fast_semantic_gaze.yaml
+  segmentation_frequency_hz: native
+  native_run: true
+  output_width: 1008
+  output_height: 756
+  jpeg_quality: 90
+  # Chosen by the 300-car/450-motorcycle-frame benchmark (17.60 frame/s,
+  # 2.76 GB peak VRAM; faster than batch 4 and 6 with finite outputs).
+  batch_size: 8
+  cpu_write_workers: 8
+  max_pending_writes: 32
+  save_confidence: true
+  save_normalized_entropy: true
+  save_macro_probabilities: false
+  temporal_stabilization:
+    enabled: false
+    scientific_outputs: false
+    rationale: "raw native masks are the only masks used by semantic gaze and statistics"
+  interior_cockpit:
+    source: mapillary_native_ego_classes_plus_conservative_border_contact
+    native_only: true
+    bottom_contact_proxy:
+      enabled: true
+      lower_start_fraction: 0.72
+      contact_rows: 4
+      eligible_classes: [vehicle, two_wheeler]
+    upper_border_proxy:
+      enabled_domains: [car]
+      upper_end_fraction: 0.42
+      minimum_upper_fraction: 0.55
+      contact_rows: 4
+      eligible_classes: [built_environment]
+  mirror:
+    include_in_primary_mask: false
+    detector: disabled
+    possible_gaze_candidate_is_review_only: true
+    normalized_review_zones:
+      car: [[0.32, 0.03, 0.68, 0.25], [0.00, 0.22, 0.22, 0.55], [0.78, 0.22, 1.00, 0.55]]
+      motorcycle: [[0.00, 0.18, 0.25, 0.52], [0.75, 0.18, 1.00, 0.52]]
+  gaze:
+    max_segmentation_dt_s: 0.12
+    foveal_sigma_deg: 1.5
+    foveal_radius_sigmas: 2.5
+    ivt_velocity_threshold_deg_s: 30.0
+    min_fixation_duration_s: 0.100
+    max_gap_within_fixation_s: 0.075
+  render:
+    overlay_alpha: 0.62
+    video_fps: measured_from_timestamps
+    # A side-by-side MP4 has one presentation timebase.  Use the slower native
+    # stream (car) and keep the scientific masks/tables untouched and native.
+    shared_video_fps: car_measured_from_timestamps
+    gaze_radius_px: 7
+    show_gaze_class: false
+    preview_duration_s: 30.0
+
+native_comparison:
+  baseline_5hz_root: output/article1/fast_semantic_gaze
+  native_root: output/article1/fast_semantic_gaze_native
+  block_duration_s: 10.0
+  bootstrap_repeats: 2000
+  random_seed: 20260803
+
+recordings:
+  car:
+    recording_id: car_2e84f0c3e245
+    vrs: unknown_20260528_090955.vrs
+    output: output/article1/fast_semantic_gaze_native/car
+  motorcycle:
+    recording_id: motorcycle_5ab8604a14df
+    vrs: unknown_20260731_162521.vrs
+    output: output/article1/fast_semantic_gaze_native/motorcycle

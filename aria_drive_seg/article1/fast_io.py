@@ -105,6 +105,10 @@ def _atomic_parquet(path: Path, rows: Iterable[Dict[str, Any]]) -> None:
     tmp.replace(path)
 
 
+def _tree_size_bytes(root: Path) -> int:
+    return int(sum(path.stat().st_size for path in root.rglob("*") if path.is_file()))
+
+
 def _project_gaze(provider: AriaProvider, selected_indices: np.ndarray,
                   selected_ts: np.ndarray, rectifier, out_width: int,
                   out_height: int, full_width: int, full_height: int,
@@ -124,6 +128,7 @@ def _project_gaze(provider: AriaProvider, selected_indices: np.ndarray,
     sx, sy = out_width / full_width, out_height / full_height
     rows: List[Dict[str, Any]] = []
     valid = in_image = 0
+    associated_abs_dt_ms: List[float] = []
     t0 = time.perf_counter()
     for i, ts in enumerate(gaze_ts):
         gaze = provider.eyegaze_by_index(i, label)
@@ -137,6 +142,8 @@ def _project_gaze(provider: AriaProvider, selected_indices: np.ndarray,
         near_ok = nearest[i] >= 0 and abs(int(dt_ns[i])) <= max_dt_s * NS_PER_S
         semantic_ready = combined and inside and near_ok
         valid += int(semantic_ready)
+        if semantic_ready:
+            associated_abs_dt_ms.append(abs(float(dt_ns[i])) / 1e6)
         in_image += int(inside)
         seg_row = int(nearest[i]) if nearest[i] >= 0 else -1
         rows.append({
@@ -156,11 +163,19 @@ def _project_gaze(provider: AriaProvider, selected_indices: np.ndarray,
                                      if seg_row >= 0 else None),
             "semantic_ready": semantic_ready,
         })
+    dt_values = np.asarray(associated_abs_dt_ms, dtype=float)
     return rows, {
         "available": True, "samples": len(rows), "semantic_ready": valid,
+        "excluded_samples": len(rows) - valid,
         "semantic_ready_fraction": valid / len(rows) if rows else 0.0,
         "in_image_fraction": in_image / len(rows) if rows else 0.0,
         "max_segmentation_dt_s": max_dt_s,
+        "association_method": "nearest_real_segmentation_timestamp",
+        "absolute_segmentation_dt_ms": {
+            "median": float(np.median(dt_values)) if dt_values.size else None,
+            "p95": float(np.percentile(dt_values, 95)) if dt_values.size else None,
+            "max": float(dt_values.max()) if dt_values.size else None,
+        },
         "projection_s": time.perf_counter() - t0,
     }
 
@@ -274,6 +289,11 @@ def run_fast_extract(vrs_path: str | Path, output_dir: str | Path,
     def mean(values: List[float]) -> Optional[float]:
         return float(np.mean(values)) if values else None
     duration_s = float((source_ts[-1] - source_ts[0]) / NS_PER_S)
+    measured_source_hz = (float((source_ts.size - 1) / duration_s)
+                          if source_ts.size > 1 and duration_s > 0 else None)
+    all_source_frames = bool(
+        indices.size == source_ts.size and
+        np.array_equal(indices, np.arange(source_ts.size, dtype=np.int64)))
     summary = {
         "schema": "article1_fast_external_io_v1",
         "generated_utc": dt.datetime.now(dt.timezone.utc).isoformat(),
@@ -281,10 +301,14 @@ def run_fast_extract(vrs_path: str | Path, output_dir: str | Path,
         "source_file": str(Path(vrs_path).resolve()),
         "source_file_sha256": source_hash,
         "source_frames": int(source_ts.size), "source_duration_s": duration_s,
+        "measured_source_rgb_hz": measured_source_hz,
         "selected_real_frames": int(indices.size), "segmentation_frequency_hz": frequency,
         "measured_selected_hz": (float((indices.size - 1) /
                                        ((selected_ts[-1] - selected_ts[0]) / NS_PER_S))
                                  if indices.size > 1 else None),
+        "all_source_frames_selected": all_source_frames,
+        "subsampling_applied": not all_source_frames,
+        "duplicated_frames": 0, "failed_frames": 0,
         "resampled": False, "interpolated": False, "synthetic_frames": 0,
         "stored_resolution": [out_w, out_h], "gaze": gaze_summary,
         "profiling": {
@@ -294,6 +318,7 @@ def run_fast_extract(vrs_path: str | Path, output_dir: str | Path,
             "cpu_write_workers": workers, "max_pending_writes": max_pending,
         },
     }
+    summary["frames_output_size_bytes"] = _tree_size_bytes(out / "frames")
     atomic_write_json(out / "frames" / "extraction_summary.json", summary)
     atomic_write_json(manifest_path, {"stage": "semantic_gaze_fast_external_io",
                                      "fingerprint": fingerprint,

@@ -88,6 +88,28 @@ def choose_preview_rows(index, duration_s: float):
     return index.iloc[best[0]:best[1]].copy()
 
 
+def measured_fps_from_timestamps(index) -> float:
+    """Measured presentation rate for observed, strictly ordered RGB records."""
+    ts = index.capture_timestamp_ns.to_numpy(np.int64)
+    if ts.size < 2 or np.any(np.diff(ts) <= 0):
+        raise ValueError("at least two strictly increasing timestamps are required")
+    duration_s = float((int(ts[-1]) - int(ts[0])) / 1e9)
+    if duration_s <= 0:
+        raise ValueError("timestamp duration must be positive")
+    return float((ts.size - 1) / duration_s)
+
+
+def _resolve_fps(value: Any, index) -> tuple[float, str]:
+    if isinstance(value, str):
+        if value not in {"measured", "measured_from_timestamps"}:
+            raise ValueError(f"unsupported video fps mode: {value}")
+        return measured_fps_from_timestamps(index), "measured_from_real_timestamps"
+    fps = float(value)
+    if not np.isfinite(fps) or fps <= 0:
+        raise ValueError("video fps must be positive")
+    return fps, "configured_constant"
+
+
 def render_domain(input_dir: str | Path, output_path: str | Path, cfg: Config,
                   preview_path: Optional[str | Path] = None) -> Dict[str, Any]:
     import pandas as pd
@@ -102,7 +124,8 @@ def render_domain(input_dir: str | Path, output_path: str | Path, cfg: Config,
     index = index.sort_values("capture_timestamp_ns").reset_index(drop=True)
     if index.empty:
         raise ValueError("no RGB/segmentation rows to render")
-    fps = float(render.get("video_fps", fast.get("segmentation_frequency_hz", 5.0)))
+    fps, fps_source = _resolve_fps(
+        render.get("video_fps", fast.get("segmentation_frequency_hz", 5.0)), index)
     alpha = float(render.get("overlay_alpha", .62))
     radius = int(render.get("gaze_radius_px", 7))
     gaze = _gaze_lookup(root)
@@ -126,6 +149,10 @@ def render_domain(input_dir: str | Path, output_path: str | Path, cfg: Config,
             "end_timestamp_ns": int(preview.capture_timestamp_ns.iloc[-1])}
     info = {"path": str(output_path), "frames": int(len(index)), "fps": fps,
             "duration_s": float(len(index) / fps), "size": list(size),
+            "fps_source": fps_source,
+            "source_timestamp_duration_s": float(
+                (int(index.capture_timestamp_ns.iloc[-1]) -
+                 int(index.capture_timestamp_ns.iloc[0])) / 1e9),
             "layout": "single_full_frame_clean_semantic_overlay",
             "diagnostic_panels": False, "preview": preview_info}
     atomic_write_json(output_path.with_suffix(".manifest.json"), info)
@@ -153,7 +180,7 @@ def render_shared_route(car_dir: str | Path, motorcycle_dir: str | Path,
     taxonomy = Taxonomy.load(cfg.resolve(fast["classes"]))
     alpha = float(fast.get("render", {}).get("overlay_alpha", .62))
     radius = int(fast.get("render", {}).get("gaze_radius_px", 7))
-    fps = float(fast.get("render", {}).get("video_fps", 5.0))
+    render = fast.get("render", {})
     route_report = Path(route_report)
     summary = json.loads((route_report / "route_alignment_summary.json").read_text())
     bin_size = float(summary["analysis_bin_size_m"])
@@ -162,11 +189,14 @@ def render_shared_route(car_dir: str | Path, motorcycle_dir: str | Path,
                       pairs.paired.astype(bool)].bin_key)
     data: Dict[str, Any] = {}
     gaze: Dict[str, Any] = {}
+    domain_fps: Dict[str, float] = {}
     behavior_root = Path(behavior_root)
     recording_ids = {"car": "car_2e84f0c3e245",
                      "motorcycle": "motorcycle_5ab8604a14df"}
     for domain, root in roots.items():
         frames = pd.read_parquet(root / "frames" / "frames.parquet")
+        domain_fps[domain] = measured_fps_from_timestamps(
+            frames.sort_values("capture_timestamp_ns"))
         seg = pd.read_parquet(root / "segmentation" / "segmentation_index.parquet")
         bins = pd.read_parquet(
             behavior_root / recording_ids[domain] / "frame_route_bins.parquet")
@@ -175,6 +205,22 @@ def render_shared_route(car_dir: str | Path, motorcycle_dir: str | Path,
         data[domain] = merged.merge(bcols, on="frame_index", how="left")
         data[domain] = data[domain][data[domain].bin_valid.fillna(False).astype(bool)]
         gaze[domain] = _gaze_lookup(root)
+
+    shared_value = render.get("shared_video_fps", render.get("video_fps", 5.0))
+    if isinstance(shared_value, str) and shared_value.startswith("car_"):
+        if shared_value.removeprefix("car_") not in {
+                "measured", "measured_from_timestamps"}:
+            raise ValueError(f"unsupported shared video fps mode: {shared_value}")
+        fps, fps_source = domain_fps["car"], "car_measured_from_real_timestamps"
+    elif isinstance(shared_value, str) and shared_value.startswith("motorcycle_"):
+        if shared_value.removeprefix("motorcycle_") not in {
+                "measured", "measured_from_timestamps"}:
+            raise ValueError(f"unsupported shared video fps mode: {shared_value}")
+        fps, fps_source = (domain_fps["motorcycle"],
+                           "motorcycle_measured_from_real_timestamps")
+    else:
+        fps, fps_source = _resolve_fps(shared_value, data["car"].sort_values(
+            "capture_timestamp_ns").drop_duplicates("capture_timestamp_ns"))
 
     ordered: list[tuple[Any, Any]] = []
     used_keys = []
@@ -210,8 +256,13 @@ def render_shared_route(car_dir: str | Path, motorcycle_dir: str | Path,
             writer.write(np.hstack(panels))
     info = {"path": str(output_path), "frames": len(ordered), "fps": fps,
             "duration_s": len(ordered) / fps, "paired_bin_size_m": bin_size,
+            "fps_source": fps_source,
+            "domain_native_fps": domain_fps,
             "paired_bins_rendered": len(used_keys), "layout": "clean_side_by_side",
             "matching": "spatial route bin and within-bin traversal order",
-            "synthetic_frames": 0}
+            "synthetic_frames": 0, "scientific_masks_resampled": False,
+            "presentation_note": (
+                "one MP4 requires one timebase; this spatial QA video uses the "
+                "configured domain timebase without changing native scientific outputs")}
     atomic_write_json(output_path.with_suffix(".manifest.json"), info)
     return info

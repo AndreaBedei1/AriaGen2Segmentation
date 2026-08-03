@@ -51,6 +51,7 @@ def run_benchmark(cfg, input_roots: Dict[str, str | Path],
                   repeats: int = 3) -> Dict[str, Any]:
     """Benchmark batches and a native/5/2.5 Hz temporal reuse ablation."""
     import pandas as pd
+    import psutil
     import torch
     from ..segmentation.oneformer import OneFormerMapillarySegmenter
     from ..taxonomy import Taxonomy
@@ -88,6 +89,7 @@ def run_benchmark(cfg, input_roots: Dict[str, str | Path],
     output_size = (int(fast.get("output_height", 756)),
                    int(fast.get("output_width", 1008)))
     batch_rows = []
+    process = psutil.Process()
     probe_paths = [all_paths[i % len(all_paths)] for i in range(max(batch_sizes))]
     for batch_size in batch_sizes:
         paths = probe_paths[:batch_size]
@@ -103,9 +105,13 @@ def run_benchmark(cfg, input_roots: Dict[str, str | Path],
                 warm.class_queries_logits, warm.masks_queries_logits, matrix, output_size)
             dense_outputs(probabilities)
         torch.cuda.synchronize(); torch.cuda.reset_peak_memory_stats()
-        stage = {"preprocess": [], "forward": [], "aggregate_transfer": []}
+        stage = {"load_rgb": [], "preprocess": [], "forward": [],
+                 "aggregate_transfer": []}
+        finite_outputs = True
+        peak_rss = process.memory_info().rss
         for _ in range(repeats):
-            images = _load_batch(paths)
+            t0 = time.perf_counter(); images = _load_batch(paths)
+            stage["load_rgb"].append(time.perf_counter() - t0)
             t0 = time.perf_counter()
             inputs = model._proc(images=images, return_tensors="pt")
             stage["preprocess"].append(time.perf_counter() - t0)
@@ -120,18 +126,27 @@ def run_benchmark(cfg, input_roots: Dict[str, str | Path],
             probabilities = aggregate_query_probabilities(
                 outputs.class_queries_logits, outputs.masks_queries_logits,
                 matrix, output_size)
+            finite_outputs = finite_outputs and bool(torch.isfinite(probabilities).all())
             dense_outputs(probabilities); torch.cuda.synchronize()
             stage["aggregate_transfer"].append(time.perf_counter() - t0)
+            peak_rss = max(peak_rss, process.memory_info().rss)
         total = sum(np.mean(v) for v in stage.values())
+        peak_vram = torch.cuda.max_memory_allocated() / 1e6
         batch_rows.append({
             "batch_size": batch_size,
+            "load_rgb_ms_per_frame": 1000 * np.mean(stage["load_rgb"]) / batch_size,
             "preprocess_ms_per_frame": 1000 * np.mean(stage["preprocess"]) / batch_size,
             "forward_ms_per_frame": 1000 * np.mean(stage["forward"]) / batch_size,
             "aggregate_transfer_ms_per_frame":
                 1000 * np.mean(stage["aggregate_transfer"]) / batch_size,
             "total_profiled_ms_per_frame": 1000 * total / batch_size,
+            "batch_latency_ms": 1000 * total,
             "throughput_profiled_frames_s": batch_size / total,
-            "peak_vram_mb": torch.cuda.max_memory_allocated() / 1e6,
+            "peak_vram_mb": peak_vram,
+            "peak_vram_fraction": peak_vram / (
+                torch.cuda.get_device_properties(0).total_memory / 1e6),
+            "peak_ram_mb": peak_rss / 1e6,
+            "numerically_finite": finite_outputs,
         })
 
     # One native inference for each short real-time window.  Lower-rate rows reuse
@@ -180,5 +195,10 @@ def run_benchmark(cfg, input_roots: Dict[str, str | Path],
             timing_rows.append({"domain": domain, **row})
     return {"batch_profiles": batch_rows, "temporal_quality": quality_rows,
             "frequency_coverage": timing_rows, "chosen_batch_size": chosen_batch,
+            "sampled_frames_per_domain": {
+                domain: int(len(spec["frames"])) for domain, spec in windows.items()},
+            "benchmark_requirement_min_frames_per_domain": 300,
+            "benchmark_requirement_met": all(
+                len(spec["frames"]) >= 300 for spec in windows.values()),
             "window_s": window_s, "repeats": repeats,
             "model": str(model.model_id), "synthetic_frames": 0}

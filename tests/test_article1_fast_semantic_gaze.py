@@ -12,6 +12,7 @@ import yaml
 from aria_drive_seg.article1.fast_benchmark import temporal_reuse_agreement
 from aria_drive_seg.article1.fast_io import nearest_indices, timestamp_grid_indices
 from aria_drive_seg.article1.fast_plots import apply_shared_limits, shared_limits
+from aria_drive_seg.article1.fast_render import measured_fps_from_timestamps
 from aria_drive_seg.article1.fast_semantic_gaze import (
     FastMapillaryMapper, apply_interior_bottom_contact,
     apply_interior_upper_contact)
@@ -20,6 +21,7 @@ from aria_drive_seg.taxonomy import Taxonomy
 
 ROOT = Path(__file__).resolve().parent.parent
 CONFIG = ROOT / "configs/article1/fast_semantic_gaze.yaml"
+NATIVE_CONFIG = ROOT / "configs/article1/fast_semantic_gaze_native.yaml"
 CLASSES = ROOT / "configs/article1/classes_fast_semantic_gaze.yaml"
 MAPPING = ROOT / "configs/article1/mapillary_to_fast_semantic_gaze.yaml"
 
@@ -65,6 +67,17 @@ def test_frequency_is_timestamp_selected_and_configurable():
     assert len(native) == 21 and len(hz5) == 11 and len(hz25) == 6
     assert np.all(ts[hz5] == np.arange(0, 2_000_000_001, 200_000_000))
     assert len(set(hz5)) == len(hz5)
+
+
+def test_native_frequency_selects_every_real_frame_once_without_resampling():
+    ts = np.array([0, 91_000_000, 201_000_000, 298_000_000, 407_000_000],
+                  dtype=np.int64)
+    selected = timestamp_grid_indices(ts, "native")
+    assert selected.tolist() == list(range(len(ts)))
+    assert len(np.unique(selected)) == len(ts)
+    frame_table = pd.DataFrame({"capture_timestamp_ns": ts})
+    expected = (len(ts) - 1) / ((ts[-1] - ts[0]) / 1e9)
+    assert measured_fps_from_timestamps(frame_table) == expected
 
 
 def test_nearest_mask_association_keeps_signed_real_time_error():
@@ -120,6 +133,23 @@ def test_full_run_config_disables_slow_and_mirror_primary_paths():
     assert cfg.get("semantic_gaze_fast_external.temporal_stabilization.enabled") is False
 
 
+def test_native_config_is_separate_raw_and_timestamp_measured():
+    cfg = Config.load(NATIVE_CONFIG)
+    assert cfg.get("semantic_gaze_fast_external.segmentation_frequency_hz") == "native"
+    assert cfg.get("semantic_gaze_fast_external.native_run") is True
+    assert cfg.get("semantic_gaze_fast_external.render.video_fps") == \
+        "measured_from_timestamps"
+    assert cfg.get("semantic_gaze_fast_external.temporal_stabilization.enabled") is False
+    assert cfg.get("semantic_gaze_fast_external.temporal_stabilization.scientific_outputs") \
+        is False
+    assert cfg.get("recordings.car.output").startswith(
+        "output/article1/fast_semantic_gaze_native/")
+    assert cfg.get("recordings.motorcycle.output").startswith(
+        "output/article1/fast_semantic_gaze_native/")
+    assert cfg.get("native_comparison.baseline_5hz_root") == \
+        "output/article1/fast_semantic_gaze"
+
+
 def test_fast_sources_do_not_import_slow_full_frame_models_or_use_rate_feature():
     sources = [ROOT / "aria_drive_seg/article1/fast_semantic_gaze.py",
                ROOT / "aria_drive_seg/article1/fast_io.py"]
@@ -128,6 +158,8 @@ def test_fast_sources_do_not_import_slow_full_frame_models_or_use_rate_feature()
                    "segmentation.grounded_sam2", "from sam2", "import sam2"):
         assert banned not in text
     assert "features =" not in text and "features=" not in text
+    native = NATIVE_CONFIG.read_text().lower()
+    assert "grounding" not in native and "sam2" not in native
 
 
 def test_requested_branch_descends_from_stable_baseline_without_full_fov_path():
@@ -202,3 +234,45 @@ def test_clean_semantic_camera_renderer_writes_video(tmp_path):
     assert output.stat().st_size > 0 and preview.stat().st_size > 0
     assert info["layout"] == "single_full_frame_clean_semantic_overlay"
     assert info["diagnostic_panels"] is False
+
+
+def test_native_renderer_uses_measured_timestamp_rate(tmp_path):
+    import cv2
+    from aria_drive_seg.article1.fast_render import render_domain
+
+    root = tmp_path / "native"
+    for directory in ("frames/rectified", "segmentation/masks",
+                      "segmentation/confidence", "segmentation/normalized_entropy",
+                      "gaze"):
+        (root / directory).mkdir(parents=True, exist_ok=True)
+    timestamps = [0, 90_000_000, 205_000_000, 300_000_000]
+    frame_rows, seg_rows = [], []
+    for i, timestamp in enumerate(timestamps):
+        stem = f"frame_{i:06d}"
+        cv2.imwrite(str(root / "frames/rectified" / f"{stem}.jpg"),
+                    np.full((24, 32, 3), 60, np.uint8))
+        cv2.imwrite(str(root / "segmentation/masks" / f"{stem}.png"),
+                    np.full((24, 32), 1, np.uint16))
+        for layer in ("confidence", "normalized_entropy"):
+            cv2.imwrite(str(root / "segmentation" / layer / f"{stem}.png"),
+                        np.full((24, 32), 128, np.uint8))
+        frame_rows.append({"frame_index": i, "capture_timestamp_ns": timestamp,
+                           "rectified_path": f"frames/rectified/{stem}.jpg",
+                           "width": 32, "height": 24})
+        seg_rows.append({"frame_index": i, "capture_timestamp_ns": timestamp,
+                         "mask_path": f"segmentation/masks/{stem}.png",
+                         "confidence_path": f"segmentation/confidence/{stem}.png",
+                         "normalized_entropy_path":
+                             f"segmentation/normalized_entropy/{stem}.png",
+                         "mean_confidence": .5, "mean_normalized_entropy": .5,
+                         "fraction_other_environment": 0.0})
+    pd.DataFrame(frame_rows).to_parquet(root / "frames/frames.parquet", index=False)
+    pd.DataFrame(seg_rows).to_parquet(
+        root / "segmentation/segmentation_index.parquet", index=False)
+    pd.DataFrame(columns=["semantic_valid", "segmentation_frame_index",
+                          "rect_u", "rect_v"]).to_parquet(
+        root / "gaze/semantic_gaze.parquet", index=False)
+    info = render_domain(root, tmp_path / "native.mp4", Config.load(NATIVE_CONFIG))
+    assert info["fps"] == 10.0
+    assert info["fps_source"] == "measured_from_real_timestamps"
+    assert info["frames"] == len(timestamps)

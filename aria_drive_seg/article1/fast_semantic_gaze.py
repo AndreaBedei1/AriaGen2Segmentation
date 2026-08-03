@@ -20,6 +20,7 @@ import yaml
 
 from ..behavior.gaze_semantics import (foveal_weights, identify_fixations,
                                        pixels_per_degree,
+                                       scanpath_statistics,
                                        sample_foveal_semantics,
                                        semantic_gaze_metrics)
 from ..config import Config
@@ -353,11 +354,16 @@ def run_fast_external(input_dir: str | Path, cfg: Config,
         return (float(np.sum(values) / processed) if processed else None)
     class_means = {klass.name: float(result[f"fraction_{klass.name}"].mean())
                    for klass in taxonomy.classes}
+    extraction_hz = extraction.get("measured_source_rgb_hz")
     summary = {
         "schema": "article1_fast_external_segmentation_v1",
         "result_status": cfg.get("result_status", "exploratory_pilot"),
         "frames": int(len(result)), "new_frames": int(processed),
+        "failed_frames": 0,
+        "all_extracted_frames_processed": int(len(result)) == int(len(frames)),
+        "measured_source_rgb_hz": extraction_hz,
         "elapsed_s": elapsed, "throughput_frames_s": processed / elapsed if elapsed else None,
+        "gpu_forward_s": float(np.sum(forward_ms) / 1000.0),
         "batch_size": batch_size, "write_workers": workers,
         "peak_vram_mb": float(torch.cuda.max_memory_allocated() / 1e6),
         "peak_ram_mb": float(peak_rss / 1e6),
@@ -385,6 +391,8 @@ def run_fast_external(input_dir: str | Path, cfg: Config,
         "temporal_stabilization": fast.get("temporal_stabilization", {}),
         "config_fingerprint": fp,
     }
+    summary["segmentation_output_size_bytes"] = int(sum(
+        path.stat().st_size for path in seg_root.rglob("*") if path.is_file()))
     atomic_write_json(seg_root / "summary.json", summary)
     atomic_write_json(manifest_path, {
         "stage": "semantic_gaze_fast_external", "fingerprint": fp,
@@ -622,10 +630,25 @@ def run_fast_semantic_gaze(input_dir: str | Path, cfg: Config) -> Dict[str, Any]
         samples, names, fixations, sample_interval_s,
         off_road_classes=primary_road)
     valid = int(samples.semantic_valid.astype(bool).sum())
+    valid_rows = samples[samples.semantic_valid.astype(bool)]
+    abs_dt_ms = valid_rows.segmentation_dt_ms.abs().to_numpy(float)
+    scanpath = scanpath_statistics(
+        samples.rect_u.to_numpy(float), samples.rect_v.to_numpy(float),
+        samples.semantic_valid.to_numpy(bool), ppd,
+        (int(stored["height"]), int(stored["width"])))
+    if scanpath.get("scanpath_length_deg") is not None:
+        valid_duration_s = (float(
+            (int(valid_rows.timestamp_ns.iloc[-1]) -
+             int(valid_rows.timestamp_ns.iloc[0])) / 1e9)
+            if len(valid_rows) > 1 else 0.0)
+        scanpath["scanpath_length_deg_per_s"] = (
+            float(scanpath["scanpath_length_deg"] / valid_duration_s)
+            if valid_duration_s > 0 else None)
     summary = {
         "schema": "article1_fast_semantic_gaze_v1",
         "result_status": cfg.get("result_status", "exploratory_pilot"),
         "gaze_samples": int(len(samples)), "semantic_valid_samples": valid,
+        "excluded_gaze_samples": int(len(samples) - valid),
         "semantic_valid_fraction": valid / len(samples) if len(samples) else 0.0,
         "semantic_valid_time_s": valid * sample_interval_s,
         "sample_interval_s_measured_from_timestamps": sample_interval_s,
@@ -633,6 +656,13 @@ def run_fast_semantic_gaze(input_dir: str | Path, cfg: Config) -> Dict[str, Any]
         "foveal_sigma_deg": gaze_cfg.get("foveal_sigma_deg", 1.5),
         "foveal_radius_px": radius_px,
         "fixations": int(len(fixations)), "metrics": metrics,
+        "scanpath": scanpath,
+        "gaze_mask_absolute_dt_ms": {
+            "median": float(np.median(abs_dt_ms)) if abs_dt_ms.size else None,
+            "p95": float(np.percentile(abs_dt_ms, 95)) if abs_dt_ms.size else None,
+            "max": float(abs_dt_ms.max()) if abs_dt_ms.size else None,
+        },
+        "gaze_mask_association": "nearest_real_segmentation_timestamp",
         "possible_mirror_gaze_candidates": mirror_candidates,
         "mirror_proxy": {
             "status": "weak_spatial_review_only", "included_in_primary_metrics": False,
