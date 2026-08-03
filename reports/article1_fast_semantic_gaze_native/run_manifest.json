@@ -1,0 +1,56 @@
+{
+  "schema": "article1_fast_semantic_gaze_native_run_manifest_v1",
+  "result_status": "exploratory_pilot",
+  "branch": "feature/article1-fast-full-semantic-gaze",
+  "initial_head": "607ccdf",
+  "config": "configs/article1/fast_semantic_gaze_native.yaml",
+  "output_root": "output/article1/fast_semantic_gaze_native",
+  "baseline_5hz_root": "output/article1/fast_semantic_gaze",
+  "baseline_5hz_unchanged": true,
+  "baseline_file_count": 27661,
+  "baseline_size_bytes": 2387020397,
+  "baseline_manifest_sha256": "b099465e5889e78b39959a529ac3e31d061a3079dbf8104be65af8124727a031",
+  "model": "weights/mask2former-mapillary-semantic",
+  "resolution": [1008, 756],
+  "batch_size": 8,
+  "scientific_masks": "raw_native_no_temporal_stabilization",
+  "grounding_dino_used": false,
+  "sam2_used": false,
+  "domains": {
+    "car": {
+      "measured_rgb_hz": 10.00076320190187,
+      "source_frames": 3762,
+      "processed_frames": 3762,
+      "failed_frames": 0,
+      "semantic_gaze_coverage": 0.9319329965434725
+    },
+    "motorcycle": {
+      "measured_rgb_hz": 15.000255906615607,
+      "source_frames": 15069,
+      "processed_frames": 15069,
+      "failed_frames": 0,
+      "semantic_gaze_coverage": 0.8966421129471099
+    }
+  },
+  "comparison": {
+    "gaze_timestamps_exactly_paired": true,
+    "block_duration_s": 10.0,
+    "shared_route_bins": 42,
+    "recovered_short_event_candidates": 749,
+    "manual_qa_cases": 76,
+    "mirror_candidates_confirmed": 0
+  },
+  "videos": {
+    "car": "output/article1/fast_semantic_gaze_native/car_semantic_camera_full_native.mp4",
+    "motorcycle": "output/article1/fast_semantic_gaze_native/motorcycle_semantic_camera_full_native.mp4",
+    "shared_route": "output/article1/fast_semantic_gaze_native/paired_shared_route_comparison_native.mp4",
+    "car_preview": "output/article1/fast_semantic_gaze_native/previews/car_preview_native_30s.mp4",
+    "motorcycle_preview": "output/article1/fast_semantic_gaze_native/previews/motorcycle_preview_native_30s.mp4",
+    "full_decode_validation": "passed"
+  },
+  "tests": {
+    "passed": 505,
+    "skipped": 14
+  },
+  "mandatory_verdict": "C"
+}
