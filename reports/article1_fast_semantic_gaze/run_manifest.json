@@ -1,0 +1,42 @@
+{
+  "schema": "article1_fast_semantic_gaze_report_manifest_v1",
+  "result_status": "exploratory_pilot",
+  "branch": "feature/article1-fast-full-semantic-gaze",
+  "baseline_branch": "feature/article1-multimodal-behavior-analysis",
+  "retired_full_fov_used": false,
+  "configuration": {
+    "mode": "semantic_gaze_fast_external",
+    "model": "weights/mask2former-mapillary-semantic",
+    "segmentation_frequency_hz": 5.0,
+    "batch_size": 4,
+    "resolution": [1008, 756],
+    "grounded_models_used": false,
+    "synthetic_frames": 0
+  },
+  "recordings": {
+    "car": {
+      "sha256": "2e84f0c3e245a7afc353e7c981ed44916df5d8c723e61aab1dd7735903490bf9",
+      "source_frames": 3762,
+      "segmented_frames": 1881,
+      "duration_s": 376.071298167,
+      "semantic_gaze_coverage": 0.9318443676327218
+    },
+    "motorcycle": {
+      "sha256": "5ab8604a14dfafecb15fc58a86c8d99ac59e4c83b1cb6025e43d22efe264f6d7",
+      "source_frames": 15069,
+      "segmented_frames": 5023,
+      "duration_s": 1004.516,
+      "semantic_gaze_coverage": 0.8964762094365917
+    }
+  },
+  "structured_rows": {
+    "paired_route_bins": 1176,
+    "event_metrics": 320
+  },
+  "validation": {
+    "integrated_test_environment": {"passed": 499, "skipped": 14},
+    "vrs_test_environment": {"passed": 498, "skipped": 15},
+    "all_five_videos_full_decode_ok": true,
+    "structured_output_audit_ok": true
+  }
+}
