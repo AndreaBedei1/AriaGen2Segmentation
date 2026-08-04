@@ -49,8 +49,9 @@ ten seconds after it finished".
 
 Windows are clipped to the recording and trimmed away from neighbouring
 manoeuvres; every clip is recorded on the row with its reason. Each signal family
-— vehicle at 1 Hz, head at frame rate, PPG at beat times, light at 9 Hz, gaze
-where a block covers it — is windowed on **its own real samples**.
+— vehicle at 1 Hz, head at 805 Hz, PPG at beat times, light at 9 Hz, gaze and eye
+state at 30 Hz over the **whole** recording, the visual lane-position proxy at
+5 Hz — is windowed on **its own real samples**.
 
 ## Two structural fixes the first run forced
 
@@ -107,12 +108,79 @@ These do not separate cleanly, and the straight-road values being the *highest*
 suggests the yaw-rate measure is picking up scanning behaviour rather than
 manoeuvre-driven head turns. It should not be over-read.
 
+## Eye, gaze and lane-position response
+
+Full table in `output/article1/final_behavior_statistics/event_response.csv`,
+figure `../article1_final_behavior_statistics/figures/11_event_related_eye_response.png`.
+Semantic gaze and eye state now cover the whole recording, so **every** event has
+a reading in every window; the earlier limitation, where gaze existed only inside
+two 30 s blocks, no longer applies. Solid-line candidates are carried as an event
+type alongside the map-derived kinds.
+
+These windows are built by the same `build_windows` used above, so they are
+clipped to the recording and trimmed away from neighbouring manoeuvres. On the
+motorcycle, with 62 junctions and 13 roundabouts in 1 004 s, that trimming leaves
+a median baseline of 3 s against the requested 20 s and clips **81%** of baseline
+windows. An event whose baseline is trimmed to nothing produces no delta, which is
+recorded on the row rather than silently zeroed.
+
+Median change from each event's own baseline window to its immediate window:
+
+| event | n car / moto | Δ blink/min car | Δ blink/min moto | Δ road-relevant mass car | Δ road-relevant mass moto | Δ gaze entropy car | Δ gaze entropy moto | Δ pupil residual car | Δ pupil residual moto |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| roundabout | 6 / 13 | +25.5 | 0.0 | +4.5 pp | +6.7 pp | +0.081 | −0.015 | +0.051 mm | +0.114 mm |
+| junction | 10 / 62 | −7.7 | 0.0 | +18.1 pp | −1.7 pp | +0.045 | +0.005 | −0.024 mm | −0.034 mm |
+| curve | 3 / 14 | +39.2 | 0.0 | −0.1 pp | +15.7 pp | +0.058 | −0.008 | +0.090 mm | +0.074 mm |
+| pedestrian crossing | 7 / 13 | −13.3 | +4.0 | +11.5 pp | +0.6 pp | +0.061 | −0.013 | +0.043 mm | +0.089 mm |
+| straight | 9 / 25 | +12.0 | −7.5 | +16.2 pp | +18.8 pp | +0.048 | −0.059 | −0.041 mm | +0.043 mm |
+| solid-line candidate | 5 / 56 | −3.1 | −13.3 | +9.3 pp | +6.9 pp | +0.028 | −0.008 | −0.040 mm | −0.040 mm |
+| traffic signal | 0 / 1 | — | +21.4 | — | −32.3 pp | — | −0.060 | — | +0.544 mm |
+
+**No event-level comparison survives FDR**, pooled or per type. The counts are the
+reason and they are worse than the heart-rate counts above, because trimming
+removes a baseline entirely for many events: 3–10 car events per type, one traffic
+signal in the whole pilot, and only 15–23 events with a usable delta on both sides
+after trimming.
+
+One pattern is consistent across all six comparable types: **gaze entropy rises
+around every car event and does not on the motorcycle** (+0.03…+0.08 against
+−0.06…+0.005). It still does not survive FDR (p_FDR = 0.26 pooled), and there is a
+competing explanation that this analysis cannot exclude — the car's baseline
+windows are far less trimmed than the motorcycle's, so the two columns are not
+measured over comparable baseline lengths, and that alone could produce the
+pattern.
+
+A Δ blink rate over a short window is quantised in coarse steps: after clipping the
+immediate window has a 7 s median, where a single blink is worth ~8.6/min. That is
+why the car column moves in large jumps on single-digit counts.
+
+Median head angular speed in the 5 s **before** each event starts:
+
+| event | car | motorcycle |
+|---|---:|---:|
+| roundabout | 0.311 rad/s | 0.407 rad/s |
+| curve | 0.386 rad/s | 0.357 rad/s |
+| junction | 0.125 rad/s | 0.166 rad/s |
+| pedestrian crossing | 0.107 rad/s | 0.161 rad/s |
+| straight | 0.123 rad/s | 0.256 rad/s |
+
+Head motion before roundabouts and curves is 2–3× the level before junctions and
+crossings in both vehicles. That is the most consistent pattern in the whole
+event analysis, and it is the one a reader would expect: a manoeuvre with a
+lateral component is preceded by head movement. It is still measured on 3–13
+events per cell and is descriptive only.
+
 ## Language
 
 Physiological changes around events are described as **autonomic response
 candidates** / **event-associated heart-rate change**. An increase is never
 called stress, arousal or workload. With one participant and one session there is
 no basis for any of those labels.
+
+The same applies to the eye metrics. A blink-rate change around an event is an
+**event-associated blink-rate change**; it is not fatigue, not workload and not
+distraction. A pupil residual change is an **event-associated light-adjusted
+pupil change**; it is not arousal and has no clinical reading.
 
 ## Verdict
 
@@ -121,4 +189,5 @@ no basis for any of those labels.
 | event detection from the map | **A** | 291 events, reproducible from a cached OSM extract, non-circular by construction |
 | windowing and clipping | **A** | durations in seconds, every clip recorded, families windowed on their own samples |
 | event-related HR responses | **C — descriptive only** | consistent direction, but n = 1–6 for every event type except one |
-| event-related head motion | **C — descriptive only** | does not separate; probably measuring scanning, not manoeuvres |
+| event-related head motion | **C — descriptive only** | the pre-event pattern is consistent across both vehicles, but on 3–13 events per cell |
+| event-related eye and gaze responses | **D — must be repeated** | full coverage in every window, so the analysis is now possible, but nothing survives FDR on 3–10 car events per type |

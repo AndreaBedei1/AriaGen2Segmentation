@@ -102,6 +102,29 @@ Two motorcycle windows were refused entirely, both for the valid-beat fraction.
 Short-duration event responses use HR, IBI, pulse amplitude and quality — never
 HRV, which is meaningless over a 10 s roundabout.
 
+## On the shared route
+
+The paired comparison over the 42 shared 50 m bins reports the same fact twice,
+once in each unit:
+
+| metric | car | motorcycle | difference | 95% CI | Cliff's δ | p (FDR) |
+|---|---:|---:|---:|---|---:|---:|
+| heart rate (bpm) | 79.6 | 121.5 | **+41.3** | [39.8, 45.6] | +1.00 | 0.008 |
+| inter-beat interval (ms) | 753.6 | 493.7 | **−254.2** | [−305, −236] | −1.00 | 0.008 |
+
+A Cliff's δ of exactly ±1.00 means complete separation: every motorcycle bin has a
+higher heart rate than every car bin. On a spatially paired stretch of the same
+road that removes route, road class and speed limit as explanations — and leaves
+time of day, traffic, ambient temperature, physical exertion and session, all of
+which are confounded with the vehicle here. Separation this complete is a
+statement about two sessions, not about two vehicles.
+
+The event-level analysis, which compares each event's change from its own local
+baseline rather than an absolute level, finds **no** difference (−5.0 bpm, 95% CI
+[−12.5, +1.7], Cliff's δ = −0.20, p_FDR = 0.73, on the 19 events whose baseline
+window survived trimming). The between-session level difference is the whole of
+the bin-level effect.
+
 ## Caveats
 
 * Pulse amplitude depends on LED drive current and integration time as well as on

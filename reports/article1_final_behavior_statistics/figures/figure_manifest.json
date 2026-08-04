@@ -1,0 +1,92 @@
+{
+  "schema": "article1_final_behavior_figures_v1",
+  "result_status": "exploratory_pilot",
+  "figures": [
+    {
+      "stem": "01_route_map_shared",
+      "png": "reports/article1_final_behavior_statistics/figures/01_route_map_shared.png",
+      "pdf": "reports/article1_final_behavior_statistics/figures/01_route_map_shared.pdf",
+      "same_scale_car_motorcycle": true
+    },
+    {
+      "stem": "02_semantic_gaze_distribution",
+      "png": "reports/article1_final_behavior_statistics/figures/02_semantic_gaze_distribution.png",
+      "pdf": "reports/article1_final_behavior_statistics/figures/02_semantic_gaze_distribution.pdf",
+      "same_scale_car_motorcycle": true
+    },
+    {
+      "stem": "03_dwell_fixation_by_class",
+      "png": "reports/article1_final_behavior_statistics/figures/03_dwell_fixation_by_class.png",
+      "pdf": "reports/article1_final_behavior_statistics/figures/03_dwell_fixation_by_class.pdf",
+      "same_scale_car_motorcycle": true
+    },
+    {
+      "stem": "04_semantic_gaze_shared_route",
+      "png": "reports/article1_final_behavior_statistics/figures/04_semantic_gaze_shared_route.png",
+      "pdf": "reports/article1_final_behavior_statistics/figures/04_semantic_gaze_shared_route.pdf",
+      "same_scale_car_motorcycle": true
+    },
+    {
+      "stem": "05_event_related_gaze",
+      "png": "reports/article1_final_behavior_statistics/figures/05_event_related_gaze.png",
+      "pdf": "reports/article1_final_behavior_statistics/figures/05_event_related_gaze.pdf",
+      "same_scale_car_motorcycle": true
+    },
+    {
+      "stem": "06_speed_head_motion",
+      "png": "reports/article1_final_behavior_statistics/figures/06_speed_head_motion.png",
+      "pdf": "reports/article1_final_behavior_statistics/figures/06_speed_head_motion.pdf",
+      "same_scale_car_motorcycle": true
+    },
+    {
+      "stem": "07_ppg_hr_event_related",
+      "png": "reports/article1_final_behavior_statistics/figures/07_ppg_hr_event_related.png",
+      "pdf": "reports/article1_final_behavior_statistics/figures/07_ppg_hr_event_related.pdf",
+      "same_scale_car_motorcycle": true
+    },
+    {
+      "stem": "08_solid_line_candidates",
+      "png": "reports/article1_final_behavior_statistics/figures/08_solid_line_candidates.png",
+      "pdf": "reports/article1_final_behavior_statistics/figures/08_solid_line_candidates.pdf",
+      "same_scale_car_motorcycle": true
+    },
+    {
+      "stem": "09_paired_summary_difference",
+      "png": "reports/article1_final_behavior_statistics/figures/09_paired_summary_difference.png",
+      "pdf": "reports/article1_final_behavior_statistics/figures/09_paired_summary_difference.pdf",
+      "same_scale_car_motorcycle": true
+    },
+    {
+      "stem": "10_blink_pupil_comparison",
+      "png": "reports/article1_final_behavior_statistics/figures/10_blink_pupil_comparison.png",
+      "pdf": "reports/article1_final_behavior_statistics/figures/10_blink_pupil_comparison.pdf",
+      "same_scale_car_motorcycle": true
+    },
+    {
+      "stem": "11_event_related_eye_response",
+      "png": "reports/article1_final_behavior_statistics/figures/11_event_related_eye_response.png",
+      "pdf": "reports/article1_final_behavior_statistics/figures/11_event_related_eye_response.pdf",
+      "same_scale_car_motorcycle": true
+    },
+    {
+      "stem": "12_paired_gaze_physiology_summary",
+      "png": "reports/article1_final_behavior_statistics/figures/12_paired_gaze_physiology_summary.png",
+      "pdf": "reports/article1_final_behavior_statistics/figures/12_paired_gaze_physiology_summary.pdf",
+      "same_scale_car_motorcycle": true
+    }
+  ],
+  "figure_count": 12,
+  "domain_colors": {
+    "car": "#0072B2",
+    "motorcycle": "#D55E00"
+  },
+  "comparisons_use_common_scales": true,
+  "one_question_per_figure": true,
+  "additions": [
+    "10_blink_pupil_comparison",
+    "11_event_related_eye_response",
+    "12_paired_gaze_physiology_summary"
+  ],
+  "eye_closure_is_not_a_drowsiness_measure": true,
+  "pupil_has_no_clinical_interpretation": true
+}

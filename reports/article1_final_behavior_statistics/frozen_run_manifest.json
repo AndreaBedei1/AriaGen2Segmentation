@@ -1,0 +1,59 @@
+{
+  "schema": "article1_frozen_run_manifest_v1",
+  "generated_utc": "2026-08-04T19:38:04.184732+00:00",
+  "purpose": "content hashes of the semantic-gaze runs consumed by the final behaviour statistics. These runs are read-only inputs; a hash change means a run was re-executed, which must be a deliberate, reviewed act",
+  "runs": {
+    "output/article1/fast_semantic_gaze": {
+      "files": {
+        "full_run_summary.json": "2d460eb7310aba637812fe7a82b8e928dd515e1467e8985f39453aafa84d1697",
+        "paired_route_bins.parquet": "be58301f999bc1d3e80a14354d05432f750ae7b92507c4700df8f70bb7ffe63f",
+        "event_metrics.parquet": "378e1416547a99bf6e71382e0853ea692eb6d632d8e9550985fbd57fc1b788e3",
+        "car/frames/extraction_summary.json": "7225559dfcc5442e292abb9427353c77ce72e6ed777b6e56edc561cd19af91dd",
+        "car/frames/frames.parquet": "a614a4c742d5682f6d1172c7aae85342592c0669c9cdf528b6784bd8dc7359aa",
+        "car/frames/calibration.json": "206e665130fc14afae7d68bbefe672393344dbcba7270a168a857eed6030830e",
+        "car/segmentation/summary.json": "8ff466f38fdc4ef98ea4fb48b6602b61e3945ed44093b7a748f12f269a90e8ce",
+        "car/segmentation/segmentation_index.parquet": "96678f083ed6274fc0515d63c9a485d3d4e708c7e5595867e1fa35c41e444313",
+        "car/gaze/semantic_gaze_summary.json": "4a66c747c53eeb6b9bcaac3fd0decfcc6864b6c6152881ac244e9a24f9018266",
+        "car/gaze/semantic_gaze.parquet": "9ea1e448cf39ccb7e1ca8ee56153b7ee6dccef4080e3e85c6b2defe8063b458a",
+        "car/gaze/fixations.parquet": "4c1f05ca8db24715079035e531fd6b33586702bb23a822b25a1ca3a7cfe22f8a",
+        "car/gaze/projected_gaze.parquet": "ecfc0358645de00c85514bc0c123f593b75f272744171b691ffe57810f237ec5",
+        "motorcycle/frames/extraction_summary.json": "9c4789871e67383fcfed5005ddc382a85cbe7cbc6bb95f610bd3134bea0bf13e",
+        "motorcycle/frames/frames.parquet": "c20e42b70877f806a11cfa861ba114c685841cd40307164c227df976dbcdb187",
+        "motorcycle/frames/calibration.json": "206e665130fc14afae7d68bbefe672393344dbcba7270a168a857eed6030830e",
+        "motorcycle/segmentation/summary.json": "1165180e011465378eb6e16a6d5fb8cee4596f64511fb609db13bbd200aadac4",
+        "motorcycle/segmentation/segmentation_index.parquet": "41127b42945d094e2e6a0f1d795f299ceffef11b6db1963889a2a56cb76745e3",
+        "motorcycle/gaze/semantic_gaze_summary.json": "cd0363931ea4c9a97395ad14576061554b13ba36fa620d3e09d8412a86df6d0c",
+        "motorcycle/gaze/semantic_gaze.parquet": "9d5da605fa3d5e2b4cdec2398742cd68f51e84e217c55b2dcd3dcf9c4b6cf930",
+        "motorcycle/gaze/fixations.parquet": "c97fbc1a20669d09174bfd70efcd913f625046e81ccec8b9d9bdd4fb151c6a54",
+        "motorcycle/gaze/projected_gaze.parquet": "2f9a07ee6b43f21c301480ecb3b70f09e98f3bfc21068bb5e0b61763cc282250"
+      },
+      "file_count": 21
+    },
+    "output/article1/fast_semantic_gaze_native": {
+      "files": {
+        "full_run_summary.json": "d7b147e9a163ce1ec8448824c1c3c8bfa3233be8c9b7232bbb4e5e91d2ae9a3a",
+        "paired_route_bins.parquet": "885a7b657ffec3ce3230e0da8f90969342c6aa67005ea7c64127fbfa4cc7a1a4",
+        "event_metrics.parquet": "4d9dd5cc882deffa59da94979177c9ba058706f27053c5e661db74ec589c86e9",
+        "car/frames/extraction_summary.json": "e7e5914b2266f189a694abc87f20deef978c95dae72bfd2c398923f9a032c60a",
+        "car/frames/frames.parquet": "1eb9546319a5469570ff29c1aea3c9590712892b7e647af5ac53056d843096e0",
+        "car/frames/calibration.json": "206e665130fc14afae7d68bbefe672393344dbcba7270a168a857eed6030830e",
+        "car/segmentation/summary.json": "1229f77c451a22399f8e19fac658e2ca31b77f553507ded1949bd17c21a1749b",
+        "car/segmentation/segmentation_index.parquet": "dc00ec943f4c1bfdeb25779614f83310ca3fc817f0f6e430df9a834b8a452ea3",
+        "car/gaze/semantic_gaze_summary.json": "c27253f2072766859ed3d1f7d0e0050b6e8c9ac64c57e7035ea84cde0ffdc398",
+        "car/gaze/semantic_gaze.parquet": "36061b2efe5053acc0213387c37feabe48e198aff23c00a9fd529dc5746b7a8f",
+        "car/gaze/fixations.parquet": "529ea2e7bc977b4df6fb71586292f3b0d4c0d49af513cf02f68f2b2fb796ee45",
+        "car/gaze/projected_gaze.parquet": "acb4de1a888fa0ccaaaeab3942551368f64dc53a6918de7eb3133776303454ab",
+        "motorcycle/frames/extraction_summary.json": "372d4ddd0949198b529d9e25ecc3b4de9b38494b6edec92342d1c97f602362b5",
+        "motorcycle/frames/frames.parquet": "a08e2db6772ea03e34fe9bf1e3db3e0a663cea8c16dbf79c4467991b9b8d12f4",
+        "motorcycle/frames/calibration.json": "206e665130fc14afae7d68bbefe672393344dbcba7270a168a857eed6030830e",
+        "motorcycle/segmentation/summary.json": "d1e239b13ba32be6fbeaeb0c17b5cbea6bbedf93a24dfa3f153aa8cbea146cd0",
+        "motorcycle/segmentation/segmentation_index.parquet": "b8120aa997acb3938382723737c0a377d8a32a5276ef7c1b3d0549804e29fa7e",
+        "motorcycle/gaze/semantic_gaze_summary.json": "d018d3c4200ab94708f12a4f68055adbc18790cebf60dee2f6e727a3da4c0c18",
+        "motorcycle/gaze/semantic_gaze.parquet": "39401c14ef3c7618a996d220d718de1f48fc509b6bac8ecb3599a6f1cd979a5d",
+        "motorcycle/gaze/fixations.parquet": "de9703208eb0f972626bc24d5f1f732aa3e5d34b4a8a61b1545cf0f260e341f7",
+        "motorcycle/gaze/projected_gaze.parquet": "58fdc940872cdb051d53cb2b34b3653756fcb1fe7cdf685d5d496612ce78f769"
+      },
+      "file_count": 21
+    }
+  }
+}

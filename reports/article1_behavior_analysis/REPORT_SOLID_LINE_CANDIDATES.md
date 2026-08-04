@@ -78,17 +78,37 @@ number from an unmeasured quantity.
 | offset p05 … p95 | **−0.61 … +0.46 m** | **−1.20 … +1.26 m** |
 | occupied band width | **1.07 m** | **2.46 m** |
 
-The motorcycle occupies a lateral band **2.3× wider** than the car within the
-same lane. That is a real, measurable behavioural difference, resolved at a
-precision GPS cannot approach, and it is the most promising result in this
-section.
+Over these two 30 s blocks the motorcycle occupies a lateral band **2.3× wider**
+than the car within the same lane.
 
 Caveat: the pixel-to-metre scale assumes a 3.5 m lane, so the absolute offsets
 scale linearly with that assumption. *Changes* within a block do not depend on
 it, and the band-width comparison is only weakly sensitive to it.
 
-The car's 16% coverage is low because its block is an urban stretch where the
-right-hand boundary is frequently occluded by parked vehicles.
+The car's 16% coverage is low for two reasons: its block is an urban stretch where
+the right-hand boundary is frequently occluded by parked vehicles, **and** the
+measurement band was fixed at 0.72–0.95 of the image height, which in a car is
+85% dashboard rather than road.
+
+> **Superseded by the full-run proxy.** The band-width figures above come from two
+> 30 s blocks with a fixed measurement band. `behavior/lane_position.py` now
+> measures the same quantity over the **whole** recording, with the near-field
+> road band chosen per recording from the segmentation's own row-wise road
+> profile, and with the offset normalised by the lane's own half-width so it does
+> not inherit the 3.5 m assumption at all:
+>
+> | | car | motorcycle |
+> |---|---:|---:|
+> | measurement band (image rows) | 0.663 – 0.720 | 0.725 – 1.000 |
+> | frames with a usable offset | 1 088 / 1 881 (**57.8%**) | 3 497 / 5 023 (**69.6%**) |
+> | normalised offset p05 … p95 | −1.13 … +0.50 | −1.06 … +0.82 |
+> | **p05–p95 band width** | **1.63** | **1.87** (1.15×) |
+>
+> On the whole drive the band is 1.15× wider on the motorcycle, not 2.3×, and on
+> the 42 shared bins the difference is not distinguishable at all (+0.001 lane
+> half-widths, 95% CI [−0.06, +0.16], p_FDR = 0.98). Two 30 s blocks in different
+> places were not a basis for the stronger claim. See
+> `../article1_final_behavior_statistics/REPORT_MULTIMODAL_COMPARISON.md`.
 
 ## Review package
 

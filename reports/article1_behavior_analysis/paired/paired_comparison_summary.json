@@ -12,14 +12,15 @@
   "effective_independent_blocks": 6,
   "effective_sample_size_note": "42 paired bins resolve to about 6 independent 30 s blocks. That block count, not the bin count, is the effective sample size behind every interval below.",
   "semantic_gaze_in_paired_comparison": {
-    "available": false,
-    "reason": "neither 30 s frozen semantic block falls on a bin both vehicles drove, so no paired bin has a semantic-gaze reading on both sides",
-    "consequence": "the paired comparison covers dynamics, physiology and light only; car-motorcycle semantic gaze is compared per recording, not per shared bin",
-    "fix": "run the frozen pipeline on a block inside the shared route identified in route/paired_route_segments.csv"
+    "available": true,
+    "source": "output/article1/fast_semantic_gaze",
+    "coverage": "the full-recording fast semantic-gaze run, which covers 93.2% (car) and 89.6% (motorcycle) of each drive; the remainder is blinks and tracking dropouts, not uncovered road",
+    "bins_with_gaze_on_both_sides": 42,
+    "superseded_limitation": "earlier revisions had two 30 s frozen semantic blocks that covered no shared bin, so gaze could not enter this comparison at all"
   },
   "fdr": {
     "alpha": 0.05,
-    "tested": 12,
+    "tested": 14,
     "rejected": 5,
     "threshold": 0.003599280143971206,
     "method": "Benjamini-Hochberg"
@@ -64,9 +65,9 @@
         "completeness": 0.3333333333333333,
         "definition": "mean of range-normalised visual and head-motion demand components",
         "n": 42,
-        "median": 0.20963006296537895,
-        "p05": 0.0008901601531808645,
-        "p95": 0.9861191697714888,
+        "median": 0.40544808663170345,
+        "p05": 0.13703578720651666,
+        "p95": 0.7211905530556718,
         "caveat": "built from 2 of 6 components; not comparable to a fully-populated index"
       },
       "traffic_interaction": {
@@ -116,22 +117,22 @@
       "visual_demand": {
         "name": "visual_demand_index",
         "components_used": [
+          "gaze_entropy",
           "head_motion"
         ],
         "components_missing": [
           "gaze_switching",
-          "gaze_entropy",
           "short_fixation_rate",
           "scanpath_length",
           "semantic_density"
         ],
-        "completeness": 0.16666666666666666,
+        "completeness": 0.3333333333333333,
         "definition": "mean of range-normalised visual and head-motion demand components",
         "n": 42,
-        "median": 0.2052579909807844,
-        "p05": 0.0007626301078890358,
-        "p95": 0.9972991446850881,
-        "caveat": "built from 1 of 6 components; not comparable to a fully-populated index"
+        "median": 0.4066126190354638,
+        "p05": 0.0827453998430025,
+        "p95": 0.7055937558839508,
+        "caveat": "built from 2 of 6 components; not comparable to a fully-populated index"
       },
       "traffic_interaction": {
         "name": "traffic_interaction_index",
@@ -175,7 +176,7 @@
       "permutation_p": 0.39072185562887424,
       "permutation_iterations": 5000,
       "permutation_reason": null,
-      "permutation_p_fdr": 0.5860827834433113,
+      "permutation_p_fdr": 0.6077895532004711,
       "significant_after_fdr": false
     },
     {
@@ -198,7 +199,7 @@
       "permutation_p": 0.10757848430313938,
       "permutation_iterations": 5000,
       "permutation_reason": null,
-      "permutation_p_fdr": 0.20258805381780784,
+      "permutation_p_fdr": 0.23315336932613479,
       "significant_after_fdr": false
     },
     {
@@ -221,7 +222,7 @@
       "permutation_p": 0.589882023595281,
       "permutation_iterations": 5000,
       "permutation_reason": null,
-      "permutation_p_fdr": 0.7865093647937079,
+      "permutation_p_fdr": 0.8258348330333934,
       "significant_after_fdr": false
     },
     {
@@ -244,7 +245,7 @@
       "permutation_p": 0.001999600079984003,
       "permutation_iterations": 5000,
       "permutation_reason": null,
-      "permutation_p_fdr": 0.0065986802639472104,
+      "permutation_p_fdr": 0.0076984603079384125,
       "significant_after_fdr": true
     },
     {
@@ -267,7 +268,7 @@
       "permutation_p": 0.7798440311937612,
       "permutation_iterations": 5000,
       "permutation_reason": null,
-      "permutation_p_fdr": 0.9358128374325135,
+      "permutation_p_fdr": 0.9098180363927214,
       "significant_after_fdr": false
     },
     {
@@ -290,7 +291,7 @@
       "permutation_p": 0.0005998800239952009,
       "permutation_iterations": 5000,
       "permutation_reason": null,
-      "permutation_p_fdr": 0.0035992801439712055,
+      "permutation_p_fdr": 0.004199160167966407,
       "significant_after_fdr": true
     },
     {
@@ -313,7 +314,7 @@
       "permutation_p": 0.0005998800239952009,
       "permutation_iterations": 5000,
       "permutation_reason": null,
-      "permutation_p_fdr": 0.0035992801439712055,
+      "permutation_p_fdr": 0.004199160167966407,
       "significant_after_fdr": true
     },
     {
@@ -336,7 +337,7 @@
       "permutation_p": 0.003599280143971206,
       "permutation_iterations": 5000,
       "permutation_reason": null,
-      "permutation_p_fdr": 0.008638272345530894,
+      "permutation_p_fdr": 0.010077984403119376,
       "significant_after_fdr": true
     },
     {
@@ -359,23 +360,53 @@
       "permutation_p": 0.0021995600879824036,
       "permutation_iterations": 5000,
       "permutation_reason": null,
-      "permutation_p_fdr": 0.0065986802639472104,
+      "permutation_p_fdr": 0.0076984603079384125,
       "significant_after_fdr": true
     },
     {
       "metric": "gaze_foveal_entropy",
-      "n_paired_bins": 0,
-      "skipped": true,
-      "reason": "only 0 bins have the metric on both sides",
-      "permutation_p_fdr": null,
+      "skipped": false,
+      "n_paired_bins": 42,
+      "effective_independent_blocks": 6,
+      "is_place_property": false,
+      "place_property_note": null,
+      "unit_of_analysis": "50 m route bin",
+      "motorcycle_median": 0.25510770657279913,
+      "car_median": 0.269294926129927,
+      "paired_median_difference_moto_minus_car": -0.012213578023050037,
+      "ci_low": -0.03254449337354037,
+      "ci_high": 0.02607798610479284,
+      "ci_method": "block bootstrap, block=8, 2000 iterations",
+      "ci_caveat": null,
+      "median_ratio_moto_over_car": 0.9610164825673768,
+      "cliffs_delta": -0.01020408163265306,
+      "permutation_p": 0.7044591081783643,
+      "permutation_iterations": 5000,
+      "permutation_reason": null,
+      "permutation_p_fdr": 0.8965843194997365,
       "significant_after_fdr": false
     },
     {
       "metric": "gaze_road_relevant_mass",
-      "n_paired_bins": 0,
-      "skipped": true,
-      "reason": "only 0 bins have the metric on both sides",
-      "permutation_p_fdr": null,
+      "skipped": false,
+      "n_paired_bins": 42,
+      "effective_independent_blocks": 6,
+      "is_place_property": false,
+      "place_property_note": null,
+      "unit_of_analysis": "50 m route bin",
+      "motorcycle_median": 0.1984059764293709,
+      "car_median": 0.28147991274703854,
+      "paired_median_difference_moto_minus_car": -0.07914167643130737,
+      "ci_low": -0.10206602958099908,
+      "ci_high": -0.007880231194649416,
+      "ci_method": "block bootstrap, block=8, 2000 iterations",
+      "ci_caveat": null,
+      "median_ratio_moto_over_car": 0.7863677784071916,
+      "cliffs_delta": -0.16099773242630386,
+      "permutation_p": 0.21875624875024996,
+      "permutation_iterations": 5000,
+      "permutation_reason": null,
+      "permutation_p_fdr": 0.38282343531293744,
       "significant_after_fdr": false
     },
     {
@@ -409,19 +440,19 @@
       "is_place_property": false,
       "place_property_note": null,
       "unit_of_analysis": "50 m route bin",
-      "motorcycle_median": 0.2052579909807844,
-      "car_median": 0.20963006296537895,
-      "paired_median_difference_moto_minus_car": 0.017715085839904915,
-      "ci_low": -0.04338996534190643,
-      "ci_high": 0.08412511807463209,
+      "motorcycle_median": 0.4066126190354638,
+      "car_median": 0.40544808663170345,
+      "paired_median_difference_moto_minus_car": -0.061877392956800115,
+      "ci_low": -0.10221936249286667,
+      "ci_high": 0.017675442953428877,
       "ci_method": "block bootstrap, block=8, 2000 iterations",
       "ci_caveat": null,
-      "median_ratio_moto_over_car": null,
-      "cliffs_delta": 0.06235827664399093,
-      "permutation_p": 0.9164167166566687,
+      "median_ratio_moto_over_car": 0.8826067464189646,
+      "cliffs_delta": -0.060090702947845805,
+      "permutation_p": 0.9350129974005199,
       "permutation_iterations": 5000,
       "permutation_reason": null,
-      "permutation_p_fdr": 0.9997273272618205,
+      "permutation_p_fdr": 1.0,
       "significant_after_fdr": false
     },
     {
@@ -435,16 +466,16 @@
       "motorcycle_median": 0.4852206614630623,
       "car_median": 0.4064918546790799,
       "paired_median_difference_moto_minus_car": 0.06289971224757351,
-      "ci_low": -0.06486691798153349,
+      "ci_low": -0.06481311864415484,
       "ci_high": 0.13409575300320287,
       "ci_method": "block bootstrap, block=8, 2000 iterations",
       "ci_caveat": null,
       "median_ratio_moto_over_car": null,
       "cliffs_delta": 0.15419501133786848,
-      "permutation_p": 0.11817636472705459,
+      "permutation_p": 0.11657668466306739,
       "permutation_iterations": 5000,
       "permutation_reason": null,
-      "permutation_p_fdr": 0.20258805381780784,
+      "permutation_p_fdr": 0.23315336932613479,
       "significant_after_fdr": false
     }
   ]

@@ -1,0 +1,86 @@
+{
+  "schema": "article1_final_paired_statistics_v1",
+  "result_status": "exploratory_pilot",
+  "pilot_caveat": "One participant, one session per vehicle. These are descriptive statistics of two specific drives. They do not estimate a population parameter, they cannot be generalised, and no confidence interval here is a statement about drivers in general.",
+  "random_seed": 20260802,
+  "seeding": "one generator per family, so a change in one family cannot shift another's intervals through the draw order",
+  "families": {
+    "bin": {
+      "statistical_unit": "50 m map-defined route bin",
+      "paired": true,
+      "units": 42,
+      "block_size_units": 8,
+      "block_length_s": 30.0,
+      "effective_sample_size": 6,
+      "metrics_compared": 21,
+      "surviving_fdr": 9,
+      "fdr": {
+        "alpha": 0.05,
+        "tested": 21,
+        "rejected": 9,
+        "threshold": 0.00639872025594881,
+        "method": "Benjamini-Hochberg"
+      }
+    },
+    "event": {
+      "statistical_unit": "road event",
+      "paired": false,
+      "pairing_note": "the two drives do not share events, so this family compares each event's change from its own local baseline rather than an absolute level",
+      "car_units": 40,
+      "motorcycle_units": 184,
+      "block_size_units": 10,
+      "block_length_s": 30.0,
+      "metrics_compared": 11,
+      "surviving_fdr": 0,
+      "fdr": {
+        "alpha": 0.05,
+        "tested": 11,
+        "rejected": 0,
+        "threshold": null,
+        "method": "Benjamini-Hochberg"
+      }
+    },
+    "block": {
+      "statistical_unit": "30 s time block",
+      "paired": false,
+      "car_units": 13,
+      "motorcycle_units": 34,
+      "block_size_units": 1,
+      "block_size_note": "one unit, because a unit here already *is* the 30 s decorrelation window used everywhere else",
+      "metrics_compared": 4,
+      "surviving_fdr": 1,
+      "fdr": {
+        "alpha": 0.05,
+        "tested": 4,
+        "rejected": 1,
+        "threshold": 0.001999600079984003,
+        "method": "Benjamini-Hochberg"
+      }
+    }
+  },
+  "surviving_fdr": {
+    "bin": [
+      "blinks_per_minute",
+      "fixation_time_percent",
+      "head_angular_speed_rad_s",
+      "head_vibration_rms_msec2",
+      "heart_rate_bpm",
+      "ibi_ms",
+      "interior_cockpit_mass_percent",
+      "pupil_light_adjusted_residual_mm",
+      "scanpath_length_deg_per_s"
+    ],
+    "event": [],
+    "block": [
+      "blinks_per_minute"
+    ]
+  },
+  "gaze_in_paired_comparison": {
+    "available": true,
+    "bins_with_gaze_on_both_sides": 42,
+    "source": "full-recording fast semantic gaze at 5 Hz segmentation",
+    "note": "semantic gaze now enters the paired comparison on every shared bin; the earlier limitation, where two 30 s frozen blocks covered no shared bin, no longer applies"
+  },
+  "frames_are_independent_samples": false,
+  "unit_of_analysis_is_never_the_frame": true
+}

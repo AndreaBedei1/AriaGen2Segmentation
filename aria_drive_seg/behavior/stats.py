@@ -134,6 +134,66 @@ def paired_block_bootstrap(a: Sequence[float], b: Sequence[float],
                       f"{iterations} iterations", caveat)
 
 
+def two_sample_block_bootstrap(a: Sequence[float], b: Sequence[float],
+                               block_size: int = 4, iterations: int = 2000,
+                               alpha: float = 0.05,
+                               rng: Optional[np.random.Generator] = None
+                               ) -> EffectSize:
+    """Difference of medians with a block-bootstrap interval, for unpaired units.
+
+    Used where the two vehicles have no common unit to pair on — separate events,
+    separate time blocks — so each group is resampled in contiguous blocks
+    independently and the difference is recomputed. It is not a paired test and
+    does not pretend to be one: the interval is wider than the paired version for
+    the same data, which is correct, because the pairing information is genuinely
+    absent.
+    """
+    x = np.asarray(a, float)
+    y = np.asarray(b, float)
+    x = x[np.isfinite(x)]
+    y = y[np.isfinite(y)]
+    if x.size < 3 or y.size < 3:
+        return EffectSize("median_difference", int(min(x.size, y.size)),
+                          float("nan"), None, None, "insufficient units",
+                          f"{x.size} and {y.size} units: too few to resample")
+    rng = rng or np.random.default_rng(0)
+    est = float(np.median(x) - np.median(y))
+    blocks_x = _blocks(x.size, block_size)
+    blocks_y = _blocks(y.size, block_size)
+    stats = np.empty(iterations)
+    for i in range(iterations):
+        px = rng.integers(0, len(blocks_x), size=len(blocks_x))
+        py = rng.integers(0, len(blocks_y), size=len(blocks_y))
+        sx = np.concatenate([blocks_x[j] for j in px])[:x.size]
+        sy = np.concatenate([blocks_y[j] for j in py])[:y.size]
+        stats[i] = np.median(x[sx]) - np.median(y[sy])
+    finite = stats[np.isfinite(stats)]
+    if finite.size < iterations * 0.5:
+        return EffectSize("median_difference", int(min(x.size, y.size)), est,
+                          None, None, "block bootstrap failed to converge")
+    caveat = None
+    if min(x.size, y.size) < MIN_UNITS_FOR_INTERVAL:
+        caveat = (f"{x.size} and {y.size} units: the interval is reported for "
+                  "completeness but a bootstrap cannot manufacture information "
+                  "this few units do not contain")
+    return EffectSize(
+        "median_difference", int(min(x.size, y.size)), est,
+        float(np.percentile(finite, 100 * alpha / 2)),
+        float(np.percentile(finite, 100 * (1 - alpha / 2))),
+        f"two-sample block bootstrap, block={block_size}, "
+        f"{iterations} iterations", caveat)
+
+
+def effective_sample_size(n_units: int, block_size: int) -> int:
+    """Independent blocks behind a comparison, not its row count.
+
+    Consecutive units of one drive are strongly autocorrelated, so the number of
+    rows overstates the information available by whatever factor the block length
+    represents. This is the number every interval actually rests on.
+    """
+    return int(np.ceil(int(n_units) / max(1, int(block_size)))) if n_units else 0
+
+
 def block_permutation_test(a: Sequence[float], b: Sequence[float],
                            statistic: Callable[[np.ndarray, np.ndarray], float],
                            block_size: int = 4, iterations: int = 5000,

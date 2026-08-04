@@ -1,0 +1,78 @@
+event_type,metric,unit,n_car,n_motorcycle,car_median,motorcycle_median,statistical_unit,counts_are_single_digit
+curve,delta_heart_rate_bpm,bpm,1,8,16.22541685612073,5.792945272504873,road event,True
+curve,delta_ibi_ms,ms,1,8,-163.08171900000002,-15.536092749999995,road event,True
+curve,delta_blink_rate_per_minute,blinks/min,2,8,39.214285802249805,-0.00019175593033793348,road event,True
+curve,delta_mean_blink_duration_s,s,1,7,-0.061112000000000014,0.009999800000000003,road event,True
+curve,delta_eye_closure_fraction,fraction,1,8,0.023809523809523808,0.026851851851851856,road event,True
+curve,delta_pupil_light_adjusted_residual_mm,"mm, light-adjusted",1,8,0.08945189433615802,0.07403885513036432,road event,True
+curve,delta_road_relevant_mass_percent,% foveal mass,1,8,-0.1353492780260659,15.658548227776711,road event,True
+curve,delta_gaze_entropy,normalised entropy,1,8,0.057514040268008604,-0.008237039869772506,road event,True
+curve,delta_head_angular_speed_rad_s,rad/s,1,8,0.15235354282298808,0.133336786100619,road event,True
+curve,delta_speed_mps,m/s,2,8,-3.750000238418579,-6.138999938964844,road event,True
+curve,delta_visual_lane_position_proxy_abs_offset,lane half-widths,1,7,-0.0012024886853295724,-0.0030790394885071293,road event,True
+junction,delta_heart_rate_bpm,bpm,5,47,3.1304807337664187,-2.0057776500517264,road event,True
+junction,delta_ibi_ms,ms,5,47,-23.310495500000002,9.69809900000007,road event,True
+junction,delta_blink_rate_per_minute,blinks/min,6,51,-7.6666546111198315,0.0,road event,True
+junction,delta_mean_blink_duration_s,s,5,50,-0.016666750000000008,0.0009970811965811857,road event,True
+junction,delta_eye_closure_fraction,fraction,5,50,-0.038974358974358976,-0.008333333333333331,road event,True
+junction,delta_pupil_light_adjusted_residual_mm,"mm, light-adjusted",5,50,-0.024192431413000946,-0.033786480834910156,road event,True
+junction,delta_road_relevant_mass_percent,% foveal mass,5,50,18.053576489640893,-1.7317247624064187,road event,True
+junction,delta_gaze_entropy,normalised entropy,5,50,0.044472933444481166,0.004595026708660355,road event,True
+junction,delta_head_angular_speed_rad_s,rad/s,5,50,0.025869033341822056,0.0017460614208593406,road event,True
+junction,delta_speed_mps,m/s,5,50,-1.0279998779296875,-1.5627498626708984,road event,True
+junction,delta_visual_lane_position_proxy_abs_offset,lane half-widths,5,47,0.3591016548463357,0.02651632669331784,road event,True
+pedestrian_crossing,delta_heart_rate_bpm,bpm,4,6,10.326780347373692,-5.240594241030472,road event,True
+pedestrian_crossing,delta_ibi_ms,ms,4,6,-89.3655465,22.360052249999995,road event,True
+pedestrian_crossing,delta_blink_rate_per_minute,blinks/min,4,7,-13.33332044741986,4.00001172499725,road event,True
+pedestrian_crossing,delta_mean_blink_duration_s,s,3,4,0.0066669999999999785,0.00023135416666665576,road event,True
+pedestrian_crossing,delta_eye_closure_fraction,fraction,4,6,-0.03537037037037037,0.010555555555555554,road event,True
+pedestrian_crossing,delta_pupil_light_adjusted_residual_mm,"mm, light-adjusted",4,6,0.04289742259026906,0.08880921944204767,road event,True
+pedestrian_crossing,delta_road_relevant_mass_percent,% foveal mass,4,6,11.534998919762259,0.5527373862933365,road event,True
+pedestrian_crossing,delta_gaze_entropy,normalised entropy,4,6,0.06060276083331906,-0.013177501888748416,road event,True
+pedestrian_crossing,delta_head_angular_speed_rad_s,rad/s,4,6,0.030945620012176343,0.06136411834212312,road event,True
+pedestrian_crossing,delta_speed_mps,m/s,3,7,-2.6944994926452637,0.3470001220703125,road event,True
+pedestrian_crossing,delta_visual_lane_position_proxy_abs_offset,lane half-widths,3,6,0.389844376702671,-0.1555361706814493,road event,True
+roundabout,delta_heart_rate_bpm,bpm,2,9,9.869337499737355,11.315720412677052,road event,True
+roundabout,delta_ibi_ms,ms,2,9,-93.240522,-33.02632900000003,road event,True
+roundabout,delta_blink_rate_per_minute,blinks/min,4,9,25.500009080614007,1.7969989237087702e-05,road event,True
+roundabout,delta_mean_blink_duration_s,s,2,9,-0.05456366071428573,0.0066666000000000225,road event,True
+roundabout,delta_eye_closure_fraction,fraction,2,9,-0.006428571428571429,0.0,road event,True
+roundabout,delta_pupil_light_adjusted_residual_mm,"mm, light-adjusted",2,9,0.0504582844929512,0.11410856236670781,road event,True
+roundabout,delta_road_relevant_mass_percent,% foveal mass,2,9,4.522071965195089,6.689375907477007,road event,True
+roundabout,delta_gaze_entropy,normalised entropy,2,9,0.08074874299474705,-0.014955476952189517,road event,True
+roundabout,delta_head_angular_speed_rad_s,rad/s,2,9,0.07848544128279919,0.12557577342750595,road event,True
+roundabout,delta_speed_mps,m/s,4,9,-4.798499822616577,-3.513500213623047,road event,True
+roundabout,delta_visual_lane_position_proxy_abs_offset,lane half-widths,2,8,2.1085413572245835,-0.0769336533070483,road event,True
+solid_line_candidate,delta_heart_rate_bpm,bpm,2,26,-2.2003455955135323,4.088292336638084,road event,True
+solid_line_candidate,delta_ibi_ms,ms,2,26,16.535663999999997,-15.543750750000015,road event,True
+solid_line_candidate,delta_blink_rate_per_minute,blinks/min,2,29,-3.142847142810684,-13.333307961489282,road event,True
+solid_line_candidate,delta_mean_blink_duration_s,s,2,24,-0.008333625000000011,-0.002777333333333333,road event,True
+solid_line_candidate,delta_eye_closure_fraction,fraction,2,27,-0.0075,-0.03666666666666667,road event,True
+solid_line_candidate,delta_pupil_light_adjusted_residual_mm,"mm, light-adjusted",2,27,-0.03949363600650466,-0.039744697455226796,road event,True
+solid_line_candidate,delta_road_relevant_mass_percent,% foveal mass,2,27,9.30879457715172,6.9306615905201205,road event,True
+solid_line_candidate,delta_gaze_entropy,normalised entropy,2,27,0.028108421626943256,-0.007703585143885139,road event,True
+solid_line_candidate,delta_head_angular_speed_rad_s,rad/s,2,27,0.005957646230041955,0.023227378992525305,road event,True
+solid_line_candidate,delta_speed_mps,m/s,1,29,-7.278000354766846,-1.930999755859375,road event,True
+solid_line_candidate,delta_visual_lane_position_proxy_abs_offset,lane half-widths,2,25,-0.17429916962290393,0.0008007602785067292,road event,True
+straight,delta_heart_rate_bpm,bpm,5,10,5.78432951537205,1.9878406806716171,road event,True
+straight,delta_ibi_ms,ms,5,10,-42.74109599999997,-1.9253247500000157,road event,True
+straight,delta_blink_rate_per_minute,blinks/min,5,11,12.000005123987744,-7.500001170937594,road event,True
+straight,delta_mean_blink_duration_s,s,2,9,-0.08749975000000002,-0.010476171428571435,road event,True
+straight,delta_eye_closure_fraction,fraction,5,10,0.0,-0.023161764705882354,road event,True
+straight,delta_pupil_light_adjusted_residual_mm,"mm, light-adjusted",5,10,-0.04064897114303568,0.0431280075653261,road event,True
+straight,delta_road_relevant_mass_percent,% foveal mass,5,10,16.199555113161757,18.757940270653158,road event,True
+straight,delta_gaze_entropy,normalised entropy,5,10,0.0483591818840261,-0.0590824606604303,road event,True
+straight,delta_head_angular_speed_rad_s,rad/s,5,10,0.08917560330520061,0.2020944890315799,road event,True
+straight,delta_speed_mps,m/s,4,11,-4.055750131607056,-4.0829997062683105,road event,True
+straight,delta_visual_lane_position_proxy_abs_offset,lane half-widths,4,7,0.17302465175149478,0.1903953145618298,road event,True
+traffic_signal,delta_heart_rate_bpm,bpm,0,1,,27.79265113380916,road event,True
+traffic_signal,delta_ibi_ms,ms,0,1,,-81.635832,road event,True
+traffic_signal,delta_blink_rate_per_minute,blinks/min,0,1,,21.428571033163223,road event,True
+traffic_signal,delta_mean_blink_duration_s,s,0,1,,-0.07777744444444445,road event,True
+traffic_signal,delta_eye_closure_fraction,fraction,0,1,,-0.04444444444444445,road event,True
+traffic_signal,delta_pupil_light_adjusted_residual_mm,"mm, light-adjusted",0,1,,0.5439860057972601,road event,True
+traffic_signal,delta_road_relevant_mass_percent,% foveal mass,0,1,,-32.33448258954865,road event,True
+traffic_signal,delta_gaze_entropy,normalised entropy,0,1,,-0.06000321764588848,road event,True
+traffic_signal,delta_head_angular_speed_rad_s,rad/s,0,1,,0.045153186681745894,road event,True
+traffic_signal,delta_speed_mps,m/s,0,1,,18.111000537872314,road event,True
+traffic_signal,delta_visual_lane_position_proxy_abs_offset,lane half-widths,0,1,,-0.4492780305723757,road event,True

@@ -103,6 +103,34 @@ gaze:
     - traffic_light
     - road_boundary_or_obstacle
 
+eye_state:
+  # Blink and pupil diameter come from the eye-gaze record's own DataLayout.
+  # Field offsets are read from the recording, never hardcoded, and the decode is
+  # cross-checked against projectaria_tools before any table is written.
+  stream_label: eyegaze
+  blink:
+    # Consecutive samples further apart than this belong to different events. A
+    # gap is never bridged: the eye state during it was not recorded.
+    max_gap_s: 0.075
+    # A closure longer than this is reported as a prolonged closure, not counted
+    # as a blink.
+    max_blink_duration_s: 1.0
+    # The value of the raw `blink` field that means "eye closed" is decided from
+    # the data, not from this file. A polarity is accepted only if the candidate
+    # state is both rarer and shorter-running than its complement.
+    max_closed_fraction: 0.35
+    rate_window_s: 60.0
+    rate_step_s: 10.0
+  pupil:
+    # Local baseline for the deviation metric, centred rolling median.
+    baseline_window_s: 60.0
+    # Ambient light is associated by nearest real sample; beyond this the sample
+    # has no light reading rather than an interpolated one.
+    max_light_dt_s: 0.25
+    # Exploratory only. Reported with its R^2 so a reader sees how little of the
+    # variance it removes.
+    light_correction: log10_lux_plus_one_ols
+
 events:
   approach_radius_m:
     roundabout: 40.0
@@ -130,6 +158,39 @@ solid_line:
   # Manoeuvres this close to a junction are excluded from the non-compliant
   # bucket: turning across a line at a junction is normal.
   junction_exclusion_radius_m: 25.0
+
+visual_lane_position:
+  # A PROXY. It measures where the head-mounted camera sits between the two lane
+  # markings visible in the near field, normalised by the lane's own half-width.
+  # It is never a metric measurement of the vehicle's position in its lane.
+  source: fast_semantic_gaze_masks
+  # The near-field road band is MEASURED per recording, not fixed: the rows that
+  # are near-field road on a motorcycle are dashboard in a car. It is the lowest
+  # contiguous run of predominantly-road rows, restricted to its lower portion.
+  band_probe_frames: 120
+  min_road_row_fraction: 0.15
+  band_lower_portion: 0.60
+  min_band_fraction: 0.05
+  # Geometry rejections: a pair of markings that is too narrow, too wide, or does
+  # not have road surface between them does not bound one carriageway lane.
+  min_lane_width_fraction: 0.05
+  max_lane_width_fraction: 0.90
+  min_road_fraction_between: 0.50
+  # Used only for the secondary metric expressed in metres.
+  assumed_lane_width_m: 3.5
+  min_crossing_duration_s: 0.5
+
+head_eye:
+  # Head checks are found on the head IMU's own ~805 Hz samples; a 0.15 s
+  # excursion is three samples at the gaze rate and would be lost there.
+  head_yaw_rate_threshold_rad_s: 0.35
+  head_min_duration_s: 0.15
+  gaze_yaw_rate_threshold_rad_s: 1.0
+  gaze_min_duration_s: 0.066
+  concurrency_tolerance_s: 0.30
+  # A lateral head check is never attributed to a mirror.
+  attribute_head_check_to_mirror: false
+  head_motion_lead_s: 5.0
 
 ppg:
   # Quality gate. Nothing downstream sees a beat that did not pass it.

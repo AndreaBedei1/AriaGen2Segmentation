@@ -46,10 +46,27 @@ BIN_METRICS = (
     ("gaze_foveal_entropy", "gaze"),
     ("gaze_road_relevant_mass", "gaze"),
 )
+# `is_fixation` is deliberately absent. This script attaches the nearest gaze
+# sample to each reference frame and then takes the bin's median, so a boolean
+# would collapse to 0 or 1 over the four-to-eight frames a 50 m bin contains.
+# Fixation time is computed properly — over every gaze sample in the bin — by
+# scripts/analyze_article1_final_behavior.py.
+
+#: Classes whose foveal mass makes up the road-relevant share.
+ROAD_CLASSES = ("road_surface", "lane_marking", "regulatory_road_marking",
+                "vehicle", "two_wheeler", "pedestrian", "traffic_sign",
+                "traffic_light", "road_boundary_or_sidewalk")
 
 
-def per_bin_metrics(dest: Path, bin_size_m: float) -> pd.DataFrame:
-    """Aggregate every signal family onto the frame-level route bins."""
+def per_bin_metrics(dest: Path, bin_size_m: float,
+                    gaze_root: Optional[Path] = None) -> pd.DataFrame:
+    """Aggregate every signal family onto the frame-level route bins.
+
+    `gaze_root` is the **full-recording** fast semantic-gaze run for this domain.
+    Earlier revisions read a per-recording table produced from two 30 s frozen
+    blocks that covered no shared bin, which is why gaze used to drop out of this
+    comparison entirely; it now covers the whole drive.
+    """
     bins = pd.read_parquet(dest / "frame_route_bins.parquet")
     bins = bins[bins["bin_valid"].astype(bool)]
     if bins.empty:
@@ -100,29 +117,35 @@ def per_bin_metrics(dest: Path, bin_size_m: float) -> pd.DataFrame:
 
     attach(dest / "sensors" / "als.parquet", "timestamp_ns", {"lux": "lux"})
 
-    sg = dest / "semantic_gaze.parquet"
-    if sg.exists():
+    sg = (gaze_root / "gaze" / "semantic_gaze.parquet") if gaze_root else None
+    if sg is not None and sg.exists():
         g = pd.read_parquet(sg)
         g = g[g["semantic_valid"].astype(bool)]
         if not g.empty:
-            road = [c for c in g.columns if c.startswith("p_") and c[2:] in (
-                "road_surface", "lane_marking", "regulatory_road_marking",
-                "vehicle", "pedestrian", "traffic_sign", "traffic_light",
-                "road_boundary_or_obstacle")]
+            road = [c for c in g.columns if c.startswith("p_") and c[2:] in ROAD_CLASSES]
             g = g.assign(gaze_road_relevant_mass=g[road].sum(axis=1),
-                         gaze_foveal_entropy=g["foveal_entropy"])
+                         gaze_foveal_entropy=g["foveal_entropy"],
+                         )
             tmp = dest / "_gaze_tmp.parquet"
             g.to_parquet(tmp, index=False)
             attach(tmp, "timestamp_ns", {
                 "gaze_foveal_entropy": "gaze_foveal_entropy",
                 "gaze_road_relevant_mass": "gaze_road_relevant_mass"})
             tmp.unlink(missing_ok=True)
-            # Only frames inside a dense semantic block have a real reading.
-            covered = set(g["frame_index"].tolist())
-            mask = ~out["frame_index"].isin(covered)
+            # A reference frame only has a real reading when a valid gaze sample
+            # sits close enough to it in time. Frames further away than half the
+            # reference interval keep NaN rather than a distant sample's value.
+            gaze_ts = g["timestamp_ns"].to_numpy(np.int64)
+            frame_ts = out["timestamp_ns"].to_numpy(np.int64)
+            pos = np.clip(np.searchsorted(gaze_ts, frame_ts), 0, gaze_ts.size - 1)
+            prev = np.clip(pos - 1, 0, gaze_ts.size - 1)
+            nearest_dt = np.minimum(np.abs(gaze_ts[pos] - frame_ts),
+                                    np.abs(frame_ts - gaze_ts[prev]))
+            reference_dt = float(np.median(np.diff(frame_ts))) if frame_ts.size > 1 else 0.0
+            too_far = nearest_dt > max(reference_dt, 1e8)
             for c in ("gaze_foveal_entropy", "gaze_road_relevant_mass"):
                 if c in out:
-                    out.loc[mask, c] = np.nan
+                    out.loc[too_far, c] = np.nan
 
     numeric = [c for c in out.columns if c not in
                ("frame_index", "timestamp_ns", "bin_key")]
@@ -136,6 +159,8 @@ def main() -> int:
     ap.add_argument("--config", default="configs/article1/behavior_analysis.yaml")
     ap.add_argument("--output", default="output/article1/behavior_analysis")
     ap.add_argument("--reports", default="reports/article1_behavior_analysis")
+    ap.add_argument("--fast-gaze-root", default="output/article1/fast_semantic_gaze",
+                    help="full-recording semantic gaze consumed by this comparison")
     ap.add_argument("--log-level", default="INFO")
     args = ap.parse_args()
     setup_logging(args.log_level)
@@ -155,7 +180,7 @@ def main() -> int:
     per_domain: Dict[str, pd.DataFrame] = {}
     for domain, spec in (cfg.get("recordings") or {}).items():
         dest = out_root / spec["recording_id"]
-        df = per_bin_metrics(dest, bin_size)
+        df = per_bin_metrics(dest, bin_size, Path(args.fast_gaze_root) / domain)
         per_domain[domain] = df
         log.info("%s: %d occupied bins with metrics", domain, len(df))
 
@@ -287,15 +312,20 @@ def main() -> int:
             f"{block_len_s:.0f} s blocks. That block count, not the bin count, is "
             "the effective sample size behind every interval below."),
         "semantic_gaze_in_paired_comparison": {
-            "available": False,
-            "reason": ("neither 30 s frozen semantic block falls on a bin both "
-                       "vehicles drove, so no paired bin has a semantic-gaze "
-                       "reading on both sides"),
-            "consequence": ("the paired comparison covers dynamics, physiology "
-                            "and light only; car-motorcycle semantic gaze is "
-                            "compared per recording, not per shared bin"),
-            "fix": ("run the frozen pipeline on a block inside the shared route "
-                    "identified in route/paired_route_segments.csv"),
+            "available": True,
+            "source": str(Path(args.fast_gaze_root)),
+            "coverage": ("the full-recording fast semantic-gaze run, which covers "
+                         "93.2% (car) and 89.6% (motorcycle) of each drive; the "
+                         "remainder is blinks and tracking dropouts, not "
+                         "uncovered road"),
+            "bins_with_gaze_on_both_sides": int(sum(
+                1 for _, row in merged.iterrows()
+                if np.isfinite(row.get("gaze_road_relevant_mass_car", np.nan))
+                and np.isfinite(row.get("gaze_road_relevant_mass_moto", np.nan)))),
+            "superseded_limitation": ("earlier revisions had two 30 s frozen "
+                                      "semantic blocks that covered no shared "
+                                      "bin, so gaze could not enter this "
+                                      "comparison at all"),
         },
         "fdr": {k: v for k, v in fdr.items() if k != "adjusted"},
         "indices": indices,
